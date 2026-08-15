@@ -1,0 +1,57 @@
+# Python virtual environment
+.venv/
+venv/
+env/
+
+# Python cache / compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# MkDocs build output
+site/
+
+# MkDocs cache
+.cache/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE / Editor
+.vscode/
+.idea/
+*.iml
+
+# Temporary / backup files
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak
+
+# Logs
+*.log
+
+# Environment / secret files
+.env
+.env.*
+!.env.example
+
+# Python tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Local-only files
+local/
+tmp/

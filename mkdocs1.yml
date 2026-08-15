@@ -1,0 +1,78 @@
+site_name: MicroServer Guide
+site_description: 금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 프레임워크 구축 및 운영 가이드
+
+theme:
+  name: material
+
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.prune
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+
+  - Roadmap:
+      - 전체 구축 로드맵: roadmap/microserver_roadmap.md
+
+  - 프로젝트 환경 구성:
+      - 환경 구성 개요: project_setup/project_environment_setup_overview_guide.md
+
+  - 기초 학습:
+      - 기초 학습 개요: basic/microserver_basic_overview_guide.md
+
+  - MicroServer 구축:
+      - 구축 개요: build/microserver_build_overview_guide.md
+      - 01. 프로젝트 기본 구성: build/step01_project_setup_guide.md
+      - 02. Web 기본 구성: build/step02_web_setup_guide.md
+      - 03. DataSource 연동: build/step03_datasource_setup_guide.md
+      - 04. Spring Security: build/step04_spring_security_guide.md
+      - 05. 공통 처리: build/step05_common_processing_guide.md
+      - 06. Logging: build/step06_logging_guide.md
+      - 07. API 문서: build/step07_api_documentation_guide.md
+      - 08. Web 화면: build/step08_web_view_guide.md
+      - 09. 전문 연계: build/step09_message_integration_guide.md
+      - 10. 관리자 기능: build/step10_admin_guide.md
+
+  - MicroServer Architecture:
+      - 아키텍처 개요: architecture/microserver_architecture_overview_guide.md
+      - 멀티모듈 구조: architecture/multi_module_architecture_guide.md
+      - Common Module: architecture/common_module_guide.md
+      - Relay Client: architecture/relay_client_guide.md
+      - Relay Server: architecture/relay_server_guide.md
+      - Admin: architecture/admin_module_guide.md
+      - Runtime: architecture/runtime_module_guide.md
+
+  - Spring Cloud:
+      - Spring Cloud 개요: spring_cloud/spring_cloud_overview_guide.md
+      - Spring WebFlux: spring_cloud/spring_webflux_guide.md
+      - Spring Cloud Gateway: spring_cloud/spring_cloud_gateway_guide.md
+      - Service Discovery / Eureka: spring_cloud/service_discovery_eureka_guide.md
+
+  - 운영 및 배포:
+      - 운영 및 배포 개요: operation/operation_deployment_overview_guide.md
+      - Build: operation/build_guide.md
+      - 환경별 설정: operation/environment_configuration_guide.md
+      - Actuator / Health Check: operation/actuator_healthcheck_guide.md
+      - 배포: operation/deployment_guide.md
+
+  - Reference:
+      - Reference 개요: reference/reference_overview.md
+      - 프로젝트 전체 구조: reference/project_structure_reference.md
+      - Troubleshooting: reference/troubleshooting.md
+      - 참고 자료: reference/resources.md
