@@ -43,9 +43,18 @@ nav:
   - 프로젝트 시작:
       - 프로젝트 이해:
           - 프로젝트 소개: 01_project_start/01_overview/project_introduction.md
-          - 구축 목표: 01_project_start/01_overview/project_goal.md
+          - 구축 목표: 01_project_start/01_overview/team_microserver_build_objectives_guide.md
           - 프로젝트 로드맵: 01_project_start/01_overview/project_roadmap.md
-          - 아키텍처 방향: 01_project_start/01_overview/architecture_direction.md
+          - 아키텍처 방향:
+            - 아키텍처 방향 개요: 01_project_start/01_overview/architecture/architecture_overview.md
+            - 구축 원칙 및 개발 방식: 01_project_start/01_overview/architecture/development_principles.md
+            - 멀티모듈 및 프로젝트 구조: 01_project_start/01_overview/architecture/multi_module_structure.md
+            - 애플리케이션 계층 구조: 01_project_start/01_overview/architecture/layered_application_structure.md
+            - 공통 처리 구조: 01_project_start/01_overview/architecture/common_processing_structure.md
+            - 데이터 및 보안 아키텍처: 01_project_start/01_overview/architecture/data_security_architecture.md
+            - 공통 데이터 및 캐시 구조: 01_project_start/01_overview/architecture/cache_common_data.md
+            - 금융 시스템 연계 아키텍처: 01_project_start/01_overview/architecture/financial_integration_architecture.md
+            - 확장 및 운영 아키텍처: 01_project_start/01_overview/architecture/extension_operation_architecture.md
 
       - 프로젝트 환경 구성:
           - 개발 장비 구성: 01_project_start/02_environment/development_device.md
