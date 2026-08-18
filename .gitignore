@@ -1,57 +1,19 @@
-# Python virtual environment
+# Python virtual environments
 .venv/
 venv/
-env/
 
-# Python cache / compiled files
+# Python
 __pycache__/
 *.py[cod]
-*$py.class
 
-# MkDocs build output
+# MkDocs
 site/
 
-# MkDocs cache
-.cache/
-
-# macOS
+# OS
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
 Thumbs.db
-ehthumbs.db
-Desktop.ini
 
-# IDE / Editor
-.vscode/
-.idea/
-*.iml
-
-# Temporary / backup files
-*.tmp
-*.temp
-*.swp
-*.swo
-*~
-*.bak
-
-# Logs
-*.log
-
-# Environment / secret files
-.env
-.env.*
-!.env.example
-
-# Python tooling
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.coverage
-htmlcov/
-
-# Local-only files
-local/
-tmp/
+# VS Code local settings
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json

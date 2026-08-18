@@ -1,8 +1,10 @@
-site_name: MicroServer Guide
-site_description: 금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 프레임워크 구축 및 운영 가이드
+site_name: Microserver
+site_description: Financial SI Standard Framework & Reference Architecture
+docs_dir: docs
 
 theme:
   name: material
+  language: ko
 
   features:
     - navigation.tabs
@@ -13,10 +15,21 @@ theme:
     - content.code.copy
     - content.code.annotate
 
+extra_css:
+  - assets/css/extra.css
+
+
+plugins:
+  - search
+  - redirects:
+      redirect_maps:
+        index.md: 01_project_start/01_overview/project_introduction.md
+        
 markdown_extensions:
   - attr_list
   - md_in_html
   - admonition
+  - pymdownx.details
   - pymdownx.highlight
   - pymdownx.superfences:
       custom_fences:
@@ -25,79 +38,95 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
 
 nav:
-  - Home:
-      - MicroServer 소개: index.md
-      - 전체 구축 로드맵: roadmap/microserver_roadmap.md
+#  - Home: index.md
 
-  - 프로젝트 환경 구성:
-      - 환경 구성 개요: project_setup/project_environment_setup_overview_guide.md
+  - 프로젝트 시작:
+      - 프로젝트 이해:
+          - 프로젝트 소개: 01_project_start/01_overview/project_introduction.md
+          - 구축 목표: 01_project_start/01_overview/project_goal.md
+          - 프로젝트 로드맵: 01_project_start/01_overview/project_roadmap.md
+          - 아키텍처 방향: 01_project_start/01_overview/architecture_direction.md
 
-  - 기초 학습:
-      - 기초 학습 개요: basic/microserver_basic_overview_guide.md
+      - 프로젝트 환경 구성:
+          - 개발 장비 구성: 01_project_start/02_environment/development_device.md
+          - Git / GitHub 환경 구성: 01_project_start/02_environment/git_github_setup.md
+          - Python / MkDocs:
+              - Windows 환경 구성: 01_project_start/02_environment/python_mkdocs/windows_python_venv_mkdocs.md
+              - macOS 환경 구성: 01_project_start/02_environment/python_mkdocs/macos_python_venv_mkdocs.md
+          - Java 개발환경:
+              - JDK 설치 및 설정: 01_project_start/02_environment/java/jdk_setup.md
+              - VS Code 개발환경 구성: 01_project_start/02_environment/java/vscode_setup.md
+              - Maven 설치 및 설정: 01_project_start/02_environment/java/maven_setup.md
+          - Database 개발환경:
+              - Oracle / Docker 로컬 환경: 01_project_start/02_environment/database/oracle_docker_setup.md
 
-  - MicroServer 구축:
-      - 구축 개요: build/microserver_build_overview_guide.md
+      - 프로젝트 생성:
+          - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
+          - Maven 기본 구조: 01_project_start/03_project_creation/maven_project_structure.md
+          - Package 구조 설계: 01_project_start/03_project_creation/package_structure.md
+          - application.yml 기본 설정: 01_project_start/03_project_creation/application_yaml.md
+          - 프로젝트 최초 실행: 01_project_start/03_project_creation/first_run.md
 
-      - 01. 프로젝트 기본 구성:
-          - 프로젝트 기본 구성: build/step01_project_setup_guide.md
+  - Framework 구축:
+      - 프로젝트 공통 구조:
+          - module-common 구성: 02_framework/01_project_structure/module_common.md
+          - runtime 모듈 구성: 02_framework/01_project_structure/runtime_module.md
+          - admin 모듈 구성: 02_framework/01_project_structure/admin_module.md
+          - 멀티모듈 프로젝트 구조: 02_framework/01_project_structure/multi_module_structure.md
 
-      - 02. Web 기본 구성:
-          - Web 기본 구성: build/step02_web_setup_guide.md
+      - 공통 Framework:
+          - 공통 Response 구조: 02_framework/02_common_framework/common_response.md
+          - 공통 예외 처리: 02_framework/02_common_framework/exception_handling.md
+          - Logging 구성: 02_framework/02_common_framework/logging.md
+          - Filter 구성: 02_framework/02_common_framework/filter.md
+          - 공통 Utility 구성: 02_framework/02_common_framework/utility.md
+          - Jasypt 설정: 02_framework/02_common_framework/jasypt.md
 
-      - 03. DataSource 연동:
-          - DataSource 연동: build/step03_datasource_setup_guide.md
+      - Database:
+          - Oracle 연동: 02_framework/03_database/oracle_connection.md
+          - DataSource 구성: 02_framework/03_database/datasource.md
+          - MyBatis 구성: 02_framework/03_database/mybatis.md
+          - Transaction 관리: 02_framework/03_database/transaction.md
+          - Multi DataSource 구성: 02_framework/03_database/multi_datasource.md
 
-      - 04. Spring Security:
-          - Spring Security: build/step04_spring_security_guide.md
+      - Security:
+          - Spring Security 기본 구성: 02_framework/04_security/spring_security.md
+          - 사용자 관리: 02_framework/04_security/user_management.md
+          - Role / 권한 모델: 02_framework/04_security/role_management.md
+          - 사용자 인증: 02_framework/04_security/authentication.md
+          - 인가 및 접근 제어: 02_framework/04_security/authorization.md
 
-      - 05. 공통 처리:
-          - 공통 처리: build/step05_common_processing_guide.md
+      - API 개발 표준:
+          - Controller 개발 표준: 02_framework/05_api/controller.md
+          - Service 개발 표준: 02_framework/05_api/service.md
+          - Repository / Mapper 개발 표준: 02_framework/05_api/repository.md
+          - Validation: 02_framework/05_api/validation.md
+          - OpenAPI / Swagger: 02_framework/05_api/openapi_swagger.md
 
-      - 06. Logging:
-          - Logging: build/step06_logging_guide.md
+  - 업무 및 금융 연계:
+      - 업무 공통:
+          - 공통코드: 03_business_financial/01_business_common/common_code.md
+          - 메뉴 관리: 03_business_financial/01_business_common/menu.md
+          - 사용자 관리 기능: 03_business_financial/01_business_common/user.md
+          - 게시판 공통 기능: 03_business_financial/01_business_common/board.md
+          - 관리자 기능: 03_business_financial/01_business_common/admin.md
 
-      - 07. API 문서:
-          - API 문서: build/step07_api_documentation_guide.md
+      - 금융 시스템 연계:
+          - 전문 구조: 03_business_financial/02_financial_integration/message_structure.md
+          - Message Builder: 03_business_financial/02_financial_integration/message_builder.md
+          - Message Parser: 03_business_financial/02_financial_integration/message_parser.md
+          - MCA 연계: 03_business_financial/02_financial_integration/mca.md
+          - EAI 연계: 03_business_financial/02_financial_integration/eai.md
+          - FEP 연계: 03_business_financial/02_financial_integration/fep.md
 
-      - 08. Web 화면:
-          - Web 화면: build/step08_web_view_guide.md
+  - 확장 아키텍처:
+      - WebClient: 04_extended_architecture/webclient.md
+      - Spring Cloud Gateway: 04_extended_architecture/spring_cloud_gateway.md
+      - Spring WebFlux: 04_extended_architecture/webflux.md
+      - Service Discovery / Eureka: 04_extended_architecture/eureka.md
+      - Kubernetes: 04_extended_architecture/kubernetes.md
 
-      - 09. 전문 연계:
-          - 전문 연계: build/step09_message_integration_guide.md
-
-      - 10. 관리자 기능:
-          - 관리자 기능: build/step10_admin_guide.md
-
-  - Architecture:
-      - 아키텍처 개요: architecture/microserver_architecture_overview_guide.md
-      - 멀티모듈 구조: architecture/multi_module_architecture_guide.md
-
-      - 주요 모듈:
-          - Common Module: architecture/common_module_guide.md
-          - Relay Client: architecture/relay_client_guide.md
-          - Relay Server: architecture/relay_server_guide.md
-          - Admin: architecture/admin_module_guide.md
-          - Runtime: architecture/runtime_module_guide.md
-
-  - Spring Cloud:
-      - Spring Cloud 개요: spring_cloud/spring_cloud_overview_guide.md
-
-      - Spring WebFlux:
-          - Spring WebFlux 개요: spring_cloud/spring_webflux_guide.md
-
-      - Spring Cloud Gateway:
-          - Gateway 개요 및 구축: spring_cloud/spring_cloud_gateway_guide.md
-          - Service Discovery / Eureka: spring_cloud/service_discovery_eureka_guide.md
-
-  - 운영 및 배포:
-      - 운영 및 배포 개요: operation/operation_deployment_overview_guide.md
-      - Build: operation/build_guide.md
-      - 환경별 설정: operation/environment_configuration_guide.md
-      - Actuator / Health Check: operation/actuator_healthcheck_guide.md
-      - 배포: operation/deployment_guide.md
-
-  - Reference:
-      - Reference 개요: reference/reference_overview.md
-      - 프로젝트 전체 구조: reference/project_structure_reference.md
-      - Troubleshooting: reference/troubleshooting.md
-      - 참고 자료: reference/resources.md
+  - 참고자료:
+      - Git Commit Convention: 99_appendix/git_commit_convention.md
+      - 문서 작성 규칙: 99_appendix/document_writing_rule.md
+      - Troubleshooting: 99_appendix/troubleshooting.md

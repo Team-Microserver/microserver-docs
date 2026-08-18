@@ -1,0 +1,89 @@
+microserver_mkdocs_hierarchical/
+├── docs/
+│   ├── 01_project_start/
+│   │   ├── 01_overview/
+│   │   │   ├── architecture_direction.md
+│   │   │   ├── project_goal.md
+│   │   │   ├── project_introduction.md
+│   │   │   └── project_roadmap.md
+│   │   ├── 02_environment/
+│   │   │   ├── database/
+│   │   │   │   └── oracle_docker_setup.md
+│   │   │   ├── java/
+│   │   │   │   ├── jdk_setup.md
+│   │   │   │   ├── maven_setup.md
+│   │   │   │   └── vscode_setup.md
+│   │   │   ├── python_mkdocs/
+│   │   │   │   ├── macos_python_venv_mkdocs.md
+│   │   │   │   └── windows_python_venv_mkdocs.md
+│   │   │   ├── development_device.md
+│   │   │   └── git_github_setup.md
+│   │   └── 03_project_creation/
+│   │       ├── application_yaml.md
+│   │       ├── first_run.md
+│   │       ├── maven_project_structure.md
+│   │       ├── package_structure.md
+│   │       └── spring_boot_project_create.md
+│   ├── 02_framework/
+│   │   ├── 01_project_structure/
+│   │   │   ├── admin_module.md
+│   │   │   ├── module_common.md
+│   │   │   ├── multi_module_structure.md
+│   │   │   └── runtime_module.md
+│   │   ├── 02_common_framework/
+│   │   │   ├── common_response.md
+│   │   │   ├── exception_handling.md
+│   │   │   ├── filter.md
+│   │   │   ├── jasypt.md
+│   │   │   ├── logging.md
+│   │   │   └── utility.md
+│   │   ├── 03_database/
+│   │   │   ├── datasource.md
+│   │   │   ├── multi_datasource.md
+│   │   │   ├── mybatis.md
+│   │   │   ├── oracle_connection.md
+│   │   │   └── transaction.md
+│   │   ├── 04_security/
+│   │   │   ├── authentication.md
+│   │   │   ├── authorization.md
+│   │   │   ├── role_management.md
+│   │   │   ├── spring_security.md
+│   │   │   └── user_management.md
+│   │   └── 05_api/
+│   │       ├── controller.md
+│   │       ├── openapi_swagger.md
+│   │       ├── repository.md
+│   │       ├── service.md
+│   │       └── validation.md
+│   ├── 03_business_financial/
+│   │   ├── 01_business_common/
+│   │   │   ├── admin.md
+│   │   │   ├── board.md
+│   │   │   ├── common_code.md
+│   │   │   ├── menu.md
+│   │   │   └── user.md
+│   │   └── 02_financial_integration/
+│   │       ├── eai.md
+│   │       ├── fep.md
+│   │       ├── mca.md
+│   │       ├── message_builder.md
+│   │       ├── message_parser.md
+│   │       └── message_structure.md
+│   ├── 04_extended_architecture/
+│   │   ├── eureka.md
+│   │   ├── kubernetes.md
+│   │   ├── spring_cloud_gateway.md
+│   │   ├── webclient.md
+│   │   └── webflux.md
+│   ├── 99_appendix/
+│   │   ├── document_writing_rule.md
+│   │   ├── git_commit_convention.md
+│   │   └── troubleshooting.md
+│   ├── assets/
+│   │   └── css/
+│   │       └── extra.css
+│   └── index.md
+├── .gitignore
+├── mkdocs.yml
+├── README.md
+└── requirements.txt
