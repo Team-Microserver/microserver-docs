@@ -24,7 +24,7 @@ plugins:
   - redirects:
       redirect_maps:
         index.md: 01_project_start/01_overview/project_introduction.md
-        
+
 markdown_extensions:
   - attr_list
   - md_in_html
@@ -67,7 +67,7 @@ nav:
           - application.yml 기본 설정: 01_project_start/03_project_creation/application_yaml.md
           - 프로젝트 최초 실행: 01_project_start/03_project_creation/first_run.md
 
-  - Framework 구축:
+  - 공통 기능 개발:
       - 프로젝트 공통 구조:
           - module-common 구성: 02_framework/01_project_structure/module_common.md
           - runtime 모듈 구성: 02_framework/01_project_structure/runtime_module.md
