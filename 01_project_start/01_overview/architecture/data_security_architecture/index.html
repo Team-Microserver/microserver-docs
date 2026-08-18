@@ -11,25 +11,25 @@
       
       
       
-        <link rel="prev" href="../../01_overview/architecture/extension_operation_architecture/">
+        <link rel="prev" href="../common_processing_structure/">
       
       
-        <link rel="next" href="../git_github_setup/">
+        <link rel="next" href="../cache_common_data/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/images/favicon.png">
+      <link rel="icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>개발 장비 구성 - Microserver</title>
+        <title>데이터 및 보안 아키텍처 - Microserver</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
       
       
 
@@ -48,9 +48,9 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/css/extra.css">
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -82,7 +82,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -102,7 +102,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              개발 장비 구성
+              데이터 및 보안 아키텍처
             
           </span>
         </div>
@@ -193,7 +193,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../01_overview/project_introduction/" class="md-tabs__link">
+        <a href="../../project_introduction/" class="md-tabs__link">
           
   
   
@@ -223,7 +223,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../02_framework/01_project_structure/module_common/" class="md-tabs__link">
+        <a href="../../../../02_framework/01_project_structure/module_common/" class="md-tabs__link">
           
   
   
@@ -253,7 +253,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../03_business_financial/01_business_common/common_code/" class="md-tabs__link">
+        <a href="../../../../03_business_financial/01_business_common/common_code/" class="md-tabs__link">
           
   
   
@@ -276,7 +276,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../04_extended_architecture/webclient/" class="md-tabs__link">
+        <a href="../../../../04_extended_architecture/webclient/" class="md-tabs__link">
           
   
   
@@ -296,7 +296,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../99_appendix/git_commit_convention/" class="md-tabs__link">
+        <a href="../../../../99_appendix/git_commit_convention/" class="md-tabs__link">
           
   
   
@@ -330,7 +330,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -402,6 +402,8 @@
                 
   
   
+    
+  
   
   
     
@@ -412,19 +414,17 @@
       
     
     
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1" checked>
         
-  
-  
-  
-    <a href="../../01_overview/project_introduction/" class="md-nav__link">
-      
+          
+          <label class="md-nav__link" for="__nav_1_1" id="__nav_1_1_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
@@ -438,13 +438,99 @@
   
   
 
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 이해
   
 
-      
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 소개
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../team_microserver_build_objectives_guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    구축 목표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project_roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 로드맵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -472,17 +558,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_1_4" checked>
         
           
-          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_1_1_4" id="__nav_1_1_4_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    프로젝트 환경 구성
+    아키텍처 방향
   
 
     
@@ -493,16 +579,156 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_1_2">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_1_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_1_4">
             <span class="md-nav__icon md-icon"></span>
             
   
-    프로젝트 환경 구성
+    아키텍처 방향
   
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture_overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    아키텍처 방향 개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development_principles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    구축 원칙 및 개발 방식
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../multi_module_structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티모듈 및 프로젝트 구조
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../layered_application_structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    애플리케이션 계층 구조
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../common_processing_structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    공통 처리 구조
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -527,7 +753,7 @@
   <span class="md-ellipsis">
     
   
-    개발 장비 구성
+    데이터 및 보안 아키텍처
   
 
     
@@ -545,7 +771,7 @@
   <span class="md-ellipsis">
     
   
-    개발 장비 구성
+    데이터 및 보안 아키텍처
   
 
     
@@ -571,21 +797,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        문서 목적
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        작성 예정 내용
+        1. 문서 목적
       
     </span>
   </a>
@@ -608,14 +823,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../git_github_setup/" class="md-nav__link">
+      <a href="../cache_common_data/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Git / GitHub 환경 구성
+    공통 데이터 및 캐시 구조
   
 
     
@@ -635,33 +850,15 @@
   
   
   
-    
-    
-    
-    
-      
-      
-    
-    
-      
+    <li class="md-nav__item">
+      <a href="../financial_integration_architecture/" class="md-nav__link">
         
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
-      
   
   
   <span class="md-ellipsis">
     
   
-    Python / MkDocs
+    금융 시스템 연계 아키텍처
   
 
     
@@ -669,13 +866,7 @@
   
   
 
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
+      </a>
     </li>
   
 
@@ -687,33 +878,15 @@
   
   
   
-    
-    
-    
-    
-      
-      
-    
-    
-      
+    <li class="md-nav__item">
+      <a href="../extension_operation_architecture/" class="md-nav__link">
         
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../java/jdk_setup/" class="md-nav__link">
-      
   
   
   <span class="md-ellipsis">
     
   
-    Java 개발환경
+    확장 및 운영 아키텍처
   
 
     
@@ -721,64 +894,14 @@
   
   
 
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
+      </a>
     </li>
   
 
               
             
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../database/oracle_docker_setup/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Database 개발환경
-  
-
-    
-  </span>
-  
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
+          </ul>
+        </nav>
       
     </li>
   
@@ -818,7 +941,59 @@
   
   
   
-    <a href="../../03_project_creation/spring_boot_project_create/" class="md-nav__link">
+    <a href="../../../02_environment/development_device/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../03_project_creation/spring_boot_project_create/" class="md-nav__link">
       
   
   
@@ -881,7 +1056,7 @@
   
   
   
-    <a href="../../../02_framework/01_project_structure/module_common/" class="md-nav__link">
+    <a href="../../../../02_framework/01_project_structure/module_common/" class="md-nav__link">
       
   
   
@@ -938,7 +1113,7 @@
   
   
   
-    <a href="../../../03_business_financial/01_business_common/common_code/" class="md-nav__link">
+    <a href="../../../../03_business_financial/01_business_common/common_code/" class="md-nav__link">
       
   
   
@@ -991,7 +1166,7 @@
   
   
   
-    <a href="../../../04_extended_architecture/webclient/" class="md-nav__link">
+    <a href="../../../../04_extended_architecture/webclient/" class="md-nav__link">
       
   
   
@@ -1042,7 +1217,7 @@
   
   
   
-    <a href="../../../99_appendix/git_commit_convention/" class="md-nav__link">
+    <a href="../../../../99_appendix/git_commit_convention/" class="md-nav__link">
       
   
   
@@ -1095,21 +1270,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        문서 목적
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        작성 예정 내용
+        1. 문서 목적
       
     </span>
   </a>
@@ -1133,27 +1297,209 @@
 
 
 
-<h1 id="_1">개발 장비 구성</h1>
-<div class="admonition info">
-<p class="admonition-title">작성 예정</p>
-<p>이 문서는 <strong>Microserver 프로젝트 구축 과정에 맞춰 단계적으로 작성될 예정입니다.</strong></p>
-</div>
-<h2 id="_2">문서 목적</h2>
-<p>이 단계에서 필요한 개념, 설정, 구현 방법, 테스트 및 검증 절차를 정리합니다.</p>
-<h2 id="_3">작성 예정 내용</h2>
+<h1 id="_1">데이터 및 보안 아키텍처</h1>
+<h2 id="1">1. 문서 목적</h2>
+<p>Database와 Security는 금융 SI 애플리케이션에서 가장 기본적이면서도 영향 범위가 큰 영역입니다.</p>
+<p>Microserver는 두 기능을 업무 코드에 직접 흩어놓지 않고 <strong>공통 설정과 정책을 통해 일관되게 적용</strong>하는 방향으로 설계합니다.</p>
+<hr />
+<h1 id="part-1">Part 1. 데이터 아키텍처</h1>
+<h2 id="2">2. 데이터 접근 기본 구조</h2>
+<pre class="mermaid"><code>flowchart LR
+    S[Service]
+    D[DAO / Mapper]
+    M[MyBatis]
+    DS[DataSource / HikariCP]
+    DB[(Oracle)]
+
+    S --&gt; D
+    D --&gt; M
+    M --&gt; DS
+    DS --&gt; DB</code></pre>
+<p>Service가 DataSource를 직접 사용하지 않고 DAO / Mapper를 통해 접근하도록 합니다.</p>
+<hr />
+<h2 id="3-datasource">3. DataSource 구성 방향</h2>
+<p>DataSource는 공통 Configuration에서 Bean으로 구성하고 업무 Module에서 재사용하는 방향을 검토합니다.</p>
+<p>주요 설정 영역:</p>
 <ul>
-<li>기술 개요</li>
-<li>적용 목적 및 설계 방향</li>
-<li>환경 및 프로젝트 설정</li>
-<li>주요 소스코드</li>
-<li>실행 및 테스트 방법</li>
-<li>문제 해결 / 주의사항</li>
-<li>Git Commit &amp; Push 기준</li>
+<li>JDBC URL</li>
+<li>Driver</li>
+<li>User</li>
+<li>Password</li>
+<li>Connection Pool</li>
+<li>Timeout</li>
+<li>Pool Size</li>
+<li>Transaction Isolation</li>
+</ul>
+<p>민감한 접속정보는 소스에 평문으로 포함하지 않는 것을 원칙으로 합니다.</p>
+<hr />
+<h2 id="4-mybatis">4. MyBatis 처리 흐름</h2>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant S as Service
+    participant D as DAO
+    participant ST as SqlSessionTemplate
+    participant M as Mapper XML
+    participant DB as Oracle
+
+    S-&gt;&gt;D: 조회 요청
+    D-&gt;&gt;ST: Mapper 호출
+    ST-&gt;&gt;M: SQL Identifier
+    M-&gt;&gt;DB: SQL 실행
+    DB--&gt;&gt;M: ResultSet
+    M--&gt;&gt;ST: Mapping
+    ST--&gt;&gt;D: Result Object
+    D--&gt;&gt;S: Data</code></pre>
+<p>SQL과 Java 업무 로직을 분리하여 유지보수성을 확보합니다.</p>
+<hr />
+<h2 id="5-multi-datasource">5. Multi DataSource</h2>
+<p>금융 프로젝트에서는 목적별로 여러 Database를 사용하는 경우가 있습니다.</p>
+<div class="highlight"><pre><span></span><code>Application
+├─ Common DataSource
+├─ Business DataSource
+└─ External / Legacy DataSource
+</code></pre></div>
+<p>각 DataSource는 다음 요소를 독립적으로 가질 수 있습니다.</p>
+<ul>
+<li>HikariConfig</li>
+<li>DataSource Bean</li>
+<li>SqlSessionFactory</li>
+<li>SqlSessionTemplate</li>
+<li>TransactionManager</li>
+<li>Mapper Scan 범위</li>
+</ul>
+<p>초기 단계에서는 단일 DataSource를 먼저 완성한 후 Multi DataSource로 확장합니다.</p>
+<hr />
+<h2 id="6-transaction">6. Transaction 아키텍처</h2>
+<p>Transaction의 기본 단위는 Service입니다.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant C as Controller
+    participant S as Service
+    participant D1 as DAO A
+    participant D2 as DAO B
+    participant DB as Database
+
+    C-&gt;&gt;S: 업무 처리 요청
+    S-&gt;&gt;S: Transaction Begin
+    S-&gt;&gt;D1: 처리 1
+    D1-&gt;&gt;DB: SQL 1
+    DB--&gt;&gt;D1: OK
+    S-&gt;&gt;D2: 처리 2
+    D2-&gt;&gt;DB: SQL 2
+    DB--&gt;&gt;D2: OK
+    S-&gt;&gt;S: Commit
+    S--&gt;&gt;C: Success</code></pre>
+<p>오류 시:</p>
+<div class="highlight"><pre><span></span><code>SQL 1 성공
+  ↓
+SQL 2 실패
+  ↓
+Exception
+  ↓
+Transaction Rollback
+  ↓
+SQL 1까지 원복
+</code></pre></div>
+<hr />
+<h1 id="part-2-security">Part 2. Security 아키텍처</h1>
+<h2 id="7-security">7. Security 기본 방향</h2>
+<p>Spring Security를 이용하여 인증과 인가를 공통화합니다.</p>
+<p>핵심 영역:</p>
+<ul>
+<li>Authentication</li>
+<li>Authorization</li>
+<li>Role / Permission</li>
+<li>Security Context</li>
+<li>인증 실패 처리</li>
+<li>접근 거부 처리</li>
 </ul>
 <hr />
-<blockquote>
-<p>문서 상태: <strong>준비중</strong></p>
-</blockquote>
+<h2 id="8">8. 인증 요청 흐름</h2>
+<pre class="mermaid"><code>sequenceDiagram
+    autonumber
+    participant C as Client
+    participant F as Security Filter Chain
+    participant A as Authentication
+    participant U as User Service
+    participant DB as Database
+    participant CT as Controller
+
+    C-&gt;&gt;F: 인증정보 포함 Request
+    F-&gt;&gt;A: 인증 검증
+    A-&gt;&gt;U: 사용자 조회
+    U-&gt;&gt;DB: 사용자/권한 조회
+    DB--&gt;&gt;U: User + Roles
+    U--&gt;&gt;A: 인증 대상 정보
+    A--&gt;&gt;F: Authentication Result
+    F-&gt;&gt;F: SecurityContext 구성
+    F-&gt;&gt;CT: 인증된 Request 전달</code></pre>
+<p>구체적인 인증 방식은 실제 구축 단계에서 선택합니다.</p>
+<p>예:</p>
+<ul>
+<li>ID / Password</li>
+<li>Session</li>
+<li>JWT</li>
+<li>OAuth2 / OIDC</li>
+<li>외부 인증 연계</li>
+</ul>
+<hr />
+<h2 id="9">9. 인가 흐름</h2>
+<p>인증이 “누구인가”를 확인하는 것이라면 인가는 “무엇을 할 수 있는가”를 판단합니다.</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Authenticated User]
+    B[Role / Authority]
+    C[Requested API]
+    D{Allowed?}
+    E[Controller]
+    F[Access Denied]
+
+    A --&gt; B
+    B --&gt; D
+    C --&gt; D
+    D --&gt;|Yes| E
+    D --&gt;|No| F</code></pre>
+<hr />
+<h2 id="10">10. 보안 정보 관리</h2>
+<p>다음 정보는 평문 하드코딩을 피합니다.</p>
+<ul>
+<li>DB Password</li>
+<li>API Key</li>
+<li>Client Secret</li>
+<li>외부 시스템 Credential</li>
+<li>암복호화 Key</li>
+</ul>
+<p>적용 후보:</p>
+<ul>
+<li>환경변수</li>
+<li>환경별 외부 Configuration</li>
+<li>Jasypt</li>
+<li>Kubernetes Secret</li>
+<li>전용 Secret 관리 솔루션</li>
+</ul>
+<p>환경에 따라 적절한 방식을 선택합니다.</p>
+<hr />
+<h2 id="11-data-security">11. Data와 Security의 접점</h2>
+<p>사용자 및 권한 정보는 Database에 저장될 수 있으며 Security 구성과 밀접하게 연계됩니다.</p>
+<div class="highlight"><pre><span></span><code>Security Filter
+    ↓
+User Authentication Service
+    ↓
+User / Role DAO
+    ↓
+User / Role Tables
+</code></pre></div>
+<p>따라서 Security Module이 업무 DAO에 무분별하게 의존하지 않도록 공통 사용자/권한 Repository의 책임을 명확히 설계해야 합니다.</p>
+<hr />
+<h2 id="12">12. 설계 원칙</h2>
+<ul>
+<li>DataSource 설정을 업무 코드에 직접 구현하지 않는다.</li>
+<li>Transaction은 업무 단위로 관리한다.</li>
+<li>다중 DataSource는 명시적으로 분리한다.</li>
+<li>인증과 인가를 구분한다.</li>
+<li>보안 정보는 평문 하드코딩하지 않는다.</li>
+<li>Security 정책을 Controller마다 반복하지 않는다.</li>
+<li>인증/권한 변경이 업무 로직에 미치는 영향을 최소화한다.</li>
+</ul>
 
 
 
@@ -1209,10 +1555,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>
