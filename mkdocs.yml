@@ -65,6 +65,10 @@ nav:
           - Java 개발환경:
               - JDK 설치 및 설정: 01_project_start/02_environment/java/jdk_setup.md
  
+          - Maven 개발환경:
+            - Maven 설치 및 설정: 01_project_start/02_environment/maven/maven_setup.md
+
+
           - VS Code 개발환경:
             - 구성 개요: 01_project_start/02_environment/vscode/vscode_setup.md
             - VS Code 설치 및 기본 설정: 01_project_start/02_environment/vscode/vscode_install_basic_setup.md
@@ -73,9 +77,7 @@ nav:
             - 개발 지원 Extension 및 Profile 구성: 01_project_start/02_environment/vscode/support_extension_profile_setup.md
             - JDK 연계 및 개발환경 운영: 01_project_start/02_environment/vscode/jdk_workspace_environment_setup.md
 
-          - Maven 개발환경:
-            - Maven 설치 및 설정: 01_project_start/02_environment/maven/maven_setup.md
- 
+           
  #             - VS Code 환경 구성:
  #               - 구성 개요: 01_project_start/02_environment/java/vscode_setup.md
  #               - VS Code 설치 및 기본 설정: 01_project_start/02_environment/java/vscode/vscode_install_basic_setup.md
@@ -89,10 +91,10 @@ nav:
 
       - 프로젝트 생성:
           - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
-          - Maven 기본 구조: 01_project_start/03_project_creation/maven_project_structure.md
-          - Package 구조 설계: 01_project_start/03_project_creation/package_structure.md
-          - application.yml 기본 설정: 01_project_start/03_project_creation/application_yaml.md
-          - 프로젝트 최초 실행: 01_project_start/03_project_creation/first_run.md
+          - 프로젝트 개발환경 설정:
+            - JDK / VS Code Workspace 설정: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_setup.md
+            - Maven Wrapper 및 프로젝트 Maven 설정: 01_project_start/03_project_creation/project_environment/project_maven_setup.md
+            - Maven 멀티모듈 기본 구성: 01_project_start/03_project_creation/project_environment/maven_multi_module_setup.md
 
   - 공통 기능 개발:
       - 프로젝트 공통 구조:
