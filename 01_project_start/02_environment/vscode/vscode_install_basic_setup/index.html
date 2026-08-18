@@ -1,0 +1,1789 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+      
+      
+      
+      
+        <link rel="prev" href="../vscode_setup/">
+      
+      
+        <link rel="next" href="../java_extension_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>VS Code 설치 및 기본 설정 - Microserver</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vs-code" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Microserver
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              VS Code 설치 및 기본 설정
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 시작
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02_framework/01_project_structure/module_common/" class="md-tabs__link">
+          
+  
+  
+  공통 기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../03_business_financial/01_business_common/common_code/" class="md-tabs__link">
+          
+  
+  
+  업무 및 금융 연계
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04_extended_architecture/webclient/" class="md-tabs__link">
+          
+  
+  
+  확장 아키텍처
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../99_appendix/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  참고자료
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Microserver
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 시작
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 시작
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 이해
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development_device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 장비 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git_github_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git / GitHub 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python / MkDocs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../java/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_5" id="__nav_1_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    VS Code 개발환경
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    구성 개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치 및 기본 설정
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치 및 기본 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. VS Code 역할
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../java_extension_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 개발 Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spring_boot_extension_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../support_extension_profile_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 지원 Extension 및 Profile 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jdk_workspace_environment_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 연계 및 개발환경 운영
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../maven/maven_setup.md" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maven 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../database/oracle_docker_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../03_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../02_framework/01_project_structure/module_common/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    공통 기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../03_business_financial/01_business_common/common_code/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    업무 및 금융 연계
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../04_extended_architecture/webclient/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    확장 아키텍처
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../99_appendix/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    참고자료
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. VS Code 역할
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="vs-code">VS Code 설치 및 기본 설정 가이드</h1>
+<h2 id="1">1. 문서 목적</h2>
+<p>본 문서는 MicroServer 개발환경에서 사용할 Visual Studio Code를 Windows와 macOS에 설치하고, Java / Spring Boot 개발을 시작하기 전에 필요한 VS Code 기본 환경을 구성한다.</p>
+<p>현재 단계에서는 프로젝트를 생성하지 않는다.</p>
+<p>따라서 본 문서는 다음 작업에 집중한다.</p>
+<ul>
+<li>VS Code 설치</li>
+<li><code>code</code> 명령 사용 준비</li>
+<li>VS Code 주요 화면 이해</li>
+<li>Command Palette 사용</li>
+<li>Extensions 화면 사용</li>
+<li>Integrated Terminal 확인</li>
+<li>UTF-8 등 기본 Editor 설정</li>
+<li>User Settings와 Workspace Settings의 차이 이해</li>
+</ul>
+<hr />
+<h2 id="2-vs-code">2. VS Code 역할</h2>
+<p>VS Code는 기본 상태에서는 범용 Source Code Editor이다.</p>
+<p>Java 및 Spring Boot 개발 기능은 이후 Extension을 설치하여 추가한다.</p>
+<div class="highlight"><pre><span></span><code>VS Code
+  │
+  ├─ 기본 Editor 기능
+  ├─ Terminal
+  ├─ Git UI
+  └─ Extension Platform
+       │
+       ├─ Java 개발 기능
+       ├─ Spring Boot 개발 기능
+       └─ YAML / XML / Container 기능
+</code></pre></div>
+<p>즉, 먼저 VS Code 자체를 정상적으로 사용할 수 있는 상태로 만든 뒤 Extension을 단계적으로 구성한다.</p>
+<hr />
+<h1 id="3-windows">3. Windows 설치</h1>
+<h2 id="31-vs-code">3.1 VS Code 다운로드</h2>
+<p>Visual Studio Code 공식 사이트에서 Windows용 설치 파일을 다운로드한다.</p>
+<p>일반적인 Windows x64 개발 PC에서는 다음 설치 형식을 사용할 수 있다.</p>
+<div class="highlight"><pre><span></span><code>Windows x64 User Installer
+</code></pre></div>
+<p>환경에 따라 System Installer를 사용할 수도 있지만 개발자 PC에서는 User Installer만으로도 충분하다.</p>
+<hr />
+<h2 id="32">3.2 설치 옵션</h2>
+<p>설치 과정에서 다음 항목을 활성화하는 것을 권장한다.</p>
+<ul>
+<li>PATH에 VS Code 추가</li>
+<li>파일을 Code로 열기 메뉴 등록</li>
+<li>디렉터리를 Code로 열기 메뉴 등록</li>
+<li>지원되는 파일 형식의 편집기로 Code 등록</li>
+</ul>
+<p>특히 <strong>PATH 등록</strong>을 활성화하면 PowerShell이나 Command Prompt에서 <code>code</code> 명령을 사용할 수 있다.</p>
+<hr />
+<h2 id="33">3.3 설치 확인</h2>
+<p>VS Code를 실행하여 정상적으로 시작되는지 확인한다.</p>
+<p>PowerShell을 새로 열고 다음 명령을 실행한다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">code</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+<p>정상적으로 설치되고 PATH가 등록되어 있다면 VS Code 버전이 표시된다.</p>
+<blockquote>
+<p><code>code --version</code>이 실행되지 않더라도 VS Code 애플리케이션 자체는 정상 설치되어 있을 수 있다.
+이 경우 설치 옵션의 PATH 등록 여부를 확인한다.</p>
+</blockquote>
+<hr />
+<h1 id="4-macos">4. macOS 설치</h1>
+<h2 id="41">4.1 애플리케이션 설치</h2>
+<p>macOS용 Visual Studio Code를 다운로드한 후 애플리케이션을 다음 위치에 배치한다.</p>
+<div class="highlight"><pre><span></span><code>/Applications/Visual Studio Code.app
+</code></pre></div>
+<p>Applications에서 VS Code를 실행하여 정상적으로 시작되는지 확인한다.</p>
+<hr />
+<h2 id="42-code-path">4.2 <code>code</code> 명령 PATH 등록</h2>
+<p>VS Code에서 Command Palette를 연다.</p>
+<div class="highlight"><pre><span></span><code>Command + Shift + P
+</code></pre></div>
+<p>다음 명령을 검색한다.</p>
+<div class="highlight"><pre><span></span><code>Shell Command: Install 'code' command in PATH
+</code></pre></div>
+<p>명령을 실행한 후 기존 Terminal을 종료하고 새 Terminal을 실행한다.</p>
+<p>확인:</p>
+<div class="highlight"><pre><span></span><code>code<span class="w"> </span>--version
+</code></pre></div>
+<hr />
+<h1 id="5-vs-code">5. VS Code 주요 화면</h1>
+<p>VS Code의 주요 영역은 다음과 같다.</p>
+<table>
+<thead>
+<tr>
+<th>영역</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Explorer</td>
+<td>폴더와 파일 탐색</td>
+</tr>
+<tr>
+<td>Search</td>
+<td>Workspace 전체 검색</td>
+</tr>
+<tr>
+<td>Source Control</td>
+<td>Git 변경사항 확인</td>
+</tr>
+<tr>
+<td>Run and Debug</td>
+<td>실행 및 Debug 관리</td>
+</tr>
+<tr>
+<td>Extensions</td>
+<td>Extension 검색, 설치, 관리</td>
+</tr>
+<tr>
+<td>Terminal</td>
+<td>VS Code 내부 Terminal</td>
+</tr>
+<tr>
+<td>Problems</td>
+<td>오류 및 Warning 확인</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>VS Code 및 Extension 로그 확인</td>
+</tr>
+<tr>
+<td>Status Bar</td>
+<td>Encoding, Git Branch 등 상태 확인</td>
+</tr>
+</tbody>
+</table>
+<p>Java / Spring Boot 개발에서는 Explorer, Extensions, Terminal, Problems, Output을 자주 사용하게 된다.</p>
+<hr />
+<h1 id="6-command-palette">6. Command Palette</h1>
+<p>Command Palette는 VS Code 및 설치된 Extension의 명령을 실행하는 핵심 기능이다.</p>
+<h3 id="windows-linux">Windows / Linux</h3>
+<div class="highlight"><pre><span></span><code>Ctrl + Shift + P
+</code></pre></div>
+<h3 id="macos">macOS</h3>
+<div class="highlight"><pre><span></span><code>Command + Shift + P
+</code></pre></div>
+<p>예를 들어 Java Extension을 설치하면 다음과 같은 명령이 Command Palette에 추가된다.</p>
+<div class="highlight"><pre><span></span><code>Java: ...
+</code></pre></div>
+<p>Spring Boot Extension을 설치하면 Spring 관련 명령도 추가된다.</p>
+<p>따라서 Extension 설치가 정상적으로 되었는지를 확인할 때도 Command Palette를 활용할 수 있다.</p>
+<hr />
+<h1 id="7-extensions">7. Extensions 화면</h1>
+<p>Extensions 화면에서는 VS Code의 개발 기능을 추가하거나 제거할 수 있다.</p>
+<h3 id="windows-linux_1">Windows / Linux</h3>
+<div class="highlight"><pre><span></span><code>Ctrl + Shift + X
+</code></pre></div>
+<h3 id="macos_1">macOS</h3>
+<div class="highlight"><pre><span></span><code>Command + Shift + X
+</code></pre></div>
+<p>Extensions 화면에서는 다음 작업이 가능하다.</p>
+<ul>
+<li>Extension 검색</li>
+<li>설치</li>
+<li>Enable / Disable</li>
+<li>Update</li>
+<li>Uninstall</li>
+<li>Publisher 확인</li>
+<li>Extension ID 확인</li>
+</ul>
+<p>MicroServer 프로젝트에서는 Extension 이름만 보고 설치하지 말고 <strong>Publisher와 Extension ID를 함께 확인</strong>하는 것을 권장한다.</p>
+<hr />
+<h1 id="8-integrated-terminal">8. Integrated Terminal</h1>
+<p>VS Code는 Editor 하단에서 Terminal을 사용할 수 있다.</p>
+<p>메뉴:</p>
+<div class="highlight"><pre><span></span><code>Terminal
+→ New Terminal
+</code></pre></div>
+<p>Windows에서는 PowerShell, macOS에서는 zsh를 기본으로 사용할 수 있다.</p>
+<p>향후 Git, Maven, Docker 등 개발 도구 명령을 실행할 때 사용한다.</p>
+<p>현재 단계에서는 실제 Maven Build나 애플리케이션 실행을 진행하지 않는다.</p>
+<hr />
+<h1 id="9-settings">9. Settings 열기</h1>
+<p>VS Code Settings 단축키:</p>
+<h3 id="windows">Windows</h3>
+<div class="highlight"><pre><span></span><code>Ctrl + ,
+</code></pre></div>
+<h3 id="macos_2">macOS</h3>
+<div class="highlight"><pre><span></span><code>Command + ,
+</code></pre></div>
+<p>Settings는 UI 화면에서 검색하여 변경할 수 있고, JSON으로 직접 설정할 수도 있다.</p>
+<p>현재 단계에서는 프로젝트가 없으므로 개발자 PC 전체에 적용되는 기본 설정만 확인한다.</p>
+<hr />
+<h1 id="10">10. 파일 인코딩</h1>
+<p>Settings에서 다음 항목을 검색한다.</p>
+<div class="highlight"><pre><span></span><code>Files Encoding
+</code></pre></div>
+<p>권장 값:</p>
+<div class="highlight"><pre><span></span><code>UTF-8
+</code></pre></div>
+<p>MicroServer 프로젝트에서는 Java Source뿐 아니라 다음 파일도 UTF-8 기준으로 관리할 예정이다.</p>
+<div class="highlight"><pre><span></span><code>Java
+XML
+YAML
+Markdown
+Properties
+Shell Script
+</code></pre></div>
+<p>인코딩이 개발자별로 다르면 한글 주석이나 문서에서 불필요한 Diff가 발생할 수 있으므로 UTF-8 사용을 권장한다.</p>
+<hr />
+<h1 id="11-auto-save">11. Auto Save</h1>
+<p>Settings 검색:</p>
+<div class="highlight"><pre><span></span><code>Files Auto Save
+</code></pre></div>
+<p>Auto Save는 개인 개발 성향에 따라 사용할 수 있다.</p>
+<p>예:</p>
+<div class="highlight"><pre><span></span><code>off
+afterDelay
+onFocusChange
+onWindowChange
+</code></pre></div>
+<p>Auto Save 여부는 프로젝트 Source의 결과에 직접 영향을 주는 설정이 아니므로 팀 공통 설정으로 강제하지 않아도 된다.</p>
+<hr />
+<h1 id="12-format-on-save">12. Format On Save</h1>
+<p>Settings 검색:</p>
+<div class="highlight"><pre><span></span><code>Editor Format On Save
+</code></pre></div>
+<p>현재는 아직 프로젝트의 Java Formatter 정책을 정의하기 전이므로 특정 설정을 강제하지 않는다.</p>
+<p>향후 Code Style과 Formatter 정책이 확정되면 Workspace Settings나 Formatter Profile을 통해 프로젝트 공통 기준으로 관리한다.</p>
+<hr />
+<h1 id="13-trim-trailing-whitespace">13. Trim Trailing Whitespace</h1>
+<p>Settings 검색:</p>
+<div class="highlight"><pre><span></span><code>Trim Trailing Whitespace
+</code></pre></div>
+<p>이 기능은 파일 저장 시 줄 끝의 불필요한 공백을 제거한다.</p>
+<p>프로젝트 공통 규칙은 프로젝트 생성 이후 <code>.editorconfig</code> 또는 Workspace Settings를 이용해 통일하는 것을 권장한다.</p>
+<hr />
+<h1 id="14-user-settings-workspace-settings">14. User Settings와 Workspace Settings</h1>
+<p>VS Code Settings는 적용 범위에 따라 구분된다.</p>
+<pre class="mermaid"><code>flowchart LR
+    U[User Settings] --&gt; PC[개발자 VS Code 전체]
+    W[Workspace Settings] --&gt; PRJ[특정 프로젝트]</code></pre>
+<h2 id="141-user-settings">14.1 User Settings</h2>
+<p>개발자 개인 취향에 가까운 설정이다.</p>
+<p>예:</p>
+<ul>
+<li>Theme</li>
+<li>Font Size</li>
+<li>화면 Layout</li>
+<li>Auto Save</li>
+<li>개인 단축키</li>
+<li>개인 Terminal 설정</li>
+</ul>
+<h2 id="142-workspace-settings">14.2 Workspace Settings</h2>
+<p>프로젝트 전체에 통일할 필요가 있는 설정이다.</p>
+<p>향후 다음과 같은 항목을 Workspace Settings로 관리할 수 있다.</p>
+<ul>
+<li>프로젝트 JDK</li>
+<li>Java 관련 프로젝트 설정</li>
+<li>Formatter</li>
+<li>Source Encoding</li>
+<li>Build 관련 IDE 설정</li>
+<li>프로젝트 권장 Extension</li>
+</ul>
+<p>향후 프로젝트가 생성되면 다음 구조를 사용할 수 있다.</p>
+<div class="highlight"><pre><span></span><code>microserver/
+ └─ .vscode/
+     ├─ settings.json
+     └─ extensions.json
+</code></pre></div>
+<blockquote>
+<p>현재는 아직 프로젝트가 생성되지 않았으므로 <code>.vscode/settings.json</code>이나 <code>.vscode/extensions.json</code>을 생성하지 않는다.</p>
+</blockquote>
+<hr />
+<h1 id="15">15. 현재 단계에서 확인할 사항</h1>
+<p>다음 기능이 정상적으로 사용 가능한지만 확인한다.</p>
+<ul>
+<li>VS Code 실행</li>
+<li>Explorer</li>
+<li>Extensions</li>
+<li>Terminal</li>
+<li>Command Palette</li>
+<li>Settings</li>
+<li>Output</li>
+<li>Problems</li>
+</ul>
+<p>이 단계에서는 다음 작업을 하지 않는다.</p>
+<div class="highlight"><pre><span></span><code>프로젝트 폴더 열기
+pom.xml 수정
+Maven Build
+Java Source 작성
+Spring Boot 실행
+Debug 실행
+JUnit Test 작성
+</code></pre></div>
+<hr />
+<h1 id="16">16. 체크리스트</h1>
+<ul>
+<li>[ ] VS Code가 설치되어 있다.</li>
+<li>[ ] VS Code가 정상 실행된다.</li>
+<li>[ ] <code>code --version</code>을 사용할 수 있거나 VS Code 애플리케이션 실행이 정상이다.</li>
+<li>[ ] Command Palette를 사용할 수 있다.</li>
+<li>[ ] Extensions 화면을 사용할 수 있다.</li>
+<li>[ ] Integrated Terminal을 사용할 수 있다.</li>
+<li>[ ] Files Encoding을 UTF-8로 사용할 준비가 되어 있다.</li>
+<li>[ ] User Settings와 Workspace Settings의 차이를 이해했다.</li>
+<li>[ ] 아직 프로젝트 전용 Workspace 설정을 만들지 않았다.</li>
+</ul>
+<hr />
+<h1 id="17">17. 다음 단계</h1>
+<p>다음 문서에서는 VS Code에 Java 개발 기능을 추가한다.</p>
+<div class="highlight"><pre><span></span><code>VS Code 설치 및 기본 설정
+        ↓
+Java 개발 Extension 구성
+        ↓
+Spring Boot Extension 구성
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1850 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+      
+      
+      
+      
+        <link rel="prev" href="../support_extension_profile_setup/">
+      
+      
+        <link rel="next" href="../../database/oracle_docker_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>JDK 연계 및 개발환경 운영 - Microserver</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#jdk-vs-code" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Microserver
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              JDK 연계 및 개발환경 운영
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 시작
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02_framework/01_project_structure/module_common/" class="md-tabs__link">
+          
+  
+  
+  공통 기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../03_business_financial/01_business_common/common_code/" class="md-tabs__link">
+          
+  
+  
+  업무 및 금융 연계
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04_extended_architecture/webclient/" class="md-tabs__link">
+          
+  
+  
+  확장 아키텍처
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../99_appendix/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  참고자료
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Microserver
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 시작
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 시작
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 이해
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development_device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 장비 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git_github_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git / GitHub 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python / MkDocs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../java/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_5" id="__nav_1_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    VS Code 개발환경
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    구성 개요
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_install_basic_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치 및 기본 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../java_extension_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 개발 Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spring_boot_extension_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../support_extension_profile_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 지원 Extension 및 Profile 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 연계 및 개발환경 운영
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 연계 및 개발환경 운영
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-jdk-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. JDK와 VS Code의 관계
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../maven/maven_setup.md" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maven 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../database/oracle_docker_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Database 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../03_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../02_framework/01_project_structure/module_common/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    공통 기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../03_business_financial/01_business_common/common_code/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    업무 및 금융 연계
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../04_extended_architecture/webclient/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    확장 아키텍처
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../99_appendix/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    참고자료
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-jdk-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. JDK와 VS Code의 관계
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="jdk-vs-code">JDK 연계 및 VS Code 개발환경 운영 가이드</h1>
+<h2 id="1">1. 문서 목적</h2>
+<p>본 문서는 앞 단계에서 준비한 <strong>Eclipse Temurin JDK</strong>와 VS Code Java Extension의 관계를 설명하고, MicroServer 프로젝트에서 사용할 <strong>프로젝트별 JDK 운영 방식</strong>과 VS Code 개발환경 점검 방법을 정리한다.</p>
+<p>현재는 아직 실제 MicroServer 프로젝트를 생성하기 전이다.</p>
+<p>따라서 Workspace 설정 파일을 바로 만들기보다 다음 내용을 이해하고 확인하는 데 집중한다.</p>
+<ul>
+<li>VS Code와 JDK의 관계</li>
+<li>Java Extension이 JDK를 사용하는 구조</li>
+<li><code>Java: Configure Java Runtime</code></li>
+<li>프로젝트별 JDK 운영 방향</li>
+<li>시스템 <code>JAVA_HOME</code> 의존 최소화</li>
+<li>Extension 문제 확인 방법</li>
+<li>현재 환경 구성 단계의 완료 기준</li>
+</ul>
+<hr />
+<h2 id="2-jdk-vs-code">2. JDK와 VS Code의 관계</h2>
+<p>JDK는 VS Code에 포함된 개발도구가 아니다.</p>
+<p>구성요소의 역할을 구분하면 다음과 같다.</p>
+<table>
+<thead>
+<tr>
+<th>구성</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eclipse Temurin JDK</td>
+<td>Java Compiler와 Java Runtime 제공</td>
+</tr>
+<tr>
+<td>VS Code</td>
+<td>Editor / IDE UI 제공</td>
+</tr>
+<tr>
+<td>Java Extension</td>
+<td>VS Code에서 Java 개발 기능 제공</td>
+</tr>
+<tr>
+<td>Spring Boot Extension</td>
+<td>Java 환경 위에서 Spring Boot 기능 제공</td>
+</tr>
+<tr>
+<td>Workspace</td>
+<td>향후 특정 프로젝트의 개발 설정 관리</td>
+</tr>
+</tbody>
+</table>
+<p>구조:</p>
+<pre class="mermaid"><code>flowchart LR
+    JDK[Eclipse Temurin JDK]
+    VS[VS Code]
+    JAVA[Java Extension]
+    SPRING[Spring Boot Extension]
+    PROJECT[향후 MicroServer Workspace]
+
+    VS --&gt; JAVA
+    JAVA --&gt; JDK
+    VS --&gt; SPRING
+    SPRING --&gt; JAVA
+    PROJECT --&gt; VS</code></pre>
+<hr />
+<h1 id="3-microserver-jdk">3. MicroServer의 JDK 운영 방향</h1>
+<p>일반적인 Java 개발환경 구성에서는 다음 방식을 많이 사용한다.</p>
+<div class="highlight"><pre><span></span><code>JDK Installer 실행
+      ↓
+JAVA_HOME 설정
+      ↓
+PATH 설정
+      ↓
+PC 전체에서 동일 JDK 사용
+</code></pre></div>
+<p>MicroServer 프로젝트에서는 프로젝트별 개발환경을 분리하기 위해 다음 구조를 기본 방향으로 한다.</p>
+<div class="highlight"><pre><span></span><code>Temurin JDK 별도 준비
+      ↓
+여러 JDK를 개발 PC에 보관
+      ↓
+VS Code Java Extension 사용
+      ↓
+프로젝트 생성 이후
+      ↓
+Workspace에서 프로젝트별 JDK 지정
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><span></span><code>Developer PC
+ ├─ jdks/
+ │   ├─ temurin-17/
+ │   ├─ temurin-21/
+ │   └─ temurin-26/
+ │
+ └─ projects/
+     ├─ legacy-project/    → JDK 17
+     └─ microserver/       → 프로젝트 기준 JDK
+</code></pre></div>
+<p>이 방식은 STS/Eclipse에서 프로젝트별 Installed JRE/JDK를 선택하는 방식과 비슷한 목적을 가진다.</p>
+<hr />
+<h1 id="4-jdk">4. 프로젝트별 JDK 운영의 장점</h1>
+<p>다음과 같은 장점이 있다.</p>
+<ul>
+<li>여러 JDK 버전을 동시에 보관할 수 있다.</li>
+<li>프로젝트별 Java 버전을 독립적으로 관리할 수 있다.</li>
+<li>다른 Java 프로젝트에 미치는 영향을 줄일 수 있다.</li>
+<li>시스템 전역 <code>JAVA_HOME</code> 변경을 최소화할 수 있다.</li>
+<li>개발환경 재현성을 높일 수 있다.</li>
+<li>VS Code Workspace 설정으로 프로젝트 기준을 명확히 할 수 있다.</li>
+</ul>
+<p>특히 기존 시스템 유지보수와 신규 MicroServer 개발을 동시에 수행하는 개발자에게 유용하다.</p>
+<hr />
+<h1 id="5-vs-code-java-runtime">5. VS Code Java Runtime 명령 확인</h1>
+<p>Java Extension Pack이 설치되어 있으면 Command Palette에서 Java Runtime 관련 명령을 사용할 수 있다.</p>
+<p>Command Palette:</p>
+<h3 id="windows">Windows</h3>
+<div class="highlight"><pre><span></span><code>Ctrl + Shift + P
+</code></pre></div>
+<h3 id="macos">macOS</h3>
+<div class="highlight"><pre><span></span><code>Command + Shift + P
+</code></pre></div>
+<p>검색:</p>
+<div class="highlight"><pre><span></span><code>Java: Configure Java Runtime
+</code></pre></div>
+<p>이 화면은 Java 개발환경에서 사용하는 JDK Runtime을 확인하거나 구성할 때 사용한다.</p>
+<p>현재 단계에서는 <strong>앞 단계에서 준비한 Temurin JDK를 VS Code가 연결할 수 있는 기능이 준비되어 있다는 것</strong>을 확인한다.</p>
+<hr />
+<h1 id="6-java-install-new-jdk">6. Java: Install New JDK</h1>
+<p>Java Extension 환경에서는 다음과 같은 명령도 확인할 수 있다.</p>
+<div class="highlight"><pre><span></span><code>Java: Install New JDK
+</code></pre></div>
+<p>이 기능을 이용해 새로운 JDK 설치를 시작할 수도 있다.</p>
+<p>하지만 MicroServer에서는 JDK 배포판과 버전을 프로젝트 기준에 맞춰 통일하기 위해 앞 단계의 <strong>JDK 설치 및 설정 가이드에서 Eclipse Temurin JDK를 먼저 준비하는 방식</strong>을 사용한다.</p>
+<p>따라서 개발자가 VS Code에서 임의 Vendor의 JDK를 설치하는 방식은 프로젝트 기본 절차로 사용하지 않는다.</p>
+<hr />
+<h1 id="7-jdk">7. 실제 프로젝트별 JDK 설정 시점</h1>
+<p>현재는 아직 MicroServer 프로젝트가 없으므로 실제 Workspace JDK 설정을 만들지 않는다.</p>
+<p>설정 시점은 다음과 같다.</p>
+<div class="highlight"><pre><span></span><code>JDK 준비
+   ↓
+VS Code 준비
+   ↓
+Java / Spring Extension 준비
+   ↓
+Maven 환경 준비
+   ↓
+MicroServer 프로젝트 생성
+   ↓
+VS Code Workspace 열기
+   ↓
+프로젝트별 JDK 지정
+</code></pre></div>
+<p>즉, <strong>JDK를 선택할 수 있는 VS Code 환경은 지금 준비하지만 실제 프로젝트 경로와 연결하는 설정은 프로젝트가 생성된 뒤 수행</strong>한다.</p>
+<hr />
+<h1 id="8-workspace">8. 향후 Workspace 구조</h1>
+<p>프로젝트가 생성되면 다음과 같은 구조를 사용할 수 있다.</p>
+<div class="highlight"><pre><span></span><code>microserver/
+ ├─ .vscode/
+ │   ├─ settings.json
+ │   └─ extensions.json
+ └─ ...
+</code></pre></div>
+<p>역할:</p>
+<div class="highlight"><pre><span></span><code>settings.json
+→ 프로젝트별 JDK 및 IDE 공통 설정
+
+extensions.json
+→ 프로젝트 권장 Extension 안내
+</code></pre></div>
+<p>현재는 파일의 목적만 이해하고 실제 설정 내용은 이후 프로젝트 가이드에서 작성한다.</p>
+<hr />
+<h1 id="9-java_home-jdk">9. JAVA_HOME과 프로젝트 JDK의 관계</h1>
+<p>시스템 <code>JAVA_HOME</code>은 운영체제 Terminal이나 외부 도구가 Java를 찾을 때 사용될 수 있다.</p>
+<p>반면 VS Code Java 환경에서는 프로젝트 또는 Workspace 기준으로 Java Runtime을 지정할 수 있다.</p>
+<p>따라서 다음 두 개념을 구분해야 한다.</p>
+<div class="highlight"><pre><span></span><code>System JAVA_HOME
+→ PC 전체 / Terminal 중심 Java 환경
+
+VS Code Workspace JDK
+→ 특정 프로젝트의 Java 개발환경
+</code></pre></div>
+<p>MicroServer에서는 후자를 프로젝트 개발환경의 기준으로 삼는다.</p>
+<p>다만 Maven, 외부 Shell, CI/CD 등은 별도의 Java Runtime 설정이 필요할 수 있으므로 해당 내용은 Maven 및 Build 환경 가이드에서 별도로 다룬다.</p>
+<hr />
+<h1 id="10-java-language-server-project-jdk">10. Java Language Server와 Project JDK</h1>
+<p>VS Code의 Java 개발기능은 Java Language Server를 통해 제공된다.</p>
+<p>개념적으로 다음 두 Runtime의 역할이 다를 수 있다.</p>
+<div class="highlight"><pre><span></span><code>Java Language Server 실행용 Runtime
+        ≠
+Project Source를 컴파일할 때 사용할 JDK
+</code></pre></div>
+<p>따라서 VS Code Extension 자체가 동작하기 위한 Java 환경과 MicroServer Project가 사용할 Java 버전을 같은 개념으로 생각하지 않는 것이 중요하다.</p>
+<p>프로젝트 생성 이후에는 <strong>프로젝트용 JDK를 명시적으로 확인</strong>한다.</p>
+<hr />
+<h1 id="11-extension">11. Extension 문제 확인</h1>
+<p>Java나 Spring 관련 메뉴가 정상적으로 보이지 않는 경우 다음 순서로 확인한다.</p>
+<h2 id="111-extension-enabled">11.1 Extension Enabled 확인</h2>
+<div class="highlight"><pre><span></span><code>Extensions
+→ Installed
+→ 해당 Extension 선택
+→ Enabled 상태 확인
+</code></pre></div>
+<h2 id="112-vs-code-reload">11.2 VS Code Reload</h2>
+<p>Command Palette:</p>
+<div class="highlight"><pre><span></span><code>Developer: Reload Window
+</code></pre></div>
+<p>VS Code Window를 Reload한 후 다시 확인한다.</p>
+<h2 id="113-output">11.3 Output 확인</h2>
+<p>메뉴:</p>
+<div class="highlight"><pre><span></span><code>View
+→ Output
+</code></pre></div>
+<p>Output 목록에서 관련 Extension 로그를 확인한다.</p>
+<p>향후 중요한 로그:</p>
+<div class="highlight"><pre><span></span><code>Language Support for Java
+Spring Boot Tools
+Maven for Java
+</code></pre></div>
+<h2 id="114-java-command">11.4 Java Command 확인</h2>
+<p>Command Palette:</p>
+<div class="highlight"><pre><span></span><code>Java:
+</code></pre></div>
+<p>Java 관련 명령이 나타나는지 확인한다.</p>
+<h2 id="115-spring-command">11.5 Spring Command 확인</h2>
+<p>Command Palette:</p>
+<div class="highlight"><pre><span></span><code>Spring
+</code></pre></div>
+<p>또는:</p>
+<div class="highlight"><pre><span></span><code>Spring Boot
+</code></pre></div>
+<hr />
+<h1 id="12-java-language-server">12. Java Language Server 문제 대응</h1>
+<p>향후 프로젝트를 열었을 때 Java Project 인식이 비정상인 경우 다음 명령을 사용할 수 있다.</p>
+<div class="highlight"><pre><span></span><code>Java: Clean Java Language Server Workspace
+</code></pre></div>
+<p>이 명령은 Java Language Server의 Workspace 정보를 정리하고 Java Project를 다시 인식시키는 데 사용할 수 있다.</p>
+<blockquote>
+<p>현재 프로젝트 생성 전 단계에서는 실행할 필요가 없다.
+향후 문제 해결 명령으로 알아둔다.</p>
+</blockquote>
+<hr />
+<h1 id="13-extension">13. Extension 업데이트 이후 문제</h1>
+<p>Java / Spring Extension은 지속적으로 업데이트된다.</p>
+<p>업데이트 직후 개발환경에서 문제가 발생하면 다음을 확인한다.</p>
+<ul>
+<li>최근 Extension Update 여부</li>
+<li>Extension Enabled 상태</li>
+<li>VS Code Reload</li>
+<li>Output Log</li>
+<li>Java Runtime 인식 상태</li>
+<li>팀 내 동일 문제 발생 여부</li>
+</ul>
+<p>문제가 프로젝트 전체에 영향을 준다면 특정 Extension 버전을 팀에서 통일할 수 있다.</p>
+<hr />
+<h1 id="14">14. 현재 단계에서 하지 않는 작업</h1>
+<p>본 문서가 끝나더라도 아직 다음 작업은 하지 않는다.</p>
+<div class="highlight"><pre><span></span><code>Spring Boot 프로젝트 생성
+pom.xml 작성 / 수정
+Maven Dependency 추가
+Java Package 생성
+Application Class 작성
+application.yml 작성
+Database 연결
+Application 실행
+Debug 실행
+JUnit Test 작성
+</code></pre></div>
+<p>현재 목표는 다음 상태이다.</p>
+<div class="highlight"><pre><span></span><code>VS Code 설치
+        +
+Java Extension 준비
+        +
+Spring Boot Extension 준비
+        +
+지원 Extension 준비
+        +
+Temurin JDK 준비
+        +
+프로젝트별 JDK를 연결할 수 있는 환경 이해
+</code></pre></div>
+<hr />
+<h1 id="15-vs-code">15. VS Code 환경 구성 완료 상태</h1>
+<p>환경 구성이 완료되면 개발 PC는 다음 상태가 된다.</p>
+<pre class="mermaid"><code>flowchart TB
+    PC[Developer PC]
+
+    PC --&gt; JDK[Eclipse Temurin JDK]
+    PC --&gt; GIT[Git]
+    PC --&gt; VS[Visual Studio Code]
+
+    VS --&gt; JAVA[Extension Pack for Java]
+    VS --&gt; SPRING[Spring Boot Extension Pack]
+    VS --&gt; SUPPORT[Support Extensions]
+
+    JAVA --&gt; LANG[Java Language Support]
+    JAVA --&gt; DEBUG[Debugger]
+    JAVA --&gt; TEST[Test Runner]
+    JAVA --&gt; MAVEN[Maven Support]
+
+    SPRING --&gt; TOOLS[Spring Boot Tools]
+    SPRING --&gt; INIT[Spring Initializr]
+    SPRING --&gt; DASH[Spring Boot Dashboard]
+
+    SUPPORT --&gt; YAML[YAML]
+    SUPPORT --&gt; XML[XML]
+    SUPPORT --&gt; CT[Container Tools]</code></pre>
+<hr />
+<h1 id="16">16. 최종 체크리스트</h1>
+<h2 id="vs-code">VS Code</h2>
+<ul>
+<li>[ ] VS Code가 정상 설치되어 있다.</li>
+<li>[ ] Command Palette를 사용할 수 있다.</li>
+<li>[ ] Extensions 화면을 사용할 수 있다.</li>
+<li>[ ] Terminal을 사용할 수 있다.</li>
+<li>[ ] Output을 확인할 수 있다.</li>
+</ul>
+<h2 id="java">Java</h2>
+<ul>
+<li>[ ] Eclipse Temurin JDK가 앞 단계에서 준비되어 있다.</li>
+<li>[ ] Extension Pack for Java가 설치되어 있다.</li>
+<li>[ ] <code>Java: Configure Java Runtime</code> 명령을 확인할 수 있다.</li>
+<li>[ ] 프로젝트별 JDK 운영 방향을 이해했다.</li>
+<li>[ ] 시스템 <code>JAVA_HOME</code>과 Workspace JDK의 차이를 이해했다.</li>
+</ul>
+<h2 id="spring-boot">Spring Boot</h2>
+<ul>
+<li>[ ] Spring Boot Extension Pack이 설치되어 있다.</li>
+<li>[ ] Spring Boot Tools가 설치되어 있다.</li>
+<li>[ ] Spring Initializr가 설치되어 있다.</li>
+<li>[ ] Spring Boot Dashboard가 설치되어 있다.</li>
+</ul>
+<h2 id="_1">지원 환경</h2>
+<ul>
+<li>[ ] YAML이 설치되어 있다.</li>
+<li>[ ] XML이 설치되어 있다.</li>
+<li>[ ] Container Tools가 설치되어 있다.</li>
+</ul>
+<h2 id="_2">단계 확인</h2>
+<ul>
+<li>[ ] 아직 MicroServer Spring Boot 프로젝트를 생성하지 않았다.</li>
+<li>[ ] 아직 <code>pom.xml</code>을 작성하지 않았다.</li>
+<li>[ ] 아직 Application 실행 / Debug를 하지 않았다.</li>
+<li>[ ] 실제 Workspace JDK 설정은 프로젝트 생성 이후 적용한다.</li>
+</ul>
+<hr />
+<h1 id="17">17. 다음 단계</h1>
+<p>VS Code 개발환경 구성이 완료되면 Maven 환경 구성으로 진행한다.</p>
+<div class="highlight"><pre><span></span><code>JDK 설치 및 설정
+        ↓
+VS Code 개발환경 구성       ← 완료
+        ↓
+Maven 설치 및 설정
+        ↓
+Spring Boot 프로젝트 생성
+        ↓
+프로젝트 기본 구조 구성
+</code></pre></div>
+<p>VS Code는 여기까지 <strong>개발 도구 환경 구성</strong>을 완료하고,
+실제 Build와 Application 구성은 다음 단계부터 진행한다.</p>
+<h2 id="_3">참고</h2>
+<ul>
+<li>
+<p>Managing Java Projects in VS Code<br />
+<a href="https://code.visualstudio.com/docs/java/java-project">https://code.visualstudio.com/docs/java/java-project</a></p>
+</li>
+<li>
+<p>Java Extensions for Visual Studio Code<br />
+<a href="https://code.visualstudio.com/docs/java/extensions">https://code.visualstudio.com/docs/java/extensions</a></p>
+</li>
+<li>
+<p>Spring Boot in Visual Studio Code<br />
+<a href="https://code.visualstudio.com/docs/java/java-spring-boot">https://code.visualstudio.com/docs/java/java-spring-boot</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
