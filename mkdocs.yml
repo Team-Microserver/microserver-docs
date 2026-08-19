@@ -81,11 +81,15 @@ nav:
  
  
       - 프로젝트 생성:
-          - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
-          - 프로젝트 개발환경 설정:
-            - JDK / VS Code Workspace 설정: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_setup.md
+        - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
+        - 프로젝트 개발환경 설정:
+            - 프로젝트 JDK / VS Code Workspace 설정: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_setup.md
             - Maven Wrapper 및 프로젝트 Maven 설정: 01_project_start/03_project_creation/project_environment/project_maven_setup.md
-            - Maven 멀티모듈 기본 구성: 01_project_start/03_project_creation/project_environment/maven_multi_module_setup.md
+        - 프로젝트 초기 실행 및 검증:
+            - Spring Boot 초기 실행 및 Build 검증: 01_project_start/03_project_creation/project_verification/project_initial_run_verification.md
+        - 프로젝트 기본 구조 구성:
+            - Maven 멀티모듈 기본 구성: 01_project_start/03_project_creation/project_structure/maven_multi_module_setup.md 
+ 
  
       - Python / MkDocs:
         - Windows 환경 구성: 01_project_start/04_etc/python_mkdocs/windows_python_venv_mkdocs.md
