@@ -21,8 +21,9 @@
 
 다음 환경이 먼저 준비되어 있어야 한다.
 
-- VS Code 설치
 - Eclipse Temurin JDK 준비
+- Apache Maven 기본 환경 구성
+- VS Code 설치
 - Extension Pack for Java 설치
 
 Spring Boot Extension은 Java 개발환경을 대체하는 것이 아니라 그 위에 Spring Boot 관련 기능을 추가한다.
@@ -344,20 +345,26 @@ Spring 관련 명령이 표시되면 Extension이 정상적으로 등록된 것�
 ```text
 JDK 준비
   ↓
+Maven 기본 환경 구성
+  ↓
 VS Code 설치
   ↓
 Java Extension
   ↓
 Spring Boot Extension     ← 현재
   ↓
-Maven 환경 구성
+개발 지원 Extension / JDK 연계 확인
   ↓
 Spring Boot 프로젝트 생성
 ```
 
-Spring Initializr Extension이 설치되었다고 바로 프로젝트를 생성하면 Maven 구성과 프로젝트 생성 가이드의 순서가 섞이게 된다.
+Apache Maven 자체는 이미 앞 단계에서 준비되어 있다.
 
-따라서 지금은 Extension만 설치하고 실제 사용은 프로젝트 생성 단계로 넘긴다.
+Spring Initializr Extension이 설치되었다고 여기서 바로 프로젝트를 생성하면
+**VS Code 환경 구성 단계와 실제 프로젝트 생성 단계가 섞이게 된다.**
+
+따라서 현재는 Spring Boot 개발에 필요한 Extension을 준비하고 역할을 이해하는 데까지만 진행한다.
+Spring Initializr를 이용한 실제 프로젝트 생성은 다음 **Spring Boot 프로젝트 생성 가이드**에서 수행한다.
 
 ---
 

@@ -441,15 +441,26 @@ microserver/
 
 # 17. 다음 단계
 
-다음 문서에서는 앞 단계에서 준비한 Eclipse Temurin JDK와 VS Code의 관계 및 프로젝트별 JDK 운영 방향을 정리한다.
+다음 문서에서는 앞 단계에서 준비한 Eclipse Temurin JDK와
+현재 구성한 VS Code Java Extension의 관계를 확인하고,
+향후 프로젝트별 JDK를 어떤 시점에 연결할지 운영 방향을 정리한다.
 
 ```text
-지원 Extension / Profile
-        ↓
-JDK 연계 / 개발환경 운영
-        ↓
-Maven 환경 구성
+JDK 준비
+   ↓
+Maven 준비
+   ↓
+VS Code / Java / Spring Extension
+   ↓
+지원 Extension / Profile       ← 현재 완료
+   ↓
+JDK 연계 및 VS Code 환경 운영 확인
+   ↓
+Spring Boot 프로젝트 생성
 ```
+
+Apache Maven 환경은 이미 VS Code 구성 전에 준비되어 있으므로
+VS Code 환경 구성이 완료되면 별도의 Maven 설치 단계로 되돌아가지 않는다.
 
 ## 참고
 

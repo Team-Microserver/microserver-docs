@@ -243,9 +243,13 @@ Apache Maven / Maven Wrapper
 → 실제 프로젝트 Build 수행
 ```
 
-현재 단계에서는 아직 Maven 프로젝트가 없으므로 `pom.xml`, Lifecycle 실행, Dependency 구성 등은 진행하지 않는다.
+앞 단계의 **Maven 설치 및 기본 환경 구성 가이드**에서 Apache Maven 자체는 이미 개발 PC에 준비했다.
 
-Maven 자체 환경은 별도의 **Maven 설치 및 설정 가이드**에서 다룬다.
+현재 단계에서는 아직 Maven 프로젝트가 없으므로 `pom.xml`, Lifecycle 실행, Dependency 구성,
+Maven Wrapper 연계 등 **프로젝트 단위 Maven 작업은 진행하지 않는다.**
+
+즉, 현재 설치하는 Maven for Java Extension은 앞에서 준비한 Maven을
+향후 VS Code의 Java 프로젝트와 연계하기 위한 IDE 지원 기능이다.
 
 ---
 
@@ -435,12 +439,21 @@ Debug 실행
 Java 개발 Extension 구성이 끝나면 Spring Boot 개발 기능을 추가한다.
 
 ```text
-Extension Pack for Java
-        ↓
+JDK 준비
+   ↓
+Maven 준비
+   ↓
+VS Code 설치
+   ↓
+Extension Pack for Java        ← 현재 완료
+   ↓
 Spring Boot Extension Pack
-        ↓
+   ↓
 개발 지원 Extension
 ```
+
+Apache Maven 자체는 이미 앞 단계에서 준비했으며,
+현재부터는 VS Code 안에서 Java / Spring Boot 개발 기능을 순차적으로 구성한다.
 
 ## 참고
 

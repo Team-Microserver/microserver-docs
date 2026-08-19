@@ -41,20 +41,21 @@ MicroServer 개발환경은 다음 순서로 구성한다.
 ```mermaid
 flowchart LR
     A[Git / GitHub 환경 구성] --> B[Temurin JDK 준비]
-    B --> C[VS Code 설치]
-    C --> D[Java Extension 구성]
-    D --> E[Spring Boot Extension 구성]
-    E --> F[지원 Extension / Profile 구성]
-    F --> G[JDK 연계 확인]
-    G --> H[Maven 환경 구성]
+    B --> C[Apache Maven 준비]
+    C --> D[VS Code 설치]
+    D --> E[Java Extension 구성]
+    E --> F[Spring Boot Extension 구성]
+    F --> G[지원 Extension / Profile 구성]
+    G --> H[JDK 연계 방식 확인]
     H --> I[Spring Boot 프로젝트 생성]
+    I --> J[프로젝트 JDK / Maven / VS Code 설정]
 ```
 
 현재 가이드는 다음 범위를 담당한다.
 
 ```mermaid
 flowchart LR
-    JDK[Temurin JDK 준비]
+    JDK[Temurin JDK 준비] --> MAVEN[Apache Maven 준비]
 
     subgraph VSCODE["VS Code 개발환경 구성"]
         direction LR
@@ -63,17 +64,17 @@ flowchart LR
         VS3[Spring Boot Extension]
         VS4[지원 Extension]
         VS5[Profile]
-        VS6[JDK 연계 준비]
+        VS6[JDK 연계 방식 확인]
 
         VS1 --> VS2 --> VS3 --> VS4 --> VS5 --> VS6
     end
 
-    MAVEN[Maven 환경 구성]
     SPRING[Spring Boot 프로젝트 생성]
+    PROJECT[프로젝트 개발환경 설정]
 
-    JDK --> VSCODE
-    VSCODE --> MAVEN
-    MAVEN --> SPRING
+    MAVEN --> VSCODE
+    VSCODE --> SPRING
+    SPRING --> PROJECT
 ```
 
 ---
@@ -245,19 +246,22 @@ flowchart TB
 
 ## 6. 다음 단계
 
-VS Code 환경 구성이 끝나면 다음 개발환경 가이드로 진행한다.
+VS Code 환경 구성이 끝나면 **Spring Boot 프로젝트 생성 단계**로 진행한다.
 
 ```text
 JDK 설치 및 설정
         ↓
-VS Code 개발환경 구성       ← 현재
+Maven 설치 및 기본 환경 구성
         ↓
-Maven 설치 및 설정
+VS Code 개발환경 구성       ← 현재
         ↓
 Spring Boot 프로젝트 생성
         ↓
-프로젝트 기본 구조 구성
+프로젝트 JDK / Maven / VS Code 설정
 ```
 
-VS Code는 이 단계에서 **개발 도구 자체를 준비**하고,
-실제 Maven / Spring Boot 프로젝트와 관련된 설정은 다음 단계부터 적용한다.
+JDK와 Maven은 앞 단계에서 이미 개발 PC에 준비되어 있다.
+
+VS Code 단계에서는 IDE와 Java / Spring Boot 개발 Extension을 준비하고,
+실제 프로젝트 JDK Runtime, Maven Wrapper, `pom.xml`, Workspace 설정 등은
+Spring Boot 프로젝트가 생성된 이후의 **프로젝트 개발환경 설정 단계**에서 적용한다.

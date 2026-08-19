@@ -2,33 +2,135 @@
 
 ## 1. 문서 목적
 
-본 문서는 MicroServer 프로젝트의 Java 개발을 시작하기 위한 **JDK(Java Development Kit) 준비 및 프로젝트별 JDK 연결 방법**을 설명한다.
+본 문서는 MicroServer 프로젝트의 Java 개발환경을 구성하기 위해 **Eclipse Temurin JDK(Java Development Kit)** 를 준비하고, Windows 및 macOS에서 JDK가 정상적으로 동작하는지 확인하는 방법을 설명한다.
 
-이 단계에서는 아직 Spring Boot 프로젝트나 Maven 빌드 환경을 구성하지 않는다.
-따라서 본 문서의 범위는 다음과 같다.
+현재 단계에서는 아직 Maven, VS Code, Spring Boot 프로젝트를 구성하지 않는다.
 
+따라서 본 문서에서는 다음 내용만 다룬다.
+
+- 프로젝트에서 사용할 JDK 배포판과 버전 기준
+- JDK와 JRE의 차이
 - Eclipse Temurin JDK 다운로드
-- Windows / macOS에서 JDK 압축 해제 및 보관
-- JDK 자체 정상 동작 확인
-- VS Code에서 프로젝트별로 사용할 JDK 지정
+- Windows에서 JDK 압축 해제 및 보관
+- macOS에서 JDK 압축 해제 및 보관
+- `java` / `javac` 실행을 통한 JDK 정상 동작 확인
+- 여러 JDK 버전을 개발 장비에 함께 보관하는 운영 방식
 
-다음 내용은 본 문서에서 다루지 않는다.
+다음 내용은 이후 단계의 가이드에서 별도로 다룬다.
 
-- Spring Boot 프로젝트 생성
 - Maven 설치 및 설정
+- VS Code 설치 및 Extension 구성
+- VS Code에서 프로젝트별 JDK 연결
+- `.vscode/settings.json`
+- `java.configuration.runtimes`
+- Spring Boot 프로젝트 생성
 - `pom.xml` 설정
-- Spring Boot Java 버전 설정
-- 애플리케이션 실행 및 빌드
-
-위 항목은 이후 단계의 가이드 문서에서 별도로 구성한다.
+- Maven Wrapper 설정
+- 애플리케이션 실행 및 Build
 
 ---
 
-## 2. 프로젝트 JDK 운영 원칙
+## 2. 개발환경 구성에서 JDK의 위치
 
-MicroServer 프로젝트는 JDK를 운영체제 전체에 공통으로 적용하는 방식보다 **프로젝트별로 명시적으로 JDK를 선택하는 방식**을 사용한다.
+MicroServer 프로젝트의 개발환경은 다음 순서로 구성한다.
 
-즉, 다음과 같은 전역 설정을 기본 운영 방식으로 사용하지 않는다.
+```mermaid
+flowchart LR
+    A[Git / GitHub 환경 구성] --> B[Eclipse Temurin JDK]
+    B --> C[Apache Maven]
+    C --> D[VS Code]
+    D --> E[Spring Boot 프로젝트 생성]
+    E --> F[프로젝트 개발환경 설정]
+```
+
+현재 문서는 다음 단계에 해당한다.
+
+```text
+Git / GitHub 환경 구성
+        ↓
+[ Eclipse Temurin JDK 준비 ]   ← 현재
+        ↓
+Apache Maven 설치
+        ↓
+VS Code 개발환경 구성
+        ↓
+Spring Boot 프로젝트 생성
+```
+
+JDK는 이후 Maven과 VS Code, Spring Boot 프로젝트가 공통으로 사용하는 Java 개발 기반이므로 가장 먼저 준비한다.
+
+---
+
+## 3. 프로젝트 JDK 운영 원칙
+
+MicroServer 프로젝트의 JDK 운영 원칙은 다음과 같다.
+
+### 3.1 Eclipse Temurin 사용
+
+프로젝트에서 사용하는 OpenJDK 배포판은 **Eclipse Temurin**으로 통일한다.
+
+Java는 여러 OpenJDK 배포판이 존재한다.
+
+예:
+
+- Eclipse Temurin
+- Oracle JDK
+- Amazon Corretto
+- Microsoft Build of OpenJDK
+
+기능적으로 호환되는 배포판이라도 개발자마다 서로 다른 Vendor의 JDK를 사용하면 설치 경로, 배포 방식, 업데이트 정책 등이 달라질 수 있다.
+
+따라서 MicroServer 프로젝트에서는 개발환경의 일관성을 위해 Eclipse Temurin을 표준 JDK 배포판으로 사용한다.
+
+### 3.2 JDK는 프로젝트 Git 저장소 외부에 보관
+
+JDK Binary는 프로젝트 Source와 분리하여 관리한다.
+
+#### Windows
+
+```text
+C:\dev\
+ ├─ jdks\
+ │   ├─ temurin-26\
+ │   ├─ temurin-25\
+ │   └─ temurin-17\
+ │
+ └─ workspace\
+```
+
+#### macOS
+
+```text
+~/dev/
+ ├─ jdks/
+ │   ├─ temurin-26.jdk/
+ │   ├─ temurin-25.jdk/
+ │   └─ temurin-17.jdk/
+ │
+ └─ workspace/
+```
+
+JDK는 용량이 크고 운영체제와 CPU Architecture에 따라 Binary가 다르므로 Git Repository에 포함하지 않는다.
+
+### 3.3 여러 JDK 버전을 함께 보관 가능
+
+개발 장비에서는 하나의 JDK만 설치할 필요가 없다.
+
+```text
+Temurin JDK 17
+Temurin JDK 25
+Temurin JDK 26
+```
+
+각 JDK를 별도의 디렉터리에 보관해 두면 이후 프로젝트 특성에 따라 필요한 JDK를 선택하여 사용할 수 있다.
+
+현재 단계에서는 특정 프로젝트와 JDK를 연결하지 않는다.
+
+실제 프로젝트별 JDK 연결은 **Spring Boot 프로젝트가 생성된 이후 프로젝트 개발환경 설정 단계**에서 진행한다.
+
+### 3.4 시스템 전역 Java 설정을 기본 방식으로 사용하지 않음
+
+MicroServer 프로젝트에서는 다음과 같은 운영체제 전역 설정을 기본 JDK 운영 방식으로 사용하지 않는다.
 
 ```text
 JAVA_HOME
@@ -36,55 +138,33 @@ PATH에 JDK/bin 등록
 운영체제 기본 Java 변경
 ```
 
-대신 JDK를 개발 장비의 지정된 디렉터리에 보관하고, VS Code Workspace 설정에서 해당 프로젝트가 사용할 JDK를 직접 지정한다.
+JDK는 개발 도구 디렉터리에 독립적으로 보관하고 필요한 도구나 프로젝트에서 해당 JDK를 명시적으로 사용하는 방향으로 구성한다.
 
-```mermaid
-flowchart LR
-    JDK1[Temurin JDK 26] --> P1[MicroServer Project]
-    JDK2[다른 버전 JDK] --> P2[Legacy Project]
-
-    P1 --> V1[VS Code Workspace 설정]
-    P2 --> V2[VS Code Workspace 설정]
-```
-
-이 방식의 장점은 다음과 같다.
-
-- 프로젝트마다 서로 다른 JDK 버전을 사용할 수 있다.
-- 다른 Java 프로젝트의 JDK 설정에 영향을 주지 않는다.
-- `JAVA_HOME` 변경으로 인해 기존 프로젝트가 영향을 받는 문제를 줄일 수 있다.
-- 개발자가 여러 Java 버전을 동시에 보유하기 쉽다.
-- 프로젝트별 JDK 버전을 명확하게 관리할 수 있다.
-
-!!! note "STS와 유사한 프로젝트별 JDK 운영"
-    STS/Eclipse에서 프로젝트별 Installed JRE 또는 Execution Environment를 지정하는 것과 유사하게, VS Code에서도 Java Runtime 설정을 이용하여 프로젝트별 JDK를 선택할 수 있다.
+따라서 현재 단계에서는 시스템 `JAVA_HOME`이나 JDK `bin` PATH를 영구 설정하지 않는다.
 
 ---
 
-## 3. 프로젝트 표준 JDK
+## 4. 프로젝트 표준 JDK
 
-MicroServer 프로젝트의 JDK 배포판은 **Eclipse Temurin**을 사용한다.
-
-2026년 8월 기준 Eclipse Adoptium의 최신 일반 Java 릴리스는 다음과 같다.
+MicroServer 프로젝트에서는 **Eclipse Temurin JDK 26**을 기준으로 개발환경을 구성한다.
 
 ```text
-Eclipse Temurin JDK 26
-현재 릴리스: 26.0.2+10
+Vendor       : Eclipse Temurin
+Java Version : 26
+Package Type : JDK
+JVM          : HotSpot
 ```
 
-따라서 본 프로젝트에서는 **Temurin JDK 26**을 기준으로 개발환경을 구성한다.
+본 프로젝트에서는 최신 Java 버전을 적용한다는 기준으로 Java 26을 사용한다.
 
-!!! info "LTS 버전 참고"
-    Java 26은 현재 최신 일반 릴리스이며 LTS 버전은 아니다.
-    현재 최신 LTS는 Java 25이다.
-    본 프로젝트에서는 최신 버전을 적용한다는 기준에 따라 Java 26을 사용한다.
-
-JDK는 Oracle JDK, Amazon Corretto, Microsoft Build of OpenJDK 등 여러 배포판이 존재하지만 프로젝트 내 개발환경의 일관성을 위해 **Eclipse Temurin으로 통일**한다.
+!!! info "Java 버전 운영"
+    프로젝트 진행 중 JDK 기준 버전이 변경될 경우 문서, 개발환경, Build 설정, CI/CD 환경을 함께 변경해야 한다.
 
 ---
 
-## 4. JDK와 JRE의 차이
+## 5. JDK와 JRE의 차이
 
-Java 개발환경에서는 JRE가 아니라 반드시 JDK가 필요하다.
+Java 개발환경에서는 JRE가 아니라 반드시 **JDK**가 필요하다.
 
 ```text
 JDK
@@ -95,78 +175,66 @@ JDK
  └─ 기타 Java 개발 도구
 ```
 
+JRE는 Java 애플리케이션 실행에 필요한 Runtime을 중심으로 제공하지만, JDK에는 Java Source를 컴파일하는 `javac`와 여러 개발 도구가 포함된다.
+
 Temurin 다운로드 시 다음 항목을 확인한다.
 
 ```text
-Version      : 26
 Package Type : JDK
-JVM          : HotSpot
-Architecture : 개발 장비에 맞게 선택
 ```
 
-JRE만 다운로드하지 않도록 주의한다.
+JRE Package를 선택하지 않도록 주의한다.
 
 ---
 
-## 5. JDK 설치 방식
+## 6. JDK 설치 방식
 
-본 프로젝트에서는 JDK를 운영체제용 Installer로 설치한 후 `JAVA_HOME`을 등록하는 방식보다 **압축 배포본을 다운로드하여 개발 도구 디렉터리에 직접 보관하는 방식**을 권장한다.
+MicroServer 프로젝트에서는 운영체제용 Installer를 이용하여 시스템 영역에 JDK를 설치하는 방식보다 **압축 배포본을 내려받아 개발 도구 디렉터리에 직접 보관하는 방식**을 권장한다.
 
-예를 들어 다음과 같이 여러 버전의 JDK를 함께 보관할 수 있다.
+| 운영체제 | 권장 형식 |
+|---|---|
+| Windows | ZIP |
+| macOS | TAR.GZ |
 
-### Windows
+압축 배포본을 사용하는 이유는 다음과 같다.
 
-```text
-C:\dev\jdks
- ├─ temurin-26
- ├─ temurin-25
- └─ temurin-17
-```
-
-### macOS
-
-```text
-~/dev/jdks
- ├─ temurin-26.jdk
- ├─ temurin-25.jdk
- └─ temurin-17.jdk
-```
-
-각 프로젝트는 필요한 JDK 디렉터리를 VS Code에서 별도로 지정한다.
-
-!!! warning "JDK를 프로젝트 Git 저장소에 포함하지 않는다"
-    JDK 자체는 용량이 크고 운영체제 및 CPU Architecture에 따라 파일이 달라진다.
-    따라서 JDK 바이너리를 Git Repository에 포함하지 않는다.
+- 여러 JDK 버전을 동시에 보관하기 쉽다.
+- 시스템 Java 환경을 변경하지 않아도 된다.
+- JDK 설치 위치를 개발자가 명확하게 관리할 수 있다.
+- 기존 Java 프로젝트의 환경에 미치는 영향을 줄일 수 있다.
+- 필요하지 않은 JDK를 디렉터리 단위로 제거하기 쉽다.
 
 ---
 
 # Windows 환경
 
-## 6. Windows Temurin JDK 준비
+## 7. Windows 개발 장비 Architecture 확인
 
-### 6.1 개발 장비 Architecture 확인
-
-일반적인 Windows 개발 장비는 x64 환경을 사용한다.
-
-PowerShell에서 확인할 수 있다.
+PowerShell:
 
 ```powershell
 $env:PROCESSOR_ARCHITECTURE
 ```
 
-일반적인 출력:
+일반적인 x64 PC:
 
 ```text
 AMD64
 ```
 
-이 경우 Temurin 다운로드 시 **Windows / x64 / JDK**를 선택한다.
+이 경우 Temurin 다운로드 기준은 다음과 같다.
 
-ARM 기반 Windows 장비라면 해당 Architecture에 맞는 패키지를 선택한다.
+```text
+Operating System : Windows
+Architecture     : x64
+Package Type     : JDK
+```
+
+ARM 기반 Windows 장비라면 해당 Architecture에 맞는 Package를 사용한다.
 
 ---
 
-### 6.2 Temurin JDK 다운로드
+## 8. Windows Temurin JDK 다운로드
 
 Eclipse Adoptium 공식 사이트에서 Temurin JDK를 다운로드한다.
 
@@ -180,46 +248,79 @@ Version      : 26
 Operating OS : Windows
 Architecture : x64
 Package Type : JDK
+JVM          : HotSpot
 Archive      : ZIP
 ```
 
-본 프로젝트에서는 시스템 Installer보다 **ZIP 압축 배포본 사용을 권장**한다.
+본 프로젝트에서는 MSI Installer보다 **ZIP 압축 배포본**을 사용한다.
 
 ---
 
-### 6.3 JDK 압축 해제
+## 9. Windows JDK 디렉터리 준비
 
-예를 들어 다음 디렉터리를 생성한다.
+JDK를 보관할 개발 도구 디렉터리를 생성한다.
 
 ```text
 C:\dev\jdks
 ```
 
-다운로드한 Temurin JDK ZIP 파일의 압축을 해제한 후 관리하기 쉬운 이름으로 정리한다.
+PowerShell:
 
-예:
+```powershell
+New-Item -ItemType Directory -Force C:\dev\jdks
+```
+
+여러 버전은 다음과 같이 보관할 수 있다.
+
+```text
+C:\dev\jdks
+ ├─ temurin-26
+ ├─ temurin-25
+ └─ temurin-17
+```
+
+---
+
+## 10. Windows JDK 압축 해제
+
+다운로드한 Temurin ZIP 파일을 `C:\dev\jdks` 아래에 압축 해제한다.
+
+압축 해제 후 실제 디렉터리 이름은 Release에 따라 다음처럼 생성될 수 있다.
+
+```text
+jdk-26.0.2+10
+```
+
+관리 편의를 위해 다음과 같이 정리할 수 있다.
 
 ```text
 C:\dev\jdks\temurin-26
 ```
 
-JDK 내부 구조는 대략 다음과 같다.
+구조 예:
 
 ```text
 C:\dev\jdks\temurin-26
- ├─ bin
- │   ├─ java.exe
- │   ├─ javac.exe
- │   └─ ...
- ├─ conf
- ├─ include
- ├─ jmods
- ├─ legal
- ├─ lib
+ ├─ bin\
+ ├─ conf\
+ ├─ include\
+ ├─ jmods\
+ ├─ legal\
+ ├─ lib\
  └─ release
 ```
 
-VS Code에서 지정해야 하는 경로는 `bin`이 아니라 **JDK Home 디렉터리 자체**이다.
+---
+
+## 11. Windows JDK Home 확인
+
+JDK Home은 JDK의 최상위 디렉터리를 의미한다.
+
+```text
+C:\dev\jdks\temurin-26
+```
+
+다음과 혼동하지 않는다.
 
 ```text
 O  C:\dev\jdks\temurin-26
@@ -227,29 +328,33 @@ X  C:\dev\jdks\temurin-26\bin
 X  C:\dev\jdks\temurin-26\bin\java.exe
 ```
 
+이 JDK Home 경로는 이후 Maven 및 VS Code 개발환경 구성에서 다시 사용한다.
+
 ---
 
-### 6.4 Windows JDK 정상 동작 확인
+## 12. Windows JDK 정상 동작 확인
 
-본 프로젝트에서는 시스템 PATH에 Java를 등록하지 않으므로 다음 명령이 반드시 동작할 필요는 없다.
+MicroServer 프로젝트에서는 JDK를 시스템 PATH에 등록하지 않으므로 다음 명령이 바로 실행되지 않아도 된다.
 
 ```powershell
 java -version
 ```
 
-대신 JDK의 실행파일을 직접 지정하여 확인한다.
+현재 단계에서는 JDK 실행파일을 직접 호출하여 확인한다.
+
+### Java Runtime
 
 ```powershell
 & "C:\dev\jdks\temurin-26\bin\java.exe" -version
 ```
 
-Compiler 확인:
+### Java Compiler
 
 ```powershell
 & "C:\dev\jdks\temurin-26\bin\javac.exe" -version
 ```
 
-정상적으로 설치되었다면 다음과 같이 Java 26 버전이 확인된다.
+정상적인 경우 Java 26 계열 정보가 표시된다.
 
 ```text
 openjdk version "26..."
@@ -257,23 +362,41 @@ OpenJDK Runtime Environment Temurin-26...
 OpenJDK 64-Bit Server VM Temurin-26...
 ```
 
-`javac` 역시 26 버전이 출력되는지 확인한다.
+Compiler:
+
+```text
+javac 26...
+```
+
+---
+
+## 13. Windows 확인 항목
+
+다음 파일이 존재하는지 확인한다.
+
+```text
+C:\dev\jdks\temurin-26
+        │
+        ├─ bin\java.exe
+        ├─ bin\javac.exe
+        └─ release
+```
+
+특히 `javac.exe`가 없다면 JDK가 아닌 다른 Runtime Package를 내려받은 것은 아닌지 확인한다.
 
 ---
 
 # macOS 환경
 
-## 7. macOS Temurin JDK 준비
+## 14. Mac Architecture 확인
 
-### 7.1 Mac Architecture 확인
-
-Terminal에서 다음 명령을 실행한다.
+Terminal:
 
 ```bash
 uname -m
 ```
 
-Apple Silicon Mac:
+Apple Silicon:
 
 ```text
 arm64
@@ -285,16 +408,13 @@ Intel Mac:
 x86_64
 ```
 
-Apple Silicon 환경에서는 Temurin의 **macOS / AArch64** 패키지를 사용한다.
+Apple Silicon 환경에서는 Temurin의 **macOS / AArch64** Package를 사용하고, Intel Mac은 x64 Package를 사용한다.
 
 ---
 
-### 7.2 Temurin JDK 다운로드
+## 15. macOS Temurin JDK 다운로드
 
-Eclipse Adoptium 공식 사이트에서 다운로드한다.
-
-- Eclipse Adoptium: <https://adoptium.net/>
-- Temurin Releases: <https://adoptium.net/temurin/releases/>
+Eclipse Adoptium 공식 사이트에서 Temurin JDK를 다운로드한다.
 
 Apple Silicon 기준:
 
@@ -303,44 +423,54 @@ Version      : 26
 Operating OS : macOS
 Architecture : AArch64
 Package Type : JDK
+JVM          : HotSpot
 Archive      : TAR.GZ
 ```
 
 Intel Mac은 Architecture를 x64로 선택한다.
 
-본 프로젝트에서는 macOS Installer인 `.pkg`보다 **압축 배포본(TAR.GZ)** 사용을 권장한다.
+본 프로젝트에서는 `.pkg` Installer보다 **TAR.GZ 압축 배포본**을 사용한다.
 
 ---
 
-### 7.3 JDK 압축 해제
-
-JDK 관리 디렉터리를 생성한다.
+## 16. macOS JDK 디렉터리 준비
 
 ```bash
 mkdir -p ~/dev/jdks
 ```
 
-다운로드한 TAR.GZ 파일의 압축을 해제한다.
+여러 버전은 다음과 같이 보관할 수 있다.
 
-예:
+```text
+~/dev/jdks/
+ ├─ temurin-26.jdk/
+ ├─ temurin-25.jdk/
+ └─ temurin-17.jdk/
+```
+
+---
+
+## 17. macOS JDK 압축 해제
+
+다운로드한 TAR.GZ 파일을 `~/dev/jdks`에 압축 해제한다.
 
 ```bash
 tar -xzf OpenJDK26U-jdk_*.tar.gz -C ~/dev/jdks
 ```
 
-압축 해제된 디렉터리는 필요하면 다음과 같이 관리하기 쉬운 이름으로 변경한다.
+압축 해제 후 실제 디렉터리 이름은 Release에 따라 다를 수 있다.
+
+필요하면 다음처럼 관리하기 쉬운 이름으로 변경한다.
 
 ```text
 ~/dev/jdks/temurin-26.jdk
 ```
 
-macOS JDK의 실제 Java Home은 일반적으로 다음 위치이다.
+---
 
-```text
-~/dev/jdks/temurin-26.jdk/Contents/Home
-```
+## 18. macOS JDK 구조
 
-구조 예:
+macOS용 JDK는 일반적으로 `.jdk` Bundle 구조를 사용한다.
 
 ```text
 temurin-26.jdk
@@ -351,437 +481,216 @@ temurin-26.jdk
          ├─ include
          ├─ jmods
          ├─ legal
-         └─ lib
+         ├─ lib
+         └─ release
 ```
 
-VS Code에서 지정할 JDK 경로는 다음과 같다.
+실제 JDK Home:
 
 ```text
 ~/dev/jdks/temurin-26.jdk/Contents/Home
 ```
 
+구분:
+
+```text
+JDK Bundle
+~/dev/jdks/temurin-26.jdk
+
+JDK Home
+~/dev/jdks/temurin-26.jdk/Contents/Home
+```
+
+이 JDK Home 경로는 이후 Maven 및 VS Code 개발환경 구성에서 다시 사용한다.
+
 ---
 
-### 7.4 macOS JDK 정상 동작 확인
+## 19. macOS JDK 정상 동작 확인
 
-전역 `JAVA_HOME`을 설정하지 않고 JDK 실행파일을 직접 호출한다.
+시스템 `JAVA_HOME`을 설정하지 않고 실행파일을 직접 호출한다.
+
+### Java Runtime
 
 ```bash
 ~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java -version
 ```
 
-Compiler 확인:
+### Java Compiler
 
 ```bash
 ~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac -version
 ```
 
-정상적으로 Java 26이 출력되는지 확인한다.
-
-!!! note
-    본 프로젝트에서는 `~/.zshrc`에 `JAVA_HOME` 또는 JDK `bin` 경로를 등록하는 것을 기본 설정으로 사용하지 않는다.
-
----
-
-# VS Code 프로젝트별 JDK 설정
-
-## 8. 프로젝트별 JDK를 사용하는 이유
-
-개발 장비에는 여러 프로젝트가 존재할 수 있다.
-
-예:
+정상적인 경우 Java 26 계열 정보가 표시된다.
 
 ```text
-Project A → JDK 26
-Project B → JDK 25
-Legacy    → JDK 17
+openjdk version "26..."
+OpenJDK Runtime Environment Temurin-26...
+OpenJDK 64-Bit Server VM Temurin-26...
 ```
 
-OS 환경변수의 `JAVA_HOME`을 바꾸는 방식은 현재 작업 중인 프로젝트뿐 아니라 다른 터미널이나 개발 도구에도 영향을 줄 수 있다.
+Compiler:
 
-MicroServer 프로젝트에서는 이를 피하기 위해 **VS Code Workspace가 사용할 JDK를 프로젝트 단위로 지정**한다.
-
-```mermaid
-flowchart TD
-    JDK26[Temurin JDK 26]
-    JDK25[Temurin JDK 25]
-    JDK17[Temurin JDK 17]
-
-    A[MicroServer Workspace] --> JDK26
-    B[Other Workspace] --> JDK25
-    C[Legacy Workspace] --> JDK17
+```text
+javac 26...
 ```
 
 ---
 
-## 9. VS Code Java Runtime 설정 개념
+## 20. macOS에서 전역 JAVA_HOME을 설정하지 않음
 
-VS Code의 Java 확장에서는 여러 JDK를 등록하고 프로젝트에서 사용할 Java Runtime을 지정할 수 있다.
-
-주요 설정은 다음과 같다.
-
-```text
-java.configuration.runtimes
-```
-
-이 설정은 Java Execution Environment와 로컬 JDK 경로를 연결한다.
-
-예:
-
-```json
-{
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-26",
-            "path": "JDK_HOME_PATH",
-            "default": true
-        }
-    ]
-}
-```
-
-`path`에는 반드시 JDK의 Home 디렉터리를 지정한다.
-
-```text
-O  JDK Home
-X  JDK Home/bin
-X  java 실행파일
-```
-
-현재 VS Code Java 확장은 `JavaSE-26` Runtime을 지원한다.
-
----
-
-## 10. Workspace 단위 설정
-
-VS Code에는 크게 다음 두 종류의 설정이 있다.
-
-```text
-User Settings
-    └─ 모든 프로젝트에 공통 적용
-
-Workspace Settings
-    └─ 현재 프로젝트에만 적용
-```
-
-MicroServer 프로젝트에서는 Java Runtime을 **Workspace Settings에 설정하는 방식**을 사용한다.
-
-프로젝트 디렉터리를 VS Code에서 열면 Workspace 설정은 일반적으로 다음 파일에 저장된다.
-
-```text
-<project-root>/.vscode/settings.json
-```
-
-예:
-
-```text
-microserver
- ├─ .vscode
- │   └─ settings.json
- ├─ docs
- └─ ...
-```
-
-이 설정을 사용하면 다른 VS Code 프로젝트의 JDK 설정과 분리할 수 있다.
-
-!!! note "Workspace Trust"
-    `java.configuration.runtimes`는 개발 장비의 로컬 JDK 경로를 참조하는 설정이다.
-    신뢰되지 않은 Workspace에서는 보안 정책에 따라 제한될 수 있으므로, 본인이 생성하거나 검증한 프로젝트라면 VS Code의 Workspace Trust 상태도 함께 확인한다.
-
----
-
-## 11. Windows 프로젝트별 JDK 설정
-
-예를 들어 Windows에서 Temurin JDK를 다음 위치에 준비했다고 가정한다.
-
-```text
-C:\dev\jdks\temurin-26
-```
-
-MicroServer 프로젝트의 `.vscode/settings.json`에 다음과 같이 설정한다.
-
-```json
-{
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-26",
-            "path": "C:\\dev\\jdks\\temurin-26",
-            "default": true
-        }
-    ]
-}
-```
-
-Windows JSON에서는 `\` 문자를 다음과 같이 두 번 작성해야 한다.
-
-```text
-C:\\dev\\jdks\\temurin-26
-```
-
-또는 `/` 형태로 작성할 수도 있다.
-
-```json
-{
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-26",
-            "path": "C:/dev/jdks/temurin-26",
-            "default": true
-        }
-    ]
-}
-```
-
----
-
-## 12. macOS 프로젝트별 JDK 설정
-
-macOS에서 JDK가 다음 위치에 있다고 가정한다.
-
-```text
-/Users/<사용자계정>/dev/jdks/temurin-26.jdk/Contents/Home
-```
-
-`.vscode/settings.json`:
-
-```json
-{
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-26",
-            "path": "/Users/<사용자계정>/dev/jdks/temurin-26.jdk/Contents/Home",
-            "default": true
-        }
-    ]
-}
-```
-
-`~` 대신 실제 절대 경로를 지정하는 것을 권장한다.
-
-현재 VS Code Java Runtime 경로 설정에서는 **JDK Home 절대 경로를 사용하는 것이 가장 명확하다.**
-
----
-
-## 13. `java.jdt.ls.java.home`과의 차이
-
-VS Code Java 설정에는 다음 속성도 존재한다.
-
-```text
-java.jdt.ls.java.home
-```
-
-하지만 이 설정과 프로젝트 Runtime은 역할이 다르다.
-
-### `java.jdt.ls.java.home`
-
-Java Language Server 자체를 실행하기 위한 JDK를 지정한다.
-
-```text
-VS Code
-  └─ Java Language Server 실행용 JDK
-```
-
-최근 VS Code Java Extension은 Windows x64, macOS x64/AArch64 등 주요 플랫폼에서 Java Language Server 실행용 Runtime을 자체 포함할 수 있다.
-
-따라서 MicroServer 프로젝트에서는 특별한 이유가 없는 한 이 값을 별도로 지정하지 않는다.
-
-### `java.configuration.runtimes`
-
-프로젝트가 사용할 Java Runtime을 지정한다.
-
-```text
-MicroServer Project
-  └─ Temurin JDK 26
-```
-
-따라서 본 프로젝트에서 중요하게 관리할 설정은 다음이다.
-
-```text
-java.configuration.runtimes
-```
-
-!!! warning
-    `java.jdt.ls.java.home`을 프로젝트 JDK 설정과 동일한 개념으로 사용하지 않는다.
-    Language Server 실행 JDK와 프로젝트 컴파일용 JDK는 목적이 다르다.
-
----
-
-## 14. VS Code 화면에서 JDK 확인
-
-Java 관련 VS Code 확장 설치가 완료된 이후 Command Palette에서 다음 명령을 사용할 수 있다.
-
-Windows:
-
-```text
-Ctrl + Shift + P
-```
-
-macOS:
-
-```text
-Command + Shift + P
-```
-
-검색:
-
-```text
-Java: Configure Java Runtime
-```
-
-이 화면에서는 현재 VS Code가 인식한 JDK와 프로젝트 Runtime을 확인할 수 있다.
-
-확인해야 할 항목:
-
-```text
-Project Runtime
-    JavaSE-26
-
-JDK Path
-    Windows : C:\dev\jdks\temurin-26
-    macOS   : .../temurin-26.jdk/Contents/Home
-```
-
-!!! note
-    Java Extension 설치 및 VS Code의 세부 Java 개발환경 구성은 다음 단계인 **VS Code 개발환경 구성 가이드**에서 설명한다.
-    본 문서에서는 JDK와 프로젝트 Runtime의 연결 개념까지만 다룬다.
-
----
-
-## 15. 프로젝트별 설정 시 주의사항
-
-### 15.1 `JAVA_HOME`을 추가하지 않는다
-
-본 프로젝트에서는 기본적으로 다음 설정을 하지 않는다.
-
-Windows:
-
-```text
-JAVA_HOME=C:\...\jdk
-Path=%JAVA_HOME%\bin
-```
-
-macOS:
+현재 단계에서는 다음 설정을 기본 구성으로 사용하지 않는다.
 
 ```bash
 export JAVA_HOME=...
 export PATH="$JAVA_HOME/bin:$PATH"
 ```
 
-프로젝트 JDK는 VS Code Workspace에서 지정한다.
+따라서 `~/.zshrc`에도 JDK 관련 설정을 추가하지 않는다.
+
+JDK 자체가 정상적으로 준비되었는지는 앞에서 설명한 절대 경로 실행 방식으로 확인한다.
 
 ---
 
-### 15.2 JDK 경로는 개발 장비별로 다를 수 있다
+## 21. 여러 JDK 버전 관리
 
-Workspace의 JDK 경로는 개발자 로컬 장비의 실제 파일 경로를 사용한다.
+향후 다른 프로젝트 때문에 추가 JDK가 필요할 수 있다.
 
-예:
-
-```text
-개발자 A
-C:\dev\jdks\temurin-26
-
-개발자 B
-D:\development\jdks\temurin-26
-```
-
-따라서 팀에서 `.vscode/settings.json`을 Git으로 공유하려면 JDK 경로 정책을 별도로 정해야 한다.
-
-가장 단순한 방법은 개발 장비별 표준 JDK 보관 경로를 정하는 것이다.
-
-예:
+### Windows
 
 ```text
-Windows : C:\dev\jdks\temurin-26
-macOS   : ~/dev/jdks/temurin-26.jdk/Contents/Home
-```
-
-Windows와 macOS가 동시에 존재하는 프로젝트에서는 JDK 경로가 서로 다르므로 **JDK 경로가 포함된 Workspace 설정을 무조건 공통 커밋하지 않는 것**이 안전하다.
-
-필요한 경우 팀 표준 경로 또는 개발자별 로컬 설정 운영 정책을 별도로 정한다.
-
----
-
-### 15.3 JDK 경로는 절대 경로로 명확하게 지정한다
-
-프로젝트 Runtime 설정의 `path`에는 개발 장비에 존재하는 **JDK Home 절대 경로**를 지정하는 것을 권장한다.
-
-Windows 예:
-
-```text
-C:/dev/jdks/temurin-26
-```
-
-macOS 예:
-
-```text
-/Users/<사용자계정>/dev/jdks/temurin-26.jdk/Contents/Home
-```
-
-JDK 자체는 Git 프로젝트와 분리된 개발 도구 영역에 보관하고, VS Code Workspace가 해당 경로를 바라보도록 구성한다.
-
----
-
-## 16. 여러 프로젝트에서 서로 다른 JDK 사용 예
-
-한 개발 장비에 다음 JDK가 있다고 가정한다.
-
-```text
-C:\dev\jdks
+C:\dev\jdks\
  ├─ temurin-17
+ ├─ temurin-21
  ├─ temurin-25
  └─ temurin-26
 ```
 
-MicroServer:
+### macOS
 
-```json
-{
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-26",
-            "path": "C:/dev/jdks/temurin-26",
-            "default": true
-        }
-    ]
-}
+```text
+~/dev/jdks/
+ ├─ temurin-17.jdk
+ ├─ temurin-21.jdk
+ ├─ temurin-25.jdk
+ └─ temurin-26.jdk
 ```
 
-Legacy Project:
+새 버전을 추가할 때 기존 JDK를 덮어쓰지 않고 별도 디렉터리에 보관한다.
 
-```json
-{
-    "java.configuration.runtimes": [
-        {
-            "name": "JavaSE-17",
-            "path": "C:/dev/jdks/temurin-17",
-            "default": true
-        }
-    ]
-}
+현재 단계에서는 어떤 프로젝트가 어떤 JDK를 사용하는지 설정하지 않는다.
+
+---
+
+## 22. JDK 업데이트 시 주의사항
+
+같은 Major Version의 JDK라도 보안 Patch 등에 따라 세부 버전이 변경될 수 있다.
+
+예:
+
+```text
+Temurin 26.x.x
 ```
 
-이 경우 OS의 기본 Java 환경을 변경하지 않고 프로젝트를 전환할 수 있다.
+업데이트 시 다음 항목을 확인한다.
 
-```mermaid
-flowchart LR
-    DEV[개발 PC]
+- 프로젝트 표준 JDK Major Version이 변경되는지
+- 기존 JDK 디렉터리를 바로 삭제할 필요가 있는지
+- 이후 Maven / VS Code / CI/CD가 참조하는 경로가 있는지
+- 팀 전체에 동일한 버전 적용이 필요한지
 
-    DEV --> J17[Temurin 17]
-    DEV --> J25[Temurin 25]
-    DEV --> J26[Temurin 26]
+기존 JDK를 즉시 덮어쓰기보다 새로운 디렉터리에 준비하고 검증 후 전환하는 방식을 권장한다.
 
-    J17 --> LEGACY[Legacy Project]
-    J26 --> MICRO[MicroServer]
+---
+
+## 23. 자주 발생하는 문제
+
+### 23.1 `java -version`이 실행되지 않음
+
+현재 프로젝트에서는 JDK `bin`을 시스템 PATH에 등록하지 않으므로 다음 명령이 실패할 수 있다.
+
+```bash
+java -version
+```
+
+이는 반드시 설치 오류를 의미하지 않는다.
+
+절대 경로로 확인한다.
+
+#### Windows
+
+```powershell
+& "C:\dev\jdks\temurin-26\bin\java.exe" -version
+```
+
+#### macOS
+
+```bash
+~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java -version
+```
+
+### 23.2 `javac`가 없음
+
+#### Windows
+
+```text
+C:\dev\jdks\temurin-26\bin\javac.exe
+```
+
+#### macOS
+
+```text
+~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac
+```
+
+파일이 없다면 Temurin 다운로드 시 JRE가 아닌 **JDK Package**를 선택했는지 확인한다.
+
+### 23.3 Architecture가 맞지 않음
+
+Windows:
+
+```powershell
+$env:PROCESSOR_ARCHITECTURE
+```
+
+macOS:
+
+```bash
+uname -m
+```
+
+장비 Architecture에 맞는 Temurin Package를 사용한다.
+
+### 23.4 압축 해제 후 경로가 다름
+
+Release에 따라 다음처럼 이름이 생성될 수 있다.
+
+```text
+jdk-26.0.2+10
+```
+
+관리 편의를 위해 `temurin-26` 형태로 정리할 수 있다.
+
+중요한 것은 디렉터리 이름보다 다음 파일이 정상적으로 존재하는지 여부이다.
+
+```text
+bin/java
+bin/javac
 ```
 
 ---
 
-## 17. 최종 확인
-
-JDK 준비가 끝나면 다음 사항을 확인한다.
+## 24. 최종 확인
 
 ### Windows
+
+JDK Home:
+
+```text
+C:\dev\jdks\temurin-26
+```
+
+확인:
 
 ```powershell
 & "C:\dev\jdks\temurin-26\bin\java.exe" -version
@@ -790,65 +699,89 @@ JDK 준비가 끝나면 다음 사항을 확인한다.
 
 ### macOS
 
+JDK Home:
+
+```text
+~/dev/jdks/temurin-26.jdk/Contents/Home
+```
+
+확인:
+
 ```bash
 ~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java -version
 ~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac -version
 ```
 
-VS Code Java 개발환경 구성이 완료된 이후에는 다음 명령으로 프로젝트 Runtime을 확인한다.
-
-```text
-Java: Configure Java Runtime
-```
-
-MicroServer 프로젝트가 다음 Runtime을 바라보고 있는지 확인한다.
-
-```text
-JavaSE-26
-```
+두 환경 모두 Java Runtime과 Compiler가 Java 26으로 정상 실행되면 JDK 준비는 완료된 것이다.
 
 ---
 
-## 18. 체크리스트
+## 25. 체크리스트
 
-- [ ] Eclipse Temurin JDK를 사용한다.
-- [ ] 프로젝트 기준 JDK가 Java 26으로 준비되어 있다.
+### 공통
+
+- [ ] Eclipse Temurin을 프로젝트 표준 JDK 배포판으로 사용한다.
+- [ ] Java 26 JDK를 준비했다.
 - [ ] JRE가 아닌 JDK Package를 다운로드했다.
-- [ ] Windows에서는 ZIP 배포본을 사용했다.
-- [ ] macOS에서는 TAR.GZ 배포본을 사용했다.
 - [ ] JDK를 프로젝트 Git Repository 외부에 보관했다.
-- [ ] JDK의 `java` 실행파일이 정상 동작한다.
-- [ ] JDK의 `javac` 실행파일이 정상 동작한다.
-- [ ] 전역 `JAVA_HOME` 설정을 프로젝트 기본 구성으로 사용하지 않는다.
-- [ ] JDK `bin` 디렉터리를 전역 PATH에 추가하지 않았다.
-- [ ] VS Code Workspace에서 `java.configuration.runtimes`로 프로젝트 JDK를 지정할 준비가 되어 있다.
-- [ ] VS Code가 JDK Home 디렉터리를 바라보도록 설정한다.
-- [ ] Spring Boot / Maven / `pom.xml` 관련 설정은 이후 가이드에서 진행한다.
+- [ ] 여러 JDK를 버전별 디렉터리로 관리할 수 있다.
+- [ ] 시스템 전역 `JAVA_HOME`을 프로젝트 기본 구성으로 사용하지 않는다.
+- [ ] JDK `bin`을 시스템 전역 PATH에 추가하지 않았다.
+
+### Windows
+
+- [ ] 개발 장비 Architecture를 확인했다.
+- [ ] Windows용 ZIP 배포본을 사용했다.
+- [ ] JDK를 `C:\dev\jdks` 계열 경로에 압축 해제했다.
+- [ ] `java.exe -version`이 정상 실행된다.
+- [ ] `javac.exe -version`이 정상 실행된다.
+
+### macOS
+
+- [ ] Apple Silicon / Intel Architecture를 확인했다.
+- [ ] macOS용 TAR.GZ 배포본을 사용했다.
+- [ ] JDK를 `~/dev/jdks` 계열 경로에 압축 해제했다.
+- [ ] `Contents/Home/bin/java -version`이 정상 실행된다.
+- [ ] `Contents/Home/bin/javac -version`이 정상 실행된다.
+- [ ] `~/.zshrc`에 프로젝트용 `JAVA_HOME`을 등록하지 않았다.
+
+### 단계 확인
+
+- [ ] VS Code 관련 설정을 아직 진행하지 않았다.
+- [ ] 프로젝트별 JDK Runtime 설정을 아직 만들지 않았다.
+- [ ] Maven 프로젝트 설정을 아직 진행하지 않았다.
+- [ ] Spring Boot 프로젝트를 아직 생성하지 않았다.
+- [ ] `pom.xml`을 아직 작성하거나 수정하지 않았다.
 
 ---
 
-## 19. 다음 단계
+## 26. 다음 단계
 
-JDK 준비가 완료되면 다음 가이드를 진행한다.
+JDK 준비가 완료되면 다음 가이드로 진행한다.
 
 ```text
-JDK 설치 및 설정
+JDK 설치 및 설정                ← 현재 완료
+        ↓
+Maven 설치 및 기본 환경 구성
         ↓
 VS Code 개발환경 구성
         ↓
-Maven 설치 및 설정
+Spring Boot 프로젝트 생성
         ↓
-Spring Boot 프로젝트 구성
+프로젝트 JDK / Maven / VS Code 설정
 ```
 
-다음 단계에서는 VS Code의 Java 개발 확장 기능과 프로젝트 개발환경을 구성한다.
+다음 단계에서는 Apache Maven을 개발 PC에 준비하고, 앞에서 설치한 Temurin JDK를 이용하여 Maven이 정상 실행되는지 확인한다.
 
 ---
 
-## 20. 공식 참고 자료
+## 27. 공식 참고 자료
 
-- Eclipse Adoptium: <https://adoptium.net/>
-- Eclipse Temurin Release Roadmap: <https://adoptium.net/support/>
-- VS Code Java - Managing Java Projects: <https://code.visualstudio.com/docs/java/java-project>
-- Language Support for Java by Red Hat: <https://github.com/redhat-developer/vscode-java>
-- VS Code Settings Scope: <https://code.visualstudio.com/api/references/contribution-points>
+- Eclipse Adoptium  
+  <https://adoptium.net/>
+
+- Eclipse Temurin Releases  
+  <https://adoptium.net/temurin/releases/>
+
+- Eclipse Temurin Support / Release Roadmap  
+  <https://adoptium.net/support/>

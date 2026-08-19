@@ -167,17 +167,17 @@ Java: Install New JDK
 ```text
 JDK 준비
    ↓
+Maven 기본 환경 준비
+   ↓
 VS Code 준비
    ↓
 Java / Spring Extension 준비
    ↓
-Maven 환경 준비
-   ↓
-MicroServer 프로젝트 생성
+MicroServer Spring Boot 프로젝트 생성
    ↓
 VS Code Workspace 열기
    ↓
-프로젝트별 JDK 지정
+프로젝트별 JDK / Maven / Workspace 설정
 ```
 
 즉, **JDK를 선택할 수 있는 VS Code 환경은 지금 준비하지만 실제 프로젝트 경로와 연결하는 설정은 프로젝트가 생성된 뒤 수행**한다.
@@ -228,7 +228,10 @@ VS Code Workspace JDK
 
 MicroServer에서는 후자를 프로젝트 개발환경의 기준으로 삼는다.
 
-다만 Maven, 외부 Shell, CI/CD 등은 별도의 Java Runtime 설정이 필요할 수 있으므로 해당 내용은 Maven 및 Build 환경 가이드에서 별도로 다룬다.
+Apache Maven 자체의 개발 PC 환경은 앞 단계에서 이미 구성했지만,
+**생성된 프로젝트가 사용할 Java 버전, Maven Wrapper, `pom.xml` Build 설정은 아직 구성하지 않는다.**
+
+이 내용은 Spring Boot 프로젝트 생성 이후의 프로젝트 개발환경 설정 단계에서 다룬다.
 
 ---
 
@@ -459,22 +462,29 @@ flowchart TB
 
 # 17. 다음 단계
 
-VS Code 개발환경 구성이 완료되면 Maven 환경 구성으로 진행한다.
+이 문서까지 완료하면 VS Code 개발환경 구성은 끝난다.
+
+다음 단계에서는 **Spring Boot 프로젝트를 실제로 생성**한다.
 
 ```text
 JDK 설치 및 설정
         ↓
-VS Code 개발환경 구성       ← 완료
+Maven 설치 및 기본 환경 구성
         ↓
-Maven 설치 및 설정
+VS Code 개발환경 구성       ← 현재 완료
         ↓
 Spring Boot 프로젝트 생성
+        ↓
+프로젝트 JDK / Maven / VS Code 설정
         ↓
 프로젝트 기본 구조 구성
 ```
 
-VS Code는 여기까지 **개발 도구 환경 구성**을 완료하고,
-실제 Build와 Application 구성은 다음 단계부터 진행한다.
+현재까지는 개발 PC에 JDK, Maven, VS Code와 필요한 Extension을 준비한 상태이다.
+
+실제 `.vscode/settings.json`, `java.configuration.runtimes`,
+Maven Wrapper, `pom.xml`의 Java / Build 설정 등은
+Spring Boot 프로젝트 생성 이후의 **프로젝트 개발환경 설정 단계**에서 적용한다.
 
 ## 참고
 

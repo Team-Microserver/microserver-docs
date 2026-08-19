@@ -59,9 +59,6 @@ nav:
       - 프로젝트 환경 구성:
           - 개발 장비 구성: 01_project_start/02_environment/development_device.md
           - Git / GitHub 환경 구성: 01_project_start/02_environment/git_github_setup.md
-          - Python / MkDocs:
-              - Windows 환경 구성: 01_project_start/02_environment/python_mkdocs/windows_python_venv_mkdocs.md
-              - macOS 환경 구성: 01_project_start/02_environment/python_mkdocs/macos_python_venv_mkdocs.md
           - Java 개발환경:
               - JDK 설치 및 설정: 01_project_start/02_environment/java/jdk_setup.md
  
@@ -76,25 +73,25 @@ nav:
             - Spring Boot Extension 구성: 01_project_start/02_environment/vscode/spring_boot_extension_setup.md
             - 개발 지원 Extension 및 Profile 구성: 01_project_start/02_environment/vscode/support_extension_profile_setup.md
             - JDK 연계 및 개발환경 운영: 01_project_start/02_environment/vscode/jdk_workspace_environment_setup.md
-
-           
- #             - VS Code 환경 구성:
- #               - 구성 개요: 01_project_start/02_environment/java/vscode_setup.md
- #               - VS Code 설치 및 기본 설정: 01_project_start/02_environment/java/vscode/vscode_install_basic_setup.md
- #               - Java 개발 Extension 구성: 01_project_start/02_environment/java/vscode/java_extension_setup.md
- #               - Spring Boot Extension 구성: 01_project_start/02_environment/java/vscode/spring_boot_extension_setup.md
- #               - 개발 지원 Extension 및 Profile 구성: 01_project_start/02_environment/java/vscode/support_extension_profile_setup.md
- #               - JDK 연계 및 개발환경 운영: 01_project_start/02_environment/java/vscode/jdk_workspace_environment_setup.md
- #             - Maven 설치 및 설정: 01_project_start/02_environment/java/maven_setup.md
-          - Database 개발환경:
-              - Oracle / Docker 로컬 환경: 01_project_start/02_environment/database/oracle_docker_setup.md
-
+          
+          - Oracle / Docker 로컬 환경:
+            - Docker Desktop 설치 및 기본 환경 구성: 01_project_start/02_environment/database/docker_desktop_setup.md
+            - Oracle Database Free 로컬 개발환경 구성: 01_project_start/02_environment/database/oracle_database_free_setup.md
+            - Apple Silicon Oracle Docker 지원 및 검증: 01_project_start/02_environment/database/oracle_docker_apple_silicon_support.md
+ 
+ 
       - 프로젝트 생성:
           - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
           - 프로젝트 개발환경 설정:
             - JDK / VS Code Workspace 설정: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_setup.md
             - Maven Wrapper 및 프로젝트 Maven 설정: 01_project_start/03_project_creation/project_environment/project_maven_setup.md
             - Maven 멀티모듈 기본 구성: 01_project_start/03_project_creation/project_environment/maven_multi_module_setup.md
+ 
+      - Python / MkDocs:
+        - Windows 환경 구성: 01_project_start/04_etc/python_mkdocs/windows_python_venv_mkdocs.md
+        - macOS 환경 구성: 01_project_start/04_etc/python_mkdocs/macos_python_venv_mkdocs.md
+
+
 
   - 공통 기능 개발:
       - 프로젝트 공통 구조:
