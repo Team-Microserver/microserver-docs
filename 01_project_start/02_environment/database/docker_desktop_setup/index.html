@@ -1,0 +1,1955 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+      
+      
+      
+      
+        <link rel="prev" href="../../vscode/jdk_workspace_environment_setup/">
+      
+      
+        <link rel="next" href="../oracle_database_free_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Docker Desktop 설치 및 기본 환경 구성 - Microserver</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#docker-desktop" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Microserver
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Docker Desktop 설치 및 기본 환경 구성
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 시작
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02_framework/01_project_structure/module_common/" class="md-tabs__link">
+          
+  
+  
+  공통 기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../03_business_financial/01_business_common/common_code/" class="md-tabs__link">
+          
+  
+  
+  업무 및 금융 연계
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04_extended_architecture/webclient/" class="md-tabs__link">
+          
+  
+  
+  확장 아키텍처
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../99_appendix/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  참고자료
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Microserver
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 시작
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 시작
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 이해
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development_device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 장비 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../git_github_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git / GitHub 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../java/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../maven/maven_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maven 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../vscode/vscode_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_2_6" id="__nav_1_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle / Docker 로컬 환경
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Oracle / Docker 로컬 환경
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Desktop 설치 및 기본 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker Desktop 설치 및 기본 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-docker-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 개발환경 구성에서 Docker Desktop의 위치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-docker-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Docker Desktop의 역할
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Container를 사용하는 이유
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oracle_database_free_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle Database Free 로컬 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oracle_docker_apple_silicon_support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Apple Silicon Oracle Docker 지원 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../03_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../04_etc/python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python / MkDocs
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../02_framework/01_project_structure/module_common/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    공통 기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../03_business_financial/01_business_common/common_code/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    업무 및 금융 연계
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../04_extended_architecture/webclient/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    확장 아키텍처
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../99_appendix/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    참고자료
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-docker-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 개발환경 구성에서 Docker Desktop의 위치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-docker-desktop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Docker Desktop의 역할
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Container를 사용하는 이유
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="docker-desktop">Docker Desktop 설치 및 기본 환경 구성 가이드</h1>
+<h2 id="1">1. 문서 목적</h2>
+<p>본 문서는 MicroServer 프로젝트의 로컬 개발 인프라를 Container 기반으로 실행하기 위해
+Windows 및 macOS 개발 PC에 <strong>Docker Desktop</strong>을 설치하고,
+Docker Engine / Docker CLI / Docker Compose를 사용할 수 있는 기본 환경을 구성하는 방법을 설명한다.</p>
+<p>본 문서는 특정 Database나 Application Container를 실행하는 문서가 아니다.</p>
+<p>현재 단계에서는 다음 내용만 구성한다.</p>
+<ul>
+<li>Docker / Container 역할 이해</li>
+<li>Windows Docker Desktop 설치</li>
+<li>Windows WSL 2 기반 실행환경 확인</li>
+<li>macOS Docker Desktop 설치</li>
+<li>Apple Silicon / Intel Mac 구분</li>
+<li>Docker Desktop 사용 정책 및 라이선스 확인</li>
+<li>Docker Engine / Docker CLI 확인</li>
+<li>Docker Compose 확인</li>
+<li>Docker Desktop Resource와 Disk 사용 이해</li>
+<li>기본 Container 실행 테스트</li>
+<li>Docker Desktop 기본 문제 해결</li>
+</ul>
+<p>Oracle Database Free Image Pull과 실제 Database Container 구성은 다음 문서에서 진행한다.</p>
+<div class="highlight"><pre><span></span><code>Docker Desktop 설치 및 기본 환경 구성
+        ↓
+Oracle Database Free 로컬 개발환경 구성
+        ↓
+Apple Silicon 환경은 필요 시 ARM64 지원 검증
+</code></pre></div>
+<hr />
+<h2 id="2-docker-desktop">2. 개발환경 구성에서 Docker Desktop의 위치</h2>
+<p>MicroServer 개발환경은 다음 순서로 준비한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Git / GitHub] --&gt; B[Eclipse Temurin JDK]
+    B --&gt; C[Apache Maven]
+    C --&gt; D[VS Code]
+    D --&gt; E[Docker Desktop]
+    E --&gt; F[Oracle Database Free]
+    F --&gt; G[Spring Boot 프로젝트 생성]</code></pre>
+<p>현재 문서는 다음 단계에 해당한다.</p>
+<div class="highlight"><pre><span></span><code>Git / GitHub
+    ↓
+Eclipse Temurin JDK
+    ↓
+Apache Maven
+    ↓
+VS Code
+    ↓
+[ Docker Desktop ]              ← 현재
+    ↓
+Oracle Database Free
+</code></pre></div>
+<p>Docker Desktop을 먼저 독립적으로 준비하면
+이후 Oracle뿐 아니라 Redis, Kafka, 기타 개발용 Container를 추가할 때 동일 환경을 재사용할 수 있다.</p>
+<hr />
+<h2 id="3-docker-desktop">3. Docker Desktop의 역할</h2>
+<p>Docker Desktop은 Windows와 macOS에서 Container 개발환경을 쉽게 사용할 수 있도록
+Docker 관련 도구를 하나의 Desktop Application으로 제공한다.</p>
+<p>개념적으로 다음과 같이 이해할 수 있다.</p>
+<pre class="mermaid"><code>flowchart TB
+    PC[Developer PC]
+    PC --&gt; DD[Docker Desktop]
+
+    DD --&gt; ENGINE[Docker Engine]
+    DD --&gt; CLI[Docker CLI]
+    DD --&gt; COMPOSE[Docker Compose]
+    DD --&gt; UI[Desktop UI]
+
+    ENGINE --&gt; CONTAINER[Containers]
+    ENGINE --&gt; IMAGE[Images]
+    ENGINE --&gt; VOLUME[Volumes]
+    ENGINE --&gt; NETWORK[Networks]</code></pre>
+<p>주요 구성:</p>
+<table>
+<thead>
+<tr>
+<th>구성</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Docker Engine</td>
+<td>Image를 이용하여 Container 실행</td>
+</tr>
+<tr>
+<td>Docker CLI</td>
+<td><code>docker</code> 명령 제공</td>
+</tr>
+<tr>
+<td>Docker Compose</td>
+<td>여러 Container 구성을 YAML로 관리</td>
+</tr>
+<tr>
+<td>Docker Desktop UI</td>
+<td>Container / Image / Volume 상태 확인</td>
+</tr>
+<tr>
+<td>Docker VM / Backend</td>
+<td>Windows/macOS에서 Linux Container 실행 기반 제공</td>
+</tr>
+</tbody>
+</table>
+<p>MicroServer에서는 <strong>Linux Container 기반 개발환경</strong>을 기준으로 한다.</p>
+<hr />
+<h2 id="4-container">4. Container를 사용하는 이유</h2>
+<p>개발 PC에 Oracle Database 같은 Server Software를 직접 설치하면
+OS별 설치 과정, 버전, 설정 파일, Service 상태가 개발자마다 달라질 수 있다.</p>
+<p>Container 기반으로 구성하면 다음과 같은 장점이 있다.</p>
+<div class="highlight"><pre><span></span><code>동일 Image
+    ↓
+동일한 Server Software 구성
+    ↓
+개발자별 독립 실행
+    ↓
+삭제 / 재생성 용이
+    ↓
+로컬 개발환경 재현성 향상
+</code></pre></div>
+<p>특히 Database나 Middleware처럼 설치와 초기화 과정이 복잡한 제품을
+개발 PC에서 격리하여 운영할 때 유용하다.</p>
+<hr />
+<h1 id="windows">Windows 환경</h1>
+<h2 id="5-windows">5. Windows 사전 확인</h2>
+<p>Windows에서 Docker Desktop을 사용할 때는 일반적으로 WSL 2 기반 Backend를 사용한다.</p>
+<p>PowerShell에서 Windows Subsystem for Linux 상태를 확인한다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-status</span>
+</code></pre></div>
+<p>설치된 Distribution 확인:</p>
+<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-list</span> <span class="p">-</span><span class="n">-verbose</span>
+</code></pre></div>
+<p>예:</p>
+<div class="highlight"><pre><span></span><code>NAME      STATE      VERSION
+Ubuntu    Stopped    2
+</code></pre></div>
+<p>Docker Desktop 설치 과정에서 WSL 2 활성화가 필요하면
+Docker Desktop Installer 또는 Windows가 안내하는 절차를 따른다.</p>
+<div class="admonition note">
+<p class="admonition-title">WSL 2</p>
+<p>Docker Desktop의 Windows 환경에서는 WSL 2 기반 Engine을 사용할 수 있다.
+MicroServer는 Oracle Linux Container를 실행하므로 Windows Container Mode가 아니라
+Linux Container 기반 환경을 사용한다.</p>
+</div>
+<hr />
+<h2 id="6-windows-docker-desktop">6. Windows Docker Desktop 다운로드</h2>
+<p>Docker 공식 사이트에서 <strong>Docker Desktop for Windows</strong>를 다운로드한다.</p>
+<p>설치 시점의 최신 지원 Windows Version과 Hardware Requirement는
+Docker 공식 문서를 기준으로 확인한다.</p>
+<p>회사 개발 PC에서 설치 권한이 제한되어 있다면
+사내 Software 배포 정책 또는 관리자 권한 정책을 먼저 확인한다.</p>
+<hr />
+<h2 id="7-windows-docker-desktop">7. Windows Docker Desktop 설치</h2>
+<p>다운로드한 Installer를 실행한다.</p>
+<p>일반적인 개발환경에서는 WSL 2 Backend를 사용한다.</p>
+<p>설치 완료 후 Windows Start Menu에서 다음 Application을 실행한다.</p>
+<div class="highlight"><pre><span></span><code>Docker Desktop
+</code></pre></div>
+<p>처음 실행하면 Docker Desktop 초기 설정과 약관 화면이 나타날 수 있다.</p>
+<p>Docker Engine이 완전히 시작될 때까지 기다린다.</p>
+<hr />
+<h2 id="8-windows-wsl-2-engine">8. Windows WSL 2 Engine 확인</h2>
+<p>Docker Desktop:</p>
+<div class="highlight"><pre><span></span><code>Settings
+→ General
+</code></pre></div>
+<p>WSL 2 기반 Engine을 사용하는 환경이라면
+관련 설정이 활성화되어 있는지 확인한다.</p>
+<p>필요한 경우:</p>
+<div class="highlight"><pre><span></span><code>Settings
+→ Resources
+→ WSL Integration
+</code></pre></div>
+<p>에서 사용할 WSL Distribution과의 통합 상태를 확인할 수 있다.</p>
+<p>MicroServer에서 단순히 Windows PowerShell을 이용해 Docker CLI를 사용할 경우
+특정 Linux Distribution 내부 개발이 반드시 필요한 것은 아니다.</p>
+<hr />
+<h2 id="9-windows-docker-cli">9. Windows Docker CLI 확인</h2>
+<p>새 PowerShell을 실행한다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">docker</span> <span class="p">-</span><span class="n">-version</span>
+</code></pre></div>
+<p>정상 예:</p>
+<div class="highlight"><pre><span></span><code>Docker version ...
+</code></pre></div>
+<p>Docker Client만 설치된 것이 아니라 Engine과도 연결되는지 확인한다.</p>
+<div class="highlight"><pre><span></span><code><span class="n">docker</span> <span class="n">info</span>
+</code></pre></div>
+<p><code>docker info</code>에서 Client와 Server 정보를 정상적으로 확인할 수 있어야 한다.</p>
+<hr />
+<h1 id="macos">macOS 환경</h1>
+<h2 id="10-mac-cpu-architecture">10. Mac CPU Architecture 확인</h2>
+<p>Terminal:</p>
+<div class="highlight"><pre><span></span><code>uname<span class="w"> </span>-m
+</code></pre></div>
+<p>Apple Silicon:</p>
+<div class="highlight"><pre><span></span><code>arm64
+</code></pre></div>
+<p>Intel Mac:</p>
+<div class="highlight"><pre><span></span><code>x86_64
+</code></pre></div>
+<p>Docker Desktop은 Mac Architecture에 맞는 설치 Package를 사용한다.</p>
+<hr />
+<h2 id="11-macos-docker-desktop">11. macOS Docker Desktop 다운로드</h2>
+<p>Docker 공식 사이트에서 Mac용 Docker Desktop을 다운로드한다.</p>
+<p>Apple Silicon Mac:</p>
+<div class="highlight"><pre><span></span><code>Docker Desktop for Mac - Apple silicon
+</code></pre></div>
+<p>Intel Mac:</p>
+<div class="highlight"><pre><span></span><code>Docker Desktop for Mac - Intel
+</code></pre></div>
+<p>Apple Silicon에서 Intel용 Docker Desktop을 일부러 선택하지 않는다.</p>
+<hr />
+<h2 id="12-macos-docker-desktop">12. macOS Docker Desktop 설치</h2>
+<p>다운로드한 <code>Docker.dmg</code>를 연다.</p>
+<p>Docker Application을 다음 위치로 이동한다.</p>
+<div class="highlight"><pre><span></span><code>/Applications/Docker.app
+</code></pre></div>
+<p>Applications에서 Docker Desktop을 실행한다.</p>
+<p>macOS가 보안 또는 권한 관련 확인을 요청하면
+Docker Desktop 공식 설치 절차에 따라 진행한다.</p>
+<hr />
+<h2 id="13-macos-docker-cli">13. macOS Docker CLI 확인</h2>
+<p>새 Terminal을 실행한다.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>--version
+</code></pre></div>
+<p>Docker Engine 연결 확인:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>info
+</code></pre></div>
+<p>정상적으로 Server 정보까지 조회되는지 확인한다.</p>
+<p>Apple Silicon에서 Oracle Database Free를 사용할 경우
+추가 Architecture 검증은 별도의 다음 문서에서 수행한다.</p>
+<div class="highlight"><pre><span></span><code>Apple Silicon Oracle Docker 지원 및 검증 가이드
+</code></pre></div>
+<hr />
+<h2 id="14-docker-desktop">14. Docker Desktop 라이선스 및 회사 사용 정책</h2>
+<p>Docker Desktop은 사용 목적과 조직 규모에 따라 Subscription 조건이 달라질 수 있다.</p>
+<p>Docker 공식 문서에서는 대규모 기업에서의 상업적 Docker Desktop 사용에
+유료 Subscription이 필요할 수 있음을 안내한다.</p>
+<p>따라서 회사 개발 PC에서 사용하는 경우 다음을 확인한다.</p>
+<ul>
+<li>회사의 Docker Desktop 사용 정책</li>
+<li>조직의 Docker Subscription 보유 여부</li>
+<li>보안 Software와의 충돌 여부</li>
+<li>개발 PC Virtualization 정책</li>
+<li>관리자 권한 정책</li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Docker Desktop의 사용 조건과 Oracle Database Free의 사용 조건은 서로 다른 제품 정책이다.
+각각 별도로 확인한다.</p>
+</div>
+<hr />
+<h2 id="15-docker-compose">15. Docker Compose 확인</h2>
+<p>Docker Desktop에는 Docker Compose를 함께 사용할 수 있는 구성이 제공된다.</p>
+<p>확인:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>version
+</code></pre></div>
+<p>정상 예:</p>
+<div class="highlight"><pre><span></span><code>Docker Compose version ...
+</code></pre></div>
+<p>현재 표준 명령은 다음 형식이다.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose
+</code></pre></div>
+<p>Legacy Standalone Compose에서 사용하던:</p>
+<div class="highlight"><pre><span></span><code>docker-compose
+</code></pre></div>
+<p>형식은 기존 환경 호환 목적이 아니라면 새 가이드의 기본 명령으로 사용하지 않는다.</p>
+<p>현재 단계에서는 Compose 기능 존재 여부만 확인한다.</p>
+<p>실제 <code>compose.yml</code> 또는 <code>docker-compose.local.yml</code>은
+프로젝트가 생성된 이후 프로젝트 로컬 인프라 구성 단계에서 작성한다.</p>
+<hr />
+<h2 id="16-docker-desktop">16. Docker Desktop 기본 상태 확인</h2>
+<p>다음 명령을 순서대로 실행한다.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>--version
+docker<span class="w"> </span>info
+docker<span class="w"> </span>compose<span class="w"> </span>version
+</code></pre></div>
+<p>확인 항목:</p>
+<div class="highlight"><pre><span></span><code>Docker CLI      → 실행 가능
+Docker Engine   → Server 연결 가능
+Docker Compose  → 실행 가능
+</code></pre></div>
+<p>세 항목이 모두 정상이어야 이후 Oracle Container 구성을 진행한다.</p>
+<hr />
+<h2 id="17-container">17. 기본 Container 실행 테스트</h2>
+<p>Docker Engine 자체가 정상 동작하는지 간단히 확인하려면
+Docker의 기본 Test Container를 사용할 수 있다.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>hello-world
+</code></pre></div>
+<p>이 명령은 다음 과정을 확인한다.</p>
+<div class="highlight"><pre><span></span><code>Docker CLI
+   ↓
+Docker Engine
+   ↓
+Image Pull
+   ↓
+Container 생성
+   ↓
+Container 실행
+   ↓
+종료 후 --rm으로 삭제
+</code></pre></div>
+<p>정상 메시지가 출력되면 Docker의 기본 실행경로가 동작하는 것이다.</p>
+<p>현재 Test는 Docker 자체 확인 목적이며 Oracle과는 무관하다.</p>
+<hr />
+<h2 id="18-image-container-volume">18. Image / Container / Volume의 차이</h2>
+<p>Docker를 처음 사용할 때 다음 세 개념을 혼동하기 쉽다.</p>
+<pre class="mermaid"><code>flowchart LR
+    IMAGE[Image] --&gt; CONTAINER[Container]
+    CONTAINER --&gt; VOLUME[Volume]</code></pre>
+<h3 id="image">Image</h3>
+<p>Server Software와 실행환경의 Template이다.</p>
+<p>예:</p>
+<div class="highlight"><pre><span></span><code>Oracle Database Free Image
+</code></pre></div>
+<h3 id="container">Container</h3>
+<p>Image를 기반으로 실제 실행되는 Instance이다.</p>
+<p>예:</p>
+<div class="highlight"><pre><span></span><code>microserver-oracle
+</code></pre></div>
+<h3 id="volume">Volume</h3>
+<p>Container Life Cycle과 분리하여 Data를 보관한다.</p>
+<p>예:</p>
+<div class="highlight"><pre><span></span><code>microserver-oracle-data
+</code></pre></div>
+<p>특히 Database Container에서는 Volume이 중요하다.</p>
+<div class="highlight"><pre><span></span><code>Container 삭제
+    ≠
+Database Data 삭제
+
+Volume까지 삭제
+    =
+Database Data 삭제 가능
+</code></pre></div>
+<p>Oracle 문서에서 이 차이를 다시 실제 명령과 함께 설명한다.</p>
+<hr />
+<h2 id="19-docker-desktop-resource">19. Docker Desktop Resource 이해</h2>
+<p>Oracle Database는 일반적인 경량 Web Container보다
+Memory와 Disk를 더 많이 사용한다.</p>
+<p>다음 항목을 확인한다.</p>
+<ul>
+<li>Host 전체 Memory</li>
+<li>Docker Desktop 사용 가능 Resource</li>
+<li>Docker Image 저장 공간</li>
+<li>Named Volume 저장 공간</li>
+<li>SSD 여유 공간</li>
+<li>동시에 실행하는 Container 수</li>
+</ul>
+<p>현재 단계에서는 임의의 Memory Limit 값을 프로젝트 표준으로 강제하지 않는다.</p>
+<p>개발 PC 사양과 동시에 실행하는 개발 도구에 따라 Resource 요구량이 달라질 수 있기 때문이다.</p>
+<hr />
+<h2 id="20-docker-disk">20. Docker Disk 사용 확인</h2>
+<p>Docker가 사용하는 Disk 현황을 확인할 수 있다.</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>system<span class="w"> </span>df
+</code></pre></div>
+<p>Image:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>image<span class="w"> </span>ls
+</code></pre></div>
+<p>Volume:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>volume<span class="w"> </span>ls
+</code></pre></div>
+<p>Container:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>ps<span class="w"> </span>-a
+</code></pre></div>
+<p>Oracle Image와 Database Volume을 사용하기 시작하면 Disk 사용량이 증가하므로
+정기적으로 확인할 수 있다.</p>
+<hr />
+<h2 id="21-docker-desktop-ui">21. Docker Desktop UI</h2>
+<p>Docker Desktop UI에서도 주요 상태를 확인할 수 있다.</p>
+<p>대표 영역:</p>
+<div class="highlight"><pre><span></span><code>Containers
+Images
+Volumes
+Builds
+Settings
+</code></pre></div>
+<p>CLI를 기본 기준으로 사용하되
+Container Logs나 Resource 상태를 빠르게 확인할 때 Desktop UI를 함께 사용할 수 있다.</p>
+<hr />
+<h2 id="22">22. 현재 단계에서 하지 않는 작업</h2>
+<p>현재는 Docker 실행환경 자체만 준비한다.</p>
+<p>다음 작업은 아직 하지 않는다.</p>
+<div class="highlight"><pre><span></span><code>Oracle Database Image Pull
+Oracle Container 생성
+Oracle Volume 생성
+FREEPDB1 접속
+Spring Boot 프로젝트 생성
+Docker Compose 프로젝트 파일 작성
+application-local.yml 작성
+</code></pre></div>
+<p>Oracle 관련 실제 구성은 다음 문서에서 진행한다.</p>
+<hr />
+<h2 id="23">23. 자주 발생하는 문제</h2>
+<h3 id="231-docker">23.1 <code>docker</code> 명령을 찾을 수 없음</h3>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>--version
+</code></pre></div>
+<p>명령을 찾지 못한다면:</p>
+<ul>
+<li>Docker Desktop 설치 여부 확인</li>
+<li>Docker Desktop 설치 후 Terminal 재실행</li>
+<li>Windows / macOS 설치가 정상 완료되었는지 확인</li>
+</ul>
+<hr />
+<h3 id="232-docker-info-server">23.2 <code>docker info</code>에서 Server 연결 실패</h3>
+<p>대표적으로 Docker Desktop이 실행되지 않았거나
+Docker Engine이 아직 시작되지 않은 경우 발생한다.</p>
+<p>Docker Desktop을 실행하고 Engine 상태를 확인한다.</p>
+<p>다시:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>info
+</code></pre></div>
+<hr />
+<h3 id="233-windows-wsl">23.3 Windows에서 WSL 관련 오류</h3>
+<p>PowerShell:</p>
+<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-status</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-list</span> <span class="p">-</span><span class="n">-verbose</span>
+</code></pre></div>
+<p>WSL 2가 정상 활성화되어 있는지 확인한다.</p>
+<p>Docker Desktop의 WSL Integration 설정도 확인한다.</p>
+<hr />
+<h3 id="234-macos-docker-desktop">23.4 macOS에서 Docker Desktop이 실행되지 않음</h3>
+<p>다음 항목을 확인한다.</p>
+<ul>
+<li>Mac CPU Architecture와 설치 Package 일치 여부</li>
+<li>macOS 보안 / 권한 Prompt</li>
+<li>Docker Desktop 지원 macOS Version</li>
+<li>Virtualization 관련 환경</li>
+<li>Docker Desktop Logs</li>
+</ul>
+<hr />
+<h3 id="235-docker-compose">23.5 <code>docker compose</code> 명령을 찾을 수 없음</h3>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>version
+</code></pre></div>
+<p>Docker Desktop Version과 설치 상태를 확인한다.</p>
+<p>새 환경에서는 Legacy <code>docker-compose</code>를 별도로 설치하기보다
+Docker Desktop에 포함된 Compose Plugin 사용을 우선한다.</p>
+<hr />
+<h3 id="236-disk">23.6 Disk 사용량이 계속 증가함</h3>
+<p>확인:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>system<span class="w"> </span>df
+</code></pre></div>
+<p>불필요한 Image나 종료된 Container가 있는지 확인한다.</p>
+<p>단, Database Volume은 실제 개발 Data를 포함할 수 있으므로
+무작정 삭제하지 않는다.</p>
+<hr />
+<h2 id="24">24. 완료 상태</h2>
+<p>Docker Desktop 기본 환경 구성이 끝나면 다음 상태가 되어야 한다.</p>
+<pre class="mermaid"><code>flowchart TB
+    PC[Developer PC]
+    PC --&gt; DD[Docker Desktop]
+    DD --&gt; CLI[Docker CLI]
+    DD --&gt; ENGINE[Docker Engine]
+    DD --&gt; COMPOSE[Docker Compose]
+
+    CLI --&gt; READY[Container 실행 준비 완료]
+    ENGINE --&gt; READY
+    COMPOSE --&gt; READY</code></pre>
+<p>아직 Oracle Container는 만들지 않는다.</p>
+<hr />
+<h2 id="25">25. 체크리스트</h2>
+<h3 id="windows_1">Windows</h3>
+<ul>
+<li>[ ] Docker Desktop for Windows를 설치했다.</li>
+<li>[ ] 필요한 경우 WSL 2가 활성화되어 있다.</li>
+<li>[ ] Linux Container 기반 Docker Desktop 환경을 사용한다.</li>
+<li>[ ] <code>docker --version</code>이 정상 실행된다.</li>
+<li>[ ] <code>docker info</code>가 정상 실행된다.</li>
+</ul>
+<h3 id="macos_1">macOS</h3>
+<ul>
+<li>[ ] <code>uname -m</code>으로 Mac Architecture를 확인했다.</li>
+<li>[ ] Apple Silicon 또는 Intel에 맞는 Docker Desktop을 설치했다.</li>
+<li>[ ] <code>docker --version</code>이 정상 실행된다.</li>
+<li>[ ] <code>docker info</code>가 정상 실행된다.</li>
+</ul>
+<h3 id="_1">공통</h3>
+<ul>
+<li>[ ] Docker Compose를 사용할 수 있다.</li>
+<li>[ ] <code>docker run --rm hello-world</code>가 정상 실행된다.</li>
+<li>[ ] Image / Container / Volume의 차이를 이해했다.</li>
+<li>[ ] 회사 PC라면 Docker Desktop 사용 정책과 Subscription 조건을 확인했다.</li>
+<li>[ ] Oracle Database 구성은 아직 진행하지 않았다.</li>
+</ul>
+<hr />
+<h2 id="26">26. 다음 단계</h2>
+<p>Docker Desktop 준비가 완료되면 Oracle Database Free 로컬 개발환경을 구성한다.</p>
+<div class="highlight"><pre><span></span><code>Docker Desktop 설치 및 기본 환경 구성       ← 현재 완료
+        ↓
+Oracle Database Free 로컬 개발환경 구성
+        ↓
+Spring Boot 프로젝트 생성
+</code></pre></div>
+<p>Apple Silicon Mac에서는 Oracle Image Pull 전후에
+별도의 ARM64 지원 및 Architecture 검증 가이드를 참고할 수 있다.</p>
+<hr />
+<h2 id="27">27. 공식 참고 자료</h2>
+<ul>
+<li>
+<p>Docker Desktop<br />
+<a href="https://docs.docker.com/desktop/">https://docs.docker.com/desktop/</a></p>
+</li>
+<li>
+<p>Docker Desktop for Windows<br />
+<a href="https://docs.docker.com/desktop/setup/install/windows-install/">https://docs.docker.com/desktop/setup/install/windows-install/</a></p>
+</li>
+<li>
+<p>Docker Desktop WSL 2 Backend<br />
+<a href="https://docs.docker.com/desktop/features/wsl/">https://docs.docker.com/desktop/features/wsl/</a></p>
+</li>
+<li>
+<p>Docker Desktop for Mac<br />
+<a href="https://docs.docker.com/desktop/setup/install/mac-install/">https://docs.docker.com/desktop/setup/install/mac-install/</a></p>
+</li>
+<li>
+<p>Docker Compose Installation<br />
+<a href="https://docs.docker.com/compose/install/">https://docs.docker.com/compose/install/</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

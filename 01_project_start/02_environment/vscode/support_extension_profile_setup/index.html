@@ -585,58 +585,6 @@
   
   
   
-    <a href="../../python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Python / MkDocs
-  
-
-    
-  </span>
-  
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
     <a href="../../java/jdk_setup/" class="md-nav__link">
       
   
@@ -738,10 +686,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_1_2_6" id="__nav_1_2_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_1_2_5" id="__nav_1_2_5_label" tabindex="0">
             
   
   
@@ -759,8 +707,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_1_2_6">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1040,14 +988,14 @@
   
   
   
-    <a href="../../database/oracle_docker_setup/" class="md-nav__link">
+    <a href="../../database/docker_desktop_setup/" class="md-nav__link">
       
   
   
   <span class="md-ellipsis">
     
   
-    Database 개발환경
+    Oracle / Docker 로컬 환경
   
 
     
@@ -1108,6 +1056,58 @@
     
   
     프로젝트 생성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../04_etc/python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python / MkDocs
   
 
     
@@ -1748,13 +1748,23 @@ Spring Boot Dashboard
 </ul>
 <hr />
 <h1 id="17">17. 다음 단계</h1>
-<p>다음 문서에서는 앞 단계에서 준비한 Eclipse Temurin JDK와 VS Code의 관계 및 프로젝트별 JDK 운영 방향을 정리한다.</p>
-<div class="highlight"><pre><span></span><code>지원 Extension / Profile
-        ↓
-JDK 연계 / 개발환경 운영
-        ↓
-Maven 환경 구성
+<p>다음 문서에서는 앞 단계에서 준비한 Eclipse Temurin JDK와
+현재 구성한 VS Code Java Extension의 관계를 확인하고,
+향후 프로젝트별 JDK를 어떤 시점에 연결할지 운영 방향을 정리한다.</p>
+<div class="highlight"><pre><span></span><code>JDK 준비
+   ↓
+Maven 준비
+   ↓
+VS Code / Java / Spring Extension
+   ↓
+지원 Extension / Profile       ← 현재 완료
+   ↓
+JDK 연계 및 VS Code 환경 운영 확인
+   ↓
+Spring Boot 프로젝트 생성
 </code></pre></div>
+<p>Apache Maven 환경은 이미 VS Code 구성 전에 준비되어 있으므로
+VS Code 환경 구성이 완료되면 별도의 Maven 설치 단계로 되돌아가지 않는다.</p>
 <h2 id="_2">참고</h2>
 <ul>
 <li>

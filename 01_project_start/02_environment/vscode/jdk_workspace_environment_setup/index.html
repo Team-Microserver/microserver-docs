@@ -14,7 +14,7 @@
         <link rel="prev" href="../support_extension_profile_setup/">
       
       
-        <link rel="next" href="../../database/oracle_docker_setup/">
+        <link rel="next" href="../../database/docker_desktop_setup/">
       
       
         
@@ -585,58 +585,6 @@
   
   
   
-    <a href="../../python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Python / MkDocs
-  
-
-    
-  </span>
-  
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
     <a href="../../java/jdk_setup/" class="md-nav__link">
       
   
@@ -738,10 +686,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_1_2_6" id="__nav_1_2_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_1_2_5" id="__nav_1_2_5_label" tabindex="0">
             
   
   
@@ -759,8 +707,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_1_2_6">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1040,14 +988,14 @@
   
   
   
-    <a href="../../database/oracle_docker_setup/" class="md-nav__link">
+    <a href="../../database/docker_desktop_setup/" class="md-nav__link">
       
   
   
   <span class="md-ellipsis">
     
   
-    Database 개발환경
+    Oracle / Docker 로컬 환경
   
 
     
@@ -1108,6 +1056,58 @@
     
   
     프로젝트 생성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../04_etc/python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python / MkDocs
   
 
     
@@ -1551,17 +1551,17 @@ Workspace에서 프로젝트별 JDK 지정
 <p>설정 시점은 다음과 같다.</p>
 <div class="highlight"><pre><span></span><code>JDK 준비
    ↓
+Maven 기본 환경 준비
+   ↓
 VS Code 준비
    ↓
 Java / Spring Extension 준비
    ↓
-Maven 환경 준비
-   ↓
-MicroServer 프로젝트 생성
+MicroServer Spring Boot 프로젝트 생성
    ↓
 VS Code Workspace 열기
    ↓
-프로젝트별 JDK 지정
+프로젝트별 JDK / Maven / Workspace 설정
 </code></pre></div>
 <p>즉, <strong>JDK를 선택할 수 있는 VS Code 환경은 지금 준비하지만 실제 프로젝트 경로와 연결하는 설정은 프로젝트가 생성된 뒤 수행</strong>한다.</p>
 <hr />
@@ -1593,7 +1593,9 @@ VS Code Workspace JDK
 → 특정 프로젝트의 Java 개발환경
 </code></pre></div>
 <p>MicroServer에서는 후자를 프로젝트 개발환경의 기준으로 삼는다.</p>
-<p>다만 Maven, 외부 Shell, CI/CD 등은 별도의 Java Runtime 설정이 필요할 수 있으므로 해당 내용은 Maven 및 Build 환경 가이드에서 별도로 다룬다.</p>
+<p>Apache Maven 자체의 개발 PC 환경은 앞 단계에서 이미 구성했지만,
+<strong>생성된 프로젝트가 사용할 Java 버전, Maven Wrapper, <code>pom.xml</code> Build 설정은 아직 구성하지 않는다.</strong></p>
+<p>이 내용은 Spring Boot 프로젝트 생성 이후의 프로젝트 개발환경 설정 단계에서 다룬다.</p>
 <hr />
 <h1 id="10-java-language-server-project-jdk">10. Java Language Server와 Project JDK</h1>
 <p>VS Code의 Java 개발기능은 Java Language Server를 통해 제공된다.</p>
@@ -1757,19 +1759,24 @@ Temurin JDK 준비
 </ul>
 <hr />
 <h1 id="17">17. 다음 단계</h1>
-<p>VS Code 개발환경 구성이 완료되면 Maven 환경 구성으로 진행한다.</p>
+<p>이 문서까지 완료하면 VS Code 개발환경 구성은 끝난다.</p>
+<p>다음 단계에서는 <strong>Spring Boot 프로젝트를 실제로 생성</strong>한다.</p>
 <div class="highlight"><pre><span></span><code>JDK 설치 및 설정
         ↓
-VS Code 개발환경 구성       ← 완료
+Maven 설치 및 기본 환경 구성
         ↓
-Maven 설치 및 설정
+VS Code 개발환경 구성       ← 현재 완료
         ↓
 Spring Boot 프로젝트 생성
         ↓
+프로젝트 JDK / Maven / VS Code 설정
+        ↓
 프로젝트 기본 구조 구성
 </code></pre></div>
-<p>VS Code는 여기까지 <strong>개발 도구 환경 구성</strong>을 완료하고,
-실제 Build와 Application 구성은 다음 단계부터 진행한다.</p>
+<p>현재까지는 개발 PC에 JDK, Maven, VS Code와 필요한 Extension을 준비한 상태이다.</p>
+<p>실제 <code>.vscode/settings.json</code>, <code>java.configuration.runtimes</code>,
+Maven Wrapper, <code>pom.xml</code>의 Java / Build 설정 등은
+Spring Boot 프로젝트 생성 이후의 <strong>프로젝트 개발환경 설정 단계</strong>에서 적용한다.</p>
 <h2 id="_3">참고</h2>
 <ul>
 <li>

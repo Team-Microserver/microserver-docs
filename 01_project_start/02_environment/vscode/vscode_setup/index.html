@@ -585,58 +585,6 @@
   
   
   
-    <a href="../../python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
-      
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Python / MkDocs
-  
-
-    
-  </span>
-  
-  
-
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
-  
-
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-      
-    
-    
-      
-        
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
     <a href="../../java/jdk_setup/" class="md-nav__link">
       
   
@@ -738,10 +686,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_6" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2_5" checked>
         
           
-          <label class="md-nav__link" for="__nav_1_2_6" id="__nav_1_2_6_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_1_2_5" id="__nav_1_2_5_label" tabindex="0">
             
   
   
@@ -759,8 +707,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_6_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_1_2_6">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_2_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_2_5">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1195,14 +1143,14 @@
   
   
   
-    <a href="../../database/oracle_docker_setup/" class="md-nav__link">
+    <a href="../../database/docker_desktop_setup/" class="md-nav__link">
       
   
   
   <span class="md-ellipsis">
     
   
-    Database 개발환경
+    Oracle / Docker 로컬 환경
   
 
     
@@ -1263,6 +1211,58 @@
     
   
     프로젝트 생성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../04_etc/python_mkdocs/windows_python_venv_mkdocs/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Python / MkDocs
   
 
     
@@ -1756,16 +1756,17 @@
 <p>MicroServer 개발환경은 다음 순서로 구성한다.</p>
 <pre class="mermaid"><code>flowchart LR
     A[Git / GitHub 환경 구성] --&gt; B[Temurin JDK 준비]
-    B --&gt; C[VS Code 설치]
-    C --&gt; D[Java Extension 구성]
-    D --&gt; E[Spring Boot Extension 구성]
-    E --&gt; F[지원 Extension / Profile 구성]
-    F --&gt; G[JDK 연계 확인]
-    G --&gt; H[Maven 환경 구성]
-    H --&gt; I[Spring Boot 프로젝트 생성]</code></pre>
+    B --&gt; C[Apache Maven 준비]
+    C --&gt; D[VS Code 설치]
+    D --&gt; E[Java Extension 구성]
+    E --&gt; F[Spring Boot Extension 구성]
+    F --&gt; G[지원 Extension / Profile 구성]
+    G --&gt; H[JDK 연계 방식 확인]
+    H --&gt; I[Spring Boot 프로젝트 생성]
+    I --&gt; J[프로젝트 JDK / Maven / VS Code 설정]</code></pre>
 <p>현재 가이드는 다음 범위를 담당한다.</p>
 <pre class="mermaid"><code>flowchart LR
-    JDK[Temurin JDK 준비]
+    JDK[Temurin JDK 준비] --&gt; MAVEN[Apache Maven 준비]
 
     subgraph VSCODE["VS Code 개발환경 구성"]
         direction LR
@@ -1774,17 +1775,17 @@
         VS3[Spring Boot Extension]
         VS4[지원 Extension]
         VS5[Profile]
-        VS6[JDK 연계 준비]
+        VS6[JDK 연계 방식 확인]
 
         VS1 --&gt; VS2 --&gt; VS3 --&gt; VS4 --&gt; VS5 --&gt; VS6
     end
 
-    MAVEN[Maven 환경 구성]
     SPRING[Spring Boot 프로젝트 생성]
+    PROJECT[프로젝트 개발환경 설정]
 
-    JDK --&gt; VSCODE
-    VSCODE --&gt; MAVEN
-    MAVEN --&gt; SPRING</code></pre>
+    MAVEN --&gt; VSCODE
+    VSCODE --&gt; SPRING
+    SPRING --&gt; PROJECT</code></pre>
 <hr />
 <h2 id="3-vs-code">3. VS Code 환경 구성 원칙</h2>
 <p>MicroServer 프로젝트에서는 다음 원칙으로 VS Code 개발환경을 구성한다.</p>
@@ -1917,19 +1918,21 @@
 </ul>
 <hr />
 <h2 id="6">6. 다음 단계</h2>
-<p>VS Code 환경 구성이 끝나면 다음 개발환경 가이드로 진행한다.</p>
+<p>VS Code 환경 구성이 끝나면 <strong>Spring Boot 프로젝트 생성 단계</strong>로 진행한다.</p>
 <div class="highlight"><pre><span></span><code>JDK 설치 및 설정
+        ↓
+Maven 설치 및 기본 환경 구성
         ↓
 VS Code 개발환경 구성       ← 현재
         ↓
-Maven 설치 및 설정
-        ↓
 Spring Boot 프로젝트 생성
         ↓
-프로젝트 기본 구조 구성
+프로젝트 JDK / Maven / VS Code 설정
 </code></pre></div>
-<p>VS Code는 이 단계에서 <strong>개발 도구 자체를 준비</strong>하고,
-실제 Maven / Spring Boot 프로젝트와 관련된 설정은 다음 단계부터 적용한다.</p>
+<p>JDK와 Maven은 앞 단계에서 이미 개발 PC에 준비되어 있다.</p>
+<p>VS Code 단계에서는 IDE와 Java / Spring Boot 개발 Extension을 준비하고,
+실제 프로젝트 JDK Runtime, Maven Wrapper, <code>pom.xml</code>, Workspace 설정 등은
+Spring Boot 프로젝트가 생성된 이후의 <strong>프로젝트 개발환경 설정 단계</strong>에서 적용한다.</p>
 
 
 
