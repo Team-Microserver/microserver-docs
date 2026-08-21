@@ -1,41 +1,65 @@
-site_name: Microserver
-site_description: Financial SI Standard Framework & Reference Architecture
+site_name: MicroServer 구축 가이드
+site_description: 금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드
+site_author: Team MicroServer
 docs_dir: docs
 
 theme:
   name: material
   language: ko
 
+  # 항상 Dark Theme 사용
+  # OS / Browser의 Light/Dark 설정과 관계없이 slate scheme으로 고정한다.
+  # Toggle을 제공하지 않으므로 사이트는 항상 Dark 상태로 표시된다.
+  palette:
+    scheme: slate
+    primary: indigo
+    accent: light-blue
+
   features:
     - navigation.tabs
     - navigation.top
     - navigation.prune
-    - search.highlight
-    - search.share
     - content.code.copy
     - content.code.annotate
+    - content.tabs.link
+    - search.highlight
+    - search.share
 
 extra_css:
   - assets/css/extra.css
 
-
 plugins:
-  - search
+  - search:
+      lang: ko
   - redirects:
       redirect_maps:
         index.md: 01_project_start/01_overview/project_introduction.md
 
 markdown_extensions:
+  - admonition
   - attr_list
   - md_in_html
-  - admonition
+  - tables
+  - toc:
+      permalink: true
   - pymdownx.details
-  - pymdownx.highlight
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.keys
+  - pymdownx.mark
 
 nav:
 #  - Home: index.md
@@ -61,7 +85,7 @@ nav:
           - Git / GitHub 환경 구성: 01_project_start/02_environment/git_github_setup.md
           - Java 개발환경:
               - JDK 설치 및 설정: 01_project_start/02_environment/java/jdk_setup.md
- 
+
           - Maven 개발환경:
             - Maven 설치 및 설정: 01_project_start/02_environment/maven/maven_setup.md
 
@@ -73,13 +97,13 @@ nav:
             - Spring Boot Extension 구성: 01_project_start/02_environment/vscode/spring_boot_extension_setup.md
             - 개발 지원 Extension 및 Profile 구성: 01_project_start/02_environment/vscode/support_extension_profile_setup.md
             - JDK 연계 및 개발환경 운영: 01_project_start/02_environment/vscode/jdk_workspace_environment_setup.md
-          
+
           - Oracle / Docker 로컬 환경:
             - Docker Desktop 설치 및 기본 환경 구성: 01_project_start/02_environment/database/docker_desktop_setup.md
             - Oracle Database Free 로컬 개발환경 구성: 01_project_start/02_environment/database/oracle_database_free_setup.md
             - Apple Silicon Oracle Docker 지원 및 검증: 01_project_start/02_environment/database/oracle_docker_apple_silicon_support.md
- 
- 
+
+
       - 프로젝트 생성:
         - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
         - 프로젝트 개발환경 설정:
@@ -88,9 +112,9 @@ nav:
         - 프로젝트 초기 실행 및 검증:
             - Spring Boot 초기 실행 및 Build 검증: 01_project_start/03_project_creation/project_verification/project_initial_run_verification.md
         - 프로젝트 기본 구조 구성:
-            - Maven 멀티모듈 기본 구성: 01_project_start/03_project_creation/project_structure/maven_multi_module_setup.md 
- 
- 
+            - Maven 멀티모듈 기본 구성: 01_project_start/03_project_creation/project_structure/maven_multi_module_setup.md
+
+
       - Python / MkDocs:
         - Windows 환경 구성: 01_project_start/04_etc/python_mkdocs/windows_python_venv_mkdocs.md
         - macOS 환경 구성: 01_project_start/04_etc/python_mkdocs/macos_python_venv_mkdocs.md
