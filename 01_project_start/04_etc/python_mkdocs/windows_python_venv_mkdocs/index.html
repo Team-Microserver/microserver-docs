@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>Windows 환경 구성 - Microserver</title>
+        <title>Windows 환경 구성 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1547,12 +1557,12 @@
 
 
 
-<h1 id="windows-python-mkdocs">Windows Python 가상환경 / MkDocs 구성 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="windows-python-mkdocs">Windows Python 가상환경 / MkDocs 구성 가이드<a class="headerlink" href="#windows-python-mkdocs" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 Windows 개발 PC에서 MicroServer 기술문서를 작성하고 로컬에서 확인하기 위한 <strong>Python, 가상환경(venv), MkDocs, Material for MkDocs</strong> 개발환경을 구성한다.</p>
 <p>Python은 MicroServer 애플리케이션 개발 언어로 사용하는 것이 아니라 <strong>MkDocs 문서 실행 환경을 독립적으로 관리하기 위한 도구</strong>로 사용한다.</p>
 <hr />
-<h2 id="2">2. 구성 구조</h2>
+<h2 id="2">2. 구성 구조<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     WIN[Windows] --&gt; PY[Python]
     PY --&gt; VENV[.venv]
@@ -1562,13 +1572,13 @@
     SITE --&gt; GH[GitHub Pages]</code></pre>
 <p>프로젝트별로 <code>.venv</code>를 사용하면 다른 Python 프로젝트의 패키지 버전과 충돌하지 않는다.</p>
 <hr />
-<h2 id="3-python">3. Python 설치 확인</h2>
+<h2 id="3-python">3. Python 설치 확인<a class="headerlink" href="#3-python" title="Permanent link">&para;</a></h2>
 <p>PowerShell을 실행한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
 <p>또는 Python Launcher가 설치된 경우:</p>
-<div class="highlight"><pre><span></span><code><span class="n">py</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">py</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
 <p>Python이 설치되어 있지 않으면 Python 공식 배포판을 설치한다.</p>
 <p>설치 과정에서 가능하면 다음 항목을 확인한다.</p>
 <ul>
@@ -1577,235 +1587,235 @@
 <li>pip 설치</li>
 </ul>
 <p>설치 후 새 PowerShell 창을 열고 다시 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
-<span class="n">pip</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">pip</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
 <p><code>python</code> 명령이 Microsoft Store로 연결되는 등 예상과 다르게 동작하면 <code>py</code> 명령을 사용한다.</p>
 <hr />
-<h2 id="4">4. 문서 저장소로 이동</h2>
+<h2 id="4">4. 문서 저장소로 이동<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-docs</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-docs</span>
+</span></code></pre></div>
 <p>현재 위치 확인:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">Get-Location</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">Get-Location</span>
+</span></code></pre></div>
 <p>Git 저장소 상태도 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">git</span> <span class="n">status</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">git</span> <span class="n">status</span>
+</span></code></pre></div>
 <hr />
-<h2 id="5-python">5. Python 가상환경 생성</h2>
+<h2 id="5-python">5. Python 가상환경 생성<a class="headerlink" href="#5-python" title="Permanent link">&para;</a></h2>
 <p>프로젝트 루트에서 실행한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+</span></code></pre></div>
 <p><code>python</code> 명령 대신 <code>py</code>를 사용하는 환경에서는:</p>
-<div class="highlight"><pre><span></span><code><span class="n">py</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">py</span> <span class="n">-m</span> <span class="n">venv</span> <span class="p">.</span><span class="n">venv</span>
+</span></code></pre></div>
 <p>생성 후 구조 예:</p>
-<div class="highlight"><pre><span></span><code>microserver-docs/
- ├─ .venv/
- ├─ docs/
- ├─ mkdocs.yml
- └─ ...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>microserver-docs/
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a> ├─ .venv/
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a> ├─ docs/
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a> ├─ mkdocs.yml
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a> └─ ...
+</span></code></pre></div>
 <p><code>.venv</code>는 개발자 PC별 로컬 환경이므로 Git에 Commit하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>.venv/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>.venv/
+</span></code></pre></div>
 <hr />
-<h2 id="6-powershell">6. PowerShell 실행 정책 설정</h2>
+<h2 id="6-powershell">6. PowerShell 실행 정책 설정<a class="headerlink" href="#6-powershell" title="Permanent link">&para;</a></h2>
 <p>Windows에서는 가상환경 활성화 스크립트 실행 시 다음 오류가 발생할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>running scripts is disabled on this system
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>running scripts is disabled on this system
+</span></code></pre></div>
 <p>현재 사용자 범위에서 PowerShell 스크립트 실행 정책을 설정한다.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">Set-ExecutionPolicy</span> <span class="n">-ExecutionPolicy</span> <span class="n">RemoteSigned</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">Set-ExecutionPolicy</span> <span class="n">-ExecutionPolicy</span> <span class="n">RemoteSigned</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
+</span></code></pre></div>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">Get-ExecutionPolicy</span> <span class="n">-List</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nb">Get-ExecutionPolicy</span> <span class="n">-List</span>
+</span></code></pre></div>
 <p>이 설정은 일반적으로 사용자 계정에 1회 적용하면 된다.</p>
 <p>회사 보안정책에 의해 실행 정책 변경이 제한된 PC에서는 사내 정책을 우선한다.</p>
 <hr />
-<h2 id="7">7. 가상환경 활성화</h2>
+<h2 id="7">7. 가상환경 활성화<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
 <p>PowerShell:</p>
-<div class="highlight"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+</span></code></pre></div>
 <p>정상 활성화되면 프롬프트 앞에 <code>(.venv)</code>가 표시된다.</p>
-<div class="highlight"><pre><span></span><code>(.venv) PS C:\workspace\microserver-docs&gt;
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>(.venv) PS C:\workspace\microserver-docs&gt;
+</span></code></pre></div>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
-<span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">python</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">python</span>
+</span></code></pre></div>
 <p>출력 경로에 <code>.venv\Scripts\python.exe</code>가 포함되어 있으면 정상이다.</p>
 <blockquote>
 <p>새 PowerShell 창을 열면 가상환경은 다시 활성화해야 한다.</p>
 </blockquote>
 <hr />
-<h2 id="8-pip">8. pip 업그레이드</h2>
+<h2 id="8-pip">8. pip 업그레이드<a class="headerlink" href="#8-pip" title="Permanent link">&para;</a></h2>
 <p>가상환경이 활성화된 상태에서 실행한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="p">-</span><span class="n">-upgrade</span> <span class="n">pip</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="p">-</span><span class="n">-upgrade</span> <span class="n">pip</span>
+</span></code></pre></div>
 <hr />
-<h2 id="9-mkdocs">9. MkDocs 설치</h2>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">mkdocs</span>
-</code></pre></div>
+<h2 id="9-mkdocs">9. MkDocs 설치<a class="headerlink" href="#9-mkdocs" title="Permanent link">&para;</a></h2>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">mkdocs</span>
+</span></code></pre></div>
 <p>Material 테마:</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">mkdocs-material</span>
-<span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">mkdocs-redirects</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">mkdocs-material</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">mkdocs-redirects</span>
+</span></code></pre></div>
 <p>프로젝트 <code>mkdocs.yml</code>에서 <code>redirects</code> 플러그인을 사용하므로 <code>mkdocs-redirects</code>도 함께 설치한다.</p>
 <p>설치 확인:</p>
-<div class="highlight"><pre><span></span><code><span class="n">mkdocs</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">mkdocs</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
 <p>필요한 확장 기능을 프로젝트에서 추가로 사용하는 경우 패키지를 함께 설치한다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">pymdown-extensions</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">pymdown-extensions</span>
+</span></code></pre></div>
 <hr />
-<h2 id="10">10. 패키지 버전 관리</h2>
+<h2 id="10">10. 패키지 버전 관리<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
 <p>팀원 간 동일한 문서 실행 환경을 맞추기 위해 설치 패키지를 파일로 관리하는 것을 권장한다.</p>
 <p>예: <code>requirements-docs.txt</code></p>
-<div class="highlight"><pre><span></span><code>mkdocs
-mkdocs-material
-mkdocs-redirects
-pymdown-extensions
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>mkdocs
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>mkdocs-material
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>mkdocs-redirects
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>pymdown-extensions
+</span></code></pre></div>
 <p>설치:</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements-docs</span><span class="p">.</span><span class="n">txt</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">install</span> <span class="n">-r</span> <span class="n">requirements-docs</span><span class="p">.</span><span class="n">txt</span>
+</span></code></pre></div>
 <p>현재 설치 목록 생성:</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">freeze</span> <span class="p">&gt;</span> <span class="n">requirements-docs-lock</span><span class="p">.</span><span class="n">txt</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">freeze</span> <span class="p">&gt;</span> <span class="n">requirements-docs-lock</span><span class="p">.</span><span class="n">txt</span>
+</span></code></pre></div>
 <p><code>requirements-docs.txt</code>는 사람이 관리하는 최소 의존성 목록으로, lock 파일은 실제 버전 재현이 필요한 경우 활용한다.</p>
 <hr />
-<h2 id="11-mkdocs">11. MkDocs 프로젝트 확인</h2>
+<h2 id="11-mkdocs">11. MkDocs 프로젝트 확인<a class="headerlink" href="#11-mkdocs" title="Permanent link">&para;</a></h2>
 <p>프로젝트 루트에 다음 파일이 있는지 확인한다.</p>
-<div class="highlight"><pre><span></span><code>mkdocs.yml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>mkdocs.yml
+</span></code></pre></div>
 <p>문서 디렉터리 예:</p>
-<div class="highlight"><pre><span></span><code>microserver-docs/
- ├─ docs/
- │   ├─ index.md
- │   └─ 01_project_start/
- ├─ mkdocs.yml
- ├─ requirements-docs.txt
- └─ .venv/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>microserver-docs/
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a> ├─ docs/
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a> │   ├─ index.md
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a> │   └─ 01_project_start/
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a> ├─ mkdocs.yml
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a> ├─ requirements-docs.txt
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a> └─ .venv/
+</span></code></pre></div>
 <hr />
-<h2 id="12-mkdocs">12. MkDocs 로컬 서버 실행</h2>
-<div class="highlight"><pre><span></span><code><span class="n">mkdocs</span> <span class="n">serve</span>
-</code></pre></div>
+<h2 id="12-mkdocs">12. MkDocs 로컬 서버 실행<a class="headerlink" href="#12-mkdocs" title="Permanent link">&para;</a></h2>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">mkdocs</span> <span class="n">serve</span>
+</span></code></pre></div>
 <p>기본적으로 로컬 개발 서버가 실행되며 브라우저에서 문서 사이트를 확인할 수 있다.</p>
 <p>실행 중 Markdown 파일을 저장하면 자동으로 변경사항이 반영된다.</p>
 <p>종료:</p>
-<div class="highlight"><pre><span></span><code>Ctrl + C
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Ctrl + C
+</span></code></pre></div>
 <hr />
-<h2 id="13">13. 다른 포트 사용</h2>
+<h2 id="13">13. 다른 포트 사용<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
 <p>기본 포트를 다른 프로그램이 사용 중인 경우:</p>
-<div class="highlight"><pre><span></span><code><span class="n">mkdocs</span> <span class="n">serve</span> <span class="n">-a</span> <span class="n">127</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">1</span><span class="p">:</span><span class="n">8001</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="n">mkdocs</span> <span class="n">serve</span> <span class="n">-a</span> <span class="n">127</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">1</span><span class="p">:</span><span class="n">8001</span>
+</span></code></pre></div>
 <p>외부 장비에서 테스트 목적으로 접근해야 하는 경우 네트워크 정책을 확인한 뒤 별도 bind 주소를 지정한다.</p>
 <hr />
-<h2 id="14">14. 정적 사이트 빌드</h2>
+<h2 id="14">14. 정적 사이트 빌드<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
 <p>배포 전 전체 문서를 빌드하여 오류를 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
+</span></code></pre></div>
 <p>빌드 결과는 기본적으로 <code>site</code> 디렉터리에 생성된다.</p>
-<div class="highlight"><pre><span></span><code>site/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>site/
+</span></code></pre></div>
 <p><code>site/</code>는 빌드 산출물이므로 일반적으로 Git에 Commit하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>site/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>site/
+</span></code></pre></div>
 <hr />
-<h2 id="15-github-pages">15. GitHub Pages 배포</h2>
+<h2 id="15-github-pages">15. GitHub Pages 배포<a class="headerlink" href="#15-github-pages" title="Permanent link">&para;</a></h2>
 <p>GitHub Pages를 MkDocs의 <code>gh-pages</code> 방식으로 운영하는 프로젝트에서는 다음 명령을 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">mkdocs</span> <span class="n">gh-deploy</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">mkdocs</span> <span class="n">gh-deploy</span>
+</span></code></pre></div>
 <p>배포 전 권장 절차:</p>
-<div class="highlight"><pre><span></span><code><span class="n">git</span> <span class="n">status</span>
-<span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
-<span class="n">git</span> <span class="n">add</span> <span class="p">.</span>
-<span class="n">git</span> <span class="n">commit</span> <span class="n">-m</span> <span class="s2">"docs: update environment guide"</span>
-<span class="n">git</span> <span class="n">push</span>
-<span class="n">mkdocs</span> <span class="n">gh-deploy</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="n">git</span> <span class="n">status</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="n">git</span> <span class="n">add</span> <span class="p">.</span>
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="n">git</span> <span class="n">commit</span> <span class="n">-m</span> <span class="s2">"docs: update environment guide"</span>
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="n">git</span> <span class="n">push</span>
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a><span class="n">mkdocs</span> <span class="n">gh-deploy</span>
+</span></code></pre></div>
 <p>프로젝트의 실제 배포 정책이 GitHub Actions 기반이라면 <code>gh-deploy</code> 대신 저장소 Workflow 정책을 따른다.</p>
 <hr />
-<h2 id="16">16. 매번 작업할 때 실행 순서</h2>
+<h2 id="16">16. 매번 작업할 때 실행 순서<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
 <p>새 PowerShell을 열었다면:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-docs</span>
-<span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
-<span class="n">mkdocs</span> <span class="n">serve</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-docs</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="n">mkdocs</span> <span class="n">serve</span>
+</span></code></pre></div>
 <p>작업 종료:</p>
-<div class="highlight"><pre><span></span><code>Ctrl + C
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>Ctrl + C
+</span></code></pre></div>
 <p>가상환경 비활성화:</p>
-<div class="highlight"><pre><span></span><code><span class="n">deactivate</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="n">deactivate</span>
+</span></code></pre></div>
 <hr />
-<h2 id="17-vs-code">17. VS Code에서 문서 프로젝트 열기</h2>
-<div class="highlight"><pre><span></span><code><span class="n">code</span> <span class="n">C</span><span class="p">:\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-docs</span>
-</code></pre></div>
+<h2 id="17-vs-code">17. VS Code에서 문서 프로젝트 열기<a class="headerlink" href="#17-vs-code" title="Permanent link">&para;</a></h2>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="n">code</span> <span class="n">C</span><span class="p">:\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-docs</span>
+</span></code></pre></div>
 <p>VS Code 내장 Terminal을 사용하는 경우에도 동일하게 가상환경을 활성화한다.</p>
-<div class="highlight"><pre><span></span><code><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="p">.\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">Activate</span><span class="p">.</span><span class="n">ps1</span>
+</span></code></pre></div>
 <hr />
-<h2 id="18">18. 문제 해결</h2>
-<h3 id="python"><code>python</code> 명령을 찾을 수 없음</h3>
-<div class="highlight"><pre><span></span><code><span class="n">py</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
+<h2 id="18">18. 문제 해결<a class="headerlink" href="#18" title="Permanent link">&para;</a></h2>
+<h3 id="python"><code>python</code> 명령을 찾을 수 없음<a class="headerlink" href="#python" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="n">py</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
 <p><code>py</code>는 동작하지만 <code>python</code>이 동작하지 않으면 Python 설치 또는 PATH 구성을 확인한다.</p>
-<h3 id="activateps1-cannot-be-loaded"><code>Activate.ps1 cannot be loaded</code></h3>
-<div class="highlight"><pre><span></span><code><span class="nb">Set-ExecutionPolicy</span> <span class="n">-ExecutionPolicy</span> <span class="n">RemoteSigned</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
-</code></pre></div>
+<h3 id="activateps1-cannot-be-loaded"><code>Activate.ps1 cannot be loaded</code><a class="headerlink" href="#activateps1-cannot-be-loaded" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nb">Set-ExecutionPolicy</span> <span class="n">-ExecutionPolicy</span> <span class="n">RemoteSigned</span> <span class="n">-Scope</span> <span class="n">CurrentUser</span>
+</span></code></pre></div>
 <p>PowerShell을 다시 열고 가상환경을 활성화한다.</p>
-<h3 id="mkdocs"><code>mkdocs</code> 명령을 찾을 수 없음</h3>
+<h3 id="mkdocs"><code>mkdocs</code> 명령을 찾을 수 없음<a class="headerlink" href="#mkdocs" title="Permanent link">&para;</a></h3>
 <p>가상환경 활성화 여부를 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">python</span>
-<span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">show</span> <span class="n">mkdocs</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">python</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="n">show</span> <span class="n">mkdocs</span>
+</span></code></pre></div>
 <p>필요하면:</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="n">-m</span> <span class="n">mkdocs</span> <span class="p">-</span><span class="n">-version</span>
-<span class="n">python</span> <span class="n">-m</span> <span class="n">mkdocs</span> <span class="n">serve</span>
-</code></pre></div>
-<h3 id="yaml">YAML 오류</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">mkdocs</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">mkdocs</span> <span class="n">serve</span>
+</span></code></pre></div>
+<h3 id="yaml">YAML 오류<a class="headerlink" href="#yaml" title="Permanent link">&para;</a></h3>
 <p>MkDocs 실행 시 <code>mkdocs.yml</code> 들여쓰기 오류가 가장 흔하다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
+</span></code></pre></div>
 <p>오류 메시지에 표시된 YAML 위치를 우선 확인한다.</p>
-<h3 id="nav-markdown">nav에 등록한 Markdown 파일이 없음</h3>
+<h3 id="nav-markdown">nav에 등록한 Markdown 파일이 없음<a class="headerlink" href="#nav-markdown" title="Permanent link">&para;</a></h3>
 <p><code>mkdocs.yml</code>의 <code>nav</code>에 지정한 경로와 실제 <code>docs</code> 하위 파일 경로가 동일한지 확인한다.</p>
-<div class="highlight"><pre><span></span><code>mkdocs.yml
-  nav path
-      ↓
-docs/&lt;same path&gt;.md
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>mkdocs.yml
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>  nav path
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>      ↓
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>docs/&lt;same path&gt;.md
+</span></code></pre></div>
 <hr />
-<h2 id="19-gitignore">19. 권장 <code>.gitignore</code></h2>
-<div class="highlight"><pre><span></span><code>.venv/
-site/
-__pycache__/
-*.pyc
-</code></pre></div>
+<h2 id="19-gitignore">19. 권장 <code>.gitignore</code><a class="headerlink" href="#19-gitignore" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>.venv/
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>site/
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>__pycache__/
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>*.pyc
+</span></code></pre></div>
 <hr />
-<h2 id="20">20. 최종 확인</h2>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
-<span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="p">-</span><span class="n">-version</span>
-<span class="n">mkdocs</span> <span class="p">-</span><span class="n">-version</span>
-<span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
-</code></pre></div>
+<h2 id="20">20. 최종 확인<a class="headerlink" href="#20" title="Permanent link">&para;</a></h2>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="n">python</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="n">python</span> <span class="n">-m</span> <span class="n">pip</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="n">mkdocs</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="n">mkdocs</span> <span class="n">build</span> <span class="p">-</span><span class="n">-strict</span>
+</span></code></pre></div>
 <p>체크리스트:</p>
-<ul>
-<li>[ ] Python이 설치되어 있다.</li>
-<li>[ ] <code>.venv</code>를 생성했다.</li>
-<li>[ ] PowerShell에서 가상환경을 활성화할 수 있다.</li>
-<li>[ ] MkDocs가 가상환경에 설치되어 있다.</li>
-<li>[ ] Material 테마가 설치되어 있다.</li>
-<li>[ ] <code>mkdocs-redirects</code>가 설치되어 있다.</li>
-<li>[ ] <code>mkdocs serve</code>가 정상 실행된다.</li>
-<li>[ ] <code>mkdocs build --strict</code>가 성공한다.</li>
-<li>[ ] <code>.venv/</code>와 <code>site/</code>가 Git에서 제외되어 있다.</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Python이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.venv</code>를 생성했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> PowerShell에서 가상환경을 활성화할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> MkDocs가 가상환경에 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Material 테마가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mkdocs-redirects</code>가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mkdocs serve</code>가 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mkdocs build --strict</code>가 성공한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.venv/</code>와 <code>site/</code>가 Git에서 제외되어 있다.</li>
 </ul>
 
 
@@ -1824,6 +1834,8 @@ __pycache__/
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1862,7 +1874,7 @@ __pycache__/
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

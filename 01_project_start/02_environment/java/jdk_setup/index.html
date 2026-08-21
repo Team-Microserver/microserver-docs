@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>JDK 설치 및 설정 - Microserver</title>
+        <title>JDK 설치 및 설정 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1519,8 +1529,8 @@
 
 
 
-<h1 id="jdk">JDK 설치 및 설정 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="jdk">JDK 설치 및 설정 가이드<a class="headerlink" href="#jdk" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 MicroServer 프로젝트의 Java 개발환경을 구성하기 위해 <strong>Eclipse Temurin JDK(Java Development Kit)</strong> 를 준비하고, Windows 및 macOS에서 JDK가 정상적으로 동작하는지 확인하는 방법을 설명한다.</p>
 <p>현재 단계에서는 아직 Maven, VS Code, Spring Boot 프로젝트를 구성하지 않는다.</p>
 <p>따라서 본 문서에서는 다음 내용만 다룬다.</p>
@@ -1546,7 +1556,7 @@
 <li>애플리케이션 실행 및 Build</li>
 </ul>
 <hr />
-<h2 id="2-jdk">2. 개발환경 구성에서 JDK의 위치</h2>
+<h2 id="2-jdk">2. 개발환경 구성에서 JDK의 위치<a class="headerlink" href="#2-jdk" title="Permanent link">&para;</a></h2>
 <p>MicroServer 프로젝트의 개발환경은 다음 순서로 구성한다.</p>
 <pre class="mermaid"><code>flowchart LR
     A[Git / GitHub 환경 구성] --&gt; B[Eclipse Temurin JDK]
@@ -1555,21 +1565,21 @@
     D --&gt; E[Spring Boot 프로젝트 생성]
     E --&gt; F[프로젝트 개발환경 설정]</code></pre>
 <p>현재 문서는 다음 단계에 해당한다.</p>
-<div class="highlight"><pre><span></span><code>Git / GitHub 환경 구성
-        ↓
-[ Eclipse Temurin JDK 준비 ]   ← 현재
-        ↓
-Apache Maven 설치
-        ↓
-VS Code 개발환경 구성
-        ↓
-Spring Boot 프로젝트 생성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Git / GitHub 환경 구성
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>[ Eclipse Temurin JDK 준비 ]   ← 현재
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Apache Maven 설치
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>VS Code 개발환경 구성
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Spring Boot 프로젝트 생성
+</span></code></pre></div>
 <p>JDK는 이후 Maven과 VS Code, Spring Boot 프로젝트가 공통으로 사용하는 Java 개발 기반이므로 가장 먼저 준비한다.</p>
 <hr />
-<h2 id="3-jdk">3. 프로젝트 JDK 운영 원칙</h2>
+<h2 id="3-jdk">3. 프로젝트 JDK 운영 원칙<a class="headerlink" href="#3-jdk" title="Permanent link">&para;</a></h2>
 <p>MicroServer 프로젝트의 JDK 운영 원칙은 다음과 같다.</p>
-<h3 id="31-eclipse-temurin">3.1 Eclipse Temurin 사용</h3>
+<h3 id="31-eclipse-temurin">3.1 Eclipse Temurin 사용<a class="headerlink" href="#31-eclipse-temurin" title="Permanent link">&para;</a></h3>
 <p>프로젝트에서 사용하는 OpenJDK 배포판은 <strong>Eclipse Temurin</strong>으로 통일한다.</p>
 <p>Java는 여러 OpenJDK 배포판이 존재한다.</p>
 <p>예:</p>
@@ -1581,74 +1591,74 @@ Spring Boot 프로젝트 생성
 </ul>
 <p>기능적으로 호환되는 배포판이라도 개발자마다 서로 다른 Vendor의 JDK를 사용하면 설치 경로, 배포 방식, 업데이트 정책 등이 달라질 수 있다.</p>
 <p>따라서 MicroServer 프로젝트에서는 개발환경의 일관성을 위해 Eclipse Temurin을 표준 JDK 배포판으로 사용한다.</p>
-<h3 id="32-jdk-git">3.2 JDK는 프로젝트 Git 저장소 외부에 보관</h3>
+<h3 id="32-jdk-git">3.2 JDK는 프로젝트 Git 저장소 외부에 보관<a class="headerlink" href="#32-jdk-git" title="Permanent link">&para;</a></h3>
 <p>JDK Binary는 프로젝트 Source와 분리하여 관리한다.</p>
-<h4 id="windows">Windows</h4>
-<div class="highlight"><pre><span></span><code>C:\dev\
- ├─ jdks\
- │   ├─ temurin-26\
- │   ├─ temurin-25\
- │   └─ temurin-17\
- │
- └─ workspace\
-</code></pre></div>
-<h4 id="macos">macOS</h4>
-<div class="highlight"><pre><span></span><code>~/dev/
- ├─ jdks/
- │   ├─ temurin-26.jdk/
- │   ├─ temurin-25.jdk/
- │   └─ temurin-17.jdk/
- │
- └─ workspace/
-</code></pre></div>
+<h4 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>C:\dev\
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a> ├─ jdks\
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a> │   ├─ temurin-26\
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a> │   ├─ temurin-25\
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a> │   └─ temurin-17\
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a> │
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a> └─ workspace\
+</span></code></pre></div>
+<h4 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>~/dev/
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a> ├─ jdks/
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a> │   ├─ temurin-26.jdk/
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a> │   ├─ temurin-25.jdk/
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a> │   └─ temurin-17.jdk/
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a> │
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a> └─ workspace/
+</span></code></pre></div>
 <p>JDK는 용량이 크고 운영체제와 CPU Architecture에 따라 Binary가 다르므로 Git Repository에 포함하지 않는다.</p>
-<h3 id="33-jdk">3.3 여러 JDK 버전을 함께 보관 가능</h3>
+<h3 id="33-jdk">3.3 여러 JDK 버전을 함께 보관 가능<a class="headerlink" href="#33-jdk" title="Permanent link">&para;</a></h3>
 <p>개발 장비에서는 하나의 JDK만 설치할 필요가 없다.</p>
-<div class="highlight"><pre><span></span><code>Temurin JDK 17
-Temurin JDK 25
-Temurin JDK 26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Temurin JDK 17
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Temurin JDK 25
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Temurin JDK 26
+</span></code></pre></div>
 <p>각 JDK를 별도의 디렉터리에 보관해 두면 이후 프로젝트 특성에 따라 필요한 JDK를 선택하여 사용할 수 있다.</p>
 <p>현재 단계에서는 특정 프로젝트와 JDK를 연결하지 않는다.</p>
 <p>실제 프로젝트별 JDK 연결은 <strong>Spring Boot 프로젝트가 생성된 이후 프로젝트 개발환경 설정 단계</strong>에서 진행한다.</p>
-<h3 id="34-java">3.4 시스템 전역 Java 설정을 기본 방식으로 사용하지 않음</h3>
+<h3 id="34-java">3.4 시스템 전역 Java 설정을 기본 방식으로 사용하지 않음<a class="headerlink" href="#34-java" title="Permanent link">&para;</a></h3>
 <p>MicroServer 프로젝트에서는 다음과 같은 운영체제 전역 설정을 기본 JDK 운영 방식으로 사용하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>JAVA_HOME
-PATH에 JDK/bin 등록
-운영체제 기본 Java 변경
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>JAVA_HOME
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>PATH에 JDK/bin 등록
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>운영체제 기본 Java 변경
+</span></code></pre></div>
 <p>JDK는 개발 도구 디렉터리에 독립적으로 보관하고 필요한 도구나 프로젝트에서 해당 JDK를 명시적으로 사용하는 방향으로 구성한다.</p>
 <p>따라서 현재 단계에서는 시스템 <code>JAVA_HOME</code>이나 JDK <code>bin</code> PATH를 영구 설정하지 않는다.</p>
 <hr />
-<h2 id="4-jdk">4. 프로젝트 표준 JDK</h2>
+<h2 id="4-jdk">4. 프로젝트 표준 JDK<a class="headerlink" href="#4-jdk" title="Permanent link">&para;</a></h2>
 <p>MicroServer 프로젝트에서는 <strong>Eclipse Temurin JDK 26</strong>을 기준으로 개발환경을 구성한다.</p>
-<div class="highlight"><pre><span></span><code>Vendor       : Eclipse Temurin
-Java Version : 26
-Package Type : JDK
-JVM          : HotSpot
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Vendor       : Eclipse Temurin
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Java Version : 26
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Package Type : JDK
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>JVM          : HotSpot
+</span></code></pre></div>
 <p>본 프로젝트에서는 최신 Java 버전을 적용한다는 기준으로 Java 26을 사용한다.</p>
 <div class="admonition info">
 <p class="admonition-title">Java 버전 운영</p>
 <p>프로젝트 진행 중 JDK 기준 버전이 변경될 경우 문서, 개발환경, Build 설정, CI/CD 환경을 함께 변경해야 한다.</p>
 </div>
 <hr />
-<h2 id="5-jdk-jre">5. JDK와 JRE의 차이</h2>
+<h2 id="5-jdk-jre">5. JDK와 JRE의 차이<a class="headerlink" href="#5-jdk-jre" title="Permanent link">&para;</a></h2>
 <p>Java 개발환경에서는 JRE가 아니라 반드시 <strong>JDK</strong>가 필요하다.</p>
-<div class="highlight"><pre><span></span><code>JDK
- ├─ Java Runtime
- ├─ javac Compiler
- ├─ Debug / Diagnostic Tools
- ├─ javadoc
- └─ 기타 Java 개발 도구
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>JDK
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a> ├─ Java Runtime
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a> ├─ javac Compiler
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a> ├─ Debug / Diagnostic Tools
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a> ├─ javadoc
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a> └─ 기타 Java 개발 도구
+</span></code></pre></div>
 <p>JRE는 Java 애플리케이션 실행에 필요한 Runtime을 중심으로 제공하지만, JDK에는 Java Source를 컴파일하는 <code>javac</code>와 여러 개발 도구가 포함된다.</p>
 <p>Temurin 다운로드 시 다음 항목을 확인한다.</p>
-<div class="highlight"><pre><span></span><code>Package Type : JDK
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Package Type : JDK
+</span></code></pre></div>
 <p>JRE Package를 선택하지 않도록 주의한다.</p>
 <hr />
-<h2 id="6-jdk">6. JDK 설치 방식</h2>
+<h2 id="6-jdk">6. JDK 설치 방식<a class="headerlink" href="#6-jdk" title="Permanent link">&para;</a></h2>
 <p>MicroServer 프로젝트에서는 운영체제용 Installer를 이용하여 시스템 영역에 JDK를 설치하는 방식보다 <strong>압축 배포본을 내려받아 개발 도구 디렉터리에 직접 보관하는 방식</strong>을 권장한다.</p>
 <table>
 <thead>
@@ -1677,230 +1687,230 @@ JVM          : HotSpot
 <li>필요하지 않은 JDK를 디렉터리 단위로 제거하기 쉽다.</li>
 </ul>
 <hr />
-<h1 id="windows_1">Windows 환경</h1>
-<h2 id="7-windows-architecture">7. Windows 개발 장비 Architecture 확인</h2>
+<h1 id="windows_1">Windows 환경<a class="headerlink" href="#windows_1" title="Permanent link">&para;</a></h1>
+<h2 id="7-windows-architecture">7. Windows 개발 장비 Architecture 확인<a class="headerlink" href="#7-windows-architecture" title="Permanent link">&para;</a></h2>
 <p>PowerShell:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">$env:PROCESSOR_ARCHITECTURE</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">$env:PROCESSOR_ARCHITECTURE</span>
+</span></code></pre></div>
 <p>일반적인 x64 PC:</p>
-<div class="highlight"><pre><span></span><code>AMD64
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>AMD64
+</span></code></pre></div>
 <p>이 경우 Temurin 다운로드 기준은 다음과 같다.</p>
-<div class="highlight"><pre><span></span><code>Operating System : Windows
-Architecture     : x64
-Package Type     : JDK
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Operating System : Windows
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Architecture     : x64
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Package Type     : JDK
+</span></code></pre></div>
 <p>ARM 기반 Windows 장비라면 해당 Architecture에 맞는 Package를 사용한다.</p>
 <hr />
-<h2 id="8-windows-temurin-jdk">8. Windows Temurin JDK 다운로드</h2>
+<h2 id="8-windows-temurin-jdk">8. Windows Temurin JDK 다운로드<a class="headerlink" href="#8-windows-temurin-jdk" title="Permanent link">&para;</a></h2>
 <p>Eclipse Adoptium 공식 사이트에서 Temurin JDK를 다운로드한다.</p>
 <ul>
 <li>Eclipse Adoptium: <a href="https://adoptium.net/">https://adoptium.net/</a></li>
 <li>Temurin Releases: <a href="https://adoptium.net/temurin/releases/">https://adoptium.net/temurin/releases/</a></li>
 </ul>
 <p>다운로드 기준:</p>
-<div class="highlight"><pre><span></span><code>Version      : 26
-Operating OS : Windows
-Architecture : x64
-Package Type : JDK
-JVM          : HotSpot
-Archive      : ZIP
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Version      : 26
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Operating OS : Windows
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Architecture : x64
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>Package Type : JDK
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>JVM          : HotSpot
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>Archive      : ZIP
+</span></code></pre></div>
 <p>본 프로젝트에서는 MSI Installer보다 <strong>ZIP 압축 배포본</strong>을 사용한다.</p>
 <hr />
-<h2 id="9-windows-jdk">9. Windows JDK 디렉터리 준비</h2>
+<h2 id="9-windows-jdk">9. Windows JDK 디렉터리 준비<a class="headerlink" href="#9-windows-jdk" title="Permanent link">&para;</a></h2>
 <p>JDK를 보관할 개발 도구 디렉터리를 생성한다.</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>C:\dev\jdks
+</span></code></pre></div>
 <p>PowerShell:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">C</span><span class="p">:\</span><span class="n">dev</span><span class="p">\</span><span class="n">jdks</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">C</span><span class="p">:\</span><span class="n">dev</span><span class="p">\</span><span class="n">jdks</span>
+</span></code></pre></div>
 <p>여러 버전은 다음과 같이 보관할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks
- ├─ temurin-26
- ├─ temurin-25
- └─ temurin-17
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>C:\dev\jdks
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a> ├─ temurin-26
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a> ├─ temurin-25
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a> └─ temurin-17
+</span></code></pre></div>
 <hr />
-<h2 id="10-windows-jdk">10. Windows JDK 압축 해제</h2>
+<h2 id="10-windows-jdk">10. Windows JDK 압축 해제<a class="headerlink" href="#10-windows-jdk" title="Permanent link">&para;</a></h2>
 <p>다운로드한 Temurin ZIP 파일을 <code>C:\dev\jdks</code> 아래에 압축 해제한다.</p>
 <p>압축 해제 후 실제 디렉터리 이름은 Release에 따라 다음처럼 생성될 수 있다.</p>
-<div class="highlight"><pre><span></span><code>jdk-26.0.2+10
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>jdk-26.0.2+10
+</span></code></pre></div>
 <p>관리 편의를 위해 다음과 같이 정리할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\temurin-26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>C:\dev\jdks\temurin-26
+</span></code></pre></div>
 <p>구조 예:</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\temurin-26
- ├─ bin\
- ├─ conf\
- ├─ include\
- ├─ jmods\
- ├─ legal\
- ├─ lib\
- └─ release
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>C:\dev\jdks\temurin-26
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a> ├─ bin\
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a> ├─ conf\
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a> ├─ include\
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a> ├─ jmods\
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a> ├─ legal\
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a> ├─ lib\
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a> └─ release
+</span></code></pre></div>
 <hr />
-<h2 id="11-windows-jdk-home">11. Windows JDK Home 확인</h2>
+<h2 id="11-windows-jdk-home">11. Windows JDK Home 확인<a class="headerlink" href="#11-windows-jdk-home" title="Permanent link">&para;</a></h2>
 <p>JDK Home은 JDK의 최상위 디렉터리를 의미한다.</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\temurin-26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>C:\dev\jdks\temurin-26
+</span></code></pre></div>
 <p>다음과 혼동하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>O  C:\dev\jdks\temurin-26
-X  C:\dev\jdks\temurin-26\bin
-X  C:\dev\jdks\temurin-26\bin\java.exe
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>O  C:\dev\jdks\temurin-26
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>X  C:\dev\jdks\temurin-26\bin
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>X  C:\dev\jdks\temurin-26\bin\java.exe
+</span></code></pre></div>
 <p>이 JDK Home 경로는 이후 Maven 및 VS Code 개발환경 구성에서 다시 사용한다.</p>
 <hr />
-<h2 id="12-windows-jdk">12. Windows JDK 정상 동작 확인</h2>
+<h2 id="12-windows-jdk">12. Windows JDK 정상 동작 확인<a class="headerlink" href="#12-windows-jdk" title="Permanent link">&para;</a></h2>
 <p>MicroServer 프로젝트에서는 JDK를 시스템 PATH에 등록하지 않으므로 다음 명령이 바로 실행되지 않아도 된다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">java</span> <span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">java</span> <span class="n">-version</span>
+</span></code></pre></div>
 <p>현재 단계에서는 JDK 실행파일을 직접 호출하여 확인한다.</p>
-<h3 id="java-runtime">Java Runtime</h3>
-<div class="highlight"><pre><span></span><code><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\java.exe"</span> <span class="n">-version</span>
-</code></pre></div>
-<h3 id="java-compiler">Java Compiler</h3>
-<div class="highlight"><pre><span></span><code><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\javac.exe"</span> <span class="n">-version</span>
-</code></pre></div>
+<h3 id="java-runtime">Java Runtime<a class="headerlink" href="#java-runtime" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\java.exe"</span> <span class="n">-version</span>
+</span></code></pre></div>
+<h3 id="java-compiler">Java Compiler<a class="headerlink" href="#java-compiler" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\javac.exe"</span> <span class="n">-version</span>
+</span></code></pre></div>
 <p>정상적인 경우 Java 26 계열 정보가 표시된다.</p>
-<div class="highlight"><pre><span></span><code>openjdk version "26..."
-OpenJDK Runtime Environment Temurin-26...
-OpenJDK 64-Bit Server VM Temurin-26...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>openjdk version "26..."
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>OpenJDK Runtime Environment Temurin-26...
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>OpenJDK 64-Bit Server VM Temurin-26...
+</span></code></pre></div>
 <p>Compiler:</p>
-<div class="highlight"><pre><span></span><code>javac 26...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>javac 26...
+</span></code></pre></div>
 <hr />
-<h2 id="13-windows">13. Windows 확인 항목</h2>
+<h2 id="13-windows">13. Windows 확인 항목<a class="headerlink" href="#13-windows" title="Permanent link">&para;</a></h2>
 <p>다음 파일이 존재하는지 확인한다.</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\temurin-26
-        │
-        ├─ bin\java.exe
-        ├─ bin\javac.exe
-        └─ release
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>C:\dev\jdks\temurin-26
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>        │
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>        ├─ bin\java.exe
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>        ├─ bin\javac.exe
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>        └─ release
+</span></code></pre></div>
 <p>특히 <code>javac.exe</code>가 없다면 JDK가 아닌 다른 Runtime Package를 내려받은 것은 아닌지 확인한다.</p>
 <hr />
-<h1 id="macos_1">macOS 환경</h1>
-<h2 id="14-mac-architecture">14. Mac Architecture 확인</h2>
+<h1 id="macos_1">macOS 환경<a class="headerlink" href="#macos_1" title="Permanent link">&para;</a></h1>
+<h2 id="14-mac-architecture">14. Mac Architecture 확인<a class="headerlink" href="#14-mac-architecture" title="Permanent link">&para;</a></h2>
 <p>Terminal:</p>
-<div class="highlight"><pre><span></span><code>uname<span class="w"> </span>-m
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>uname<span class="w"> </span>-m
+</span></code></pre></div>
 <p>Apple Silicon:</p>
-<div class="highlight"><pre><span></span><code>arm64
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>arm64
+</span></code></pre></div>
 <p>Intel Mac:</p>
-<div class="highlight"><pre><span></span><code>x86_64
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>x86_64
+</span></code></pre></div>
 <p>Apple Silicon 환경에서는 Temurin의 <strong>macOS / AArch64</strong> Package를 사용하고, Intel Mac은 x64 Package를 사용한다.</p>
 <hr />
-<h2 id="15-macos-temurin-jdk">15. macOS Temurin JDK 다운로드</h2>
+<h2 id="15-macos-temurin-jdk">15. macOS Temurin JDK 다운로드<a class="headerlink" href="#15-macos-temurin-jdk" title="Permanent link">&para;</a></h2>
 <p>Eclipse Adoptium 공식 사이트에서 Temurin JDK를 다운로드한다.</p>
 <p>Apple Silicon 기준:</p>
-<div class="highlight"><pre><span></span><code>Version      : 26
-Operating OS : macOS
-Architecture : AArch64
-Package Type : JDK
-JVM          : HotSpot
-Archive      : TAR.GZ
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Version      : 26
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>Operating OS : macOS
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>Architecture : AArch64
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>Package Type : JDK
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>JVM          : HotSpot
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>Archive      : TAR.GZ
+</span></code></pre></div>
 <p>Intel Mac은 Architecture를 x64로 선택한다.</p>
 <p>본 프로젝트에서는 <code>.pkg</code> Installer보다 <strong>TAR.GZ 압축 배포본</strong>을 사용한다.</p>
 <hr />
-<h2 id="16-macos-jdk">16. macOS JDK 디렉터리 준비</h2>
-<div class="highlight"><pre><span></span><code>mkdir<span class="w"> </span>-p<span class="w"> </span>~/dev/jdks
-</code></pre></div>
+<h2 id="16-macos-jdk">16. macOS JDK 디렉터리 준비<a class="headerlink" href="#16-macos-jdk" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/dev/jdks
+</span></code></pre></div>
 <p>여러 버전은 다음과 같이 보관할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/
- ├─ temurin-26.jdk/
- ├─ temurin-25.jdk/
- └─ temurin-17.jdk/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>~/dev/jdks/
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a> ├─ temurin-26.jdk/
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a> ├─ temurin-25.jdk/
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a> └─ temurin-17.jdk/
+</span></code></pre></div>
 <hr />
-<h2 id="17-macos-jdk">17. macOS JDK 압축 해제</h2>
+<h2 id="17-macos-jdk">17. macOS JDK 압축 해제<a class="headerlink" href="#17-macos-jdk" title="Permanent link">&para;</a></h2>
 <p>다운로드한 TAR.GZ 파일을 <code>~/dev/jdks</code>에 압축 해제한다.</p>
-<div class="highlight"><pre><span></span><code>tar<span class="w"> </span>-xzf<span class="w"> </span>OpenJDK26U-jdk_*.tar.gz<span class="w"> </span>-C<span class="w"> </span>~/dev/jdks
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>OpenJDK26U-jdk_*.tar.gz<span class="w"> </span>-C<span class="w"> </span>~/dev/jdks
+</span></code></pre></div>
 <p>압축 해제 후 실제 디렉터리 이름은 Release에 따라 다를 수 있다.</p>
 <p>필요하면 다음처럼 관리하기 쉬운 이름으로 변경한다.</p>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/temurin-26.jdk
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>~/dev/jdks/temurin-26.jdk
+</span></code></pre></div>
 <hr />
-<h2 id="18-macos-jdk">18. macOS JDK 구조</h2>
+<h2 id="18-macos-jdk">18. macOS JDK 구조<a class="headerlink" href="#18-macos-jdk" title="Permanent link">&para;</a></h2>
 <p>macOS용 JDK는 일반적으로 <code>.jdk</code> Bundle 구조를 사용한다.</p>
-<div class="highlight"><pre><span></span><code>temurin-26.jdk
- └─ Contents
-     └─ Home
-         ├─ bin
-         ├─ conf
-         ├─ include
-         ├─ jmods
-         ├─ legal
-         ├─ lib
-         └─ release
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>temurin-26.jdk
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a> └─ Contents
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>     └─ Home
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>         ├─ bin
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>         ├─ conf
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>         ├─ include
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>         ├─ jmods
+</span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>         ├─ legal
+</span><span id="__span-34-9"><a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a>         ├─ lib
+</span><span id="__span-34-10"><a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>         └─ release
+</span></code></pre></div>
 <p>실제 JDK Home:</p>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/temurin-26.jdk/Contents/Home
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home
+</span></code></pre></div>
 <p>구분:</p>
-<div class="highlight"><pre><span></span><code>JDK Bundle
-~/dev/jdks/temurin-26.jdk
-
-JDK Home
-~/dev/jdks/temurin-26.jdk/Contents/Home
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>JDK Bundle
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>~/dev/jdks/temurin-26.jdk
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>JDK Home
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>~/dev/jdks/temurin-26.jdk/Contents/Home
+</span></code></pre></div>
 <p>이 JDK Home 경로는 이후 Maven 및 VS Code 개발환경 구성에서 다시 사용한다.</p>
 <hr />
-<h2 id="19-macos-jdk">19. macOS JDK 정상 동작 확인</h2>
+<h2 id="19-macos-jdk">19. macOS JDK 정상 동작 확인<a class="headerlink" href="#19-macos-jdk" title="Permanent link">&para;</a></h2>
 <p>시스템 <code>JAVA_HOME</code>을 설정하지 않고 실행파일을 직접 호출한다.</p>
-<h3 id="java-runtime_1">Java Runtime</h3>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java<span class="w"> </span>-version
-</code></pre></div>
-<h3 id="java-compiler_1">Java Compiler</h3>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac<span class="w"> </span>-version
-</code></pre></div>
+<h3 id="java-runtime_1">Java Runtime<a class="headerlink" href="#java-runtime_1" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java<span class="w"> </span>-version
+</span></code></pre></div>
+<h3 id="java-compiler_1">Java Compiler<a class="headerlink" href="#java-compiler_1" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac<span class="w"> </span>-version
+</span></code></pre></div>
 <p>정상적인 경우 Java 26 계열 정보가 표시된다.</p>
-<div class="highlight"><pre><span></span><code>openjdk version "26..."
-OpenJDK Runtime Environment Temurin-26...
-OpenJDK 64-Bit Server VM Temurin-26...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>openjdk version "26..."
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>OpenJDK Runtime Environment Temurin-26...
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>OpenJDK 64-Bit Server VM Temurin-26...
+</span></code></pre></div>
 <p>Compiler:</p>
-<div class="highlight"><pre><span></span><code>javac 26...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>javac 26...
+</span></code></pre></div>
 <hr />
-<h2 id="20-macos-java_home">20. macOS에서 전역 JAVA_HOME을 설정하지 않음</h2>
+<h2 id="20-macos-java_home">20. macOS에서 전역 JAVA_HOME을 설정하지 않음<a class="headerlink" href="#20-macos-java_home" title="Permanent link">&para;</a></h2>
 <p>현재 단계에서는 다음 설정을 기본 구성으로 사용하지 않는다.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>...
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>...
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</span></code></pre></div>
 <p>따라서 <code>~/.zshrc</code>에도 JDK 관련 설정을 추가하지 않는다.</p>
 <p>JDK 자체가 정상적으로 준비되었는지는 앞에서 설명한 절대 경로 실행 방식으로 확인한다.</p>
 <hr />
-<h2 id="21-jdk">21. 여러 JDK 버전 관리</h2>
+<h2 id="21-jdk">21. 여러 JDK 버전 관리<a class="headerlink" href="#21-jdk" title="Permanent link">&para;</a></h2>
 <p>향후 다른 프로젝트 때문에 추가 JDK가 필요할 수 있다.</p>
-<h3 id="windows_2">Windows</h3>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\
- ├─ temurin-17
- ├─ temurin-21
- ├─ temurin-25
- └─ temurin-26
-</code></pre></div>
-<h3 id="macos_2">macOS</h3>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/
- ├─ temurin-17.jdk
- ├─ temurin-21.jdk
- ├─ temurin-25.jdk
- └─ temurin-26.jdk
-</code></pre></div>
+<h3 id="windows_2">Windows<a class="headerlink" href="#windows_2" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>C:\dev\jdks\
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a> ├─ temurin-17
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a> ├─ temurin-21
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a> ├─ temurin-25
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a> └─ temurin-26
+</span></code></pre></div>
+<h3 id="macos_2">macOS<a class="headerlink" href="#macos_2" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>~/dev/jdks/
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a> ├─ temurin-17.jdk
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a> ├─ temurin-21.jdk
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a> ├─ temurin-25.jdk
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a> └─ temurin-26.jdk
+</span></code></pre></div>
 <p>새 버전을 추가할 때 기존 JDK를 덮어쓰지 않고 별도 디렉터리에 보관한다.</p>
 <p>현재 단계에서는 어떤 프로젝트가 어떤 JDK를 사용하는지 설정하지 않는다.</p>
 <hr />
-<h2 id="22-jdk">22. JDK 업데이트 시 주의사항</h2>
+<h2 id="22-jdk">22. JDK 업데이트 시 주의사항<a class="headerlink" href="#22-jdk" title="Permanent link">&para;</a></h2>
 <p>같은 Major Version의 JDK라도 보안 Patch 등에 따라 세부 버전이 변경될 수 있다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>Temurin 26.x.x
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>Temurin 26.x.x
+</span></code></pre></div>
 <p>업데이트 시 다음 항목을 확인한다.</p>
 <ul>
 <li>프로젝트 표준 JDK Major Version이 변경되는지</li>
@@ -1910,116 +1920,116 @@ OpenJDK 64-Bit Server VM Temurin-26...
 </ul>
 <p>기존 JDK를 즉시 덮어쓰기보다 새로운 디렉터리에 준비하고 검증 후 전환하는 방식을 권장한다.</p>
 <hr />
-<h2 id="23">23. 자주 발생하는 문제</h2>
-<h3 id="231-java-version">23.1 <code>java -version</code>이 실행되지 않음</h3>
+<h2 id="23">23. 자주 발생하는 문제<a class="headerlink" href="#23" title="Permanent link">&para;</a></h2>
+<h3 id="231-java-version">23.1 <code>java -version</code>이 실행되지 않음<a class="headerlink" href="#231-java-version" title="Permanent link">&para;</a></h3>
 <p>현재 프로젝트에서는 JDK <code>bin</code>을 시스템 PATH에 등록하지 않으므로 다음 명령이 실패할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>java<span class="w"> </span>-version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>java<span class="w"> </span>-version
+</span></code></pre></div>
 <p>이는 반드시 설치 오류를 의미하지 않는다.</p>
 <p>절대 경로로 확인한다.</p>
-<h4 id="windows_3">Windows</h4>
-<div class="highlight"><pre><span></span><code><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\java.exe"</span> <span class="n">-version</span>
-</code></pre></div>
-<h4 id="macos_3">macOS</h4>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java<span class="w"> </span>-version
-</code></pre></div>
-<h3 id="232-javac">23.2 <code>javac</code>가 없음</h3>
-<h4 id="windows_4">Windows</h4>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\temurin-26\bin\javac.exe
-</code></pre></div>
-<h4 id="macos_4">macOS</h4>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac
-</code></pre></div>
+<h4 id="windows_3">Windows<a class="headerlink" href="#windows_3" title="Permanent link">&para;</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\java.exe"</span> <span class="n">-version</span>
+</span></code></pre></div>
+<h4 id="macos_3">macOS<a class="headerlink" href="#macos_3" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java<span class="w"> </span>-version
+</span></code></pre></div>
+<h3 id="232-javac">23.2 <code>javac</code>가 없음<a class="headerlink" href="#232-javac" title="Permanent link">&para;</a></h3>
+<h4 id="windows_4">Windows<a class="headerlink" href="#windows_4" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>C:\dev\jdks\temurin-26\bin\javac.exe
+</span></code></pre></div>
+<h4 id="macos_4">macOS<a class="headerlink" href="#macos_4" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac
+</span></code></pre></div>
 <p>파일이 없다면 Temurin 다운로드 시 JRE가 아닌 <strong>JDK Package</strong>를 선택했는지 확인한다.</p>
-<h3 id="233-architecture">23.3 Architecture가 맞지 않음</h3>
+<h3 id="233-architecture">23.3 Architecture가 맞지 않음<a class="headerlink" href="#233-architecture" title="Permanent link">&para;</a></h3>
 <p>Windows:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">$env:PROCESSOR_ARCHITECTURE</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="nv">$env:PROCESSOR_ARCHITECTURE</span>
+</span></code></pre></div>
 <p>macOS:</p>
-<div class="highlight"><pre><span></span><code>uname<span class="w"> </span>-m
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>uname<span class="w"> </span>-m
+</span></code></pre></div>
 <p>장비 Architecture에 맞는 Temurin Package를 사용한다.</p>
-<h3 id="234">23.4 압축 해제 후 경로가 다름</h3>
+<h3 id="234">23.4 압축 해제 후 경로가 다름<a class="headerlink" href="#234" title="Permanent link">&para;</a></h3>
 <p>Release에 따라 다음처럼 이름이 생성될 수 있다.</p>
-<div class="highlight"><pre><span></span><code>jdk-26.0.2+10
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>jdk-26.0.2+10
+</span></code></pre></div>
 <p>관리 편의를 위해 <code>temurin-26</code> 형태로 정리할 수 있다.</p>
 <p>중요한 것은 디렉터리 이름보다 다음 파일이 정상적으로 존재하는지 여부이다.</p>
-<div class="highlight"><pre><span></span><code>bin/java
-bin/javac
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>bin/java
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>bin/javac
+</span></code></pre></div>
 <hr />
-<h2 id="24">24. 최종 확인</h2>
-<h3 id="windows_5">Windows</h3>
+<h2 id="24">24. 최종 확인<a class="headerlink" href="#24" title="Permanent link">&para;</a></h2>
+<h3 id="windows_5">Windows<a class="headerlink" href="#windows_5" title="Permanent link">&para;</a></h3>
 <p>JDK Home:</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\temurin-26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>C:\dev\jdks\temurin-26
+</span></code></pre></div>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\java.exe"</span> <span class="n">-version</span>
-<span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\javac.exe"</span> <span class="n">-version</span>
-</code></pre></div>
-<h3 id="macos_5">macOS</h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\java.exe"</span> <span class="n">-version</span>
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="p">&amp;</span> <span class="s2">"C:\dev\jdks\temurin-26\bin\javac.exe"</span> <span class="n">-version</span>
+</span></code></pre></div>
+<h3 id="macos_5">macOS<a class="headerlink" href="#macos_5" title="Permanent link">&para;</a></h3>
 <p>JDK Home:</p>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/temurin-26.jdk/Contents/Home
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home
+</span></code></pre></div>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java<span class="w"> </span>-version
-~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac<span class="w"> </span>-version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/java<span class="w"> </span>-version
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>~/dev/jdks/temurin-26.jdk/Contents/Home/bin/javac<span class="w"> </span>-version
+</span></code></pre></div>
 <p>두 환경 모두 Java Runtime과 Compiler가 Java 26으로 정상 실행되면 JDK 준비는 완료된 것이다.</p>
 <hr />
-<h2 id="25">25. 체크리스트</h2>
-<h3 id="_1">공통</h3>
-<ul>
-<li>[ ] Eclipse Temurin을 프로젝트 표준 JDK 배포판으로 사용한다.</li>
-<li>[ ] Java 26 JDK를 준비했다.</li>
-<li>[ ] JRE가 아닌 JDK Package를 다운로드했다.</li>
-<li>[ ] JDK를 프로젝트 Git Repository 외부에 보관했다.</li>
-<li>[ ] 여러 JDK를 버전별 디렉터리로 관리할 수 있다.</li>
-<li>[ ] 시스템 전역 <code>JAVA_HOME</code>을 프로젝트 기본 구성으로 사용하지 않는다.</li>
-<li>[ ] JDK <code>bin</code>을 시스템 전역 PATH에 추가하지 않았다.</li>
+<h2 id="25">25. 체크리스트<a class="headerlink" href="#25" title="Permanent link">&para;</a></h2>
+<h3 id="_1">공통<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Eclipse Temurin을 프로젝트 표준 JDK 배포판으로 사용한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Java 26 JDK를 준비했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JRE가 아닌 JDK Package를 다운로드했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JDK를 프로젝트 Git Repository 외부에 보관했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 여러 JDK를 버전별 디렉터리로 관리할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 시스템 전역 <code>JAVA_HOME</code>을 프로젝트 기본 구성으로 사용하지 않는다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JDK <code>bin</code>을 시스템 전역 PATH에 추가하지 않았다.</li>
 </ul>
-<h3 id="windows_6">Windows</h3>
-<ul>
-<li>[ ] 개발 장비 Architecture를 확인했다.</li>
-<li>[ ] Windows용 ZIP 배포본을 사용했다.</li>
-<li>[ ] JDK를 <code>C:\dev\jdks</code> 계열 경로에 압축 해제했다.</li>
-<li>[ ] <code>java.exe -version</code>이 정상 실행된다.</li>
-<li>[ ] <code>javac.exe -version</code>이 정상 실행된다.</li>
+<h3 id="windows_6">Windows<a class="headerlink" href="#windows_6" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 개발 장비 Architecture를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Windows용 ZIP 배포본을 사용했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JDK를 <code>C:\dev\jdks</code> 계열 경로에 압축 해제했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>java.exe -version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>javac.exe -version</code>이 정상 실행된다.</li>
 </ul>
-<h3 id="macos_6">macOS</h3>
-<ul>
-<li>[ ] Apple Silicon / Intel Architecture를 확인했다.</li>
-<li>[ ] macOS용 TAR.GZ 배포본을 사용했다.</li>
-<li>[ ] JDK를 <code>~/dev/jdks</code> 계열 경로에 압축 해제했다.</li>
-<li>[ ] <code>Contents/Home/bin/java -version</code>이 정상 실행된다.</li>
-<li>[ ] <code>Contents/Home/bin/javac -version</code>이 정상 실행된다.</li>
-<li>[ ] <code>~/.zshrc</code>에 프로젝트용 <code>JAVA_HOME</code>을 등록하지 않았다.</li>
+<h3 id="macos_6">macOS<a class="headerlink" href="#macos_6" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Apple Silicon / Intel Architecture를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> macOS용 TAR.GZ 배포본을 사용했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JDK를 <code>~/dev/jdks</code> 계열 경로에 압축 해제했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Contents/Home/bin/java -version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Contents/Home/bin/javac -version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>~/.zshrc</code>에 프로젝트용 <code>JAVA_HOME</code>을 등록하지 않았다.</li>
 </ul>
-<h3 id="_2">단계 확인</h3>
-<ul>
-<li>[ ] VS Code 관련 설정을 아직 진행하지 않았다.</li>
-<li>[ ] 프로젝트별 JDK Runtime 설정을 아직 만들지 않았다.</li>
-<li>[ ] Maven 프로젝트 설정을 아직 진행하지 않았다.</li>
-<li>[ ] Spring Boot 프로젝트를 아직 생성하지 않았다.</li>
-<li>[ ] <code>pom.xml</code>을 아직 작성하거나 수정하지 않았다.</li>
+<h3 id="_2">단계 확인<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code 관련 설정을 아직 진행하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 프로젝트별 JDK Runtime 설정을 아직 만들지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Maven 프로젝트 설정을 아직 진행하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Boot 프로젝트를 아직 생성하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>pom.xml</code>을 아직 작성하거나 수정하지 않았다.</li>
 </ul>
 <hr />
-<h2 id="26">26. 다음 단계</h2>
+<h2 id="26">26. 다음 단계<a class="headerlink" href="#26" title="Permanent link">&para;</a></h2>
 <p>JDK 준비가 완료되면 다음 가이드로 진행한다.</p>
-<div class="highlight"><pre><span></span><code>JDK 설치 및 설정                ← 현재 완료
-        ↓
-Maven 설치 및 기본 환경 구성
-        ↓
-VS Code 개발환경 구성
-        ↓
-Spring Boot 프로젝트 생성
-        ↓
-프로젝트 JDK / Maven / VS Code 설정
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>JDK 설치 및 설정                ← 현재 완료
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>        ↓
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>Maven 설치 및 기본 환경 구성
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>        ↓
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>VS Code 개발환경 구성
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>        ↓
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>Spring Boot 프로젝트 생성
+</span><span id="__span-58-8"><a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a>        ↓
+</span><span id="__span-58-9"><a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a>프로젝트 JDK / Maven / VS Code 설정
+</span></code></pre></div>
 <p>다음 단계에서는 Apache Maven을 개발 PC에 준비하고, 앞에서 설치한 Temurin JDK를 이용하여 Maven이 정상 실행되는지 확인한다.</p>
 <hr />
-<h2 id="27">27. 공식 참고 자료</h2>
+<h2 id="27">27. 공식 참고 자료<a class="headerlink" href="#27" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>Eclipse Adoptium<br />
@@ -2051,6 +2061,8 @@ Spring Boot 프로젝트 생성
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2089,7 +2101,7 @@ Spring Boot 프로젝트 생성
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

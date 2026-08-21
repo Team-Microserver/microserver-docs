@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>공통 처리 구조 - Microserver</title>
+        <title>공통 처리 구조 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1669,8 +1679,8 @@
 
 
 
-<h1 id="_1">공통 처리 구조</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="_1">공통 처리 구조<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>금융 SI 애플리케이션에서는 모든 요청에 공통으로 적용되는 기능이 많습니다.</p>
 <p>예:</p>
 <ul>
@@ -1686,7 +1696,7 @@
 <p>이 기능들을 각 Controller나 Service에 반복해서 작성하면 업무 코드가 복잡해집니다.</p>
 <p>Microserver는 <strong>Filter와 AOP를 이용하여 공통 관심사와 비즈니스 로직을 분리</strong>합니다.</p>
 <hr />
-<h2 id="2">2. 전체 공통 처리 흐름</h2>
+<h2 id="2">2. 전체 공통 처리 흐름<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     A[Client]
     B[Request Filter]
@@ -1704,47 +1714,47 @@
     F -. Exception .-&gt; H
     H --&gt; I</code></pre>
 <hr />
-<h2 id="3-filter">3. Filter의 역할</h2>
+<h2 id="3-filter">3. Filter의 역할<a class="headerlink" href="#3-filter" title="Permanent link">&para;</a></h2>
 <p>Filter는 Servlet 요청이 Controller에 도달하기 전에 실행됩니다.</p>
 <p>요청 흐름:</p>
-<div class="highlight"><pre><span></span><code>Client
-  ↓
-Filter 1
-  ↓
-Filter 2
-  ↓
-Security Filter Chain
-  ↓
-DispatcherServlet
-  ↓
-Controller
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Client
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Filter 1
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Filter 2
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Security Filter Chain
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>DispatcherServlet
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  ↓
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Controller
+</span></code></pre></div>
 <p>응답은 반대 방향으로 전달됩니다.</p>
-<div class="highlight"><pre><span></span><code>Controller
-  ↓
-DispatcherServlet
-  ↓
-Security Filter Chain
-  ↓
-Filter 2
-  ↓
-Filter 1
-  ↓
-Client
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Controller
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  ↓
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>DispatcherServlet
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  ↓
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Security Filter Chain
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  ↓
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Filter 2
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  ↓
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Filter 1
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  ↓
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Client
+</span></code></pre></div>
 <hr />
-<h2 id="4-filter">4. Filter 적용 대상</h2>
+<h2 id="4-filter">4. Filter 적용 대상<a class="headerlink" href="#4-filter" title="Permanent link">&para;</a></h2>
 <p>Microserver에서 Filter 적용을 검토할 기능은 다음과 같습니다.</p>
-<h3 id="request-trace">Request Trace</h3>
+<h3 id="request-trace">Request Trace<a class="headerlink" href="#request-trace" title="Permanent link">&para;</a></h3>
 <p>요청마다 고유 Trace ID를 생성합니다.</p>
-<div class="highlight"><pre><span></span><code>Request
-→ TRACE_ID 생성
-→ MDC 저장
-→ 전체 요청 처리
-→ Response
-→ MDC 정리
-</code></pre></div>
-<h3 id="logging">Logging</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Request
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>→ TRACE_ID 생성
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>→ MDC 저장
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>→ 전체 요청 처리
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>→ Response
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>→ MDC 정리
+</span></code></pre></div>
+<h3 id="logging">Logging<a class="headerlink" href="#logging" title="Permanent link">&para;</a></h3>
 <p>다음 정보를 공통으로 남길 수 있습니다.</p>
 <ul>
 <li>Trace ID</li>
@@ -1756,12 +1766,12 @@ Client
 <li>처리시간</li>
 <li>HTTP Status</li>
 </ul>
-<h3 id="header">Header 처리</h3>
+<h3 id="header">Header 처리<a class="headerlink" href="#header" title="Permanent link">&para;</a></h3>
 <p>업무별 Controller에서 반복하지 않도록 공통 Header를 확인할 수 있습니다.</p>
-<h3 id="_2">인증 전처리</h3>
+<h3 id="_2">인증 전처리<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p>Spring Security와 역할을 구분하여 필요한 공통 인증 정보를 구성할 수 있습니다.</p>
 <hr />
-<h2 id="5-filter-chain">5. Filter Chain 시퀀스</h2>
+<h2 id="5-filter-chain">5. Filter Chain 시퀀스<a class="headerlink" href="#5-filter-chain" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant C as Client
@@ -1785,7 +1795,7 @@ Client
     LF-&gt;&gt;LF: 처리시간 / Status Log
     LF--&gt;&gt;C: HTTP Response</code></pre>
 <hr />
-<h2 id="6-onceperrequestfilter">6. OncePerRequestFilter 활용 방향</h2>
+<h2 id="6-onceperrequestfilter">6. OncePerRequestFilter 활용 방향<a class="headerlink" href="#6-onceperrequestfilter" title="Permanent link">&para;</a></h2>
 <p>요청당 한 번만 수행되어야 하는 Filter는 <code>OncePerRequestFilter</code>를 활용할 수 있습니다.</p>
 <p>주요 대상:</p>
 <ul>
@@ -1796,7 +1806,7 @@ Client
 </ul>
 <p>Forward / Error Dispatch 등으로 동일 요청이 다시 처리되는 경우 불필요한 중복 수행을 줄이는 데 유리합니다.</p>
 <hr />
-<h2 id="7-aop">7. AOP의 역할</h2>
+<h2 id="7-aop">7. AOP의 역할<a class="headerlink" href="#7-aop" title="Permanent link">&para;</a></h2>
 <p>AOP는 HTTP Request 자체보다는 <strong>메소드 실행 전후의 횡단 관심사</strong>를 처리하는 데 사용합니다.</p>
 <p>예:</p>
 <ul>
@@ -1819,7 +1829,7 @@ Client
     A-&gt;&gt;A: After / Around 처리
     A--&gt;&gt;C: Result 반환</code></pre>
 <hr />
-<h2 id="8-filter-aop">8. Filter와 AOP의 구분</h2>
+<h2 id="8-filter-aop">8. Filter와 AOP의 구분<a class="headerlink" href="#8-filter-aop" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -1858,7 +1868,7 @@ Client
 </table>
 <p>둘을 무분별하게 섞지 않고 책임을 명확히 구분합니다.</p>
 <hr />
-<h2 id="9-exception">9. 공통 Exception 처리</h2>
+<h2 id="9-exception">9. 공통 Exception 처리<a class="headerlink" href="#9-exception" title="Permanent link">&para;</a></h2>
 <p>예외는 가능한 한 공통 Handler에서 일관된 응답으로 변환합니다.</p>
 <pre class="mermaid"><code>flowchart TB
     A[Controller / Service / DAO]
@@ -1879,21 +1889,21 @@ Client
     F --&gt; G</code></pre>
 <p>예외를 단순 메시지 문자열로만 처리하지 않고 오류 코드, 사용자 메시지, Trace ID 등을 포함할 수 있는 구조를 검토합니다.</p>
 <hr />
-<h2 id="10-response">10. 공통 Response 처리</h2>
+<h2 id="10-response">10. 공통 Response 처리<a class="headerlink" href="#10-response" title="Permanent link">&para;</a></h2>
 <p>정상 응답도 공통 형식을 사용하여 API별 응답 구조 편차를 줄입니다.</p>
 <p>개념 예:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="nt">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0000"</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"resultMessage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"정상처리되었습니다."</span><span class="p">,</span>
-<span class="w">    </span><span class="nt">"traceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span>
-<span class="w">  </span><span class="p">},</span>
-<span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">"header"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">"resultCode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0000"</span><span class="p">,</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">"resultMessage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"정상처리되었습니다."</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="nt">"traceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="nt">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>실제 필드 명칭은 API 표준을 확정하는 단계에서 결정합니다.</p>
 <hr />
-<h2 id="11">11. 설계 원칙</h2>
+<h2 id="11">11. 설계 원칙<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Filter에서 비즈니스 처리를 하지 않는다.</li>
 <li>AOP에서 업무의 핵심 판단을 하지 않는다.</li>
@@ -1920,6 +1930,8 @@ Client
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1958,7 +1970,7 @@ Client
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

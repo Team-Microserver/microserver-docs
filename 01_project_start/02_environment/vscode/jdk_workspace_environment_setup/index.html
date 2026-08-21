@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>JDK 연계 및 개발환경 운영 - Microserver</title>
+        <title>JDK 연계 및 개발환경 운영 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1415,8 +1425,8 @@
 
 
 
-<h1 id="jdk-vs-code">JDK 연계 및 VS Code 개발환경 운영 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="jdk-vs-code">JDK 연계 및 VS Code 개발환경 운영 가이드<a class="headerlink" href="#jdk-vs-code" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 앞 단계에서 준비한 <strong>Eclipse Temurin JDK</strong>와 VS Code Java Extension의 관계를 설명하고, MicroServer 프로젝트에서 사용할 <strong>프로젝트별 JDK 운영 방식</strong>과 VS Code 개발환경 점검 방법을 정리한다.</p>
 <p>현재는 아직 실제 MicroServer 프로젝트를 생성하기 전이다.</p>
 <p>따라서 Workspace 설정 파일을 바로 만들기보다 다음 내용을 이해하고 확인하는 데 집중한다.</p>
@@ -1430,7 +1440,7 @@
 <li>현재 환경 구성 단계의 완료 기준</li>
 </ul>
 <hr />
-<h2 id="2-jdk-vs-code">2. JDK와 VS Code의 관계</h2>
+<h2 id="2-jdk-vs-code">2. JDK와 VS Code의 관계<a class="headerlink" href="#2-jdk-vs-code" title="Permanent link">&para;</a></h2>
 <p>JDK는 VS Code에 포함된 개발도구가 아니다.</p>
 <p>구성요소의 역할을 구분하면 다음과 같다.</p>
 <table>
@@ -1477,41 +1487,41 @@
     SPRING --&gt; JAVA
     PROJECT --&gt; VS</code></pre>
 <hr />
-<h1 id="3-microserver-jdk">3. MicroServer의 JDK 운영 방향</h1>
+<h1 id="3-microserver-jdk">3. MicroServer의 JDK 운영 방향<a class="headerlink" href="#3-microserver-jdk" title="Permanent link">&para;</a></h1>
 <p>일반적인 Java 개발환경 구성에서는 다음 방식을 많이 사용한다.</p>
-<div class="highlight"><pre><span></span><code>JDK Installer 실행
-      ↓
-JAVA_HOME 설정
-      ↓
-PATH 설정
-      ↓
-PC 전체에서 동일 JDK 사용
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>JDK Installer 실행
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>JAVA_HOME 설정
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>PATH 설정
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>      ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>PC 전체에서 동일 JDK 사용
+</span></code></pre></div>
 <p>MicroServer 프로젝트에서는 프로젝트별 개발환경을 분리하기 위해 다음 구조를 기본 방향으로 한다.</p>
-<div class="highlight"><pre><span></span><code>Temurin JDK 별도 준비
-      ↓
-여러 JDK를 개발 PC에 보관
-      ↓
-VS Code Java Extension 사용
-      ↓
-프로젝트 생성 이후
-      ↓
-Workspace에서 프로젝트별 JDK 지정
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Temurin JDK 별도 준비
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>      ↓
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>여러 JDK를 개발 PC에 보관
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      ↓
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>VS Code Java Extension 사용
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>      ↓
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>프로젝트 생성 이후
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>      ↓
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>Workspace에서 프로젝트별 JDK 지정
+</span></code></pre></div>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>Developer PC
- ├─ jdks/
- │   ├─ temurin-17/
- │   ├─ temurin-21/
- │   └─ temurin-26/
- │
- └─ projects/
-     ├─ legacy-project/    → JDK 17
-     └─ microserver/       → 프로젝트 기준 JDK
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Developer PC
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a> ├─ jdks/
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a> │   ├─ temurin-17/
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a> │   ├─ temurin-21/
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a> │   └─ temurin-26/
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a> │
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a> └─ projects/
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>     ├─ legacy-project/    → JDK 17
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>     └─ microserver/       → 프로젝트 기준 JDK
+</span></code></pre></div>
 <p>이 방식은 STS/Eclipse에서 프로젝트별 Installed JRE/JDK를 선택하는 방식과 비슷한 목적을 가진다.</p>
 <hr />
-<h1 id="4-jdk">4. 프로젝트별 JDK 운영의 장점</h1>
+<h1 id="4-jdk">4. 프로젝트별 JDK 운영의 장점<a class="headerlink" href="#4-jdk" title="Permanent link">&para;</a></h1>
 <p>다음과 같은 장점이 있다.</p>
 <ul>
 <li>여러 JDK 버전을 동시에 보관할 수 있다.</li>
@@ -1523,138 +1533,138 @@ Workspace에서 프로젝트별 JDK 지정
 </ul>
 <p>특히 기존 시스템 유지보수와 신규 MicroServer 개발을 동시에 수행하는 개발자에게 유용하다.</p>
 <hr />
-<h1 id="5-vs-code-java-runtime">5. VS Code Java Runtime 명령 확인</h1>
+<h1 id="5-vs-code-java-runtime">5. VS Code Java Runtime 명령 확인<a class="headerlink" href="#5-vs-code-java-runtime" title="Permanent link">&para;</a></h1>
 <p>Java Extension Pack이 설치되어 있으면 Command Palette에서 Java Runtime 관련 명령을 사용할 수 있다.</p>
 <p>Command Palette:</p>
-<h3 id="windows">Windows</h3>
-<div class="highlight"><pre><span></span><code>Ctrl + Shift + P
-</code></pre></div>
-<h3 id="macos">macOS</h3>
-<div class="highlight"><pre><span></span><code>Command + Shift + P
-</code></pre></div>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Ctrl + Shift + P
+</span></code></pre></div>
+<h3 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Command + Shift + P
+</span></code></pre></div>
 <p>검색:</p>
-<div class="highlight"><pre><span></span><code>Java: Configure Java Runtime
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Java: Configure Java Runtime
+</span></code></pre></div>
 <p>이 화면은 Java 개발환경에서 사용하는 JDK Runtime을 확인하거나 구성할 때 사용한다.</p>
 <p>현재 단계에서는 <strong>앞 단계에서 준비한 Temurin JDK를 VS Code가 연결할 수 있는 기능이 준비되어 있다는 것</strong>을 확인한다.</p>
 <hr />
-<h1 id="6-java-install-new-jdk">6. Java: Install New JDK</h1>
+<h1 id="6-java-install-new-jdk">6. Java: Install New JDK<a class="headerlink" href="#6-java-install-new-jdk" title="Permanent link">&para;</a></h1>
 <p>Java Extension 환경에서는 다음과 같은 명령도 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>Java: Install New JDK
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Java: Install New JDK
+</span></code></pre></div>
 <p>이 기능을 이용해 새로운 JDK 설치를 시작할 수도 있다.</p>
 <p>하지만 MicroServer에서는 JDK 배포판과 버전을 프로젝트 기준에 맞춰 통일하기 위해 앞 단계의 <strong>JDK 설치 및 설정 가이드에서 Eclipse Temurin JDK를 먼저 준비하는 방식</strong>을 사용한다.</p>
 <p>따라서 개발자가 VS Code에서 임의 Vendor의 JDK를 설치하는 방식은 프로젝트 기본 절차로 사용하지 않는다.</p>
 <hr />
-<h1 id="7-jdk">7. 실제 프로젝트별 JDK 설정 시점</h1>
+<h1 id="7-jdk">7. 실제 프로젝트별 JDK 설정 시점<a class="headerlink" href="#7-jdk" title="Permanent link">&para;</a></h1>
 <p>현재는 아직 MicroServer 프로젝트가 없으므로 실제 Workspace JDK 설정을 만들지 않는다.</p>
 <p>설정 시점은 다음과 같다.</p>
-<div class="highlight"><pre><span></span><code>JDK 준비
-   ↓
-Maven 기본 환경 준비
-   ↓
-VS Code 준비
-   ↓
-Java / Spring Extension 준비
-   ↓
-MicroServer Spring Boot 프로젝트 생성
-   ↓
-VS Code Workspace 열기
-   ↓
-프로젝트별 JDK / Maven / Workspace 설정
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>JDK 준비
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>   ↓
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>Maven 기본 환경 준비
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>   ↓
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>VS Code 준비
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>   ↓
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>Java / Spring Extension 준비
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>   ↓
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>MicroServer Spring Boot 프로젝트 생성
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>   ↓
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>VS Code Workspace 열기
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>   ↓
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>프로젝트별 JDK / Maven / Workspace 설정
+</span></code></pre></div>
 <p>즉, <strong>JDK를 선택할 수 있는 VS Code 환경은 지금 준비하지만 실제 프로젝트 경로와 연결하는 설정은 프로젝트가 생성된 뒤 수행</strong>한다.</p>
 <hr />
-<h1 id="8-workspace">8. 향후 Workspace 구조</h1>
+<h1 id="8-workspace">8. 향후 Workspace 구조<a class="headerlink" href="#8-workspace" title="Permanent link">&para;</a></h1>
 <p>프로젝트가 생성되면 다음과 같은 구조를 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>microserver/
- ├─ .vscode/
- │   ├─ settings.json
- │   └─ extensions.json
- └─ ...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>microserver/
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a> ├─ .vscode/
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a> │   ├─ settings.json
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a> │   └─ extensions.json
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a> └─ ...
+</span></code></pre></div>
 <p>역할:</p>
-<div class="highlight"><pre><span></span><code>settings.json
-→ 프로젝트별 JDK 및 IDE 공통 설정
-
-extensions.json
-→ 프로젝트 권장 Extension 안내
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>settings.json
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>→ 프로젝트별 JDK 및 IDE 공통 설정
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>extensions.json
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>→ 프로젝트 권장 Extension 안내
+</span></code></pre></div>
 <p>현재는 파일의 목적만 이해하고 실제 설정 내용은 이후 프로젝트 가이드에서 작성한다.</p>
 <hr />
-<h1 id="9-java_home-jdk">9. JAVA_HOME과 프로젝트 JDK의 관계</h1>
+<h1 id="9-java_home-jdk">9. JAVA_HOME과 프로젝트 JDK의 관계<a class="headerlink" href="#9-java_home-jdk" title="Permanent link">&para;</a></h1>
 <p>시스템 <code>JAVA_HOME</code>은 운영체제 Terminal이나 외부 도구가 Java를 찾을 때 사용될 수 있다.</p>
 <p>반면 VS Code Java 환경에서는 프로젝트 또는 Workspace 기준으로 Java Runtime을 지정할 수 있다.</p>
 <p>따라서 다음 두 개념을 구분해야 한다.</p>
-<div class="highlight"><pre><span></span><code>System JAVA_HOME
-→ PC 전체 / Terminal 중심 Java 환경
-
-VS Code Workspace JDK
-→ 특정 프로젝트의 Java 개발환경
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>System JAVA_HOME
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>→ PC 전체 / Terminal 중심 Java 환경
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>VS Code Workspace JDK
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>→ 특정 프로젝트의 Java 개발환경
+</span></code></pre></div>
 <p>MicroServer에서는 후자를 프로젝트 개발환경의 기준으로 삼는다.</p>
 <p>Apache Maven 자체의 개발 PC 환경은 앞 단계에서 이미 구성했지만,
 <strong>생성된 프로젝트가 사용할 Java 버전, Maven Wrapper, <code>pom.xml</code> Build 설정은 아직 구성하지 않는다.</strong></p>
 <p>이 내용은 Spring Boot 프로젝트 생성 이후의 프로젝트 개발환경 설정 단계에서 다룬다.</p>
 <hr />
-<h1 id="10-java-language-server-project-jdk">10. Java Language Server와 Project JDK</h1>
+<h1 id="10-java-language-server-project-jdk">10. Java Language Server와 Project JDK<a class="headerlink" href="#10-java-language-server-project-jdk" title="Permanent link">&para;</a></h1>
 <p>VS Code의 Java 개발기능은 Java Language Server를 통해 제공된다.</p>
 <p>개념적으로 다음 두 Runtime의 역할이 다를 수 있다.</p>
-<div class="highlight"><pre><span></span><code>Java Language Server 실행용 Runtime
-        ≠
-Project Source를 컴파일할 때 사용할 JDK
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Java Language Server 실행용 Runtime
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>        ≠
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>Project Source를 컴파일할 때 사용할 JDK
+</span></code></pre></div>
 <p>따라서 VS Code Extension 자체가 동작하기 위한 Java 환경과 MicroServer Project가 사용할 Java 버전을 같은 개념으로 생각하지 않는 것이 중요하다.</p>
 <p>프로젝트 생성 이후에는 <strong>프로젝트용 JDK를 명시적으로 확인</strong>한다.</p>
 <hr />
-<h1 id="11-extension">11. Extension 문제 확인</h1>
+<h1 id="11-extension">11. Extension 문제 확인<a class="headerlink" href="#11-extension" title="Permanent link">&para;</a></h1>
 <p>Java나 Spring 관련 메뉴가 정상적으로 보이지 않는 경우 다음 순서로 확인한다.</p>
-<h2 id="111-extension-enabled">11.1 Extension Enabled 확인</h2>
-<div class="highlight"><pre><span></span><code>Extensions
-→ Installed
-→ 해당 Extension 선택
-→ Enabled 상태 확인
-</code></pre></div>
-<h2 id="112-vs-code-reload">11.2 VS Code Reload</h2>
+<h2 id="111-extension-enabled">11.1 Extension Enabled 확인<a class="headerlink" href="#111-extension-enabled" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Extensions
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>→ Installed
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>→ 해당 Extension 선택
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>→ Enabled 상태 확인
+</span></code></pre></div>
+<h2 id="112-vs-code-reload">11.2 VS Code Reload<a class="headerlink" href="#112-vs-code-reload" title="Permanent link">&para;</a></h2>
 <p>Command Palette:</p>
-<div class="highlight"><pre><span></span><code>Developer: Reload Window
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Developer: Reload Window
+</span></code></pre></div>
 <p>VS Code Window를 Reload한 후 다시 확인한다.</p>
-<h2 id="113-output">11.3 Output 확인</h2>
+<h2 id="113-output">11.3 Output 확인<a class="headerlink" href="#113-output" title="Permanent link">&para;</a></h2>
 <p>메뉴:</p>
-<div class="highlight"><pre><span></span><code>View
-→ Output
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>View
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>→ Output
+</span></code></pre></div>
 <p>Output 목록에서 관련 Extension 로그를 확인한다.</p>
 <p>향후 중요한 로그:</p>
-<div class="highlight"><pre><span></span><code>Language Support for Java
-Spring Boot Tools
-Maven for Java
-</code></pre></div>
-<h2 id="114-java-command">11.4 Java Command 확인</h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Language Support for Java
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>Spring Boot Tools
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>Maven for Java
+</span></code></pre></div>
+<h2 id="114-java-command">11.4 Java Command 확인<a class="headerlink" href="#114-java-command" title="Permanent link">&para;</a></h2>
 <p>Command Palette:</p>
-<div class="highlight"><pre><span></span><code>Java:
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Java:
+</span></code></pre></div>
 <p>Java 관련 명령이 나타나는지 확인한다.</p>
-<h2 id="115-spring-command">11.5 Spring Command 확인</h2>
+<h2 id="115-spring-command">11.5 Spring Command 확인<a class="headerlink" href="#115-spring-command" title="Permanent link">&para;</a></h2>
 <p>Command Palette:</p>
-<div class="highlight"><pre><span></span><code>Spring
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Spring
+</span></code></pre></div>
 <p>또는:</p>
-<div class="highlight"><pre><span></span><code>Spring Boot
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Spring Boot
+</span></code></pre></div>
 <hr />
-<h1 id="12-java-language-server">12. Java Language Server 문제 대응</h1>
+<h1 id="12-java-language-server">12. Java Language Server 문제 대응<a class="headerlink" href="#12-java-language-server" title="Permanent link">&para;</a></h1>
 <p>향후 프로젝트를 열었을 때 Java Project 인식이 비정상인 경우 다음 명령을 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>Java: Clean Java Language Server Workspace
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Java: Clean Java Language Server Workspace
+</span></code></pre></div>
 <p>이 명령은 Java Language Server의 Workspace 정보를 정리하고 Java Project를 다시 인식시키는 데 사용할 수 있다.</p>
 <blockquote>
 <p>현재 프로젝트 생성 전 단계에서는 실행할 필요가 없다.
 향후 문제 해결 명령으로 알아둔다.</p>
 </blockquote>
 <hr />
-<h1 id="13-extension">13. Extension 업데이트 이후 문제</h1>
+<h1 id="13-extension">13. Extension 업데이트 이후 문제<a class="headerlink" href="#13-extension" title="Permanent link">&para;</a></h1>
 <p>Java / Spring Extension은 지속적으로 업데이트된다.</p>
 <p>업데이트 직후 개발환경에서 문제가 발생하면 다음을 확인한다.</p>
 <ul>
@@ -1667,34 +1677,34 @@ Maven for Java
 </ul>
 <p>문제가 프로젝트 전체에 영향을 준다면 특정 Extension 버전을 팀에서 통일할 수 있다.</p>
 <hr />
-<h1 id="14">14. 현재 단계에서 하지 않는 작업</h1>
+<h1 id="14">14. 현재 단계에서 하지 않는 작업<a class="headerlink" href="#14" title="Permanent link">&para;</a></h1>
 <p>본 문서가 끝나더라도 아직 다음 작업은 하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>Spring Boot 프로젝트 생성
-pom.xml 작성 / 수정
-Maven Dependency 추가
-Java Package 생성
-Application Class 작성
-application.yml 작성
-Database 연결
-Application 실행
-Debug 실행
-JUnit Test 작성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Spring Boot 프로젝트 생성
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>pom.xml 작성 / 수정
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>Maven Dependency 추가
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>Java Package 생성
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>Application Class 작성
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>application.yml 작성
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>Database 연결
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>Application 실행
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>Debug 실행
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>JUnit Test 작성
+</span></code></pre></div>
 <p>현재 목표는 다음 상태이다.</p>
-<div class="highlight"><pre><span></span><code>VS Code 설치
-        +
-Java Extension 준비
-        +
-Spring Boot Extension 준비
-        +
-지원 Extension 준비
-        +
-Temurin JDK 준비
-        +
-프로젝트별 JDK를 연결할 수 있는 환경 이해
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>VS Code 설치
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>        +
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>Java Extension 준비
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>        +
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>Spring Boot Extension 준비
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>        +
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>지원 Extension 준비
+</span><span id="__span-21-8"><a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>        +
+</span><span id="__span-21-9"><a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>Temurin JDK 준비
+</span><span id="__span-21-10"><a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>        +
+</span><span id="__span-21-11"><a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>프로젝트별 JDK를 연결할 수 있는 환경 이해
+</span></code></pre></div>
 <hr />
-<h1 id="15-vs-code">15. VS Code 환경 구성 완료 상태</h1>
+<h1 id="15-vs-code">15. VS Code 환경 구성 완료 상태<a class="headerlink" href="#15-vs-code" title="Permanent link">&para;</a></h1>
 <p>환경 구성이 완료되면 개발 PC는 다음 상태가 된다.</p>
 <pre class="mermaid"><code>flowchart TB
     PC[Developer PC]
@@ -1720,64 +1730,64 @@ Temurin JDK 준비
     SUPPORT --&gt; XML[XML]
     SUPPORT --&gt; CT[Container Tools]</code></pre>
 <hr />
-<h1 id="16">16. 최종 체크리스트</h1>
-<h2 id="vs-code">VS Code</h2>
-<ul>
-<li>[ ] VS Code가 정상 설치되어 있다.</li>
-<li>[ ] Command Palette를 사용할 수 있다.</li>
-<li>[ ] Extensions 화면을 사용할 수 있다.</li>
-<li>[ ] Terminal을 사용할 수 있다.</li>
-<li>[ ] Output을 확인할 수 있다.</li>
+<h1 id="16">16. 최종 체크리스트<a class="headerlink" href="#16" title="Permanent link">&para;</a></h1>
+<h2 id="vs-code">VS Code<a class="headerlink" href="#vs-code" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code가 정상 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Command Palette를 사용할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Extensions 화면을 사용할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Terminal을 사용할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Output을 확인할 수 있다.</li>
 </ul>
-<h2 id="java">Java</h2>
-<ul>
-<li>[ ] Eclipse Temurin JDK가 앞 단계에서 준비되어 있다.</li>
-<li>[ ] Extension Pack for Java가 설치되어 있다.</li>
-<li>[ ] <code>Java: Configure Java Runtime</code> 명령을 확인할 수 있다.</li>
-<li>[ ] 프로젝트별 JDK 운영 방향을 이해했다.</li>
-<li>[ ] 시스템 <code>JAVA_HOME</code>과 Workspace JDK의 차이를 이해했다.</li>
+<h2 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Eclipse Temurin JDK가 앞 단계에서 준비되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Extension Pack for Java가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Java: Configure Java Runtime</code> 명령을 확인할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 프로젝트별 JDK 운영 방향을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 시스템 <code>JAVA_HOME</code>과 Workspace JDK의 차이를 이해했다.</li>
 </ul>
-<h2 id="spring-boot">Spring Boot</h2>
-<ul>
-<li>[ ] Spring Boot Extension Pack이 설치되어 있다.</li>
-<li>[ ] Spring Boot Tools가 설치되어 있다.</li>
-<li>[ ] Spring Initializr가 설치되어 있다.</li>
-<li>[ ] Spring Boot Dashboard가 설치되어 있다.</li>
+<h2 id="spring-boot">Spring Boot<a class="headerlink" href="#spring-boot" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Boot Extension Pack이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Boot Tools가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Initializr가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Boot Dashboard가 설치되어 있다.</li>
 </ul>
-<h2 id="_1">지원 환경</h2>
-<ul>
-<li>[ ] YAML이 설치되어 있다.</li>
-<li>[ ] XML이 설치되어 있다.</li>
-<li>[ ] Container Tools가 설치되어 있다.</li>
+<h2 id="_1">지원 환경<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> YAML이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> XML이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Container Tools가 설치되어 있다.</li>
 </ul>
-<h2 id="_2">단계 확인</h2>
-<ul>
-<li>[ ] 아직 MicroServer Spring Boot 프로젝트를 생성하지 않았다.</li>
-<li>[ ] 아직 <code>pom.xml</code>을 작성하지 않았다.</li>
-<li>[ ] 아직 Application 실행 / Debug를 하지 않았다.</li>
-<li>[ ] 실제 Workspace JDK 설정은 프로젝트 생성 이후 적용한다.</li>
+<h2 id="_2">단계 확인<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 MicroServer Spring Boot 프로젝트를 생성하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 <code>pom.xml</code>을 작성하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 Application 실행 / Debug를 하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 실제 Workspace JDK 설정은 프로젝트 생성 이후 적용한다.</li>
 </ul>
 <hr />
-<h1 id="17">17. 다음 단계</h1>
+<h1 id="17">17. 다음 단계<a class="headerlink" href="#17" title="Permanent link">&para;</a></h1>
 <p>이 문서까지 완료하면 VS Code 개발환경 구성은 끝난다.</p>
 <p>다음 단계에서는 <strong>Spring Boot 프로젝트를 실제로 생성</strong>한다.</p>
-<div class="highlight"><pre><span></span><code>JDK 설치 및 설정
-        ↓
-Maven 설치 및 기본 환경 구성
-        ↓
-VS Code 개발환경 구성       ← 현재 완료
-        ↓
-Spring Boot 프로젝트 생성
-        ↓
-프로젝트 JDK / Maven / VS Code 설정
-        ↓
-프로젝트 기본 구조 구성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>JDK 설치 및 설정
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>        ↓
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>Maven 설치 및 기본 환경 구성
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>        ↓
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>VS Code 개발환경 구성       ← 현재 완료
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>        ↓
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>Spring Boot 프로젝트 생성
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>        ↓
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>프로젝트 JDK / Maven / VS Code 설정
+</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>        ↓
+</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>프로젝트 기본 구조 구성
+</span></code></pre></div>
 <p>현재까지는 개발 PC에 JDK, Maven, VS Code와 필요한 Extension을 준비한 상태이다.</p>
 <p>실제 <code>.vscode/settings.json</code>, <code>java.configuration.runtimes</code>,
 Maven Wrapper, <code>pom.xml</code>의 Java / Build 설정 등은
 Spring Boot 프로젝트 생성 이후의 <strong>프로젝트 개발환경 설정 단계</strong>에서 적용한다.</p>
-<h2 id="_3">참고</h2>
+<h2 id="_3">참고<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>Managing Java Projects in VS Code<br />
@@ -1809,6 +1819,8 @@ Spring Boot 프로젝트 생성 이후의 <strong>프로젝트 개발환경 설�
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1847,7 +1859,7 @@ Spring Boot 프로젝트 생성 이후의 <strong>프로젝트 개발환경 설�
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

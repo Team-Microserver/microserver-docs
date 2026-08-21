@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>데이터 및 보안 아키텍처 - Microserver</title>
+        <title>데이터 및 보안 아키텍처 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1349,13 +1359,13 @@
 
 
 
-<h1 id="_1">데이터 및 보안 아키텍처</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="_1">데이터 및 보안 아키텍처<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>Database와 Security는 금융 SI 애플리케이션에서 가장 기본적이면서도 영향 범위가 큰 영역입니다.</p>
 <p>Microserver는 두 기능을 업무 코드에 직접 흩어놓지 않고 <strong>공통 설정과 정책을 통해 일관되게 적용</strong>하는 방향으로 설계합니다.</p>
 <hr />
-<h1 id="part-1">Part 1. 데이터 아키텍처</h1>
-<h2 id="2">2. 데이터 접근 기본 구조</h2>
+<h1 id="part-1">Part 1. 데이터 아키텍처<a class="headerlink" href="#part-1" title="Permanent link">&para;</a></h1>
+<h2 id="2">2. 데이터 접근 기본 구조<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     S[Service]
     D[DAO / Mapper]
@@ -1369,7 +1379,7 @@
     DS --&gt; DB</code></pre>
 <p>Service가 DataSource를 직접 사용하지 않고 DAO / Mapper를 통해 접근하도록 합니다.</p>
 <hr />
-<h2 id="3-datasource">3. DataSource 구성 방향</h2>
+<h2 id="3-datasource">3. DataSource 구성 방향<a class="headerlink" href="#3-datasource" title="Permanent link">&para;</a></h2>
 <p>DataSource는 공통 Configuration에서 Bean으로 구성하고 업무 Module에서 재사용하는 방향을 검토합니다.</p>
 <p>주요 설정 영역:</p>
 <ul>
@@ -1384,7 +1394,7 @@
 </ul>
 <p>민감한 접속정보는 소스에 평문으로 포함하지 않는 것을 원칙으로 합니다.</p>
 <hr />
-<h2 id="4-mybatis">4. MyBatis 처리 흐름</h2>
+<h2 id="4-mybatis">4. MyBatis 처리 흐름<a class="headerlink" href="#4-mybatis" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant S as Service
@@ -1403,13 +1413,13 @@
     D--&gt;&gt;S: Data</code></pre>
 <p>SQL과 Java 업무 로직을 분리하여 유지보수성을 확보합니다.</p>
 <hr />
-<h2 id="5-multi-datasource">5. Multi DataSource</h2>
+<h2 id="5-multi-datasource">5. Multi DataSource<a class="headerlink" href="#5-multi-datasource" title="Permanent link">&para;</a></h2>
 <p>금융 프로젝트에서는 목적별로 여러 Database를 사용하는 경우가 있습니다.</p>
-<div class="highlight"><pre><span></span><code>Application
-├─ Common DataSource
-├─ Business DataSource
-└─ External / Legacy DataSource
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Application
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ Common DataSource
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├─ Business DataSource
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>└─ External / Legacy DataSource
+</span></code></pre></div>
 <p>각 DataSource는 다음 요소를 독립적으로 가질 수 있습니다.</p>
 <ul>
 <li>HikariConfig</li>
@@ -1421,7 +1431,7 @@
 </ul>
 <p>초기 단계에서는 단일 DataSource를 먼저 완성한 후 Multi DataSource로 확장합니다.</p>
 <hr />
-<h2 id="6-transaction">6. Transaction 아키텍처</h2>
+<h2 id="6-transaction">6. Transaction 아키텍처<a class="headerlink" href="#6-transaction" title="Permanent link">&para;</a></h2>
 <p>Transaction의 기본 단위는 Service입니다.</p>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
@@ -1442,19 +1452,19 @@
     S-&gt;&gt;S: Commit
     S--&gt;&gt;C: Success</code></pre>
 <p>오류 시:</p>
-<div class="highlight"><pre><span></span><code>SQL 1 성공
-  ↓
-SQL 2 실패
-  ↓
-Exception
-  ↓
-Transaction Rollback
-  ↓
-SQL 1까지 원복
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>SQL 1 성공
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  ↓
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>SQL 2 실패
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  ↓
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Exception
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  ↓
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Transaction Rollback
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  ↓
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>SQL 1까지 원복
+</span></code></pre></div>
 <hr />
-<h1 id="part-2-security">Part 2. Security 아키텍처</h1>
-<h2 id="7-security">7. Security 기본 방향</h2>
+<h1 id="part-2-security">Part 2. Security 아키텍처<a class="headerlink" href="#part-2-security" title="Permanent link">&para;</a></h1>
+<h2 id="7-security">7. Security 기본 방향<a class="headerlink" href="#7-security" title="Permanent link">&para;</a></h2>
 <p>Spring Security를 이용하여 인증과 인가를 공통화합니다.</p>
 <p>핵심 영역:</p>
 <ul>
@@ -1466,7 +1476,7 @@ SQL 1까지 원복
 <li>접근 거부 처리</li>
 </ul>
 <hr />
-<h2 id="8">8. 인증 요청 흐름</h2>
+<h2 id="8">8. 인증 요청 흐름<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant C as Client
@@ -1495,7 +1505,7 @@ SQL 1까지 원복
 <li>외부 인증 연계</li>
 </ul>
 <hr />
-<h2 id="9">9. 인가 흐름</h2>
+<h2 id="9">9. 인가 흐름<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
 <p>인증이 “누구인가”를 확인하는 것이라면 인가는 “무엇을 할 수 있는가”를 판단합니다.</p>
 <pre class="mermaid"><code>flowchart LR
     A[Authenticated User]
@@ -1511,7 +1521,7 @@ SQL 1까지 원복
     D --&gt;|Yes| E
     D --&gt;|No| F</code></pre>
 <hr />
-<h2 id="10">10. 보안 정보 관리</h2>
+<h2 id="10">10. 보안 정보 관리<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
 <p>다음 정보는 평문 하드코딩을 피합니다.</p>
 <ul>
 <li>DB Password</li>
@@ -1530,19 +1540,19 @@ SQL 1까지 원복
 </ul>
 <p>환경에 따라 적절한 방식을 선택합니다.</p>
 <hr />
-<h2 id="11-data-security">11. Data와 Security의 접점</h2>
+<h2 id="11-data-security">11. Data와 Security의 접점<a class="headerlink" href="#11-data-security" title="Permanent link">&para;</a></h2>
 <p>사용자 및 권한 정보는 Database에 저장될 수 있으며 Security 구성과 밀접하게 연계됩니다.</p>
-<div class="highlight"><pre><span></span><code>Security Filter
-    ↓
-User Authentication Service
-    ↓
-User / Role DAO
-    ↓
-User / Role Tables
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Security Filter
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    ↓
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>User Authentication Service
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    ↓
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>User / Role DAO
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    ↓
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>User / Role Tables
+</span></code></pre></div>
 <p>따라서 Security Module이 업무 DAO에 무분별하게 의존하지 않도록 공통 사용자/권한 Repository의 책임을 명확히 설계해야 합니다.</p>
 <hr />
-<h2 id="12">12. 설계 원칙</h2>
+<h2 id="12">12. 설계 원칙<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
 <ul>
 <li>DataSource 설정을 업무 코드에 직접 구현하지 않는다.</li>
 <li>Transaction은 업무 단위로 관리한다.</li>
@@ -1569,6 +1579,8 @@ User / Role Tables
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1607,7 +1619,7 @@ User / Role Tables
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

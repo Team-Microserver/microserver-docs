@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>macOS 환경 구성 - Microserver</title>
+        <title>macOS 환경 구성 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1547,12 +1557,12 @@
 
 
 
-<h1 id="macos-python-mkdocs">macOS Python 가상환경 / MkDocs 구성 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="macos-python-mkdocs">macOS Python 가상환경 / MkDocs 구성 가이드<a class="headerlink" href="#macos-python-mkdocs" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 macOS 개발환경에서 MicroServer 기술문서 사이트를 작성하고 실행하기 위한 <strong>Python, venv, MkDocs, Material for MkDocs</strong> 환경을 구성한다.</p>
 <p>프로젝트는 시스템 Python에 직접 패키지를 설치하지 않고 프로젝트 루트의 <code>.venv</code>를 사용한다.</p>
 <hr />
-<h2 id="2">2. 구성 구조</h2>
+<h2 id="2">2. 구성 구조<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     MAC[macOS] --&gt; PY[Python 3]
     PY --&gt; VENV[.venv]
@@ -1561,237 +1571,237 @@
     MK --&gt; SITE[Local Docs Site]
     SITE --&gt; GHP[GitHub Pages]</code></pre>
 <hr />
-<h2 id="3-python">3. Python 확인</h2>
+<h2 id="3-python">3. Python 확인<a class="headerlink" href="#3-python" title="Permanent link">&para;</a></h2>
 <p>터미널에서 실행한다.</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>--version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python3<span class="w"> </span>--version
+</span></code></pre></div>
 <p>pip 확인:</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>--version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>--version
+</span></code></pre></div>
 <p>macOS 개발환경에서는 명령을 명확하게 구분하기 위해 <code>python3</code>를 사용하는 것을 권장한다.</p>
 <p>Python이 설치되어 있지 않거나 별도 버전 관리가 필요한 경우 Python 공식 설치 패키지 또는 Homebrew 등을 사용할 수 있다.</p>
 <p>Homebrew를 사용하는 경우 예:</p>
-<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>python
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>brew<span class="w"> </span>install<span class="w"> </span>python
+</span></code></pre></div>
 <p>설치 후 새 터미널을 열고 다시 확인한다.</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>--version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python3<span class="w"> </span>--version
+</span></code></pre></div>
 <hr />
-<h2 id="4">4. 문서 저장소로 이동</h2>
+<h2 id="4">4. 문서 저장소로 이동<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/workspace/microserver-docs
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">cd</span><span class="w"> </span>~/workspace/microserver-docs
+</span></code></pre></div>
 <p>현재 위치:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">pwd</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">pwd</span>
+</span></code></pre></div>
 <p>저장소 상태:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git<span class="w"> </span>status
+</span></code></pre></div>
 <hr />
-<h2 id="5-python">5. Python 가상환경 생성</h2>
+<h2 id="5-python">5. Python 가상환경 생성<a class="headerlink" href="#5-python" title="Permanent link">&para;</a></h2>
 <p>프로젝트 루트에서 실행한다.</p>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>python3<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+</span></code></pre></div>
 <p>구조 예:</p>
-<div class="highlight"><pre><span></span><code>microserver-docs/
- ├─ .venv/
- ├─ docs/
- ├─ mkdocs.yml
- └─ ...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>microserver-docs/
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a> ├─ .venv/
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a> ├─ docs/
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a> ├─ mkdocs.yml
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a> └─ ...
+</span></code></pre></div>
 <p><code>.venv</code>는 Git에 Commit하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>.venv/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>.venv/
+</span></code></pre></div>
 <hr />
-<h2 id="6">6. 가상환경 활성화</h2>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-</code></pre></div>
+<h2 id="6">6. 가상환경 활성화<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span></code></pre></div>
 <p>정상 활성화 예:</p>
-<div class="highlight"><pre><span></span><code>(.venv) user@mac microserver-docs %
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>(.venv) user@mac microserver-docs %
+</span></code></pre></div>
 <p>현재 Python 경로 확인:</p>
-<div class="highlight"><pre><span></span><code>which<span class="w"> </span>python
-which<span class="w"> </span>python3
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>which<span class="w"> </span>python
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>which<span class="w"> </span>python3
+</span></code></pre></div>
 <p>가상환경 활성화 후 <code>python</code>이 <code>.venv/bin/python</code>을 가리키면 정상이다.</p>
 <blockquote>
 <p>새 Terminal 세션을 열면 가상환경을 다시 활성화해야 한다.</p>
 </blockquote>
 <hr />
-<h2 id="7-pip">7. pip 업그레이드</h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
-</code></pre></div>
+<h2 id="7-pip">7. pip 업그레이드<a class="headerlink" href="#7-pip" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip
+</span></code></pre></div>
 <p>가상환경 활성화 후에는 <code>python</code> 명령을 사용해도 된다.</p>
 <hr />
-<h2 id="8-mkdocs">8. MkDocs 설치</h2>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-redirects
-</code></pre></div>
+<h2 id="8-mkdocs">8. MkDocs 설치<a class="headerlink" href="#8-mkdocs" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-redirects
+</span></code></pre></div>
 <p>프로젝트 <code>mkdocs.yml</code>에서 <code>redirects</code> 플러그인을 사용하므로 <code>mkdocs-redirects</code>도 함께 설치한다.</p>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>--version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>mkdocs<span class="w"> </span>--version
+</span></code></pre></div>
 <p>추가 Markdown 확장이 필요한 경우:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymdown-extensions
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>pymdown-extensions
+</span></code></pre></div>
 <hr />
-<h2 id="9">9. 문서 의존성 파일 관리</h2>
+<h2 id="9">9. 문서 의존성 파일 관리<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
 <p>예: <code>requirements-docs.txt</code></p>
-<div class="highlight"><pre><span></span><code>mkdocs
-mkdocs-material
-mkdocs-redirects
-pymdown-extensions
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>mkdocs
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>mkdocs-material
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>mkdocs-redirects
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>pymdown-extensions
+</span></code></pre></div>
 <p>다른 개발자가 동일 환경을 구성할 때:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
+</span></code></pre></div>
 <p>현재 전체 설치 버전을 기록하려면:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>requirements-docs-lock.txt
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>freeze<span class="w"> </span>&gt;<span class="w"> </span>requirements-docs-lock.txt
+</span></code></pre></div>
 <hr />
-<h2 id="10-mkdocs">10. MkDocs 프로젝트 구조</h2>
-<div class="highlight"><pre><span></span><code>microserver-docs/
- ├─ docs/
- │   ├─ index.md
- │   └─ 01_project_start/
- │       └─ 02_environment/
- ├─ mkdocs.yml
- ├─ requirements-docs.txt
- └─ .venv/
-</code></pre></div>
+<h2 id="10-mkdocs">10. MkDocs 프로젝트 구조<a class="headerlink" href="#10-mkdocs" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>microserver-docs/
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a> ├─ docs/
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a> │   ├─ index.md
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a> │   └─ 01_project_start/
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a> │       └─ 02_environment/
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a> ├─ mkdocs.yml
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a> ├─ requirements-docs.txt
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a> └─ .venv/
+</span></code></pre></div>
 <p><code>mkdocs.yml</code>은 MkDocs 사이트의 메뉴, 테마, Markdown 확장 기능을 정의한다.</p>
 <hr />
-<h2 id="11-mkdocs">11. MkDocs 로컬 서버 실행</h2>
-<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>serve
-</code></pre></div>
+<h2 id="11-mkdocs">11. MkDocs 로컬 서버 실행<a class="headerlink" href="#11-mkdocs" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>mkdocs<span class="w"> </span>serve
+</span></code></pre></div>
 <p>실행 상태에서 Markdown 파일을 저장하면 변경 내용이 자동으로 반영된다.</p>
 <p>종료:</p>
-<div class="highlight"><pre><span></span><code>Control + C
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Control + C
+</span></code></pre></div>
 <hr />
-<h2 id="12">12. 포트 변경</h2>
-<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>serve<span class="w"> </span>-a<span class="w"> </span><span class="m">127</span>.0.0.1:8001
-</code></pre></div>
+<h2 id="12">12. 포트 변경<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>mkdocs<span class="w"> </span>serve<span class="w"> </span>-a<span class="w"> </span><span class="m">127</span>.0.0.1:8001
+</span></code></pre></div>
 <p>동일한 Mac에서 다른 개발 서버가 8000 포트를 사용하는 경우 활용할 수 있다.</p>
 <hr />
-<h2 id="13">13. 문서 빌드 검증</h2>
+<h2 id="13">13. 문서 빌드 검증<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
 <p>배포 전에 전체 문서 빌드 검증을 수행한다.</p>
-<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
+</span></code></pre></div>
 <p>정상 완료되면 기본적으로 다음 디렉터리가 생성된다.</p>
-<div class="highlight"><pre><span></span><code>site/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>site/
+</span></code></pre></div>
 <p><code>site/</code>는 일반적으로 Git에서 제외한다.</p>
-<div class="highlight"><pre><span></span><code>site/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>site/
+</span></code></pre></div>
 <hr />
-<h2 id="14-github-pages">14. GitHub Pages 배포</h2>
+<h2 id="14-github-pages">14. GitHub Pages 배포<a class="headerlink" href="#14-github-pages" title="Permanent link">&para;</a></h2>
 <p>MkDocs의 <code>gh-pages</code> 배포 방식을 사용하는 경우:</p>
-<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>gh-deploy
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>mkdocs<span class="w"> </span>gh-deploy
+</span></code></pre></div>
 <p>권장 절차:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
-git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"docs: update project environment guide"</span>
-git<span class="w"> </span>push
-mkdocs<span class="w"> </span>gh-deploy
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>git<span class="w"> </span>status
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"docs: update project environment guide"</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>git<span class="w"> </span>push
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>mkdocs<span class="w"> </span>gh-deploy
+</span></code></pre></div>
 <p>GitHub Actions 기반 자동 배포를 적용한 저장소라면 해당 Workflow를 우선한다.</p>
 <hr />
-<h2 id="15">15. 매번 문서 작업을 시작할 때</h2>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/workspace/microserver-docs
-<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-mkdocs<span class="w"> </span>serve
-</code></pre></div>
+<h2 id="15">15. 매번 문서 작업을 시작할 때<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nb">cd</span><span class="w"> </span>~/workspace/microserver-docs
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>mkdocs<span class="w"> </span>serve
+</span></code></pre></div>
 <p>작업 종료:</p>
-<div class="highlight"><pre><span></span><code>Control + C
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Control + C
+</span></code></pre></div>
 <p>가상환경 종료:</p>
-<div class="highlight"><pre><span></span><code>deactivate
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>deactivate
+</span></code></pre></div>
 <hr />
-<h2 id="16-vs-code">16. VS Code로 열기</h2>
-<div class="highlight"><pre><span></span><code>code<span class="w"> </span>~/workspace/microserver-docs
-</code></pre></div>
+<h2 id="16-vs-code">16. VS Code로 열기<a class="headerlink" href="#16-vs-code" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>code<span class="w"> </span>~/workspace/microserver-docs
+</span></code></pre></div>
 <p>VS Code Terminal에서도:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span></code></pre></div>
 <p>Python 확장을 설치한 경우 VS Code에서 <code>.venv</code> 인터프리터를 선택할 수 있다.</p>
 <hr />
-<h2 id="17-apple-silicon">17. Apple Silicon 환경 확인</h2>
+<h2 id="17-apple-silicon">17. Apple Silicon 환경 확인<a class="headerlink" href="#17-apple-silicon" title="Permanent link">&para;</a></h2>
 <p>Apple Silicon Mac에서는 현재 Terminal 아키텍처를 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>uname<span class="w"> </span>-m
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>uname<span class="w"> </span>-m
+</span></code></pre></div>
 <p>일반적인 Apple Silicon 환경:</p>
-<div class="highlight"><pre><span></span><code>arm64
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>arm64
+</span></code></pre></div>
 <p>Python과 패키지는 가능하면 동일 아키텍처 환경에서 사용한다.</p>
 <p>Rosetta 기반 x86 터미널과 arm64 터미널을 혼합하면 일부 네이티브 패키지 설치에서 혼선이 생길 수 있다.</p>
 <hr />
-<h2 id="18">18. 문제 해결</h2>
-<h3 id="python3-command-not-found"><code>python3: command not found</code></h3>
+<h2 id="18">18. 문제 해결<a class="headerlink" href="#18" title="Permanent link">&para;</a></h2>
+<h3 id="python3-command-not-found"><code>python3: command not found</code><a class="headerlink" href="#python3-command-not-found" title="Permanent link">&para;</a></h3>
 <p>Python 설치 여부를 확인하고 새 Terminal을 연다.</p>
 <p>Homebrew 사용 시:</p>
-<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>--version
-brew<span class="w"> </span>install<span class="w"> </span>python
-</code></pre></div>
-<h3 id="mkdocs-command-not-found"><code>mkdocs: command not found</code></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>brew<span class="w"> </span>--version
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>brew<span class="w"> </span>install<span class="w"> </span>python
+</span></code></pre></div>
+<h3 id="mkdocs-command-not-found"><code>mkdocs: command not found</code><a class="headerlink" href="#mkdocs-command-not-found" title="Permanent link">&para;</a></h3>
 <p>가상환경 활성화 여부 확인:</p>
-<div class="highlight"><pre><span></span><code>which<span class="w"> </span>python
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>mkdocs
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>which<span class="w"> </span>python
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>show<span class="w"> </span>mkdocs
+</span></code></pre></div>
 <p>직접 모듈로 실행할 수도 있다.</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>mkdocs<span class="w"> </span>--version
-python<span class="w"> </span>-m<span class="w"> </span>mkdocs<span class="w"> </span>serve
-</code></pre></div>
-<h3 id="no-module-named-mkdocs"><code>No module named mkdocs</code></h3>
-<div class="highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
-</code></pre></div>
-<h3 id="mkdocsyml"><code>mkdocs.yml</code> 오류</h3>
-<div class="highlight"><pre><span></span><code>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>python<span class="w"> </span>-m<span class="w"> </span>mkdocs<span class="w"> </span>--version
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>python<span class="w"> </span>-m<span class="w"> </span>mkdocs<span class="w"> </span>serve
+</span></code></pre></div>
+<h3 id="no-module-named-mkdocs"><code>No module named mkdocs</code><a class="headerlink" href="#no-module-named-mkdocs" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements-docs.txt
+</span></code></pre></div>
+<h3 id="mkdocsyml"><code>mkdocs.yml</code> 오류<a class="headerlink" href="#mkdocsyml" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
+</span></code></pre></div>
 <p>YAML은 들여쓰기가 문법이므로 Tab보다 Space를 사용한다.</p>
-<h3 id="nav">nav 경로 오류</h3>
+<h3 id="nav">nav 경로 오류<a class="headerlink" href="#nav" title="Permanent link">&para;</a></h3>
 <p><code>mkdocs.yml</code>의 파일 경로는 <code>docs/</code>를 기준으로 작성한다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">nav</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">프로젝트 환경 구성</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">개발 장비 구성</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">01_project_start/02_environment/development_device.md</span>
-</code></pre></div>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nt">nav</span><span class="p">:</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">프로젝트 환경 구성</span><span class="p">:</span>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">개발 장비 구성</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">01_project_start/02_environment/development_device.md</span>
+</span></code></pre></div>
 <p>실제 파일:</p>
-<div class="highlight"><pre><span></span><code>docs/01_project_start/02_environment/development_device.md
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>docs/01_project_start/02_environment/development_device.md
+</span></code></pre></div>
 <hr />
-<h2 id="19-gitignore">19. 권장 <code>.gitignore</code></h2>
-<div class="highlight"><pre><span></span><code>.venv/
-site/
-__pycache__/
-*.pyc
-.DS_Store
-</code></pre></div>
+<h2 id="19-gitignore">19. 권장 <code>.gitignore</code><a class="headerlink" href="#19-gitignore" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>.venv/
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>site/
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>__pycache__/
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>*.pyc
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>.DS_Store
+</span></code></pre></div>
 <hr />
-<h2 id="20">20. 최종 확인</h2>
-<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>--version
-<span class="nb">source</span><span class="w"> </span>.venv/bin/activate
-python<span class="w"> </span>--version
-python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>--version
-mkdocs<span class="w"> </span>--version
-mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
-</code></pre></div>
+<h2 id="20">20. 최종 확인<a class="headerlink" href="#20" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>python3<span class="w"> </span>--version
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>python<span class="w"> </span>--version
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>--version
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>mkdocs<span class="w"> </span>--version
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
+</span></code></pre></div>
 <p>체크리스트:</p>
-<ul>
-<li>[ ] Python 3가 정상 실행된다.</li>
-<li>[ ] <code>.venv</code>가 생성되어 있다.</li>
-<li>[ ] 가상환경을 활성화할 수 있다.</li>
-<li>[ ] MkDocs가 설치되어 있다.</li>
-<li>[ ] Material 테마가 설치되어 있다.</li>
-<li>[ ] <code>mkdocs-redirects</code>가 설치되어 있다.</li>
-<li>[ ] <code>mkdocs serve</code>가 정상 실행된다.</li>
-<li>[ ] <code>mkdocs build --strict</code>가 성공한다.</li>
-<li>[ ] <code>.venv/</code>, <code>site/</code>, <code>.DS_Store</code>가 Git에서 제외된다.</li>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Python 3가 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.venv</code>가 생성되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 가상환경을 활성화할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> MkDocs가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Material 테마가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mkdocs-redirects</code>가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mkdocs serve</code>가 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mkdocs build --strict</code>가 성공한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.venv/</code>, <code>site/</code>, <code>.DS_Store</code>가 Git에서 제외된다.</li>
 </ul>
 
 
@@ -1810,6 +1820,8 @@ mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1848,7 +1860,7 @@ mkdocs<span class="w"> </span>build<span class="w"> </span>--strict
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

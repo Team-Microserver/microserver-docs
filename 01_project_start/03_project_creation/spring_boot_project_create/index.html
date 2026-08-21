@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>Spring Boot 프로젝트 생성 - Microserver</title>
+        <title>Spring Boot 프로젝트 생성 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1851,8 +1861,8 @@
 
 
 
-<h1 id="spring-boot">Spring Boot 프로젝트 생성 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="spring-boot">Spring Boot 프로젝트 생성 가이드<a class="headerlink" href="#spring-boot" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 앞 단계에서 준비한 JDK, Maven, VS Code, Docker / Oracle 로컬 개발환경을 기반으로
 MicroServer의 <strong>최초 Spring Boot 프로젝트를 생성</strong>하는 방법을 설명한다.</p>
 <p>현재 단계에서는 애플리케이션의 기본 골격만 생성한다.</p>
@@ -1871,18 +1881,18 @@ MicroServer의 <strong>최초 Spring Boot 프로젝트를 생성</strong>하는 
 <li>업무 Table / Schema 구성</li>
 </ul>
 <p>이 문서의 목표는 다음과 같다.</p>
-<div class="highlight"><pre><span></span><code>Spring Initializr
-        ↓
-Spring Boot 기본 프로젝트 생성
-        ↓
-프로젝트 파일 구조 확인
-        ↓
-Git 변경사항 확인
-        ↓
-다음 프로젝트 개발환경 설정 단계로 이동
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Spring Initializr
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Spring Boot 기본 프로젝트 생성
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>프로젝트 파일 구조 확인
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Git 변경사항 확인
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>다음 프로젝트 개발환경 설정 단계로 이동
+</span></code></pre></div>
 <hr />
-<h2 id="2">2. 현재 단계의 위치</h2>
+<h2 id="2">2. 현재 단계의 위치<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>MicroServer 프로젝트 구축 흐름은 다음과 같다.</p>
 <pre class="mermaid"><code>flowchart LR
     A[개발환경 구성] --&gt; B[Spring Boot 프로젝트 생성]
@@ -1892,18 +1902,18 @@ Git 변경사항 확인
     E --&gt; F[Maven Multi Module]
     F --&gt; G[공통 프레임워크 구현]</code></pre>
 <p>현재 문서는 다음 위치에 해당한다.</p>
-<div class="highlight"><pre><span></span><code>JDK / Maven / VS Code / Oracle 환경 준비
-        ↓
-[ Spring Boot 프로젝트 생성 ]          ← 현재
-        ↓
-프로젝트 JDK / VS Code Workspace 설정
-        ↓
-Maven Wrapper 및 프로젝트 Maven 설정
-        ↓
-초기 실행 및 Build 검증
-        ↓
-Maven Multi Module 구성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>JDK / Maven / VS Code / Oracle 환경 준비
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        ↓
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>[ Spring Boot 프로젝트 생성 ]          ← 현재
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        ↓
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>프로젝트 JDK / VS Code Workspace 설정
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        ↓
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Maven Wrapper 및 프로젝트 Maven 설정
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        ↓
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>초기 실행 및 Build 검증
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>        ↓
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Maven Multi Module 구성
+</span></code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">프로젝트 생성 단계의 원칙</p>
 <p>이번 단계에서는 <strong>Spring Boot 기본 프로젝트를 만들기만 한다.</strong></p>
@@ -1912,19 +1922,19 @@ Maven Multi Module 구성
 문제가 발생했을 때 어느 단계에서 문제가 생겼는지 추적할 수 있도록 한다.</p>
 </div>
 <hr />
-<h2 id="3-spring-boot">3. Spring Boot 버전 기준</h2>
+<h2 id="3-spring-boot">3. Spring Boot 버전 기준<a class="headerlink" href="#3-spring-boot" title="Permanent link">&para;</a></h2>
 <p>본 가이드 작성 기준일은 <strong>2026-08-19</strong>이다.</p>
 <p>MicroServer 초기 프로젝트는 다음 버전을 기준으로 한다.</p>
-<div class="highlight"><pre><span></span><code>Spring Boot : 4.1.0
-Java        : 26
-Build Tool  : Maven
-Packaging   : JAR
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Spring Boot : 4.1.0
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Java        : 26
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Build Tool  : Maven
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Packaging   : JAR
+</span></code></pre></div>
 <p>Spring Boot 4.1.0은 공식 문서 기준으로 다음 환경을 지원한다.</p>
-<div class="highlight"><pre><span></span><code>Minimum Java : 17
-Maximum Java : 26
-Maven        : 3.6.3 이상
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Minimum Java : 17
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Maximum Java : 26
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Maven        : 3.6.3 이상
+</span></code></pre></div>
 <p>MicroServer는 앞 단계에서 준비한 Eclipse Temurin JDK 26을 사용한다.</p>
 <div class="admonition info">
 <p class="admonition-title">Spring Boot 버전 운영</p>
@@ -1934,64 +1944,64 @@ Maven        : 3.6.3 이상
 <p>프로젝트 표준 Version을 변경할 경우 JDK, Maven, Build, CI/CD 및 관련 문서를 함께 검토한다.</p>
 </div>
 <hr />
-<h2 id="4-spring-boot-4-web-starter">4. Spring Boot 4의 Web Starter</h2>
+<h2 id="4-spring-boot-4-web-starter">4. Spring Boot 4의 Web Starter<a class="headerlink" href="#4-spring-boot-4-web-starter" title="Permanent link">&para;</a></h2>
 <p>Spring Boot 4에서는 기능별 Starter가 보다 세분화되었다.</p>
 <p>Spring MVC 기반 Web Application의 주요 Starter는 다음과 같다.</p>
-<div class="highlight"><pre><span></span><code>spring-boot-starter-webmvc
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>spring-boot-starter-webmvc
+</span></code></pre></div>
 <p>Test 지원 Starter:</p>
-<div class="highlight"><pre><span></span><code>spring-boot-starter-webmvc-test
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>spring-boot-starter-webmvc-test
+</span></code></pre></div>
 <p>Spring Initializr 화면에서는 일반적으로 다음 Dependency를 선택한다.</p>
-<div class="highlight"><pre><span></span><code>Spring Web
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Spring Web
+</span></code></pre></div>
 <p>Initializr가 선택한 Spring Boot Version에 맞는 Starter 구성을 생성하도록 한다.</p>
 <p>현재 단계에서는 Web Application의 기본 기동을 검증할 수 있도록 <strong>Spring Web만 추가</strong>한다.</p>
 <hr />
-<h2 id="5-dependency">5. 최초 프로젝트 Dependency 원칙</h2>
+<h2 id="5-dependency">5. 최초 프로젝트 Dependency 원칙<a class="headerlink" href="#5-dependency" title="Permanent link">&para;</a></h2>
 <p>Spring Initializr에서 Dependency를 많이 선택하지 않는다.</p>
 <p>현재 선택:</p>
-<div class="highlight"><pre><span></span><code>Spring Web
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Spring Web
+</span></code></pre></div>
 <p>현재 선택하지 않음:</p>
-<div class="highlight"><pre><span></span><code>Spring Security
-Validation
-JDBC API
-Oracle Driver
-Spring Data JPA
-MyBatis
-Actuator
-Lombok
-DevTools
-Flyway
-Liquibase
-Cache
-Batch
-Kafka
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Spring Security
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>Validation
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>JDBC API
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>Oracle Driver
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>Spring Data JPA
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>MyBatis
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>Actuator
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>Lombok
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>DevTools
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>Flyway
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>Liquibase
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>Cache
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a>Batch
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>Kafka
+</span></code></pre></div>
 <p>이유는 다음과 같다.</p>
-<div class="highlight"><pre><span></span><code>최소 Spring Boot Project
-        ↓
-기본 Build / Run 검증
-        ↓
-Multi Module 구성
-        ↓
-필요 기능을 단계별 추가
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>최소 Spring Boot Project
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>        ↓
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>기본 Build / Run 검증
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        ↓
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Multi Module 구성
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        ↓
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>필요 기능을 단계별 추가
+</span></code></pre></div>
 <p>처음부터 많은 Dependency를 추가하면
 문제가 발생했을 때 원인을 특정하기 어려워진다.</p>
 <hr />
-<h2 id="6-maven-coordinate">6. Maven Coordinate 기준</h2>
+<h2 id="6-maven-coordinate">6. Maven Coordinate 기준<a class="headerlink" href="#6-maven-coordinate" title="Permanent link">&para;</a></h2>
 <p>본 가이드에서는 다음 값을 프로젝트 생성 예시로 사용한다.</p>
-<div class="highlight"><pre><span></span><code>Group       : io.github.teammicroserver
-Artifact    : microserver
-Name        : microserver
-Package     : io.github.teammicroserver
-Version     : 0.0.1-SNAPSHOT
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Group       : io.github.teammicroserver
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Artifact    : microserver
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>Name        : microserver
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>Package     : io.github.teammicroserver
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>Version     : 0.0.1-SNAPSHOT
+</span></code></pre></div>
 <p>Maven Coordinate:</p>
-<div class="highlight"><pre><span></span><code>io.github.teammicroserver:microserver:0.0.1-SNAPSHOT
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>io.github.teammicroserver:microserver:0.0.1-SNAPSHOT
+</span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Group ID</p>
 <p><code>groupId</code>는 일반적으로 조직이 관리하는 Domain / Namespace를 기준으로 정한다.</p>
@@ -2000,40 +2010,40 @@ Version     : 0.0.1-SNAPSHOT
 프로젝트 생성 전에 해당 기준으로 변경한다.</p>
 </div>
 <hr />
-<h2 id="7-spring-initializr">7. Spring Initializr를 사용하는 이유</h2>
+<h2 id="7-spring-initializr">7. Spring Initializr를 사용하는 이유<a class="headerlink" href="#7-spring-initializr" title="Permanent link">&para;</a></h2>
 <p>Spring Boot 프로젝트를 수동으로 처음부터 만들 수도 있지만
 MicroServer에서는 Spring Initializr를 사용한다.</p>
 <p>Spring Initializr는 다음 기본 파일을 생성한다.</p>
-<div class="highlight"><pre><span></span><code>pom.xml
-mvnw
-mvnw.cmd
-.mvn/
-src/main/java/
-src/main/resources/
-src/test/java/
-.gitignore
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>pom.xml
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>mvnw
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>mvnw.cmd
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>.mvn/
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>src/main/java/
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>src/main/resources/
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>src/test/java/
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>.gitignore
+</span></code></pre></div>
 <p>또한 선택한 Spring Boot Version과 Java Version,
 Dependency에 맞는 기본 Maven Project를 생성한다.</p>
 <hr />
-<h2 id="8-vs-code-spring-initializr">8. VS Code에서 Spring Initializr 실행</h2>
+<h2 id="8-vs-code-spring-initializr">8. VS Code에서 Spring Initializr 실행<a class="headerlink" href="#8-vs-code-spring-initializr" title="Permanent link">&para;</a></h2>
 <p>앞 단계에서 Spring Boot Extension Pack과
 Spring Initializr Java Support Extension이 설치되어 있어야 한다.</p>
 <p>Command Palette:</p>
-<h3 id="windows">Windows</h3>
-<div class="highlight"><pre><span></span><code>Ctrl + Shift + P
-</code></pre></div>
-<h3 id="macos">macOS</h3>
-<div class="highlight"><pre><span></span><code>Command + Shift + P
-</code></pre></div>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Ctrl + Shift + P
+</span></code></pre></div>
+<h3 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Command + Shift + P
+</span></code></pre></div>
 <p>검색:</p>
-<div class="highlight"><pre><span></span><code>Spring Initializr
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Spring Initializr
+</span></code></pre></div>
 <p>Spring Initializr의 Maven Project 생성 명령을 선택한다.</p>
 <p>VS Code Extension Version에 따라 표시되는 명령 문구가 조금 달라질 수 있으므로
 <code>Spring Initializr</code>로 검색하여 Maven Project 생성 Wizard를 시작한다.</p>
 <hr />
-<h2 id="9-spring-initializr">9. Spring Initializr 선택 값</h2>
+<h2 id="9-spring-initializr">9. Spring Initializr 선택 값<a class="headerlink" href="#9-spring-initializr" title="Permanent link">&para;</a></h2>
 <p>Wizard에서는 다음 기준으로 선택한다.</p>
 <table>
 <thead>
@@ -2086,27 +2096,27 @@ Spring Initializr Java Support Extension이 설치되어 있어야 한다.</p>
 </tbody>
 </table>
 <p>Dependency:</p>
-<div class="highlight"><pre><span></span><code>Spring Web
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Spring Web
+</span></code></pre></div>
 <hr />
-<h2 id="10-git-repository-clone">10. 이미 Git Repository를 Clone한 경우</h2>
+<h2 id="10-git-repository-clone">10. 이미 Git Repository를 Clone한 경우<a class="headerlink" href="#10-git-repository-clone" title="Permanent link">&para;</a></h2>
 <p>MicroServer Source Repository를 이미 Clone해 두었다면
 <strong><code>.git</code> 디렉터리를 삭제하거나 덮어쓰지 않는 것</strong>이 중요하다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>workspace/
-└─ microserver/
-   ├─ .git/
-   ├─ README.md
-   └─ ...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>workspace/
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>└─ microserver/
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>   ├─ .git/
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>   ├─ README.md
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>   └─ ...
+</span></code></pre></div>
 <p>Spring Initializr Extension의 생성 방식이나 Version에 따라
 선택한 Directory 아래에 Artifact 이름의 하위 Directory가 추가될 수 있다.</p>
 <p>따라서 기존 Git Repository가 있는 경우 다음 방법을 권장한다.</p>
-<div class="highlight"><pre><span></span><code>1. Spring Initializr Project를 임시 Directory에 생성
-2. 생성 결과 확인
-3. 생성된 Project 파일을 기존 microserver Repository Root로 이동
-4. 기존 .git Directory는 유지
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>1. Spring Initializr Project를 임시 Directory에 생성
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>2. 생성 결과 확인
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>3. 생성된 Project 파일을 기존 microserver Repository Root로 이동
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>4. 기존 .git Directory는 유지
+</span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title"><code>.git</code> Directory</p>
 <p>기존 Repository의 <code>.git</code> Directory는 Project Source가 아니라
@@ -2115,49 +2125,49 @@ Git Repository 자체의 Metadata이다.</p>
 다른 Repository의 <code>.git</code>으로 교체하지 않는다.</p>
 </div>
 <hr />
-<h2 id="11">11. 생성 위치 예시</h2>
+<h2 id="11">11. 생성 위치 예시<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>C:\dev\workspace\
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>C:\dev\workspace\
+</span></code></pre></div>
 <p>또는:</p>
-<div class="highlight"><pre><span></span><code>~/dev/workspace/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>~/dev/workspace/
+</span></code></pre></div>
 <p>임시 생성 결과:</p>
-<div class="highlight"><pre><span></span><code>workspace/
-├─ microserver-generated/
-└─ microserver/                 ← 기존 Git Repository
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>workspace/
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>├─ microserver-generated/
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>└─ microserver/                 ← 기존 Git Repository
+</span></code></pre></div>
 <p>최종적으로 Spring Boot Project의 <code>pom.xml</code>이
 Git Repository Root에 위치하도록 한다.</p>
-<div class="highlight"><pre><span></span><code>microserver/
-├─ .git/
-├─ .mvn/
-├─ src/
-├─ .gitignore
-├─ mvnw
-├─ mvnw.cmd
-└─ pom.xml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>microserver/
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>├─ .git/
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>├─ .mvn/
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>├─ src/
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>├─ .gitignore
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>├─ mvnw
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>├─ mvnw.cmd
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>└─ pom.xml
+</span></code></pre></div>
 <p>다음처럼 한 단계 더 중첩되지 않도록 주의한다.</p>
-<div class="highlight"><pre><span></span><code>X microserver/
-    └─ microserver/
-        ├─ pom.xml
-        └─ src/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>X microserver/
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    └─ microserver/
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>        ├─ pom.xml
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>        └─ src/
+</span></code></pre></div>
 <p>원하는 구조:</p>
-<div class="highlight"><pre><span></span><code>O microserver/
-    ├─ pom.xml
-    └─ src/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>O microserver/
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    ├─ pom.xml
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    └─ src/
+</span></code></pre></div>
 <hr />
-<h2 id="12-windows">12. Windows에서 생성 파일 이동 예시</h2>
+<h2 id="12-windows">12. Windows에서 생성 파일 이동 예시<a class="headerlink" href="#12-windows" title="Permanent link">&para;</a></h2>
 <p>생성 Project가 임시 Directory에 있다면
 필요한 파일을 기존 Repository Root로 이동한다.</p>
 <p>GUI Explorer를 이용해도 된다.</p>
 <p>PowerShell을 사용하는 경우 실제 경로를 확인한 후 진행한다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">Get-ChildItem</span> <span class="n">-Force</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="nb">Get-ChildItem</span> <span class="n">-Force</span>
+</span></code></pre></div>
 <p>숨김 Directory인 <code>.mvn</code>도 반드시 함께 이동한다.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -2165,223 +2175,223 @@ Git Repository Root에 위치하도록 한다.</p>
 <code>.git</code> Directory를 포함한 전체 Directory를 통째로 덮어쓰는 명령을 사용하지 않는다.</p>
 </div>
 <hr />
-<h2 id="13-macos">13. macOS에서 생성 파일 확인</h2>
+<h2 id="13-macos">13. macOS에서 생성 파일 확인<a class="headerlink" href="#13-macos" title="Permanent link">&para;</a></h2>
 <p>Terminal:</p>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-la
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>ls<span class="w"> </span>-la
+</span></code></pre></div>
 <p>생성 결과에서 다음 Hidden File / Directory도 확인한다.</p>
-<div class="highlight"><pre><span></span><code>.mvn
-.gitignore
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>.mvn
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>.gitignore
+</span></code></pre></div>
 <p>Finder에서 Hidden File을 확인해야 하는 경우:</p>
-<div class="highlight"><pre><span></span><code>Command + Shift + .
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Command + Shift + .
+</span></code></pre></div>
 <p>를 사용할 수 있다.</p>
 <hr />
-<h2 id="14">14. 생성 후 기본 구조</h2>
+<h2 id="14">14. 생성 후 기본 구조<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
 <p>정상적으로 생성되면 다음과 유사한 구조가 된다.</p>
-<div class="highlight"><pre><span></span><code>microserver/
-├─ .git/
-├─ .mvn/
-│  └─ wrapper/
-│     └─ maven-wrapper.properties
-├─ src/
-│  ├─ main/
-│  │  ├─ java/
-│  │  │  └─ io/github/teammicroserver/
-│  │  │     └─ *Application.java
-│  │  └─ resources/
-│  │     └─ application.properties
-│  └─ test/
-│     └─ java/
-│        └─ io/github/teammicroserver/
-│           └─ *ApplicationTests.java
-├─ .gitignore
-├─ mvnw
-├─ mvnw.cmd
-└─ pom.xml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>microserver/
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>├─ .git/
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>├─ .mvn/
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>│  └─ wrapper/
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>│     └─ maven-wrapper.properties
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>├─ src/
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a>│  ├─ main/
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>│  │  ├─ java/
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a>│  │  │  └─ io/github/teammicroserver/
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>│  │  │     └─ *Application.java
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a>│  │  └─ resources/
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a>│  │     └─ application.properties
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a>│  └─ test/
+</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a>│     └─ java/
+</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15" href="#__codelineno-29-15"></a>│        └─ io/github/teammicroserver/
+</span><span id="__span-29-16"><a id="__codelineno-29-16" name="__codelineno-29-16" href="#__codelineno-29-16"></a>│           └─ *ApplicationTests.java
+</span><span id="__span-29-17"><a id="__codelineno-29-17" name="__codelineno-29-17" href="#__codelineno-29-17"></a>├─ .gitignore
+</span><span id="__span-29-18"><a id="__codelineno-29-18" name="__codelineno-29-18" href="#__codelineno-29-18"></a>├─ mvnw
+</span><span id="__span-29-19"><a id="__codelineno-29-19" name="__codelineno-29-19" href="#__codelineno-29-19"></a>├─ mvnw.cmd
+</span><span id="__span-29-20"><a id="__codelineno-29-20" name="__codelineno-29-20" href="#__codelineno-29-20"></a>└─ pom.xml
+</span></code></pre></div>
 <p>Spring Initializr Version에 따라 생성 파일의 세부 구성이 달라질 수 있다.</p>
 <hr />
-<h2 id="15-main-application-class">15. Main Application Class</h2>
+<h2 id="15-main-application-class">15. Main Application Class<a class="headerlink" href="#15-main-application-class" title="Permanent link">&para;</a></h2>
 <p>생성된 Java Source에는 Spring Boot Main Class가 존재한다.</p>
 <p>형태:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@SpringBootApplication</span>
-<span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="err">...</span><span class="nc">Application</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(...</span><span class="na">Application</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nd">@SpringBootApplication</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="err">...</span><span class="nc">Application</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(...</span><span class="na">Application</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="p">}</span>
+</span></code></pre></div>
 <p><code>@SpringBootApplication</code>은 Spring Boot Application의 기본 Entry Point를 구성한다.</p>
 <p>현재는 이 Class를 수정하지 않는다.</p>
 <hr />
-<h2 id="16-test-class">16. Test Class</h2>
+<h2 id="16-test-class">16. Test Class<a class="headerlink" href="#16-test-class" title="Permanent link">&para;</a></h2>
 <p>Spring Initializr는 기본 Test Class도 생성한다.</p>
 <p>형태:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@SpringBootTest</span>
-<span class="kd">class</span> <span class="err">...</span><span class="nc">ApplicationTests</span><span class="w"> </span><span class="p">{</span>
-
-<span class="w">    </span><span class="nd">@Test</span>
-<span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">contextLoads</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nd">@SpringBootTest</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="kd">class</span> <span class="err">...</span><span class="nc">ApplicationTests</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">    </span><span class="nd">@Test</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">contextLoads</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>현재 Test는 Application Context가 기본적으로 구성되는지를 확인하기 위한 최소 Test이다.</p>
 <p>삭제하지 않는다.</p>
 <p>이 Test는 이후 <strong>초기 실행 및 Build 검증 가이드</strong>에서 사용한다.</p>
 <hr />
-<h2 id="17-applicationproperties">17. <code>application.properties</code></h2>
+<h2 id="17-applicationproperties">17. <code>application.properties</code><a class="headerlink" href="#17-applicationproperties" title="Permanent link">&para;</a></h2>
 <p>Spring Initializr가 다음 파일을 생성할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>src/main/resources/application.properties
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>src/main/resources/application.properties
+</span></code></pre></div>
 <p>현재는 이 파일을 비워둔 상태로 유지해도 된다.</p>
 <p>아직 다음 설정을 하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>server.port
-Datasource
-Oracle URL
-Logging
-Spring Profile
-Security
-Cache
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>server.port
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>Datasource
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>Oracle URL
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>Logging
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>Spring Profile
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>Security
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>Cache
+</span></code></pre></div>
 <p><code>application.yml</code>로 변경하는 작업도
 설정 파일 운영 기준을 정하는 단계에서 진행한다.</p>
 <hr />
-<h2 id="18-pomxml">18. <code>pom.xml</code> 기본 확인</h2>
+<h2 id="18-pomxml">18. <code>pom.xml</code> 기본 확인<a class="headerlink" href="#18-pomxml" title="Permanent link">&para;</a></h2>
 <p>현재는 <code>pom.xml</code>을 적극적으로 수정하지 않고
 Spring Initializr가 생성한 내용을 확인만 한다.</p>
 <p>확인 항목:</p>
-<div class="highlight"><pre><span></span><code>Spring Boot Parent Version
-Group ID
-Artifact ID
-Version
-Java Version
-Dependencies
-Spring Boot Maven Plugin
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Spring Boot Parent Version
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>Group ID
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>Artifact ID
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>Version
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>Java Version
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>Dependencies
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>Spring Boot Maven Plugin
+</span></code></pre></div>
 <p>기대 기준:</p>
-<div class="highlight"><pre><span></span><code>Spring Boot 4.1.0
-Java 26
-Spring Web
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>Spring Boot 4.1.0
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>Java 26
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>Spring Web
+</span></code></pre></div>
 <p>Spring Boot 4의 실제 Starter Artifact 이름은
 Initializr가 선택한 Version에 맞게 생성한 값을 우선한다.</p>
 <hr />
-<h2 id="19-maven-wrapper">19. Maven Wrapper 파일 확인</h2>
+<h2 id="19-maven-wrapper">19. Maven Wrapper 파일 확인<a class="headerlink" href="#19-maven-wrapper" title="Permanent link">&para;</a></h2>
 <p>Spring Initializr Maven Project에는 Maven Wrapper가 함께 생성된다.</p>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>.mvn/
-mvnw
-mvnw.cmd
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>.mvn/
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>mvnw
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>mvnw.cmd
+</span></code></pre></div>
 <p>현재 단계에서는 Wrapper Version을 변경하지 않는다.</p>
 <p>다음 문서에서 실제 Project Maven 표준을 확인한다.</p>
 <p>→ <a href="../project_environment/project_maven_setup/">Maven Wrapper 및 프로젝트 Maven 설정</a></p>
 <hr />
-<h2 id="20-gitignore">20. <code>.gitignore</code> 확인</h2>
+<h2 id="20-gitignore">20. <code>.gitignore</code> 확인<a class="headerlink" href="#20-gitignore" title="Permanent link">&para;</a></h2>
 <p>Spring Initializr가 생성한 <code>.gitignore</code>를 확인한다.</p>
 <p>대표적으로 Build 결과 Directory인 다음 항목이 Git에서 제외되어야 한다.</p>
-<div class="highlight"><pre><span></span><code>target/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>target/
+</span></code></pre></div>
 <p>기존 Repository에 <code>.gitignore</code>가 이미 존재했다면
 단순히 한 파일로 덮어쓰지 말고 기존 항목과 Initializr 생성 항목을 병합한다.</p>
 <hr />
-<h2 id="21-build">21. 현재는 Build하지 않는다</h2>
+<h2 id="21-build">21. 현재는 Build하지 않는다<a class="headerlink" href="#21-build" title="Permanent link">&para;</a></h2>
 <p>Spring Boot Project가 생성되면 바로 실행하고 싶을 수 있지만
 현재 문서에서는 아직 Build를 실행하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>Project 생성
-        ↓
-JDK / VS Code Workspace 설정
-        ↓
-Maven Wrapper 설정
-        ↓
-Build / Run 검증
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>Project 생성
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>        ↓
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>JDK / VS Code Workspace 설정
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>        ↓
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>Maven Wrapper 설정
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>        ↓
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>Build / Run 검증
+</span></code></pre></div>
 <p>이 순서를 유지한다.</p>
 <p>따라서 현재는:</p>
-<div class="highlight"><pre><span></span><code>mvn clean package
-./mvnw clean package
-spring-boot:run
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>mvn clean package
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>./mvnw clean package
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>spring-boot:run
+</span></code></pre></div>
 <p>등을 아직 실행하지 않는다.</p>
 <hr />
-<h2 id="22-vs-code-project-root">22. VS Code로 Project Root 열기</h2>
+<h2 id="22-vs-code-project-root">22. VS Code로 Project Root 열기<a class="headerlink" href="#22-vs-code-project-root" title="Permanent link">&para;</a></h2>
 <p>VS Code:</p>
-<div class="highlight"><pre><span></span><code>File
-→ Open Folder...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>File
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>→ Open Folder...
+</span></code></pre></div>
 <p>다음 Directory를 연다.</p>
-<div class="highlight"><pre><span></span><code>microserver/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>microserver/
+</span></code></pre></div>
 <p>즉 <code>pom.xml</code>이 바로 보이는 Directory를 Workspace Root로 연다.</p>
 <p>정상:</p>
-<div class="highlight"><pre><span></span><code>Explorer
-microserver
- ├─ .mvn
- ├─ src
- ├─ pom.xml
- ├─ mvnw
- └─ mvnw.cmd
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>Explorer
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>microserver
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a> ├─ .mvn
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a> ├─ src
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a> ├─ pom.xml
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a> ├─ mvnw
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a> └─ mvnw.cmd
+</span></code></pre></div>
 <hr />
-<h2 id="23-java-project">23. Java Project 인식 확인</h2>
+<h2 id="23-java-project">23. Java Project 인식 확인<a class="headerlink" href="#23-java-project" title="Permanent link">&para;</a></h2>
 <p>VS Code Java Extension은 Maven <code>pom.xml</code>이 있는 Folder를 열면
 Java Project를 자동으로 Import할 수 있다.</p>
 <p>Explorer에서 Java Projects View가 나타나는지 확인한다.</p>
 <p>필요한 경우 Command Palette:</p>
-<div class="highlight"><pre><span></span><code>Java: Import Java Projects in Workspace
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>Java: Import Java Projects in Workspace
+</span></code></pre></div>
 <p>현재는 Import 상태만 확인한다.</p>
 <hr />
-<h2 id="24-spring-boot-dashboard">24. Spring Boot Dashboard 확인</h2>
+<h2 id="24-spring-boot-dashboard">24. Spring Boot Dashboard 확인<a class="headerlink" href="#24-spring-boot-dashboard" title="Permanent link">&para;</a></h2>
 <p>Spring Boot Dashboard를 열어
 생성한 Application이 인식되는지 확인할 수 있다.</p>
 <p>현재는 Dashboard에 Application이 표시되는지만 확인하고
 실행은 이후 검증 단계에서 진행한다.</p>
 <hr />
-<h2 id="25">25. 현재 단계에서 수정하지 않는 항목</h2>
+<h2 id="25">25. 현재 단계에서 수정하지 않는 항목<a class="headerlink" href="#25" title="Permanent link">&para;</a></h2>
 <p>다음 파일을 미리 만들거나 수정하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>.vscode/settings.json
-.vscode/extensions.json
-application-local.yml
-Docker Compose
-Oracle JDBC Dependency
-업무 Package
-Controller
-Service
-DAO
-Filter
-AOP
-Security
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>.vscode/settings.json
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>.vscode/extensions.json
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>application-local.yml
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>Docker Compose
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>Oracle JDBC Dependency
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>업무 Package
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>Controller
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>Service
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>DAO
+</span><span id="__span-44-10"><a id="__codelineno-44-10" name="__codelineno-44-10" href="#__codelineno-44-10"></a>Filter
+</span><span id="__span-44-11"><a id="__codelineno-44-11" name="__codelineno-44-11" href="#__codelineno-44-11"></a>AOP
+</span><span id="__span-44-12"><a id="__codelineno-44-12" name="__codelineno-44-12" href="#__codelineno-44-12"></a>Security
+</span></code></pre></div>
 <p>각각 이후 단계에서 목적을 설명한 후 추가한다.</p>
 <hr />
-<h2 id="26-git">26. Git 변경사항 확인</h2>
+<h2 id="26-git">26. Git 변경사항 확인<a class="headerlink" href="#26-git" title="Permanent link">&para;</a></h2>
 <p>Repository Root:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>git<span class="w"> </span>status
+</span></code></pre></div>
 <p>예상:</p>
-<div class="highlight"><pre><span></span><code>new file: .mvn/...
-new file: mvnw
-new file: mvnw.cmd
-new file: pom.xml
-new file: src/...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>new file: .mvn/...
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>new file: mvnw
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>new file: mvnw.cmd
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>new file: pom.xml
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>new file: src/...
+</span></code></pre></div>
 <p>기존 README나 <code>.gitignore</code>가 있다면 변경사항도 함께 검토한다.</p>
 <hr />
-<h2 id="27-git-commit">27. Git Commit</h2>
+<h2 id="27-git-commit">27. Git Commit<a class="headerlink" href="#27-git-commit" title="Permanent link">&para;</a></h2>
 <p>Project 생성 상태를 하나의 기준점으로 남긴다.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>status
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>git<span class="w"> </span>status
+</span></code></pre></div>
 <p>Commit 예:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"chore: create initial Spring Boot project"</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"chore: create initial Spring Boot project"</span>
+</span></code></pre></div>
 <p>Remote Repository에 Push:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>push
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>git<span class="w"> </span>push
+</span></code></pre></div>
 <div class="admonition tip">
 <p class="admonition-title">단계별 Commit</p>
 <p>MicroServer 프로젝트는 한 번에 모든 구조를 만드는 대신
@@ -2390,7 +2400,7 @@ git<span class="w"> </span>status
 어느 단계의 변경인지 쉽게 비교할 수 있다.</p>
 </div>
 <hr />
-<h2 id="28">28. 완료 상태</h2>
+<h2 id="28">28. 완료 상태<a class="headerlink" href="#28" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TB
     P[Spring Boot Project]
     P --&gt; POM[pom.xml]
@@ -2399,51 +2409,51 @@ git<span class="w"> </span>status
     P --&gt; WRAPPER[Maven Wrapper]
     P --&gt; GIT[Git Repository]</code></pre>
 <p>현재 완료 상태:</p>
-<div class="highlight"><pre><span></span><code>Spring Boot Project     → 생성 완료
-pom.xml                 → 생성 완료
-Main Class              → 생성 완료
-기본 Test               → 생성 완료
-Maven Wrapper           → 생성 여부 확인
-Git Repository          → 변경사항 Commit
-
-Workspace JDK           → 다음 단계
-Maven 표준화            → 이후 단계
-Build / Run             → 이후 단계
-Multi Module            → 이후 단계
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>Spring Boot Project     → 생성 완료
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>pom.xml                 → 생성 완료
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>Main Class              → 생성 완료
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>기본 Test               → 생성 완료
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a>Maven Wrapper           → 생성 여부 확인
+</span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a>Git Repository          → 변경사항 Commit
+</span><span id="__span-50-7"><a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a>
+</span><span id="__span-50-8"><a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a>Workspace JDK           → 다음 단계
+</span><span id="__span-50-9"><a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a>Maven 표준화            → 이후 단계
+</span><span id="__span-50-10"><a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a>Build / Run             → 이후 단계
+</span><span id="__span-50-11"><a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a>Multi Module            → 이후 단계
+</span></code></pre></div>
 <hr />
-<h2 id="29">29. 체크리스트</h2>
-<ul>
-<li>[ ] Spring Boot 4.1.0을 선택했다.</li>
-<li>[ ] Java 26을 선택했다.</li>
-<li>[ ] Maven Project를 생성했다.</li>
-<li>[ ] Packaging을 JAR로 선택했다.</li>
-<li>[ ] Spring Web Dependency만 우선 추가했다.</li>
-<li>[ ] Project Root에 <code>pom.xml</code>이 있다.</li>
-<li>[ ] <code>.mvn</code>, <code>mvnw</code>, <code>mvnw.cmd</code>를 확인했다.</li>
-<li>[ ] Main Application Class를 확인했다.</li>
-<li>[ ] 기본 Test Class를 확인했다.</li>
-<li>[ ] VS Code에서 Project Root를 열었다.</li>
-<li>[ ] Java Project가 인식된다.</li>
-<li>[ ] 아직 Build / Application 실행을 하지 않았다.</li>
-<li>[ ] 아직 Oracle / Datasource를 연결하지 않았다.</li>
-<li>[ ] Git Commit / Push를 완료했다.</li>
+<h2 id="29">29. 체크리스트<a class="headerlink" href="#29" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Boot 4.1.0을 선택했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Java 26을 선택했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Maven Project를 생성했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Packaging을 JAR로 선택했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Web Dependency만 우선 추가했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Project Root에 <code>pom.xml</code>이 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.mvn</code>, <code>mvnw</code>, <code>mvnw.cmd</code>를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Main Application Class를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 기본 Test Class를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code에서 Project Root를 열었다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Java Project가 인식된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 Build / Application 실행을 하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 Oracle / Datasource를 연결하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Git Commit / Push를 완료했다.</li>
 </ul>
 <hr />
-<h2 id="30">30. 다음 단계</h2>
+<h2 id="30">30. 다음 단계<a class="headerlink" href="#30" title="Permanent link">&para;</a></h2>
 <p>다음 단계에서는 생성된 실제 Project를 기준으로
 JDK와 VS Code Workspace 환경을 구성한다.</p>
 <p>→ <a href="../project_environment/project_jdk_vscode_setup/">프로젝트 JDK / VS Code Workspace 설정</a></p>
-<div class="highlight"><pre><span></span><code>Spring Boot Project 생성        ← 현재 완료
-        ↓
-프로젝트 JDK / VS Code Workspace 설정
-        ↓
-Maven Wrapper / Maven 설정
-        ↓
-초기 실행 및 Build 검증
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>Spring Boot Project 생성        ← 현재 완료
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>        ↓
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>프로젝트 JDK / VS Code Workspace 설정
+</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>        ↓
+</span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a>Maven Wrapper / Maven 설정
+</span><span id="__span-51-6"><a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a>        ↓
+</span><span id="__span-51-7"><a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a>초기 실행 및 Build 검증
+</span></code></pre></div>
 <hr />
-<h2 id="31">31. 공식 참고 자료</h2>
+<h2 id="31">31. 공식 참고 자료<a class="headerlink" href="#31" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>Spring Initializr<br />
@@ -2483,6 +2493,8 @@ Maven Wrapper / Maven 설정
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2521,7 +2533,7 @@ Maven Wrapper / Maven 설정
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>

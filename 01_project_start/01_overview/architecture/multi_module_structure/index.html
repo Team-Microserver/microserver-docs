@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>멀티모듈 및 프로젝트 구조 - Microserver</title>
+        <title>멀티모듈 및 프로젝트 구조 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1625,8 +1635,8 @@
 
 
 
-<h1 id="_1">멀티모듈 및 프로젝트 구조</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="_1">멀티모듈 및 프로젝트 구조<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>Microserver는 Maven Multi Module 프로젝트를 기본 구조로 사용합니다.</p>
 <p>목표는 단순히 프로젝트를 여러 개로 나누는 것이 아니라 다음을 달성하는 것입니다.</p>
 <ul>
@@ -1637,24 +1647,24 @@
 <li>향후 프로젝트에서 필요한 공통 기능의 재사용</li>
 </ul>
 <hr />
-<h2 id="2">2. 기본 구조</h2>
+<h2 id="2">2. 기본 구조<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>초기 구조는 다음 방향을 기준으로 구성합니다.</p>
-<div class="highlight"><pre><span></span><code>microserver/
-├─ pom.xml
-│
-├─ module-common/
-│  └─ pom.xml
-│
-├─ runtime/
-│  └─ pom.xml
-│
-└─ admin/
-   └─ pom.xml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>microserver/
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ pom.xml
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>├─ module-common/
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  └─ pom.xml
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>├─ runtime/
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  └─ pom.xml
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>└─ admin/
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>   └─ pom.xml
+</span></code></pre></div>
 <p>Parent <code>pom.xml</code>은 전체 Module과 공통 Dependency Version을 관리합니다.</p>
 <hr />
-<h2 id="3">3. 모듈별 역할</h2>
-<h3 id="31-module-common">3.1 module-common</h3>
+<h2 id="3">3. 모듈별 역할<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31-module-common">3.1 module-common<a class="headerlink" href="#31-module-common" title="Permanent link">&para;</a></h3>
 <p>여러 애플리케이션에서 공통으로 사용하는 기술 기능을 제공합니다.</p>
 <p>예상 범위:</p>
 <ul>
@@ -1671,7 +1681,7 @@
 <li>전문 Message Builder / Parser</li>
 </ul>
 <p><code>module-common</code>은 독립적인 Maven Module로 빌드하며 JAR 형태로 다른 Module에 제공할 수 있도록 합니다.</p>
-<h3 id="32-runtime">3.2 runtime</h3>
+<h3 id="32-runtime">3.2 runtime<a class="headerlink" href="#32-runtime" title="Permanent link">&para;</a></h3>
 <p>실제 업무 기능을 수행하는 실행 애플리케이션입니다.</p>
 <p>주요 역할:</p>
 <ul>
@@ -1682,7 +1692,7 @@
 <li>업무 Transaction</li>
 <li>업무별 Configuration</li>
 </ul>
-<h3 id="33-admin">3.3 admin</h3>
+<h3 id="33-admin">3.3 admin<a class="headerlink" href="#33-admin" title="Permanent link">&para;</a></h3>
 <p>공통 기준정보를 관리하기 위한 관리자 애플리케이션입니다.</p>
 <p>예:</p>
 <ul>
@@ -1694,7 +1704,7 @@
 <li>게시판 / 운영 관리</li>
 </ul>
 <hr />
-<h2 id="4-module-dependency">4. Module Dependency 방향</h2>
+<h2 id="4-module-dependency">4. Module Dependency 방향<a class="headerlink" href="#4-module-dependency" title="Permanent link">&para;</a></h2>
 <p>Module 간 의존성은 가능한 한 단방향으로 구성합니다.</p>
 <pre class="mermaid"><code>flowchart TB
     ROOT[Parent POM]
@@ -1711,7 +1721,7 @@
 <p><code>module-common</code>이 <code>runtime</code> 또는 <code>admin</code>에 의존하지 않도록 하는 것이 중요합니다.</p>
 <p>공통 모듈이 특정 업무 Module에 의존하기 시작하면 재사용성이 크게 떨어집니다.</p>
 <hr />
-<h2 id="5-jar">5. 공통 JAR 빌드 흐름</h2>
+<h2 id="5-jar">5. 공통 JAR 빌드 흐름<a class="headerlink" href="#5-jar" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant DEV as Developer
@@ -1729,7 +1739,7 @@
     A--&gt;&gt;DEV: admin artifact</code></pre>
 <p>개발 단계에서는 Reactor Build를 통해 Module 간 Dependency를 자동으로 연결하고, 필요한 경우 공통 JAR을 별도 저장소에 배포하는 구조로 발전시킬 수 있습니다.</p>
 <hr />
-<h2 id="6-parent-pom">6. Parent POM의 역할</h2>
+<h2 id="6-parent-pom">6. Parent POM의 역할<a class="headerlink" href="#6-parent-pom" title="Permanent link">&para;</a></h2>
 <p>Parent POM은 다음 항목을 중앙 관리하는 역할을 합니다.</p>
 <ul>
 <li>Java Version</li>
@@ -1741,44 +1751,44 @@
 <li>Encoding</li>
 </ul>
 <p>예시 개념:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;modules&gt;</span>
-<span class="w">    </span><span class="nt">&lt;module&gt;</span>module-common<span class="nt">&lt;/module&gt;</span>
-<span class="w">    </span><span class="nt">&lt;module&gt;</span>runtime<span class="nt">&lt;/module&gt;</span>
-<span class="w">    </span><span class="nt">&lt;module&gt;</span>admin<span class="nt">&lt;/module&gt;</span>
-<span class="nt">&lt;/modules&gt;</span>
-</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">&lt;modules&gt;</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>module-common<span class="nt">&lt;/module&gt;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>runtime<span class="nt">&lt;/module&gt;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>admin<span class="nt">&lt;/module&gt;</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="nt">&lt;/modules&gt;</span>
+</span></code></pre></div>
 <p>세부 설정은 실제 프로젝트 생성 단계에서 하나씩 구성합니다.</p>
 <hr />
-<h2 id="7-package">7. Package 구조 방향</h2>
+<h2 id="7-package">7. Package 구조 방향<a class="headerlink" href="#7-package" title="Permanent link">&para;</a></h2>
 <p>각 Module 내부에서도 계층별 책임을 명확하게 합니다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>runtime/
-└─ src/main/java
-   └─ .../runtime
-      ├─ controller
-      ├─ service
-      ├─ dao
-      ├─ mapper
-      ├─ dto
-      ├─ domain
-      ├─ integration
-      └─ config
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>runtime/
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>└─ src/main/java
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   └─ .../runtime
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>      ├─ controller
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>      ├─ service
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>      ├─ dao
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>      ├─ mapper
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>      ├─ dto
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>      ├─ domain
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>      ├─ integration
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>      └─ config
+</span></code></pre></div>
 <p>공통 모듈 예:</p>
-<div class="highlight"><pre><span></span><code>module-common/
-└─ src/main/java
-   └─ .../common
-      ├─ response
-      ├─ exception
-      ├─ logging
-      ├─ filter
-      ├─ security
-      ├─ datasource
-      ├─ cache
-      └─ util
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>module-common/
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>└─ src/main/java
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>   └─ .../common
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>      ├─ response
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>      ├─ exception
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>      ├─ logging
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>      ├─ filter
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>      ├─ security
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>      ├─ datasource
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>      ├─ cache
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>      └─ util
+</span></code></pre></div>
 <hr />
-<h2 id="8-module">8. 업무 요청 시 Module 호출 예</h2>
+<h2 id="8-module">8. 업무 요청 시 Module 호출 예<a class="headerlink" href="#8-module" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant C as Client
@@ -1796,7 +1806,7 @@
     RT--&gt;&gt;C: 표준 Response</code></pre>
 <p>공통 모듈은 업무 흐름을 주도하지 않고, runtime이 필요한 공통 기능을 제공하는 형태가 기본입니다.</p>
 <hr />
-<h2 id="9-module">9. Module 분리 기준</h2>
+<h2 id="9-module">9. Module 분리 기준<a class="headerlink" href="#9-module" title="Permanent link">&para;</a></h2>
 <p>새 Module은 다음 기준을 만족할 때 분리합니다.</p>
 <ul>
 <li>여러 애플리케이션에서 반복 사용된다.</li>
@@ -1807,16 +1817,16 @@
 </ul>
 <p>단순히 Class 수가 많다는 이유로 Module을 분리하지 않습니다.</p>
 <hr />
-<h2 id="10">10. 향후 확장 가능 구조</h2>
+<h2 id="10">10. 향후 확장 가능 구조<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
 <p>필요성이 생기면 다음 Module을 추가할 수 있습니다.</p>
-<div class="highlight"><pre><span></span><code>microserver/
-├─ module-common
-├─ module-integration
-├─ module-security
-├─ runtime
-├─ admin
-└─ gateway
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>microserver/
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>├─ module-common
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>├─ module-integration
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>├─ module-security
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>├─ runtime
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>├─ admin
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>└─ gateway
+</span></code></pre></div>
 <p>하지만 초기 단계에서는 과도한 Module 분리를 피하고, <strong>공통 / 업무 실행 / 관리자</strong>의 기본 책임부터 명확히 구축합니다.</p>
 
 
@@ -1835,6 +1845,8 @@
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1873,7 +1885,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

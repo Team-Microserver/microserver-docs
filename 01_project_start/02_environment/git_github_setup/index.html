@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>Git / GitHub 환경 구성 - Microserver</title>
+        <title>Git / GitHub 환경 구성 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1935,8 +1945,8 @@
 
 
 
-<h1 id="git-github">Git / GitHub 환경 구성 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="git-github">Git / GitHub 환경 구성 가이드<a class="headerlink" href="#git-github" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 MicroServer 프로젝트의 소스코드와 기술문서를 Git으로 관리하고 GitHub 원격 저장소와 연동하기 위한 기본 개발환경을 구성한다.</p>
 <p>프로젝트에서는 Git을 단순 백업 도구가 아니라 다음 목적의 <strong>표준 형상관리 도구</strong>로 사용한다.</p>
 <ul>
@@ -1948,83 +1958,83 @@
 <li>GitHub 기반 협업 및 리뷰</li>
 </ul>
 <hr />
-<h2 id="2-git">2. Git 기반 개발 흐름</h2>
+<h2 id="2-git">2. Git 기반 개발 흐름<a class="headerlink" href="#2-git" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     W[Working Directory] --&gt;|git add| S[Staging Area]
     S --&gt;|git commit| L[Local Repository]
     L --&gt;|git push| R[GitHub Repository]
     R --&gt;|git pull| L</code></pre>
 <p>기본 작업 흐름은 다음과 같다.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"docs: add environment setup guide"</span>
-git<span class="w"> </span>push
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>status
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"docs: add environment setup guide"</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>git<span class="w"> </span>push
+</span></code></pre></div>
 <hr />
-<h2 id="3-git">3. Git 설치</h2>
-<h3 id="31-windows">3.1 Windows</h3>
+<h2 id="3-git">3. Git 설치<a class="headerlink" href="#3-git" title="Permanent link">&para;</a></h2>
+<h3 id="31-windows">3.1 Windows<a class="headerlink" href="#31-windows" title="Permanent link">&para;</a></h3>
 <p>Git for Windows를 설치한다.</p>
 <p>설치 완료 후 PowerShell을 새로 열고 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">git</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">git</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
 <p>정상 예시:</p>
-<div class="highlight"><pre><span></span><code>git version 2.x.x.windows.x
-</code></pre></div>
-<h3 id="32-macos">3.2 macOS</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git version 2.x.x.windows.x
+</span></code></pre></div>
+<h3 id="32-macos">3.2 macOS<a class="headerlink" href="#32-macos" title="Permanent link">&para;</a></h3>
 <p>터미널에서 먼저 확인한다.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>--version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>--version
+</span></code></pre></div>
 <p>Git이 설치되어 있지 않으면 macOS가 Command Line Tools 설치를 안내할 수 있다.</p>
 <p>Homebrew를 사용하는 경우 다음 방식도 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>brew<span class="w"> </span>install<span class="w"> </span>git
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>brew<span class="w"> </span>install<span class="w"> </span>git
+</span></code></pre></div>
 <p>설치 후:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>--version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>--version
+</span></code></pre></div>
 <hr />
-<h2 id="4-git">4. Git 사용자 정보 설정</h2>
+<h2 id="4-git">4. Git 사용자 정보 설정<a class="headerlink" href="#4-git" title="Permanent link">&para;</a></h2>
 <p>Commit에는 작성자 정보가 기록되므로 최초 1회 사용자 정보를 설정한다.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Your Name"</span>
-git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"your-email@example.com"</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Your Name"</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"your-email@example.com"</span>
+</span></code></pre></div>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--list
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>--list
+</span></code></pre></div>
 <p>특정 프로젝트만 다른 계정을 사용할 경우 저장소 디렉터리에서 <code>--global</code>을 제외하고 설정한다.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Project User"</span>
-git<span class="w"> </span>config<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"project@example.com"</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git<span class="w"> </span>config<span class="w"> </span>user.name<span class="w"> </span><span class="s2">"Project User"</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>git<span class="w"> </span>config<span class="w"> </span>user.email<span class="w"> </span><span class="s2">"project@example.com"</span>
+</span></code></pre></div>
 <hr />
-<h2 id="5">5. 기본 브랜치 설정</h2>
+<h2 id="5">5. 기본 브랜치 설정<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
 <p>새 Git 저장소 생성 시 기본 브랜치를 <code>main</code>으로 사용하도록 설정할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>init.defaultBranch<span class="w"> </span>main
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>init.defaultBranch<span class="w"> </span>main
+</span></code></pre></div>
 <hr />
-<h2 id="6">6. 줄바꿈 정책</h2>
+<h2 id="6">6. 줄바꿈 정책<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <p>Windows는 CRLF, Linux/macOS는 LF를 주로 사용하기 때문에 팀 개발에서는 줄바꿈 정책을 명확히 하는 것이 중요하다.</p>
 <p>프로젝트에서는 가능하면 <code>.gitattributes</code>를 저장소에 두어 저장소 기준을 통일한다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>* text=auto
-
-*.java text eol=lf
-*.xml text eol=lf
-*.yml text eol=lf
-*.yaml text eol=lf
-*.md text eol=lf
-*.sh text eol=lf
-*.bat text eol=crlf
-*.cmd text eol=crlf
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>* text=auto
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>*.java text eol=lf
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>*.xml text eol=lf
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>*.yml text eol=lf
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>*.yaml text eol=lf
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>*.md text eol=lf
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>*.sh text eol=lf
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>*.bat text eol=crlf
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>*.cmd text eol=crlf
+</span></code></pre></div>
 <p>개별 PC의 기본 설정은 다음과 같이 사용할 수 있다.</p>
-<h3 id="windows">Windows</h3>
-<div class="highlight"><pre><span></span><code><span class="n">git</span> <span class="n">config</span> <span class="p">-</span><span class="n">-global</span> <span class="n">core</span><span class="p">.</span><span class="n">autocrlf</span> <span class="n">true</span>
-</code></pre></div>
-<h3 id="macos">macOS</h3>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>core.autocrlf<span class="w"> </span>input
-</code></pre></div>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">git</span> <span class="n">config</span> <span class="p">-</span><span class="n">-global</span> <span class="n">core</span><span class="p">.</span><span class="n">autocrlf</span> <span class="n">true</span>
+</span></code></pre></div>
+<h3 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>core.autocrlf<span class="w"> </span>input
+</span></code></pre></div>
 <p>프로젝트에 <code>.gitattributes</code>가 있다면 저장소 정책을 우선한다.</p>
 <hr />
-<h2 id="7-github">7. GitHub 인증 방식</h2>
+<h2 id="7-github">7. GitHub 인증 방식<a class="headerlink" href="#7-github" title="Permanent link">&para;</a></h2>
 <p>GitHub 원격 저장소 연결은 크게 HTTPS와 SSH 방식이 있다.</p>
 <table>
 <thead>
@@ -2046,86 +2056,86 @@ git<span class="w"> </span>config<span class="w"> </span>user.email<span class="
 </table>
 <p>프로젝트 개발환경에서는 SSH 방식을 권장한다.</p>
 <hr />
-<h2 id="8-ssh-key">8. SSH Key 생성</h2>
-<h3 id="81">8.1 기존 키 확인</h3>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>~/.ssh
-</code></pre></div>
+<h2 id="8-ssh-key">8. SSH Key 생성<a class="headerlink" href="#8-ssh-key" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 기존 키 확인<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ls<span class="w"> </span>~/.ssh
+</span></code></pre></div>
 <p>Windows PowerShell에서도 사용자 홈의 <code>.ssh</code> 디렉터리를 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">Get-ChildItem</span> <span class="nv">$HOME</span><span class="p">\.</span><span class="n">ssh</span>
-</code></pre></div>
-<h3 id="82-ssh-key">8.2 SSH Key 생성</h3>
-<div class="highlight"><pre><span></span><code>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">"your-email@example.com"</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nb">Get-ChildItem</span> <span class="nv">$HOME</span><span class="p">\.</span><span class="n">ssh</span>
+</span></code></pre></div>
+<h3 id="82-ssh-key">8.2 SSH Key 생성<a class="headerlink" href="#82-ssh-key" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>ssh-keygen<span class="w"> </span>-t<span class="w"> </span>ed25519<span class="w"> </span>-C<span class="w"> </span><span class="s2">"your-email@example.com"</span>
+</span></code></pre></div>
 <p>기본 저장 위치를 사용할 경우 Enter를 입력한다.</p>
-<div class="highlight"><pre><span></span><code>~/.ssh/id_ed25519
-~/.ssh/id_ed25519.pub
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>~/.ssh/id_ed25519
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>~/.ssh/id_ed25519.pub
+</span></code></pre></div>
 <p>공개키 확인:</p>
-<h4 id="windows_1">Windows</h4>
-<div class="highlight"><pre><span></span><code><span class="nb">Get-Content</span> <span class="nv">$HOME</span><span class="p">\.</span><span class="n">ssh</span><span class="p">\</span><span class="n">id_ed25519</span><span class="p">.</span><span class="n">pub</span>
-</code></pre></div>
-<h4 id="macos_1">macOS</h4>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>~/.ssh/id_ed25519.pub
-</code></pre></div>
+<h4 id="windows_1">Windows<a class="headerlink" href="#windows_1" title="Permanent link">&para;</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nb">Get-Content</span> <span class="nv">$HOME</span><span class="p">\.</span><span class="n">ssh</span><span class="p">\</span><span class="n">id_ed25519</span><span class="p">.</span><span class="n">pub</span>
+</span></code></pre></div>
+<h4 id="macos_1">macOS<a class="headerlink" href="#macos_1" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>cat<span class="w"> </span>~/.ssh/id_ed25519.pub
+</span></code></pre></div>
 <p>출력된 공개키를 GitHub 계정의 SSH Key에 등록한다.</p>
 <blockquote>
 <p>개인키인 <code>id_ed25519</code> 파일은 외부에 공유하거나 Git 저장소에 Commit하면 안 된다.</p>
 </blockquote>
 <hr />
-<h2 id="9-github-ssh">9. GitHub SSH 연결 확인</h2>
-<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
-</code></pre></div>
+<h2 id="9-github-ssh">9. GitHub SSH 연결 확인<a class="headerlink" href="#9-github-ssh" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
+</span></code></pre></div>
 <p>최초 연결에서는 GitHub 서버 fingerprint 확인 메시지가 나타날 수 있다.</p>
 <p>정상적으로 인증되면 GitHub 계정이 확인되었다는 메시지가 출력된다.</p>
 <hr />
-<h2 id="10-clone">10. 프로젝트 Clone</h2>
+<h2 id="10-clone">10. 프로젝트 Clone<a class="headerlink" href="#10-clone" title="Permanent link">&para;</a></h2>
 <p>프로젝트 저장소의 SSH URL을 사용한다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>~/workspace
-git<span class="w"> </span>clone<span class="w"> </span>git@github.com:Team-Microserver/&lt;repository&gt;.git
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">cd</span><span class="w"> </span>~/workspace
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>git<span class="w"> </span>clone<span class="w"> </span>git@github.com:Team-Microserver/&lt;repository&gt;.git
+</span></code></pre></div>
 <p>Windows 예:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">workspace</span>
-<span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nv">@github</span><span class="p">.</span><span class="n">com</span><span class="p">:</span><span class="n">Team-Microserver</span><span class="p">/&lt;</span><span class="n">repository</span><span class="p">&gt;.</span><span class="n">git</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">cd </span><span class="n">C</span><span class="p">:\</span><span class="n">workspace</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="n">git</span> <span class="n">clone</span> <span class="n">git</span><span class="nv">@github</span><span class="p">.</span><span class="n">com</span><span class="p">:</span><span class="n">Team-Microserver</span><span class="p">/&lt;</span><span class="n">repository</span><span class="p">&gt;.</span><span class="n">git</span>
+</span></code></pre></div>
 <p>Clone 후:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>&lt;repository&gt;
-git<span class="w"> </span>status
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nb">cd</span><span class="w"> </span>&lt;repository&gt;
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>git<span class="w"> </span>status
+</span></code></pre></div>
 <hr />
-<h2 id="11-github">11. 기존 로컬 프로젝트를 GitHub와 연결</h2>
+<h2 id="11-github">11. 기존 로컬 프로젝트를 GitHub와 연결<a class="headerlink" href="#11-github" title="Permanent link">&para;</a></h2>
 <p>이미 로컬에 소스가 있는 경우:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>init
-git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"chore: initialize project"</span>
-git<span class="w"> </span>branch<span class="w"> </span>-M<span class="w"> </span>main
-git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>git@github.com:Team-Microserver/&lt;repository&gt;.git
-git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>git<span class="w"> </span>init
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"chore: initialize project"</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>git<span class="w"> </span>branch<span class="w"> </span>-M<span class="w"> </span>main
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>origin<span class="w"> </span>git@github.com:Team-Microserver/&lt;repository&gt;.git
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>main
+</span></code></pre></div>
 <p>원격 저장소 확인:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>remote<span class="w"> </span>-v
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>git<span class="w"> </span>remote<span class="w"> </span>-v
+</span></code></pre></div>
 <hr />
-<h2 id="12">12. 기본 개발 작업 흐름</h2>
+<h2 id="12">12. 기본 개발 작업 흐름<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
 <p>기능 작업 전 항상 현재 상태를 확인한다.</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-git<span class="w"> </span>pull
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>git<span class="w"> </span>status
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>git<span class="w"> </span>pull
+</span></code></pre></div>
 <p>작업 후 변경 파일 확인:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-git<span class="w"> </span>diff
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>git<span class="w"> </span>status
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>git<span class="w"> </span>diff
+</span></code></pre></div>
 <p>Staging:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span></code></pre></div>
 <p>Commit:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: add request pre-processing filter"</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: add request pre-processing filter"</span>
+</span></code></pre></div>
 <p>Push:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>push
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>git<span class="w"> </span>push
+</span></code></pre></div>
 <hr />
-<h2 id="13-commit">13. Commit 메시지 권장 규칙</h2>
+<h2 id="13-commit">13. Commit 메시지 권장 규칙<a class="headerlink" href="#13-commit" title="Permanent link">&para;</a></h2>
 <p>프로젝트 변경 이력을 읽기 쉽게 하기 위해 다음 Prefix를 권장한다.</p>
 <table>
 <thead>
@@ -2166,14 +2176,14 @@ git<span class="w"> </span>diff
 </tbody>
 </table>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>feat: add common response wrapper
-fix: handle authentication exception
-docs: add Oracle Docker setup guide
-build: configure multi-module Maven project
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>feat: add common response wrapper
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>fix: handle authentication exception
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>docs: add Oracle Docker setup guide
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>build: configure multi-module Maven project
+</span></code></pre></div>
 <p>Commit은 가능한 한 <strong>하나의 의미 있는 변경 단위</strong>로 나눈다.</p>
 <hr />
-<h2 id="14">14. 브랜치 운영 기본안</h2>
+<h2 id="14">14. 브랜치 운영 기본안<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
 <p>초기 학습/구축 단계에서는 지나치게 복잡한 Git Flow보다 단순한 브랜치 모델을 사용한다.</p>
 <pre class="mermaid"><code>flowchart LR
     MAIN[main] --&gt; F1[feature/filter]
@@ -2181,137 +2191,137 @@ build: configure multi-module Maven project
     F1 --&gt; MAIN
     F2 --&gt; MAIN</code></pre>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>feature/common-filter
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>feature/common-filter
+</span></code></pre></div>
 <p>작업 완료 후:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: add common request filter"</span>
-git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>feature/common-filter
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: add common request filter"</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>git<span class="w"> </span>push<span class="w"> </span>-u<span class="w"> </span>origin<span class="w"> </span>feature/common-filter
+</span></code></pre></div>
 <hr />
-<h2 id="15-gitignore">15. <code>.gitignore</code> 기본 구성</h2>
+<h2 id="15-gitignore">15. <code>.gitignore</code> 기본 구성<a class="headerlink" href="#15-gitignore" title="Permanent link">&para;</a></h2>
 <p>Java, VS Code, Python, MkDocs, 운영체제 파일이 섞이지 않도록 기본 제외 규칙을 둔다.</p>
-<div class="highlight"><pre><span></span><code># Java / Maven
-target/
-*.class
-*.jar
-*.war
-
-# IDE
-.vscode/
-.idea/
-*.iml
-
-# Python
-.venv/
-__pycache__/
-*.pyc
-
-# MkDocs
-site/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-
-# Secrets
-.env
-*.local
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a># Java / Maven
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>target/
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>*.class
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>*.jar
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>*.war
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a># IDE
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>.vscode/
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>.idea/
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>*.iml
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>
+</span><span id="__span-33-12"><a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a># Python
+</span><span id="__span-33-13"><a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a>.venv/
+</span><span id="__span-33-14"><a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a>__pycache__/
+</span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a>*.pyc
+</span><span id="__span-33-16"><a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a>
+</span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a># MkDocs
+</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a>site/
+</span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a>
+</span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a># OS
+</span><span id="__span-33-21"><a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a>.DS_Store
+</span><span id="__span-33-22"><a id="__codelineno-33-22" name="__codelineno-33-22" href="#__codelineno-33-22"></a>Thumbs.db
+</span><span id="__span-33-23"><a id="__codelineno-33-23" name="__codelineno-33-23" href="#__codelineno-33-23"></a>
+</span><span id="__span-33-24"><a id="__codelineno-33-24" name="__codelineno-33-24" href="#__codelineno-33-24"></a># Logs
+</span><span id="__span-33-25"><a id="__codelineno-33-25" name="__codelineno-33-25" href="#__codelineno-33-25"></a>*.log
+</span><span id="__span-33-26"><a id="__codelineno-33-26" name="__codelineno-33-26" href="#__codelineno-33-26"></a>logs/
+</span><span id="__span-33-27"><a id="__codelineno-33-27" name="__codelineno-33-27" href="#__codelineno-33-27"></a>
+</span><span id="__span-33-28"><a id="__codelineno-33-28" name="__codelineno-33-28" href="#__codelineno-33-28"></a># Secrets
+</span><span id="__span-33-29"><a id="__codelineno-33-29" name="__codelineno-33-29" href="#__codelineno-33-29"></a>.env
+</span><span id="__span-33-30"><a id="__codelineno-33-30" name="__codelineno-33-30" href="#__codelineno-33-30"></a>*.local
+</span></code></pre></div>
 <blockquote>
 <p>VS Code의 팀 공용 설정을 저장소에 관리할 계획이라면 <code>.vscode/</code> 전체를 제외하지 말고 필요한 파일만 선택적으로 관리한다.</p>
 </blockquote>
 <hr />
-<h2 id="16-commit">16. 실수로 잘못 Commit한 파일 제거</h2>
+<h2 id="16-commit">16. 실수로 잘못 Commit한 파일 제거<a class="headerlink" href="#16-commit" title="Permanent link">&para;</a></h2>
 <p>파일을 로컬에는 유지하고 Git 추적에서만 제거하려면:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>rm<span class="w"> </span>--cached<span class="w"> </span>&lt;file&gt;
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>git<span class="w"> </span>rm<span class="w"> </span>--cached<span class="w"> </span>&lt;file&gt;
+</span></code></pre></div>
 <p>디렉터리:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>rm<span class="w"> </span>-r<span class="w"> </span>--cached<span class="w"> </span>&lt;directory&gt;
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>git<span class="w"> </span>rm<span class="w"> </span>-r<span class="w"> </span>--cached<span class="w"> </span>&lt;directory&gt;
+</span></code></pre></div>
 <p>그 후 <code>.gitignore</code>에 추가하고 Commit한다.</p>
 <hr />
-<h2 id="17-git">17. 자주 사용하는 Git 명령</h2>
-<div class="highlight"><pre><span></span><code><span class="c1"># 상태 확인</span>
-git<span class="w"> </span>status
-
-<span class="c1"># 변경 내용 확인</span>
-git<span class="w"> </span>diff
-
-<span class="c1"># 최근 Commit 확인</span>
-git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph<span class="w"> </span>--decorate<span class="w"> </span>-20
-
-<span class="c1"># 원격 저장소 확인</span>
-git<span class="w"> </span>remote<span class="w"> </span>-v
-
-<span class="c1"># 원격 변경 가져오기</span>
-git<span class="w"> </span>fetch
-
-<span class="c1"># 현재 브랜치 확인</span>
-git<span class="w"> </span>branch
-
-<span class="c1"># 브랜치 생성 및 이동</span>
-git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>feature/example
-
-<span class="c1"># main 이동</span>
-git<span class="w"> </span>switch<span class="w"> </span>main
-
-<span class="c1"># 최신 변경 반영</span>
-git<span class="w"> </span>pull
-</code></pre></div>
+<h2 id="17-git">17. 자주 사용하는 Git 명령<a class="headerlink" href="#17-git" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="c1"># 상태 확인</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>git<span class="w"> </span>status
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="c1"># 변경 내용 확인</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>git<span class="w"> </span>diff
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="c1"># 최근 Commit 확인</span>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a>git<span class="w"> </span>log<span class="w"> </span>--oneline<span class="w"> </span>--graph<span class="w"> </span>--decorate<span class="w"> </span>-20
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a><span class="c1"># 원격 저장소 확인</span>
+</span><span id="__span-36-11"><a id="__codelineno-36-11" name="__codelineno-36-11" href="#__codelineno-36-11"></a>git<span class="w"> </span>remote<span class="w"> </span>-v
+</span><span id="__span-36-12"><a id="__codelineno-36-12" name="__codelineno-36-12" href="#__codelineno-36-12"></a>
+</span><span id="__span-36-13"><a id="__codelineno-36-13" name="__codelineno-36-13" href="#__codelineno-36-13"></a><span class="c1"># 원격 변경 가져오기</span>
+</span><span id="__span-36-14"><a id="__codelineno-36-14" name="__codelineno-36-14" href="#__codelineno-36-14"></a>git<span class="w"> </span>fetch
+</span><span id="__span-36-15"><a id="__codelineno-36-15" name="__codelineno-36-15" href="#__codelineno-36-15"></a>
+</span><span id="__span-36-16"><a id="__codelineno-36-16" name="__codelineno-36-16" href="#__codelineno-36-16"></a><span class="c1"># 현재 브랜치 확인</span>
+</span><span id="__span-36-17"><a id="__codelineno-36-17" name="__codelineno-36-17" href="#__codelineno-36-17"></a>git<span class="w"> </span>branch
+</span><span id="__span-36-18"><a id="__codelineno-36-18" name="__codelineno-36-18" href="#__codelineno-36-18"></a>
+</span><span id="__span-36-19"><a id="__codelineno-36-19" name="__codelineno-36-19" href="#__codelineno-36-19"></a><span class="c1"># 브랜치 생성 및 이동</span>
+</span><span id="__span-36-20"><a id="__codelineno-36-20" name="__codelineno-36-20" href="#__codelineno-36-20"></a>git<span class="w"> </span>switch<span class="w"> </span>-c<span class="w"> </span>feature/example
+</span><span id="__span-36-21"><a id="__codelineno-36-21" name="__codelineno-36-21" href="#__codelineno-36-21"></a>
+</span><span id="__span-36-22"><a id="__codelineno-36-22" name="__codelineno-36-22" href="#__codelineno-36-22"></a><span class="c1"># main 이동</span>
+</span><span id="__span-36-23"><a id="__codelineno-36-23" name="__codelineno-36-23" href="#__codelineno-36-23"></a>git<span class="w"> </span>switch<span class="w"> </span>main
+</span><span id="__span-36-24"><a id="__codelineno-36-24" name="__codelineno-36-24" href="#__codelineno-36-24"></a>
+</span><span id="__span-36-25"><a id="__codelineno-36-25" name="__codelineno-36-25" href="#__codelineno-36-25"></a><span class="c1"># 최신 변경 반영</span>
+</span><span id="__span-36-26"><a id="__codelineno-36-26" name="__codelineno-36-26" href="#__codelineno-36-26"></a>git<span class="w"> </span>pull
+</span></code></pre></div>
 <hr />
-<h2 id="18">18. 프로젝트 작업 시작 전 체크</h2>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-git<span class="w"> </span>branch<span class="w"> </span>--show-current
-git<span class="w"> </span>pull
-</code></pre></div>
+<h2 id="18">18. 프로젝트 작업 시작 전 체크<a class="headerlink" href="#18" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>git<span class="w"> </span>status
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>git<span class="w"> </span>branch<span class="w"> </span>--show-current
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>git<span class="w"> </span>pull
+</span></code></pre></div>
 <p>작업 종료 전 체크:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-git<span class="w"> </span>diff
-git<span class="w"> </span>add<span class="w"> </span>.
-git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"&lt;type&gt;: &lt;message&gt;"</span>
-git<span class="w"> </span>push
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>git<span class="w"> </span>status
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>git<span class="w"> </span>diff
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"&lt;type&gt;: &lt;message&gt;"</span>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>git<span class="w"> </span>push
+</span></code></pre></div>
 <hr />
-<h2 id="19">19. 문제 해결</h2>
-<h3 id="permission-denied-publickey"><code>Permission denied (publickey)</code></h3>
+<h2 id="19">19. 문제 해결<a class="headerlink" href="#19" title="Permanent link">&para;</a></h2>
+<h3 id="permission-denied-publickey"><code>Permission denied (publickey)</code><a class="headerlink" href="#permission-denied-publickey" title="Permanent link">&para;</a></h3>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>ssh<span class="w"> </span>-T<span class="w"> </span>git@github.com
+</span></code></pre></div>
 <p>추가 확인:</p>
-<div class="highlight"><pre><span></span><code>ssh-add<span class="w"> </span>-l
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>ssh-add<span class="w"> </span>-l
+</span></code></pre></div>
 <p>필요한 경우 SSH Agent에 키를 등록한다.</p>
-<div class="highlight"><pre><span></span><code>ssh-add<span class="w"> </span>~/.ssh/id_ed25519
-</code></pre></div>
-<h3 id="fatal-not-a-git-repository"><code>fatal: not a git repository</code></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>ssh-add<span class="w"> </span>~/.ssh/id_ed25519
+</span></code></pre></div>
+<h3 id="fatal-not-a-git-repository"><code>fatal: not a git repository</code><a class="headerlink" href="#fatal-not-a-git-repository" title="Permanent link">&para;</a></h3>
 <p>현재 위치 확인:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">pwd</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="nb">pwd</span>
+</span></code></pre></div>
 <p>Windows:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">Get-Location</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="nb">Get-Location</span>
+</span></code></pre></div>
 <p>프로젝트 루트로 이동한 후 다시 실행한다.</p>
-<h3 id="push">Push 전에 원격 변경이 존재하는 경우</h3>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>pull<span class="w"> </span>--rebase
-</code></pre></div>
+<h3 id="push">Push 전에 원격 변경이 존재하는 경우<a class="headerlink" href="#push" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>git<span class="w"> </span>pull<span class="w"> </span>--rebase
+</span></code></pre></div>
 <p>충돌이 발생하면 충돌 파일을 수정한 후 계속 진행한다.</p>
 <hr />
-<h2 id="20">20. 확인 체크리스트</h2>
-<ul>
-<li>[ ] Git이 설치되어 있다.</li>
-<li>[ ] <code>git --version</code>이 정상 실행된다.</li>
-<li>[ ] 사용자 이름과 이메일을 설정했다.</li>
-<li>[ ] GitHub SSH Key를 등록했다.</li>
-<li>[ ] <code>ssh -T git@github.com</code> 연결이 성공한다.</li>
-<li>[ ] MicroServer 저장소를 Clone했다.</li>
-<li>[ ] <code>.gitignore</code> 정책을 확인했다.</li>
-<li>[ ] Commit 메시지 규칙을 이해했다.</li>
-<li>[ ] Push / Pull이 정상 동작한다.</li>
+<h2 id="20">20. 확인 체크리스트<a class="headerlink" href="#20" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Git이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>git --version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 사용자 이름과 이메일을 설정했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> GitHub SSH Key를 등록했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>ssh -T git@github.com</code> 연결이 성공한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> MicroServer 저장소를 Clone했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.gitignore</code> 정책을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Commit 메시지 규칙을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Push / Pull이 정상 동작한다.</li>
 </ul>
 
 
@@ -2330,6 +2340,8 @@ git<span class="w"> </span>push
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2368,7 +2380,7 @@ git<span class="w"> </span>push
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>

@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>개발 지원 Extension 및 Profile 구성 - Microserver</title>
+        <title>개발 지원 Extension 및 Profile 구성 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1415,27 +1425,27 @@
 
 
 
-<h1 id="extension-profile">개발 지원 Extension 및 Profile 구성 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="extension-profile">개발 지원 Extension 및 Profile 구성 가이드<a class="headerlink" href="#extension-profile" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 Java / Spring Boot 핵심 Extension 이외에 MicroServer 개발 과정에서 사용할 <strong>YAML, XML, Container Tools</strong> 등의 지원 Extension과 VS Code Profile 운영 방법을 설명한다.</p>
 <p>핵심 Java / Spring Boot 기능과 보조 개발 기능을 분리하여 관리하는 것이 목적이다.</p>
 <hr />
-<h2 id="2-extension">2. Extension 분류 기준</h2>
+<h2 id="2-extension">2. Extension 분류 기준<a class="headerlink" href="#2-extension" title="Permanent link">&para;</a></h2>
 <p>MicroServer의 VS Code Extension은 다음 세 수준으로 구분한다.</p>
-<div class="highlight"><pre><span></span><code>필수
- ├─ Extension Pack for Java
- └─ Spring Boot Extension Pack
-
-권장
- ├─ YAML
- ├─ XML
- └─ Container Tools
-
-선택
- ├─ Git 보조 Extension
- ├─ Markdown 보조 Extension
- └─ 개인 생산성 Extension
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>필수
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a> ├─ Extension Pack for Java
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a> └─ Spring Boot Extension Pack
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>권장
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a> ├─ YAML
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a> ├─ XML
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a> └─ Container Tools
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>선택
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a> ├─ Git 보조 Extension
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a> ├─ Markdown 보조 Extension
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a> └─ 개인 생산성 Extension
+</span></code></pre></div>
 <p>핵심 원칙:</p>
 <ol>
 <li>Java 기본 기능은 Java Extension Pack으로 통일한다.</li>
@@ -1445,19 +1455,19 @@
 <li>개인 편의 Extension과 프로젝트 권장 Extension을 구분한다.</li>
 </ol>
 <hr />
-<h1 id="3-yaml-extension">3. YAML Extension</h1>
+<h1 id="3-yaml-extension">3. YAML Extension<a class="headerlink" href="#3-yaml-extension" title="Permanent link">&para;</a></h1>
 <p>Extension:</p>
-<div class="highlight"><pre><span></span><code>YAML
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>YAML
+</span></code></pre></div>
 <p>Publisher:</p>
-<div class="highlight"><pre><span></span><code>Red Hat
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Red Hat
+</span></code></pre></div>
 <p>Extension ID:</p>
-<div class="highlight"><pre><span></span><code>redhat.vscode-yaml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>redhat.vscode-yaml
+</span></code></pre></div>
 <p>설치:</p>
-<div class="highlight"><pre><span></span><code>code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-yaml
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-yaml
+</span></code></pre></div>
 <p>주요 역할:</p>
 <ul>
 <li>YAML Syntax Highlighting</li>
@@ -1467,34 +1477,34 @@
 <li>YAML 구조 탐색</li>
 </ul>
 <p>향후 다음 파일에서 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>application.yml
-docker-compose.yml
-mkdocs.yml
-GitHub Actions Workflow
-기타 YAML 설정 파일
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>application.yml
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>docker-compose.yml
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>mkdocs.yml
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>GitHub Actions Workflow
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>기타 YAML 설정 파일
+</span></code></pre></div>
 <p>Spring Boot Tools도 <code>application.yml</code>에 Spring Boot 전용 기능을 제공하지만 YAML Extension은 일반 YAML 파일 전체를 지원한다.</p>
 <p>따라서 두 Extension의 역할은 다음과 같이 구분할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>YAML Extension
-→ YAML 파일 형식 자체 지원
-
-Spring Boot Tools
-→ application.yml 안의 Spring Boot Property 지원
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>YAML Extension
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>→ YAML 파일 형식 자체 지원
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Spring Boot Tools
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>→ application.yml 안의 Spring Boot Property 지원
+</span></code></pre></div>
 <hr />
-<h1 id="4-xml-extension">4. XML Extension</h1>
+<h1 id="4-xml-extension">4. XML Extension<a class="headerlink" href="#4-xml-extension" title="Permanent link">&para;</a></h1>
 <p>Extension:</p>
-<div class="highlight"><pre><span></span><code>XML
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>XML
+</span></code></pre></div>
 <p>Publisher:</p>
-<div class="highlight"><pre><span></span><code>Red Hat
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Red Hat
+</span></code></pre></div>
 <p>Extension ID:</p>
-<div class="highlight"><pre><span></span><code>redhat.vscode-xml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>redhat.vscode-xml
+</span></code></pre></div>
 <p>설치:</p>
-<div class="highlight"><pre><span></span><code>code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-xml
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-xml
+</span></code></pre></div>
 <p>주요 역할:</p>
 <ul>
 <li>XML Syntax Highlighting</li>
@@ -1509,19 +1519,19 @@ Spring Boot Tools
 <p>현재 단계에서는 <code>pom.xml</code>을 생성하거나 수정하지 않는다.</p>
 </blockquote>
 <hr />
-<h1 id="5-container-tools">5. Container Tools</h1>
+<h1 id="5-container-tools">5. Container Tools<a class="headerlink" href="#5-container-tools" title="Permanent link">&para;</a></h1>
 <p>Extension:</p>
-<div class="highlight"><pre><span></span><code>Container Tools
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Container Tools
+</span></code></pre></div>
 <p>Publisher:</p>
-<div class="highlight"><pre><span></span><code>Microsoft
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Microsoft
+</span></code></pre></div>
 <p>Extension ID:</p>
-<div class="highlight"><pre><span></span><code>ms-azuretools.vscode-containers
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ms-azuretools.vscode-containers
+</span></code></pre></div>
 <p>설치:</p>
-<div class="highlight"><pre><span></span><code>code<span class="w"> </span>--install-extension<span class="w"> </span>ms-azuretools.vscode-containers
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>ms-azuretools.vscode-containers
+</span></code></pre></div>
 <p>주요 역할:</p>
 <ul>
 <li>Docker / Podman Container 확인</li>
@@ -1533,7 +1543,7 @@ Spring Boot Tools
 <p>MicroServer 프로젝트에서는 이후 Oracle Local Database와 개발용 Container 환경을 사용할 수 있으므로 권장한다.</p>
 <p>예전 VS Code 자료에서는 <code>Docker</code> Extension을 기준으로 설명하는 경우가 있지만 신규 환경에서는 현재 Microsoft의 Container 개발 도구 구성을 확인하여 적용한다.</p>
 <hr />
-<h1 id="6-extension">6. 프로젝트 권장 Extension 요약</h1>
+<h1 id="6-extension">6. 프로젝트 권장 Extension 요약<a class="headerlink" href="#6-extension" title="Permanent link">&para;</a></h1>
 <table>
 <thead>
 <tr>
@@ -1584,60 +1594,60 @@ Spring Boot Tools
 </table>
 <p>Extension Pack 내부 Extension은 별도로 다시 설치할 필요가 없다.</p>
 <hr />
-<h1 id="7-cli-extension">7. CLI를 이용한 기본 Extension 일괄 설치</h1>
+<h1 id="7-cli-extension">7. CLI를 이용한 기본 Extension 일괄 설치<a class="headerlink" href="#7-cli-extension" title="Permanent link">&para;</a></h1>
 <p><code>code</code> 명령을 사용할 수 있다면 다음과 같이 설치할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>code<span class="w"> </span>--install-extension<span class="w"> </span>vscjava.vscode-java-pack
-code<span class="w"> </span>--install-extension<span class="w"> </span>vmware.vscode-boot-dev-pack
-code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-yaml
-code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-xml
-code<span class="w"> </span>--install-extension<span class="w"> </span>ms-azuretools.vscode-containers
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>vscjava.vscode-java-pack
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>vmware.vscode-boot-dev-pack
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-yaml
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-xml
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>ms-azuretools.vscode-containers
+</span></code></pre></div>
 <p>설치된 Extension 목록:</p>
-<div class="highlight"><pre><span></span><code>code<span class="w"> </span>--list-extensions
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>code<span class="w"> </span>--list-extensions
+</span></code></pre></div>
 <p>주요 Extension ID 확인:</p>
-<div class="highlight"><pre><span></span><code>vscjava.vscode-java-pack
-vmware.vscode-boot-dev-pack
-redhat.vscode-yaml
-redhat.vscode-xml
-ms-azuretools.vscode-containers
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>vscjava.vscode-java-pack
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>vmware.vscode-boot-dev-pack
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>redhat.vscode-yaml
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>redhat.vscode-xml
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>ms-azuretools.vscode-containers
+</span></code></pre></div>
 <p>Pack 설치 시 포함된 개별 Extension도 목록에 함께 표시될 수 있다.</p>
 <hr />
-<h1 id="8-gui">8. GUI에서 설치 상태 확인</h1>
+<h1 id="8-gui">8. GUI에서 설치 상태 확인<a class="headerlink" href="#8-gui" title="Permanent link">&para;</a></h1>
 <p>Extensions 화면:</p>
-<div class="highlight"><pre><span></span><code>@installed
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>@installed
+</span></code></pre></div>
 <p>확인 대상:</p>
-<h3 id="java">Java</h3>
-<div class="highlight"><pre><span></span><code>Extension Pack for Java
-Language Support for Java by Red Hat
-Debugger for Java
-Test Runner for Java
-Maven for Java
-Project Manager for Java
-Visual Studio IntelliCode
-</code></pre></div>
-<h3 id="spring-boot">Spring Boot</h3>
-<div class="highlight"><pre><span></span><code>Spring Boot Extension Pack
-Spring Boot Tools
-Spring Initializr Java Support
-Spring Boot Dashboard
-</code></pre></div>
-<h3 id="_1">지원 도구</h3>
-<div class="highlight"><pre><span></span><code>YAML
-XML
-Container Tools
-</code></pre></div>
+<h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Extension Pack for Java
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>Language Support for Java by Red Hat
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Debugger for Java
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>Test Runner for Java
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Maven for Java
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>Project Manager for Java
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>Visual Studio IntelliCode
+</span></code></pre></div>
+<h3 id="spring-boot">Spring Boot<a class="headerlink" href="#spring-boot" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Spring Boot Extension Pack
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>Spring Boot Tools
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>Spring Initializr Java Support
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>Spring Boot Dashboard
+</span></code></pre></div>
+<h3 id="_1">지원 도구<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>YAML
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>XML
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>Container Tools
+</span></code></pre></div>
 <hr />
-<h1 id="9-vs-code-profile">9. VS Code Profile</h1>
+<h1 id="9-vs-code-profile">9. VS Code Profile<a class="headerlink" href="#9-vs-code-profile" title="Permanent link">&para;</a></h1>
 <p>VS Code의 Profile 기능을 사용하면 개발 목적별로 Extension과 Settings 구성을 분리할 수 있다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>Default
-Python
-AI Development
-MicroServer Java
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Default
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>Python
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>AI Development
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>MicroServer Java
+</span></code></pre></div>
 <p>Profile은 다음과 같은 경우 유용하다.</p>
 <ul>
 <li>Python / Java 개발환경을 분리하고 싶은 경우</li>
@@ -1645,36 +1655,36 @@ MicroServer Java
 <li>Java 개발용 Extension Set을 별도로 유지하고 싶은 경우</li>
 </ul>
 <hr />
-<h1 id="10-profile">10. Profile 생성</h1>
+<h1 id="10-profile">10. Profile 생성<a class="headerlink" href="#10-profile" title="Permanent link">&para;</a></h1>
 <p>VS Code 메뉴:</p>
-<div class="highlight"><pre><span></span><code>File
-→ Preferences
-→ Profiles
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>File
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>→ Preferences
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>→ Profiles
+</span></code></pre></div>
 <p>Command Palette:</p>
-<div class="highlight"><pre><span></span><code>Profiles: Create Profile
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Profiles: Create Profile
+</span></code></pre></div>
 <p>예를 들어 다음 이름으로 생성할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>MicroServer Java
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>MicroServer Java
+</span></code></pre></div>
 <p>Profile 사용은 필수가 아니다.</p>
 <p>개발자가 이미 다른 VS Code 개발환경을 많이 사용하고 있다면 MicroServer 전용 Profile을 만들어 Extension 구성을 분리하는 것을 권장할 수 있다.</p>
 <hr />
-<h1 id="11-java-spring-profile-template">11. Java Spring Profile Template</h1>
+<h1 id="11-java-spring-profile-template">11. Java Spring Profile Template<a class="headerlink" href="#11-java-spring-profile-template" title="Permanent link">&para;</a></h1>
 <p>VS Code는 Java와 Spring 개발에 사용할 수 있는 Profile Template을 제공한다.</p>
 <p>대표적으로 다음 Profile Template이 있다.</p>
-<div class="highlight"><pre><span></span><code>Java General
-Java Spring
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Java General
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>Java Spring
+</span></code></pre></div>
 <p>Java Spring Profile은 Java 개발 Extension과 Spring Boot 관련 Extension을 포함하는 초기 구성을 빠르게 준비할 때 사용할 수 있다.</p>
 <p>다만 MicroServer 프로젝트에서는 Extension의 역할을 이해하고 표준 구성을 명확히 하기 위해 본 가이드에서 각 Extension을 직접 확인한 후 Profile에 포함시키는 방식을 권장한다.</p>
 <hr />
-<h1 id="12-profile-workspace">12. Profile과 Workspace의 차이</h1>
+<h1 id="12-profile-workspace">12. Profile과 Workspace의 차이<a class="headerlink" href="#12-profile-workspace" title="Permanent link">&para;</a></h1>
 <p>Profile과 Workspace는 목적이 다르다.</p>
 <pre class="mermaid"><code>flowchart LR
     PROFILE[VS Code Profile] --&gt; ENV[개발 도구 환경]
     WORKSPACE[Workspace] --&gt; PROJECT[특정 프로젝트 설정]</code></pre>
-<h3 id="profile">Profile</h3>
+<h3 id="profile">Profile<a class="headerlink" href="#profile" title="Permanent link">&para;</a></h3>
 <p>개발 도구 환경을 구분한다.</p>
 <p>예:</p>
 <ul>
@@ -1683,7 +1693,7 @@ Java Spring
 <li>User Settings</li>
 <li>개발 목적별 VS Code 구성</li>
 </ul>
-<h3 id="workspace">Workspace</h3>
+<h3 id="workspace">Workspace<a class="headerlink" href="#workspace" title="Permanent link">&para;</a></h3>
 <p>특정 프로젝트 설정을 관리한다.</p>
 <p>예:</p>
 <ul>
@@ -1694,23 +1704,23 @@ Java Spring
 </ul>
 <p>따라서 Profile은 <strong>개발자의 VS Code 환경</strong>, Workspace는 <strong>프로젝트 환경</strong>이라고 구분하면 이해하기 쉽다.</p>
 <hr />
-<h1 id="13-extension">13. Extension 자동 업데이트</h1>
+<h1 id="13-extension">13. Extension 자동 업데이트<a class="headerlink" href="#13-extension" title="Permanent link">&para;</a></h1>
 <p>VS Code Extension은 지속적으로 업데이트된다.</p>
 <p>Extensions 화면에서 다음 상태를 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>Installed
-Enabled
-Update
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Installed
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>Enabled
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>Update
+</span></code></pre></div>
 <p>기본적으로 최신 Extension을 사용하는 것을 권장하지만 프로젝트 진행 중 특정 버전에서 문제가 발생하는 경우 팀에서 버전을 통일할 수 있다.</p>
 <p>특히 다음 Extension은 Java / Spring 개발환경의 핵심이므로 Update 이후 문제가 발생했을 때 우선 확인한다.</p>
-<div class="highlight"><pre><span></span><code>Language Support for Java
-Debugger for Java
-Maven for Java
-Spring Boot Tools
-Spring Boot Dashboard
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Language Support for Java
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>Debugger for Java
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>Maven for Java
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>Spring Boot Tools
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>Spring Boot Dashboard
+</span></code></pre></div>
 <hr />
-<h1 id="14-extension">14. Extension 운영 원칙</h1>
+<h1 id="14-extension">14. Extension 운영 원칙<a class="headerlink" href="#14-extension" title="Permanent link">&para;</a></h1>
 <p>프로젝트에서는 Extension을 무조건 많이 설치하지 않는다.</p>
 <p>권장 원칙:</p>
 <ul>
@@ -1722,50 +1732,50 @@ Spring Boot Dashboard
 <li>개인 인증정보를 Extension 설정에 저장소 형태로 공유하지 않는다.</li>
 </ul>
 <hr />
-<h1 id="15-vscodeextensionsjson">15. 향후 <code>.vscode/extensions.json</code></h1>
+<h1 id="15-vscodeextensionsjson">15. 향후 <code>.vscode/extensions.json</code><a class="headerlink" href="#15-vscodeextensionsjson" title="Permanent link">&para;</a></h1>
 <p>프로젝트 생성 이후에는 권장 Extension을 Workspace 차원에서 제안할 수 있다.</p>
 <p>예상 구조:</p>
-<div class="highlight"><pre><span></span><code>microserver/
- └─ .vscode/
-     └─ extensions.json
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>microserver/
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a> └─ .vscode/
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>     └─ extensions.json
+</span></code></pre></div>
 <p>이 파일을 사용하면 프로젝트를 연 개발자에게 권장 Extension을 안내할 수 있다.</p>
 <blockquote>
 <p>아직 프로젝트 생성 전이므로 현재 단계에서는 실제 <code>extensions.json</code> 파일을 생성하지 않는다.</p>
 </blockquote>
 <hr />
-<h1 id="16">16. 체크리스트</h1>
-<ul>
-<li>[ ] YAML Extension이 설치되어 있다.</li>
-<li>[ ] XML Extension이 설치되어 있다.</li>
-<li>[ ] Container Tools가 설치되어 있다.</li>
-<li>[ ] 필수 Extension과 권장 Extension의 차이를 이해했다.</li>
-<li>[ ] <code>code --list-extensions</code>로 설치 상태를 확인할 수 있다.</li>
-<li>[ ] VS Code Profile의 역할을 이해했다.</li>
-<li>[ ] Java Spring Profile Template이 있다는 것을 확인했다.</li>
-<li>[ ] Profile과 Workspace의 차이를 이해했다.</li>
-<li>[ ] 아직 프로젝트용 <code>.vscode/extensions.json</code>을 만들지 않았다.</li>
+<h1 id="16">16. 체크리스트<a class="headerlink" href="#16" title="Permanent link">&para;</a></h1>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> YAML Extension이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> XML Extension이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Container Tools가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 필수 Extension과 권장 Extension의 차이를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>code --list-extensions</code>로 설치 상태를 확인할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code Profile의 역할을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Java Spring Profile Template이 있다는 것을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Profile과 Workspace의 차이를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 프로젝트용 <code>.vscode/extensions.json</code>을 만들지 않았다.</li>
 </ul>
 <hr />
-<h1 id="17">17. 다음 단계</h1>
+<h1 id="17">17. 다음 단계<a class="headerlink" href="#17" title="Permanent link">&para;</a></h1>
 <p>다음 문서에서는 앞 단계에서 준비한 Eclipse Temurin JDK와
 현재 구성한 VS Code Java Extension의 관계를 확인하고,
 향후 프로젝트별 JDK를 어떤 시점에 연결할지 운영 방향을 정리한다.</p>
-<div class="highlight"><pre><span></span><code>JDK 준비
-   ↓
-Maven 준비
-   ↓
-VS Code / Java / Spring Extension
-   ↓
-지원 Extension / Profile       ← 현재 완료
-   ↓
-JDK 연계 및 VS Code 환경 운영 확인
-   ↓
-Spring Boot 프로젝트 생성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>JDK 준비
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>   ↓
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>Maven 준비
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>   ↓
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>VS Code / Java / Spring Extension
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>   ↓
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>지원 Extension / Profile       ← 현재 완료
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>   ↓
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a>JDK 연계 및 VS Code 환경 운영 확인
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>   ↓
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a>Spring Boot 프로젝트 생성
+</span></code></pre></div>
 <p>Apache Maven 환경은 이미 VS Code 구성 전에 준비되어 있으므로
 VS Code 환경 구성이 완료되면 별도의 Maven 설치 단계로 되돌아가지 않는다.</p>
-<h2 id="_2">참고</h2>
+<h2 id="_2">참고<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>VS Code Profiles<br />
@@ -1801,6 +1811,8 @@ VS Code 환경 구성이 완료되면 별도의 Maven 설치 단계로 되돌아
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1839,7 +1851,7 @@ VS Code 환경 구성이 완료되면 별도의 Maven 설치 단계로 되돌아
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

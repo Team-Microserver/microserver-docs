@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>애플리케이션 계층 구조 - Microserver</title>
+        <title>애플리케이션 계층 구조 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1603,20 +1613,20 @@
 
 
 
-<h1 id="_1">애플리케이션 계층 구조</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="_1">애플리케이션 계층 구조<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>Microserver는 애플리케이션 내부의 역할을 명확히 하기 위해 기본적으로 다음 계층을 구분합니다.</p>
-<div class="highlight"><pre><span></span><code>Controller
-    ↓
-Service
-    ↓
-DAO / Persistence
-    ↓
-Database
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Controller
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Service
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>DAO / Persistence
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Database
+</span></code></pre></div>
 <p>각 Layer는 자신에게 부여된 책임만 수행하고, 다른 Layer의 책임을 직접 처리하지 않는 것을 기본 원칙으로 합니다.</p>
 <hr />
-<h2 id="2">2. 요청 처리 구조</h2>
+<h2 id="2">2. 요청 처리 구조<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     REQ[HTTP Request]
     CT[Controller]
@@ -1634,7 +1644,7 @@ Database
     SV --&gt; CT
     CT --&gt; RES</code></pre>
 <hr />
-<h2 id="3-controller">3. Controller 역할</h2>
+<h2 id="3-controller">3. Controller 역할<a class="headerlink" href="#3-controller" title="Permanent link">&para;</a></h2>
 <p>Controller는 <strong>외부 요청과 애플리케이션 내부 Service를 연결하는 진입 계층</strong>입니다.</p>
 <p>주요 역할:</p>
 <ul>
@@ -1647,21 +1657,21 @@ Database
 <li>표준 Response 반환</li>
 </ul>
 <p>Controller가 직접 SQL을 호출하거나 복잡한 업무 로직을 수행하지 않도록 합니다.</p>
-<h3 id="controller">Controller가 가져야 할 코드</h3>
-<div class="highlight"><pre><span></span><code>요청 받기
-→ 입력 검증
-→ Service 호출
-→ 결과 반환
-</code></pre></div>
-<h3 id="controller_1">Controller가 가지지 않아야 할 코드</h3>
-<div class="highlight"><pre><span></span><code>복잡한 계산
-다수의 DAO 직접 호출
-Transaction 제어
-전문 Parsing
-외부 시스템 통신 상세 로직
-</code></pre></div>
+<h3 id="controller">Controller가 가져야 할 코드<a class="headerlink" href="#controller" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>요청 받기
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>→ 입력 검증
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>→ Service 호출
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>→ 결과 반환
+</span></code></pre></div>
+<h3 id="controller_1">Controller가 가지지 않아야 할 코드<a class="headerlink" href="#controller_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>복잡한 계산
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>다수의 DAO 직접 호출
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Transaction 제어
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>전문 Parsing
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>외부 시스템 통신 상세 로직
+</span></code></pre></div>
 <hr />
-<h2 id="4-service">4. Service 역할</h2>
+<h2 id="4-service">4. Service 역할<a class="headerlink" href="#4-service" title="Permanent link">&para;</a></h2>
 <p>Service는 <strong>전체 비즈니스 처리의 중심</strong>입니다.</p>
 <p>주요 역할:</p>
 <ul>
@@ -1673,17 +1683,17 @@ Transaction 제어
 <li>Transaction 시작 및 종료</li>
 </ul>
 <p>예를 들어 “사용자 등록” 업무가 있다고 가정하면 Service는 다음 흐름을 담당합니다.</p>
-<div class="highlight"><pre><span></span><code>사용자 중복 확인
-    ↓
-사용자 기본정보 저장
-    ↓
-기본 권한 생성
-    ↓
-처리 이력 저장
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>사용자 중복 확인
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    ↓
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>사용자 기본정보 저장
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    ↓
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>기본 권한 생성
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    ↓
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>처리 이력 저장
+</span></code></pre></div>
 <p>이 전체가 하나의 업무 단위라면 하나의 Transaction으로 처리하는 것이 자연스럽습니다.</p>
 <hr />
-<h2 id="5-transaction">5. Transaction 기본 단위</h2>
+<h2 id="5-transaction">5. Transaction 기본 단위<a class="headerlink" href="#5-transaction" title="Permanent link">&para;</a></h2>
 <p>Transaction은 Service 계층을 기본 단위로 합니다.</p>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
@@ -1723,7 +1733,7 @@ Transaction 제어
     D2--&gt;&gt;SV: Exception
     SV-&gt;&gt;SV: Transaction Rollback</code></pre>
 <hr />
-<h2 id="6-dao-persistence">6. DAO / Persistence 역할</h2>
+<h2 id="6-dao-persistence">6. DAO / Persistence 역할<a class="headerlink" href="#6-dao-persistence" title="Permanent link">&para;</a></h2>
 <p>DAO / Persistence 계층은 Database 접근에 집중합니다.</p>
 <p>주요 역할:</p>
 <ul>
@@ -1738,24 +1748,24 @@ Transaction 제어
 </ul>
 <p>DAO에서 업무 조건을 판단하거나 여러 업무 흐름을 조합하지 않는 것이 좋습니다.</p>
 <hr />
-<h2 id="7-dto-domain">7. DTO / Domain 객체</h2>
+<h2 id="7-dto-domain">7. DTO / Domain 객체<a class="headerlink" href="#7-dto-domain" title="Permanent link">&para;</a></h2>
 <p>Layer 간 데이터 전달을 위해 DTO를 사용할 수 있습니다.</p>
 <p>개념적으로는 다음처럼 구분할 수 있습니다.</p>
-<div class="highlight"><pre><span></span><code>Request DTO
-    ↓
-Controller
-    ↓
-Service DTO / Domain
-    ↓
-DAO Parameter
-    ↓
-Database Result
-    ↓
-Response DTO
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Request DTO
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    ↓
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Controller
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    ↓
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Service DTO / Domain
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    ↓
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>DAO Parameter
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    ↓
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Database Result
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    ↓
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Response DTO
+</span></code></pre></div>
 <p>모든 단계에서 무조건 별도 객체를 만들기보다 프로젝트 복잡도와 데이터 성격을 보고 결정합니다.</p>
 <hr />
-<h2 id="8">8. 정상 요청 시퀀스</h2>
+<h2 id="8">8. 정상 요청 시퀀스<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant U as Client
@@ -1775,7 +1785,7 @@ Response DTO
     S--&gt;&gt;C: User Result
     C--&gt;&gt;U: Common Response</code></pre>
 <hr />
-<h2 id="9">9. 예외 발생 시 흐름</h2>
+<h2 id="9">9. 예외 발생 시 흐름<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant C as Controller
@@ -1791,7 +1801,7 @@ Response DTO
     E--&gt;&gt;C: Standard Error Response</code></pre>
 <p>업무 Layer마다 동일한 <code>try/catch</code>를 반복하지 않고 공통 예외 처리 체계를 사용하는 것이 기본 방향입니다.</p>
 <hr />
-<h2 id="10-layer">10. Layer 설계 원칙</h2>
+<h2 id="10-layer">10. Layer 설계 원칙<a class="headerlink" href="#10-layer" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Controller는 얇게 유지한다.</li>
 <li>비즈니스 처리의 중심은 Service이다.</li>
@@ -1818,6 +1828,8 @@ Response DTO
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1856,7 +1868,7 @@ Response DTO
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

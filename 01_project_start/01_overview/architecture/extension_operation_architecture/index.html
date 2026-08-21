@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>확장 및 운영 아키텍처 - Microserver</title>
+        <title>확장 및 운영 아키텍처 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1635,8 +1645,8 @@
 
 
 
-<h1 id="_1">확장 및 운영 아키텍처</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="_1">확장 및 운영 아키텍처<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>Microserver의 초기 목표는 복잡한 MSA 플랫폼을 먼저 만드는 것이 아닙니다.</p>
 <p>Spring Boot 애플리케이션의 기본 구조와 공통 기능을 안정적으로 구축한 뒤, 실제 요구사항에 따라 다음 기술을 단계적으로 적용합니다.</p>
 <ul>
@@ -1649,7 +1659,7 @@
 <li>운영 Logging / Tracing</li>
 </ul>
 <hr />
-<h2 id="2">2. 단계적 확장 방향</h2>
+<h2 id="2">2. 단계적 확장 방향<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     A[Spring Boot MVC]
     B[WebClient]
@@ -1667,7 +1677,7 @@
     F --&gt; G</code></pre>
 <p>실제 프로젝트에서는 순서가 달라질 수 있지만 기술 도입은 필요성이 확인된 경우에 진행합니다.</p>
 <hr />
-<h2 id="3-webclient">3. WebClient</h2>
+<h2 id="3-webclient">3. WebClient<a class="headerlink" href="#3-webclient" title="Permanent link">&para;</a></h2>
 <p>외부 REST API 또는 내부 서비스 호출이 필요한 경우 WebClient를 사용할 수 있습니다.</p>
 <p>기본 호출 흐름:</p>
 <pre class="mermaid"><code>sequenceDiagram
@@ -1691,7 +1701,7 @@
 <li>Trace Header 전달</li>
 </ul>
 <hr />
-<h2 id="4-spring-webflux">4. Spring WebFlux</h2>
+<h2 id="4-spring-webflux">4. Spring WebFlux<a class="headerlink" href="#4-spring-webflux" title="Permanent link">&para;</a></h2>
 <p>WebFlux는 Reactive 요청 처리가 필요한 영역에서 검토합니다.</p>
 <p>대표적인 요청 흐름:</p>
 <pre class="mermaid"><code>flowchart LR
@@ -1713,7 +1723,7 @@
 <p>Reactive에서는 Thread가 고정되지 않을 수 있으므로 기존 <code>ThreadLocal</code> 기반 MDC 사용 방식도 다시 검토해야 합니다.</p>
 <p>Trace 정보는 Reactor Context와 연계하는 구조가 필요할 수 있습니다.</p>
 <hr />
-<h2 id="5-spring-cloud-gateway">5. Spring Cloud Gateway</h2>
+<h2 id="5-spring-cloud-gateway">5. Spring Cloud Gateway<a class="headerlink" href="#5-spring-cloud-gateway" title="Permanent link">&para;</a></h2>
 <p>서비스가 분리되면 외부 요청의 공통 진입점이 필요할 수 있습니다.</p>
 <p>Gateway 주요 역할:</p>
 <ul>
@@ -1741,7 +1751,7 @@
     G --&gt; CM</code></pre>
 <p>Gateway에 비즈니스 로직을 넣지 않는 것이 중요합니다.</p>
 <hr />
-<h2 id="6-gateway">6. Gateway 요청 시퀀스</h2>
+<h2 id="6-gateway">6. Gateway 요청 시퀀스<a class="headerlink" href="#6-gateway" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant C as Client
@@ -1758,25 +1768,25 @@
     F--&gt;&gt;G: Response
     G--&gt;&gt;C: HTTP Response</code></pre>
 <hr />
-<h2 id="7-kubernetes">7. Kubernetes 환경의 외부 요청 흐름</h2>
+<h2 id="7-kubernetes">7. Kubernetes 환경의 외부 요청 흐름<a class="headerlink" href="#7-kubernetes" title="Permanent link">&para;</a></h2>
 <p>Kubernetes 환경에서는 Ingress와 Gateway의 책임을 구분합니다.</p>
-<div class="highlight"><pre><span></span><code>사용자
-  ↓
-External Load Balancer
-  ↓
-Ingress Controller
-  ↓
-Kubernetes Service
-  ↓
-Spring Cloud Gateway
-  ↓
-Kubernetes Service
-  ↓
-Business Application Pod
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>사용자
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>External Load Balancer
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Ingress Controller
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Kubernetes Service
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Spring Cloud Gateway
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  ↓
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Kubernetes Service
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  ↓
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>Business Application Pod
+</span></code></pre></div>
 <p>Ingress는 <strong>클러스터 진입점</strong>, Gateway는 <strong>애플리케이션/API 관문</strong>으로 구분하는 것이 이해하기 쉽습니다.</p>
 <hr />
-<h2 id="8-kubernetes">8. Kubernetes 상세 트래픽 흐름</h2>
+<h2 id="8-kubernetes">8. Kubernetes 상세 트래픽 흐름<a class="headerlink" href="#8-kubernetes" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant U as User
@@ -1800,12 +1810,12 @@ Business Application Pod
     IN--&gt;&gt;LB: Response
     LB--&gt;&gt;U: HTTPS Response</code></pre>
 <hr />
-<h2 id="9-service-discovery">9. Service Discovery</h2>
+<h2 id="9-service-discovery">9. Service Discovery<a class="headerlink" href="#9-service-discovery" title="Permanent link">&para;</a></h2>
 <p>서비스가 동적으로 생성/삭제되는 환경에서는 Service Discovery가 필요할 수 있습니다.</p>
 <p>다만 Kubernetes에서는 Kubernetes Service 자체가 서비스 탐색 역할을 제공하므로 별도 Eureka와의 관계를 실제 운영환경 기준으로 판단해야 합니다.</p>
 <p>따라서 Service Discovery 기술은 목적 없이 중복 적용하지 않습니다.</p>
 <hr />
-<h2 id="10-health-check">10. Health Check</h2>
+<h2 id="10-health-check">10. Health Check<a class="headerlink" href="#10-health-check" title="Permanent link">&para;</a></h2>
 <p>운영환경에서는 애플리케이션이 단순히 Process가 떠 있는지만 확인해서는 부족합니다.</p>
 <p>다음 상태를 구분할 필요가 있습니다.</p>
 <ul>
@@ -1817,7 +1827,7 @@ Business Application Pod
 </ul>
 <p>Kubernetes 환경에서는 Liveness / Readiness 개념과 연계할 수 있습니다.</p>
 <hr />
-<h2 id="11">11. 장애 격리</h2>
+<h2 id="11">11. 장애 격리<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
 <p>서비스 분리 후에는 장애가 다른 서비스로 전파되지 않도록 해야 합니다.</p>
 <p>고려 항목:</p>
 <ul>
@@ -1830,23 +1840,23 @@ Business Application Pod
 </ul>
 <p>모든 장애에 Retry를 적용하면 오히려 장애를 확대할 수 있으므로 업무 특성을 기준으로 적용합니다.</p>
 <hr />
-<h2 id="12-trace">12. Trace 연계</h2>
+<h2 id="12-trace">12. Trace 연계<a class="headerlink" href="#12-trace" title="Permanent link">&para;</a></h2>
 <p>분산 환경에서는 하나의 요청이 여러 서비스를 거치므로 동일 요청을 추적할 수 있는 식별자가 중요합니다.</p>
-<div class="highlight"><pre><span></span><code>Client
-  TRACE_ID=AAA
-      ↓
-Gateway
-  TRACE_ID=AAA
-      ↓
-Business Service
-  TRACE_ID=AAA
-      ↓
-Integration Service
-  TRACE_ID=AAA
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Client
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  TRACE_ID=AAA
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>      ↓
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Gateway
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>  TRACE_ID=AAA
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>      ↓
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Business Service
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>  TRACE_ID=AAA
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>      ↓
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>Integration Service
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  TRACE_ID=AAA
+</span></code></pre></div>
 <p>Gateway에서 생성한 Trace ID 또는 상위에서 전달된 Trace ID를 하위 호출에 계속 전달하도록 구성합니다.</p>
 <hr />
-<h2 id="13">13. 확장 판단 기준</h2>
+<h2 id="13">13. 확장 판단 기준<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
 <p>새 기술을 적용하기 전에 다음을 확인합니다.</p>
 <ol>
 <li>현재 구조에서 해결하기 어려운 문제가 존재하는가</li>
@@ -1857,20 +1867,20 @@ Integration Service
 <li>기존 금융 인프라와 호환되는가</li>
 </ol>
 <hr />
-<h2 id="14">14. 확장 목표</h2>
+<h2 id="14">14. 확장 목표<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
 <p>Microserver는 처음부터 복잡한 플랫폼을 만드는 것이 아니라 다음 방향으로 성장합니다.</p>
-<div class="highlight"><pre><span></span><code>단일 Spring Boot 애플리케이션
-        ↓
-공통 Module 표준화
-        ↓
-내부/외부 서비스 연계
-        ↓
-서비스 분리 필요성 발생
-        ↓
-Gateway / Service 구조 확장
-        ↓
-Container / Kubernetes 운영
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>단일 Spring Boot 애플리케이션
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>        ↓
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>공통 Module 표준화
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        ↓
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>내부/외부 서비스 연계
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        ↓
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>서비스 분리 필요성 발생
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        ↓
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>Gateway / Service 구조 확장
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        ↓
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>Container / Kubernetes 운영
+</span></code></pre></div>
 <p>이렇게 함으로써 학습 목적과 실전 적용 가능성을 함께 확보하는 것을 목표로 합니다.</p>
 
 
@@ -1889,6 +1899,8 @@ Container / Kubernetes 운영
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1927,7 +1939,7 @@ Container / Kubernetes 운영
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

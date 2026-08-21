@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>Maven Wrapper 및 프로젝트 Maven 설정 - Microserver</title>
+        <title>Maven Wrapper 및 프로젝트 Maven 설정 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1917,19 +1927,19 @@
 
 
 
-<h1 id="maven-wrapper-maven">Maven Wrapper 및 프로젝트 Maven 설정 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="maven-wrapper-maven">Maven Wrapper 및 프로젝트 Maven 설정 가이드<a class="headerlink" href="#maven-wrapper-maven" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 생성된 MicroServer Spring Boot Project의 Maven 환경을
 <strong>개발 PC Maven이 아니라 프로젝트 자체의 Build 기준으로 전환</strong>하는 방법을 설명한다.</p>
 <p>앞 단계에서 Apache Maven 3.9.16을 개발 PC에 설치했다.</p>
 <p>그 Maven은 다음 목적이었다.</p>
-<div class="highlight"><pre><span></span><code>개발 PC Maven
-→ Maven Tool 자체 준비
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>개발 PC Maven
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>→ Maven Tool 자체 준비
+</span></code></pre></div>
 <p>이번 단계에서는 다음을 구성한다.</p>
-<div class="highlight"><pre><span></span><code>Project Maven Wrapper
-→ MicroServer Build Version 고정
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Project Maven Wrapper
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>→ MicroServer Build Version 고정
+</span></code></pre></div>
 <p>주요 목표:</p>
 <ul>
 <li>Spring Initializr 생성 Maven Wrapper 확인</li>
@@ -1941,17 +1951,17 @@
 <li>개인 <code>.m2/settings.xml</code>과 Project 설정의 역할 분리</li>
 </ul>
 <hr />
-<h2 id="2">2. 현재 단계의 위치</h2>
-<div class="highlight"><pre><span></span><code>Spring Boot Project 생성
-        ↓
-JDK / VS Code Workspace 설정
-        ↓
-[ Maven Wrapper / 프로젝트 Maven 설정 ]      ← 현재
-        ↓
-Spring Boot 초기 실행 및 Build 검증
-</code></pre></div>
+<h2 id="2">2. 현재 단계의 위치<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Spring Boot Project 생성
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>        ↓
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>JDK / VS Code Workspace 설정
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        ↓
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>[ Maven Wrapper / 프로젝트 Maven 설정 ]      ← 현재
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>        ↓
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>Spring Boot 초기 실행 및 Build 검증
+</span></code></pre></div>
 <hr />
-<h2 id="3-pc-maven-maven-wrapper">3. 개발 PC Maven과 Maven Wrapper</h2>
+<h2 id="3-pc-maven-maven-wrapper">3. 개발 PC Maven과 Maven Wrapper<a class="headerlink" href="#3-pc-maven-maven-wrapper" title="Permanent link">&para;</a></h2>
 <p>두 Maven의 역할을 구분한다.</p>
 <pre class="mermaid"><code>flowchart TB
     DEV[Developer PC]
@@ -1959,22 +1969,22 @@ Spring Boot 초기 실행 및 Build 검증
     PROJECT[MicroServer Project]
     PROJECT --&gt; WRAPPER[Maven Wrapper]
     WRAPPER --&gt; VERSION[Project Maven Version]</code></pre>
-<h3 id="pc-maven">개발 PC Maven</h3>
-<div class="highlight"><pre><span></span><code>mvn
-</code></pre></div>
+<h3 id="pc-maven">개발 PC Maven<a class="headerlink" href="#pc-maven" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>mvn
+</span></code></pre></div>
 <p>역할:</p>
 <ul>
 <li>Wrapper가 없을 때 초기 설정</li>
 <li>Wrapper 생성 / 업데이트</li>
 <li>일반 Maven Tool 준비</li>
 </ul>
-<h3 id="maven-wrapper">프로젝트 Maven Wrapper</h3>
+<h3 id="maven-wrapper">프로젝트 Maven Wrapper<a class="headerlink" href="#maven-wrapper" title="Permanent link">&para;</a></h3>
 <p>Windows:</p>
-<div class="highlight"><pre><span></span><code>mvnw.cmd
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>mvnw.cmd
+</span></code></pre></div>
 <p>macOS / Linux:</p>
-<div class="highlight"><pre><span></span><code>./mvnw
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>./mvnw
+</span></code></pre></div>
 <p>역할:</p>
 <ul>
 <li>Project Maven Version 고정</li>
@@ -1983,10 +1993,10 @@ Spring Boot 초기 실행 및 Build 검증
 <li>필요한 Maven Distribution 자동 Download</li>
 </ul>
 <hr />
-<h2 id="4-maven-version">4. Maven Version 기준</h2>
+<h2 id="4-maven-version">4. Maven Version 기준<a class="headerlink" href="#4-maven-version" title="Permanent link">&para;</a></h2>
 <p>현재 MicroServer 기준:</p>
-<div class="highlight"><pre><span></span><code>Apache Maven 3.9.16
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Apache Maven 3.9.16
+</span></code></pre></div>
 <p>Spring Boot 4.1.0은 공식적으로 Maven 3.6.3 이상을 지원한다.</p>
 <p>따라서 Maven 3.9.16은 Spring Boot 4.1.0 Build 요구사항을 만족한다.</p>
 <div class="admonition info">
@@ -1996,49 +2006,49 @@ Spring Boot 초기 실행 및 Build 검증
 <p>실제 MicroServer Project Build의 기준은 Wrapper Version이다.</p>
 </div>
 <hr />
-<h2 id="5-spring-initializr-maven-wrapper">5. Spring Initializr Maven Wrapper 확인</h2>
+<h2 id="5-spring-initializr-maven-wrapper">5. Spring Initializr Maven Wrapper 확인<a class="headerlink" href="#5-spring-initializr-maven-wrapper" title="Permanent link">&para;</a></h2>
 <p>Project Root:</p>
-<div class="highlight"><pre><span></span><code>microserver/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>microserver/
+</span></code></pre></div>
 <p>다음 파일을 확인한다.</p>
-<div class="highlight"><pre><span></span><code>.mvn/
-mvnw
-mvnw.cmd
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>.mvn/
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>mvnw
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>mvnw.cmd
+</span></code></pre></div>
 <p>상세:</p>
-<div class="highlight"><pre><span></span><code>microserver/
-├─ .mvn/
-│  └─ wrapper/
-│     └─ maven-wrapper.properties
-├─ mvnw
-├─ mvnw.cmd
-└─ pom.xml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>microserver/
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>├─ .mvn/
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>│  └─ wrapper/
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>│     └─ maven-wrapper.properties
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>├─ mvnw
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>├─ mvnw.cmd
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>└─ pom.xml
+</span></code></pre></div>
 <p>Spring Initializr Maven Project는 일반적으로 Maven Wrapper를 함께 생성한다.</p>
 <hr />
-<h2 id="6-wrapper-properties">6. Wrapper Properties 확인</h2>
+<h2 id="6-wrapper-properties">6. Wrapper Properties 확인<a class="headerlink" href="#6-wrapper-properties" title="Permanent link">&para;</a></h2>
 <p>파일:</p>
-<div class="highlight"><pre><span></span><code>.mvn/wrapper/maven-wrapper.properties
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>.mvn/wrapper/maven-wrapper.properties
+</span></code></pre></div>
 <p>확인할 핵심 항목:</p>
-<div class="highlight"><pre><span></span><code>distributionUrl
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>distributionUrl
+</span></code></pre></div>
 <p>예시 형태:</p>
-<div class="highlight"><pre><span></span><code><span class="na">distributionUrl</span><span class="o">=</span><span class="s">https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/&lt;VERSION&gt;/apache-maven-&lt;VERSION&gt;-bin.zip</span>
-</code></pre></div>
+<div class="language-properties highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="na">distributionUrl</span><span class="o">=</span><span class="s">https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/&lt;VERSION&gt;/apache-maven-&lt;VERSION&gt;-bin.zip</span>
+</span></code></pre></div>
 <p>실제 <code>&lt;VERSION&gt;</code> 값을 확인한다.</p>
 <hr />
-<h2 id="7-wrapper-version">7. Wrapper Version 확인 원칙</h2>
+<h2 id="7-wrapper-version">7. Wrapper Version 확인 원칙<a class="headerlink" href="#7-wrapper-version" title="Permanent link">&para;</a></h2>
 <p>현재 <code>distributionUrl</code>이:</p>
-<div class="highlight"><pre><span></span><code>3.9.16
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>3.9.16
+</span></code></pre></div>
 <p>을 사용한다면 그대로 유지한다.</p>
 <p>다른 Version이라면 프로젝트 표준에 맞춰 3.9.16으로 변경할 수 있다.</p>
 <p>단순 문자열을 수동 수정하는 방법도 있지만,
 Wrapper Script 및 관련 설정을 함께 갱신하기 위해
 Apache Maven Wrapper Plugin을 이용하는 방법을 권장한다.</p>
 <hr />
-<h2 id="8-wrapper">8. Wrapper를 다시 생성해야 하는 경우</h2>
+<h2 id="8-wrapper">8. Wrapper를 다시 생성해야 하는 경우<a class="headerlink" href="#8-wrapper" title="Permanent link">&para;</a></h2>
 <p>다음 경우에 Wrapper 설정을 다시 적용한다.</p>
 <ul>
 <li>Wrapper File이 없음</li>
@@ -2047,94 +2057,94 @@ Apache Maven Wrapper Plugin을 이용하는 방법을 권장한다.</p>
 <li>Spring Initializr 생성 Version과 Project 표준이 다름</li>
 </ul>
 <p>Apache Maven 공식 방식:</p>
-<div class="highlight"><pre><span></span><code>mvn<span class="w"> </span>wrapper:wrapper
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>mvn<span class="w"> </span>wrapper:wrapper
+</span></code></pre></div>
 <p>특정 Maven Version:</p>
-<div class="highlight"><pre><span></span><code>mvn<span class="w"> </span>wrapper:wrapper<span class="w"> </span>-Dmaven<span class="o">=</span><span class="m">3</span>.9.16
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>mvn<span class="w"> </span>wrapper:wrapper<span class="w"> </span>-Dmaven<span class="o">=</span><span class="m">3</span>.9.16
+</span></code></pre></div>
 <p>현재 Maven Wrapper의 기본 설치 Type은 Script 중심 구성을 사용할 수 있다.</p>
 <hr />
-<h2 id="9-jdk">9. JDK를 임시 연결하는 이유</h2>
+<h2 id="9-jdk">9. JDK를 임시 연결하는 이유<a class="headerlink" href="#9-jdk" title="Permanent link">&para;</a></h2>
 <p>MicroServer에서는 시스템 <code>JAVA_HOME</code>을 고정하지 않는다.</p>
 <p>따라서 개발 PC Maven인:</p>
-<div class="highlight"><pre><span></span><code>mvn
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>mvn
+</span></code></pre></div>
 <p>을 이용해 Wrapper를 갱신할 때는
 현재 Terminal Session에 JDK 26을 임시 연결한다.</p>
 <hr />
-<h2 id="10-windows-wrapper">10. Windows Wrapper 갱신</h2>
+<h2 id="10-windows-wrapper">10. Windows Wrapper 갱신<a class="headerlink" href="#10-windows-wrapper" title="Permanent link">&para;</a></h2>
 <p>PowerShell:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">$env:JAVA_HOME</span><span class="p">=</span><span class="s2">"C:\dev\jdks\temurin-26"</span>
-<span class="nv">$env:Path</span><span class="p">=</span><span class="s2">"$env:JAVA_HOME\bin;$env:Path"</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nv">$env:JAVA_HOME</span><span class="p">=</span><span class="s2">"C:\dev\jdks\temurin-26"</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nv">$env:Path</span><span class="p">=</span><span class="s2">"$env:JAVA_HOME\bin;$env:Path"</span>
+</span></code></pre></div>
 <p>Java 확인:</p>
-<div class="highlight"><pre><span></span><code><span class="n">java</span> <span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">java</span> <span class="n">-version</span>
+</span></code></pre></div>
 <p>Maven:</p>
-<div class="highlight"><pre><span></span><code><span class="n">mvn</span> <span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">mvn</span> <span class="n">-version</span>
+</span></code></pre></div>
 <p>Wrapper 갱신:</p>
-<div class="highlight"><pre><span></span><code><span class="n">mvn</span> <span class="n">wrapper</span><span class="p">:</span><span class="n">wrapper</span> <span class="n">-Dmaven</span><span class="p">=</span><span class="n">3</span><span class="p">.</span><span class="n">9</span><span class="p">.</span><span class="n">16</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">mvn</span> <span class="n">wrapper</span><span class="p">:</span><span class="n">wrapper</span> <span class="n">-Dmaven</span><span class="p">=</span><span class="n">3</span><span class="p">.</span><span class="n">9</span><span class="p">.</span><span class="n">16</span>
+</span></code></pre></div>
 <p>완료 후 변경 파일을 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">git</span> <span class="n">status</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">git</span> <span class="n">status</span>
+</span></code></pre></div>
 <hr />
-<h2 id="11-macos-wrapper">11. macOS Wrapper 갱신</h2>
+<h2 id="11-macos-wrapper">11. macOS Wrapper 갱신<a class="headerlink" href="#11-macos-wrapper" title="Permanent link">&para;</a></h2>
 <p>Terminal:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/dev/jdks/temurin-26.jdk/Contents/Home"</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/dev/jdks/temurin-26.jdk/Contents/Home"</span>
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</span></code></pre></div>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>java<span class="w"> </span>-version
-mvn<span class="w"> </span>-version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>java<span class="w"> </span>-version
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>mvn<span class="w"> </span>-version
+</span></code></pre></div>
 <p>Wrapper 갱신:</p>
-<div class="highlight"><pre><span></span><code>mvn<span class="w"> </span>wrapper:wrapper<span class="w"> </span>-Dmaven<span class="o">=</span><span class="m">3</span>.9.16
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>mvn<span class="w"> </span>wrapper:wrapper<span class="w"> </span>-Dmaven<span class="o">=</span><span class="m">3</span>.9.16
+</span></code></pre></div>
 <hr />
-<h2 id="12-macos-mvnw">12. macOS <code>mvnw</code> 실행 권한</h2>
+<h2 id="12-macos-mvnw">12. macOS <code>mvnw</code> 실행 권한<a class="headerlink" href="#12-macos-mvnw" title="Permanent link">&para;</a></h2>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>ls<span class="w"> </span>-l<span class="w"> </span>mvnw
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>ls<span class="w"> </span>-l<span class="w"> </span>mvnw
+</span></code></pre></div>
 <p>실행 권한이 없다면:</p>
-<div class="highlight"><pre><span></span><code>chmod<span class="w"> </span>+x<span class="w"> </span>mvnw
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>mvnw
+</span></code></pre></div>
 <p>Git에서도 실행 권한을 유지해야 한다면:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>update-index<span class="w"> </span>--chmod<span class="o">=</span>+x<span class="w"> </span>mvnw
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>git<span class="w"> </span>update-index<span class="w"> </span>--chmod<span class="o">=</span>+x<span class="w"> </span>mvnw
+</span></code></pre></div>
 <p>다시 확인:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>diff<span class="w"> </span>--summary
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>git<span class="w"> </span>diff<span class="w"> </span>--summary
+</span></code></pre></div>
 <hr />
-<h2 id="13-wrapper-windows">13. Wrapper 실행 확인 - Windows</h2>
+<h2 id="13-wrapper-windows">13. Wrapper 실행 확인 - Windows<a class="headerlink" href="#13-wrapper-windows" title="Permanent link">&para;</a></h2>
 <p>현재 Terminal에서 JDK를 임시 연결한다.</p>
-<div class="highlight"><pre><span></span><code><span class="nv">$env:JAVA_HOME</span><span class="p">=</span><span class="s2">"C:\dev\jdks\temurin-26"</span>
-<span class="nv">$env:Path</span><span class="p">=</span><span class="s2">"$env:JAVA_HOME\bin;$env:Path"</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nv">$env:JAVA_HOME</span><span class="p">=</span><span class="s2">"C:\dev\jdks\temurin-26"</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="nv">$env:Path</span><span class="p">=</span><span class="s2">"$env:JAVA_HOME\bin;$env:Path"</span>
+</span></code></pre></div>
 <p>Wrapper:</p>
-<div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="n">mvnw</span><span class="p">.</span><span class="n">cmd</span> <span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="p">.\</span><span class="n">mvnw</span><span class="p">.</span><span class="n">cmd</span> <span class="n">-version</span>
+</span></code></pre></div>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>Apache Maven 3.9.16
-Java version: 26...
-Java home: C:\dev\jdks\temurin-26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Apache Maven 3.9.16
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>Java version: 26...
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>Java home: C:\dev\jdks\temurin-26
+</span></code></pre></div>
 <hr />
-<h2 id="14-wrapper-macos">14. Wrapper 실행 확인 - macOS</h2>
-<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/dev/jdks/temurin-26.jdk/Contents/Home"</span>
-<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
-</code></pre></div>
+<h2 id="14-wrapper-macos">14. Wrapper 실행 확인 - macOS<a class="headerlink" href="#14-wrapper-macos" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/dev/jdks/temurin-26.jdk/Contents/Home"</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+</span></code></pre></div>
 <p>Wrapper:</p>
-<div class="highlight"><pre><span></span><code>./mvnw<span class="w"> </span>-version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>./mvnw<span class="w"> </span>-version
+</span></code></pre></div>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>Apache Maven 3.9.16
-Java version: 26...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Apache Maven 3.9.16
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>Java version: 26...
+</span></code></pre></div>
 <p>Java Home도 Temurin 26인지 확인한다.</p>
 <hr />
-<h2 id="15-wrapper-maven-download">15. Wrapper가 Maven을 Download하는 구조</h2>
+<h2 id="15-wrapper-maven-download">15. Wrapper가 Maven을 Download하는 구조<a class="headerlink" href="#15-wrapper-maven-download" title="Permanent link">&para;</a></h2>
 <p>Wrapper 실행 흐름:</p>
 <pre class="mermaid"><code>sequenceDiagram
     participant Dev as Developer
@@ -2153,214 +2163,214 @@ Java version: 26...
     Maven--&gt;&gt;Dev: Build 명령 수행</code></pre>
 <p>처음 실행 시 Download 시간이 필요할 수 있다.</p>
 <hr />
-<h2 id="16-mvn-wrapper">16. 이후 <code>mvn</code>보다 Wrapper를 우선 사용</h2>
+<h2 id="16-mvn-wrapper">16. 이후 <code>mvn</code>보다 Wrapper를 우선 사용<a class="headerlink" href="#16-mvn-wrapper" title="Permanent link">&para;</a></h2>
 <p>이제 MicroServer Project Build는 Wrapper를 기본으로 한다.</p>
 <p>Windows:</p>
-<div class="highlight"><pre><span></span><code><span class="p">.\</span><span class="n">mvnw</span><span class="p">.</span><span class="n">cmd</span> <span class="p">&lt;</span><span class="n">goal</span><span class="p">&gt;</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="p">.\</span><span class="n">mvnw</span><span class="p">.</span><span class="n">cmd</span> <span class="p">&lt;</span><span class="n">goal</span><span class="p">&gt;</span>
+</span></code></pre></div>
 <p>macOS:</p>
-<div class="highlight"><pre><span></span><code>./mvnw<span class="w"> </span>&lt;goal&gt;
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>./mvnw<span class="w"> </span>&lt;goal&gt;
+</span></code></pre></div>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>clean
-test
-package
-verify
-spring-boot:run
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>clean
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>test
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>package
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>verify
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>spring-boot:run
+</span></code></pre></div>
 <p>개발 PC에 설치된 <code>mvn</code> 명령은
 Wrapper 관리나 특수한 초기 작업이 아니면 일상 Project Build 기준으로 사용하지 않는다.</p>
 <hr />
-<h2 id="17-pomxml-project">17. <code>pom.xml</code> Project 기준 확인</h2>
+<h2 id="17-pomxml-project">17. <code>pom.xml</code> Project 기준 확인<a class="headerlink" href="#17-pomxml-project" title="Permanent link">&para;</a></h2>
 <p>현재 <code>pom.xml</code>에서 다음 항목을 확인한다.</p>
-<div class="highlight"><pre><span></span><code>Spring Boot Parent
-Group ID
-Artifact ID
-Project Version
-Java Version
-Dependencies
-Build Plugin
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>Spring Boot Parent
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>Group ID
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>Artifact ID
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>Project Version
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>Java Version
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>Dependencies
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>Build Plugin
+</span></code></pre></div>
 <p>기준:</p>
-<div class="highlight"><pre><span></span><code>Spring Boot : 4.1.0
-Java        : 26
-Packaging   : jar
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>Spring Boot : 4.1.0
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>Java        : 26
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>Packaging   : jar
+</span></code></pre></div>
 <hr />
-<h2 id="18-spring-boot-parent">18. Spring Boot Parent 확인</h2>
+<h2 id="18-spring-boot-parent">18. Spring Boot Parent 확인<a class="headerlink" href="#18-spring-boot-parent" title="Permanent link">&para;</a></h2>
 <p>Spring Initializr가 생성한 Maven Project는
 Spring Boot Parent를 사용할 수 있다.</p>
 <p>형태:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;parent&gt;</span>
-<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;version&gt;</span>4.1.0<span class="nt">&lt;/version&gt;</span>
-<span class="w">    </span><span class="nt">&lt;relativePath/&gt;</span>
-<span class="nt">&lt;/parent&gt;</span>
-</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nt">&lt;parent&gt;</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>4.1.0<span class="nt">&lt;/version&gt;</span>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a><span class="w">    </span><span class="nt">&lt;relativePath/&gt;</span>
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a><span class="nt">&lt;/parent&gt;</span>
+</span></code></pre></div>
 <p>Spring Boot Parent는 Spring Boot가 관리하는 Dependency와 Plugin 기본값을 제공한다.</p>
 <p>현재는 Parent 구조를 변경하지 않는다.</p>
 <p>Multi Module 구성 단계에서 Root Parent 구조를 다시 설계한다.</p>
 <hr />
-<h2 id="19-java-version">19. Java Version</h2>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;properties&gt;</span>
-<span class="w">    </span><span class="nt">&lt;java.version&gt;</span>26<span class="nt">&lt;/java.version&gt;</span>
-<span class="nt">&lt;/properties&gt;</span>
-</code></pre></div>
+<h2 id="19-java-version">19. Java Version<a class="headerlink" href="#19-java-version" title="Permanent link">&para;</a></h2>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nt">&lt;properties&gt;</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">    </span><span class="nt">&lt;java.version&gt;</span>26<span class="nt">&lt;/java.version&gt;</span>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="nt">&lt;/properties&gt;</span>
+</span></code></pre></div>
 <p>이 값이 Project Build의 Java Version 기준이다.</p>
 <p>VS Code User Settings의 JDK Path와 역할이 다르다.</p>
 <hr />
-<h2 id="20-spring-web-dependency">20. Spring Web Dependency 확인</h2>
+<h2 id="20-spring-web-dependency">20. Spring Web Dependency 확인<a class="headerlink" href="#20-spring-web-dependency" title="Permanent link">&para;</a></h2>
 <p>Spring Boot 4에서 Spring MVC Web Starter는 다음 Artifact를 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
-<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-webmvc<span class="nt">&lt;/artifactId&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="nt">&lt;dependency&gt;</span>
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></div>
 <p>Spring Initializr 결과를 기준으로 확인한다.</p>
 <p>프로젝트를 Boot 3 문서 예제와 비교하여
 무조건 <code>spring-boot-starter-web</code>으로 되돌리지 않는다.</p>
 <hr />
-<h2 id="21-test-dependency">21. Test Dependency 확인</h2>
+<h2 id="21-test-dependency">21. Test Dependency 확인<a class="headerlink" href="#21-test-dependency" title="Permanent link">&para;</a></h2>
 <p>Spring Boot 4의 Web MVC Test Starter 예:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;dependency&gt;</span>
-<span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-webmvc-test<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">    </span><span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
-<span class="nt">&lt;/dependency&gt;</span>
-</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="nt">&lt;dependency&gt;</span>
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-webmvc-test<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a><span class="w">    </span><span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></div>
 <p>Spring Boot 4는 기능별 Test Starter도 세분화했다.</p>
 <p>Initializr가 생성한 현재 Version의 Dependency를 우선한다.</p>
 <hr />
-<h2 id="22-spring-boot-maven-plugin">22. Spring Boot Maven Plugin</h2>
+<h2 id="22-spring-boot-maven-plugin">22. Spring Boot Maven Plugin<a class="headerlink" href="#22-spring-boot-maven-plugin" title="Permanent link">&para;</a></h2>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;build&gt;</span>
-<span class="w">    </span><span class="nt">&lt;plugins&gt;</span>
-<span class="w">        </span><span class="nt">&lt;plugin&gt;</span>
-<span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
-<span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
-<span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
-<span class="w">    </span><span class="nt">&lt;/plugins&gt;</span>
-<span class="nt">&lt;/build&gt;</span>
-</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="nt">&lt;build&gt;</span>
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a><span class="w">    </span><span class="nt">&lt;plugins&gt;</span>
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a><span class="w">        </span><span class="nt">&lt;plugin&gt;</span>
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a><span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a><span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a><span class="w">    </span><span class="nt">&lt;/plugins&gt;</span>
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a><span class="nt">&lt;/build&gt;</span>
+</span></code></pre></div>
 <p>이 Plugin은 Spring Boot Application Packaging 및 실행 관련 기능을 제공한다.</p>
 <p>현재는 Plugin 상세 Configuration을 추가하지 않는다.</p>
 <hr />
-<h2 id="23-m2settingsxml-project-pom">23. <code>.m2/settings.xml</code>과 Project POM 구분</h2>
+<h2 id="23-m2settingsxml-project-pom">23. <code>.m2/settings.xml</code>과 Project POM 구분<a class="headerlink" href="#23-m2settingsxml-project-pom" title="Permanent link">&para;</a></h2>
 <p>개인 Maven 환경:</p>
-<div class="highlight"><pre><span></span><code>~/.m2/settings.xml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>~/.m2/settings.xml
+</span></code></pre></div>
 <p>Windows:</p>
-<div class="highlight"><pre><span></span><code>C:\Users\&lt;USER&gt;\.m2\settings.xml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>C:\Users\&lt;USER&gt;\.m2\settings.xml
+</span></code></pre></div>
 <p>용도:</p>
-<div class="highlight"><pre><span></span><code>Nexus / Artifactory Mirror
-Proxy
-Repository 인증
-개인 Maven 설정
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>Nexus / Artifactory Mirror
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>Proxy
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>Repository 인증
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>개인 Maven 설정
+</span></code></pre></div>
 <p>Project:</p>
-<div class="highlight"><pre><span></span><code>pom.xml
-.mvn/
-mvnw
-mvnw.cmd
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>pom.xml
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>.mvn/
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>mvnw
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>mvnw.cmd
+</span></code></pre></div>
 <p>용도:</p>
-<div class="highlight"><pre><span></span><code>Dependency
-Plugin
-Java Version
-Project Build
-Maven Wrapper
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>Dependency
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>Plugin
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>Java Version
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>Project Build
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>Maven Wrapper
+</span></code></pre></div>
 <p>개인 Credential이 포함될 수 있는 <code>settings.xml</code>을 Git Repository에 Commit하지 않는다.</p>
 <hr />
-<h2 id="24-wrapper-checksum">24. Wrapper Checksum</h2>
+<h2 id="24-wrapper-checksum">24. Wrapper Checksum<a class="headerlink" href="#24-wrapper-checksum" title="Permanent link">&para;</a></h2>
 <p>Apache Maven Wrapper는 Download Artifact에 대해
 SHA-256 Checksum 검증 설정을 지원한다.</p>
 <p>관련 Property:</p>
-<div class="highlight"><pre><span></span><code>wrapperSha256Sum
-distributionSha256Sum
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>wrapperSha256Sum
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a>distributionSha256Sum
+</span></code></pre></div>
 <p>기업 Build 보안 정책에서 Supply Chain 검증이 필요한 경우
 Wrapper Distribution Checksum 고정을 검토할 수 있다.</p>
 <p>현재 초기 Project에서는 공식 Repository와 Wrapper 기본값을 사용하고,
 CI/CD 표준화 단계에서 Checksum 정책을 함께 확정할 수 있다.</p>
 <hr />
-<h2 id="25-build-goal">25. 현재는 Build Goal을 본격 실행하지 않는다</h2>
+<h2 id="25-build-goal">25. 현재는 Build Goal을 본격 실행하지 않는다<a class="headerlink" href="#25-build-goal" title="Permanent link">&para;</a></h2>
 <p>현재 Wrapper 동작 확인은:</p>
-<div class="highlight"><pre><span></span><code>-version
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>-version
+</span></code></pre></div>
 <p>까지만 수행한다.</p>
 <p>다음 단계에서:</p>
-<div class="highlight"><pre><span></span><code>clean test
-package
-spring-boot:run
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>clean test
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>package
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>spring-boot:run
+</span></code></pre></div>
 <p>을 순차적으로 검증한다.</p>
 <p>→ <a href="../../project_verification/project_initial_run_verification/">Spring Boot 초기 실행 및 Build 검증</a></p>
 <hr />
-<h2 id="26-git">26. Git 변경사항 확인</h2>
+<h2 id="26-git">26. Git 변경사항 확인<a class="headerlink" href="#26-git" title="Permanent link">&para;</a></h2>
 <p>Wrapper Version을 변경했다면:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-git<span class="w"> </span>diff
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>git<span class="w"> </span>status
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>git<span class="w"> </span>diff
+</span></code></pre></div>
 <p>확인 대상:</p>
-<div class="highlight"><pre><span></span><code>.mvn/wrapper/maven-wrapper.properties
-mvnw
-mvnw.cmd
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>.mvn/wrapper/maven-wrapper.properties
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>mvnw
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>mvnw.cmd
+</span></code></pre></div>
 <p>필요한 경우 Wrapper 관련 파일을 모두 Commit한다.</p>
 <hr />
-<h2 id="27-git-commit">27. Git Commit</h2>
+<h2 id="27-git-commit">27. Git Commit<a class="headerlink" href="#27-git-commit" title="Permanent link">&para;</a></h2>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.mvn<span class="w"> </span>mvnw<span class="w"> </span>mvnw.cmd<span class="w"> </span>pom.xml
-git<span class="w"> </span>status
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>git<span class="w"> </span>add<span class="w"> </span>.mvn<span class="w"> </span>mvnw<span class="w"> </span>mvnw.cmd<span class="w"> </span>pom.xml
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>git<span class="w"> </span>status
+</span></code></pre></div>
 <p>Commit:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"build: configure project Maven wrapper"</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"build: configure project Maven wrapper"</span>
+</span></code></pre></div>
 <p>Push:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>push
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>git<span class="w"> </span>push
+</span></code></pre></div>
 <p><code>pom.xml</code>에 실제 변경이 없다면 변경된 파일만 Add한다.</p>
 <hr />
-<h2 id="28">28. 완료 상태</h2>
-<div class="highlight"><pre><span></span><code>Developer Maven   → 3.9.16 준비
-Project Wrapper   → Maven 3.9.16 기준
-Project Java      → 26
-Spring Boot       → 4.1.0
-</code></pre></div>
+<h2 id="28">28. 완료 상태<a class="headerlink" href="#28" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>Developer Maven   → 3.9.16 준비
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>Project Wrapper   → Maven 3.9.16 기준
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>Project Java      → 26
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>Spring Boot       → 4.1.0
+</span></code></pre></div>
 <hr />
-<h2 id="29">29. 체크리스트</h2>
-<ul>
-<li>[ ] <code>.mvn/wrapper/maven-wrapper.properties</code>를 확인했다.</li>
-<li>[ ] <code>mvnw</code>, <code>mvnw.cmd</code>가 존재한다.</li>
-<li>[ ] Wrapper Maven Version을 확인했다.</li>
-<li>[ ] 필요한 경우 Maven 3.9.16으로 Wrapper를 갱신했다.</li>
-<li>[ ] Windows에서 <code>.\mvnw.cmd -version</code>을 확인했다.</li>
-<li>[ ] macOS에서 <code>./mvnw -version</code>을 확인했다.</li>
-<li>[ ] Wrapper가 Java 26을 사용한다.</li>
-<li>[ ] <code>pom.xml</code>의 Spring Boot Version을 확인했다.</li>
-<li>[ ] <code>pom.xml</code>의 Java Version을 확인했다.</li>
-<li>[ ] Spring Boot 4 Starter 구성을 확인했다.</li>
-<li>[ ] 개인 <code>.m2/settings.xml</code>을 Git에 Commit하지 않는다.</li>
-<li>[ ] 앞으로 Project Build는 Maven Wrapper를 우선 사용한다.</li>
-<li>[ ] Git 변경사항을 Commit / Push했다.</li>
+<h2 id="29">29. 체크리스트<a class="headerlink" href="#29" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.mvn/wrapper/maven-wrapper.properties</code>를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mvnw</code>, <code>mvnw.cmd</code>가 존재한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Wrapper Maven Version을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 필요한 경우 Maven 3.9.16으로 Wrapper를 갱신했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Windows에서 <code>.\mvnw.cmd -version</code>을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> macOS에서 <code>./mvnw -version</code>을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Wrapper가 Java 26을 사용한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>pom.xml</code>의 Spring Boot Version을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>pom.xml</code>의 Java Version을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Boot 4 Starter 구성을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 개인 <code>.m2/settings.xml</code>을 Git에 Commit하지 않는다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 앞으로 Project Build는 Maven Wrapper를 우선 사용한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Git 변경사항을 Commit / Push했다.</li>
 </ul>
 <hr />
-<h2 id="30">30. 다음 단계</h2>
+<h2 id="30">30. 다음 단계<a class="headerlink" href="#30" title="Permanent link">&para;</a></h2>
 <p>이제 Project Tool 설정이 완료되었다.</p>
 <p>다음 단계에서는 실제로 Compile, Test, Package, Spring Boot Run을 수행하여
 현재 단일 Module Project가 정상 상태인지 검증한다.</p>
 <p>→ <a href="../../project_verification/project_initial_run_verification/">Spring Boot 초기 실행 및 Build 검증</a></p>
-<div class="highlight"><pre><span></span><code>JDK / VS Code 설정
-        ↓
-Maven Wrapper 설정              ← 현재 완료
-        ↓
-Build / Test / Run 검증
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>JDK / VS Code 설정
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>        ↓
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>Maven Wrapper 설정              ← 현재 완료
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>        ↓
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>Build / Test / Run 검증
+</span></code></pre></div>
 <hr />
-<h2 id="31">31. 공식 참고 자료</h2>
+<h2 id="31">31. 공식 참고 자료<a class="headerlink" href="#31" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>Apache Maven Wrapper<br />
@@ -2400,6 +2410,8 @@ Build / Test / Run 검증
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2438,7 +2450,7 @@ Build / Test / Run 검증
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

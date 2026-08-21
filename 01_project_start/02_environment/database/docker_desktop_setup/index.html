@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>Docker Desktop 설치 및 기본 환경 구성 - Microserver</title>
+        <title>Docker Desktop 설치 및 기본 환경 구성 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1375,8 +1385,8 @@
 
 
 
-<h1 id="docker-desktop">Docker Desktop 설치 및 기본 환경 구성 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="docker-desktop">Docker Desktop 설치 및 기본 환경 구성 가이드<a class="headerlink" href="#docker-desktop" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 MicroServer 프로젝트의 로컬 개발 인프라를 Container 기반으로 실행하기 위해
 Windows 및 macOS 개발 PC에 <strong>Docker Desktop</strong>을 설치하고,
 Docker Engine / Docker CLI / Docker Compose를 사용할 수 있는 기본 환경을 구성하는 방법을 설명한다.</p>
@@ -1396,14 +1406,14 @@ Docker Engine / Docker CLI / Docker Compose를 사용할 수 있는 기본 환�
 <li>Docker Desktop 기본 문제 해결</li>
 </ul>
 <p>Oracle Database Free Image Pull과 실제 Database Container 구성은 다음 문서에서 진행한다.</p>
-<div class="highlight"><pre><span></span><code>Docker Desktop 설치 및 기본 환경 구성
-        ↓
-Oracle Database Free 로컬 개발환경 구성
-        ↓
-Apple Silicon 환경은 필요 시 ARM64 지원 검증
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Docker Desktop 설치 및 기본 환경 구성
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Oracle Database Free 로컬 개발환경 구성
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Apple Silicon 환경은 필요 시 ARM64 지원 검증
+</span></code></pre></div>
 <hr />
-<h2 id="2-docker-desktop">2. 개발환경 구성에서 Docker Desktop의 위치</h2>
+<h2 id="2-docker-desktop">2. 개발환경 구성에서 Docker Desktop의 위치<a class="headerlink" href="#2-docker-desktop" title="Permanent link">&para;</a></h2>
 <p>MicroServer 개발환경은 다음 순서로 준비한다.</p>
 <pre class="mermaid"><code>flowchart LR
     A[Git / GitHub] --&gt; B[Eclipse Temurin JDK]
@@ -1413,22 +1423,22 @@ Apple Silicon 환경은 필요 시 ARM64 지원 검증
     E --&gt; F[Oracle Database Free]
     F --&gt; G[Spring Boot 프로젝트 생성]</code></pre>
 <p>현재 문서는 다음 단계에 해당한다.</p>
-<div class="highlight"><pre><span></span><code>Git / GitHub
-    ↓
-Eclipse Temurin JDK
-    ↓
-Apache Maven
-    ↓
-VS Code
-    ↓
-[ Docker Desktop ]              ← 현재
-    ↓
-Oracle Database Free
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Git / GitHub
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    ↓
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Eclipse Temurin JDK
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    ↓
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Apache Maven
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    ↓
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>VS Code
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    ↓
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>[ Docker Desktop ]              ← 현재
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    ↓
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>Oracle Database Free
+</span></code></pre></div>
 <p>Docker Desktop을 먼저 독립적으로 준비하면
 이후 Oracle뿐 아니라 Redis, Kafka, 기타 개발용 Container를 추가할 때 동일 환경을 재사용할 수 있다.</p>
 <hr />
-<h2 id="3-docker-desktop">3. Docker Desktop의 역할</h2>
+<h2 id="3-docker-desktop">3. Docker Desktop의 역할<a class="headerlink" href="#3-docker-desktop" title="Permanent link">&para;</a></h2>
 <p>Docker Desktop은 Windows와 macOS에서 Container 개발환경을 쉽게 사용할 수 있도록
 Docker 관련 도구를 하나의 Desktop Application으로 제공한다.</p>
 <p>개념적으로 다음과 같이 이해할 수 있다.</p>
@@ -1478,36 +1488,36 @@ Docker 관련 도구를 하나의 Desktop Application으로 제공한다.</p>
 </table>
 <p>MicroServer에서는 <strong>Linux Container 기반 개발환경</strong>을 기준으로 한다.</p>
 <hr />
-<h2 id="4-container">4. Container를 사용하는 이유</h2>
+<h2 id="4-container">4. Container를 사용하는 이유<a class="headerlink" href="#4-container" title="Permanent link">&para;</a></h2>
 <p>개발 PC에 Oracle Database 같은 Server Software를 직접 설치하면
 OS별 설치 과정, 버전, 설정 파일, Service 상태가 개발자마다 달라질 수 있다.</p>
 <p>Container 기반으로 구성하면 다음과 같은 장점이 있다.</p>
-<div class="highlight"><pre><span></span><code>동일 Image
-    ↓
-동일한 Server Software 구성
-    ↓
-개발자별 독립 실행
-    ↓
-삭제 / 재생성 용이
-    ↓
-로컬 개발환경 재현성 향상
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>동일 Image
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    ↓
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>동일한 Server Software 구성
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    ↓
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>개발자별 독립 실행
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    ↓
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>삭제 / 재생성 용이
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    ↓
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>로컬 개발환경 재현성 향상
+</span></code></pre></div>
 <p>특히 Database나 Middleware처럼 설치와 초기화 과정이 복잡한 제품을
 개발 PC에서 격리하여 운영할 때 유용하다.</p>
 <hr />
-<h1 id="windows">Windows 환경</h1>
-<h2 id="5-windows">5. Windows 사전 확인</h2>
+<h1 id="windows">Windows 환경<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h1>
+<h2 id="5-windows">5. Windows 사전 확인<a class="headerlink" href="#5-windows" title="Permanent link">&para;</a></h2>
 <p>Windows에서 Docker Desktop을 사용할 때는 일반적으로 WSL 2 기반 Backend를 사용한다.</p>
 <p>PowerShell에서 Windows Subsystem for Linux 상태를 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-status</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">wsl</span> <span class="p">-</span><span class="n">-status</span>
+</span></code></pre></div>
 <p>설치된 Distribution 확인:</p>
-<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-list</span> <span class="p">-</span><span class="n">-verbose</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">wsl</span> <span class="p">-</span><span class="n">-list</span> <span class="p">-</span><span class="n">-verbose</span>
+</span></code></pre></div>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>NAME      STATE      VERSION
-Ubuntu    Stopped    2
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>NAME      STATE      VERSION
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>Ubuntu    Stopped    2
+</span></code></pre></div>
 <p>Docker Desktop 설치 과정에서 WSL 2 활성화가 필요하면
 Docker Desktop Installer 또는 Windows가 안내하는 절차를 따른다.</p>
 <div class="admonition note">
@@ -1517,96 +1527,96 @@ MicroServer는 Oracle Linux Container를 실행하므로 Windows Container Mode�
 Linux Container 기반 환경을 사용한다.</p>
 </div>
 <hr />
-<h2 id="6-windows-docker-desktop">6. Windows Docker Desktop 다운로드</h2>
+<h2 id="6-windows-docker-desktop">6. Windows Docker Desktop 다운로드<a class="headerlink" href="#6-windows-docker-desktop" title="Permanent link">&para;</a></h2>
 <p>Docker 공식 사이트에서 <strong>Docker Desktop for Windows</strong>를 다운로드한다.</p>
 <p>설치 시점의 최신 지원 Windows Version과 Hardware Requirement는
 Docker 공식 문서를 기준으로 확인한다.</p>
 <p>회사 개발 PC에서 설치 권한이 제한되어 있다면
 사내 Software 배포 정책 또는 관리자 권한 정책을 먼저 확인한다.</p>
 <hr />
-<h2 id="7-windows-docker-desktop">7. Windows Docker Desktop 설치</h2>
+<h2 id="7-windows-docker-desktop">7. Windows Docker Desktop 설치<a class="headerlink" href="#7-windows-docker-desktop" title="Permanent link">&para;</a></h2>
 <p>다운로드한 Installer를 실행한다.</p>
 <p>일반적인 개발환경에서는 WSL 2 Backend를 사용한다.</p>
 <p>설치 완료 후 Windows Start Menu에서 다음 Application을 실행한다.</p>
-<div class="highlight"><pre><span></span><code>Docker Desktop
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Docker Desktop
+</span></code></pre></div>
 <p>처음 실행하면 Docker Desktop 초기 설정과 약관 화면이 나타날 수 있다.</p>
 <p>Docker Engine이 완전히 시작될 때까지 기다린다.</p>
 <hr />
-<h2 id="8-windows-wsl-2-engine">8. Windows WSL 2 Engine 확인</h2>
+<h2 id="8-windows-wsl-2-engine">8. Windows WSL 2 Engine 확인<a class="headerlink" href="#8-windows-wsl-2-engine" title="Permanent link">&para;</a></h2>
 <p>Docker Desktop:</p>
-<div class="highlight"><pre><span></span><code>Settings
-→ General
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Settings
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>→ General
+</span></code></pre></div>
 <p>WSL 2 기반 Engine을 사용하는 환경이라면
 관련 설정이 활성화되어 있는지 확인한다.</p>
 <p>필요한 경우:</p>
-<div class="highlight"><pre><span></span><code>Settings
-→ Resources
-→ WSL Integration
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Settings
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>→ Resources
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>→ WSL Integration
+</span></code></pre></div>
 <p>에서 사용할 WSL Distribution과의 통합 상태를 확인할 수 있다.</p>
 <p>MicroServer에서 단순히 Windows PowerShell을 이용해 Docker CLI를 사용할 경우
 특정 Linux Distribution 내부 개발이 반드시 필요한 것은 아니다.</p>
 <hr />
-<h2 id="9-windows-docker-cli">9. Windows Docker CLI 확인</h2>
+<h2 id="9-windows-docker-cli">9. Windows Docker CLI 확인<a class="headerlink" href="#9-windows-docker-cli" title="Permanent link">&para;</a></h2>
 <p>새 PowerShell을 실행한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">docker</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">docker</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
 <p>정상 예:</p>
-<div class="highlight"><pre><span></span><code>Docker version ...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Docker version ...
+</span></code></pre></div>
 <p>Docker Client만 설치된 것이 아니라 Engine과도 연결되는지 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">docker</span> <span class="n">info</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">docker</span> <span class="n">info</span>
+</span></code></pre></div>
 <p><code>docker info</code>에서 Client와 Server 정보를 정상적으로 확인할 수 있어야 한다.</p>
 <hr />
-<h1 id="macos">macOS 환경</h1>
-<h2 id="10-mac-cpu-architecture">10. Mac CPU Architecture 확인</h2>
+<h1 id="macos">macOS 환경<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h1>
+<h2 id="10-mac-cpu-architecture">10. Mac CPU Architecture 확인<a class="headerlink" href="#10-mac-cpu-architecture" title="Permanent link">&para;</a></h2>
 <p>Terminal:</p>
-<div class="highlight"><pre><span></span><code>uname<span class="w"> </span>-m
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>uname<span class="w"> </span>-m
+</span></code></pre></div>
 <p>Apple Silicon:</p>
-<div class="highlight"><pre><span></span><code>arm64
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>arm64
+</span></code></pre></div>
 <p>Intel Mac:</p>
-<div class="highlight"><pre><span></span><code>x86_64
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>x86_64
+</span></code></pre></div>
 <p>Docker Desktop은 Mac Architecture에 맞는 설치 Package를 사용한다.</p>
 <hr />
-<h2 id="11-macos-docker-desktop">11. macOS Docker Desktop 다운로드</h2>
+<h2 id="11-macos-docker-desktop">11. macOS Docker Desktop 다운로드<a class="headerlink" href="#11-macos-docker-desktop" title="Permanent link">&para;</a></h2>
 <p>Docker 공식 사이트에서 Mac용 Docker Desktop을 다운로드한다.</p>
 <p>Apple Silicon Mac:</p>
-<div class="highlight"><pre><span></span><code>Docker Desktop for Mac - Apple silicon
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Docker Desktop for Mac - Apple silicon
+</span></code></pre></div>
 <p>Intel Mac:</p>
-<div class="highlight"><pre><span></span><code>Docker Desktop for Mac - Intel
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Docker Desktop for Mac - Intel
+</span></code></pre></div>
 <p>Apple Silicon에서 Intel용 Docker Desktop을 일부러 선택하지 않는다.</p>
 <hr />
-<h2 id="12-macos-docker-desktop">12. macOS Docker Desktop 설치</h2>
+<h2 id="12-macos-docker-desktop">12. macOS Docker Desktop 설치<a class="headerlink" href="#12-macos-docker-desktop" title="Permanent link">&para;</a></h2>
 <p>다운로드한 <code>Docker.dmg</code>를 연다.</p>
 <p>Docker Application을 다음 위치로 이동한다.</p>
-<div class="highlight"><pre><span></span><code>/Applications/Docker.app
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>/Applications/Docker.app
+</span></code></pre></div>
 <p>Applications에서 Docker Desktop을 실행한다.</p>
 <p>macOS가 보안 또는 권한 관련 확인을 요청하면
 Docker Desktop 공식 설치 절차에 따라 진행한다.</p>
 <hr />
-<h2 id="13-macos-docker-cli">13. macOS Docker CLI 확인</h2>
+<h2 id="13-macos-docker-cli">13. macOS Docker CLI 확인<a class="headerlink" href="#13-macos-docker-cli" title="Permanent link">&para;</a></h2>
 <p>새 Terminal을 실행한다.</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>--version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>docker<span class="w"> </span>--version
+</span></code></pre></div>
 <p>Docker Engine 연결 확인:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>info
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>docker<span class="w"> </span>info
+</span></code></pre></div>
 <p>정상적으로 Server 정보까지 조회되는지 확인한다.</p>
 <p>Apple Silicon에서 Oracle Database Free를 사용할 경우
 추가 Architecture 검증은 별도의 다음 문서에서 수행한다.</p>
-<div class="highlight"><pre><span></span><code>Apple Silicon Oracle Docker 지원 및 검증 가이드
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Apple Silicon Oracle Docker 지원 및 검증 가이드
+</span></code></pre></div>
 <hr />
-<h2 id="14-docker-desktop">14. Docker Desktop 라이선스 및 회사 사용 정책</h2>
+<h2 id="14-docker-desktop">14. Docker Desktop 라이선스 및 회사 사용 정책<a class="headerlink" href="#14-docker-desktop" title="Permanent link">&para;</a></h2>
 <p>Docker Desktop은 사용 목적과 조직 규모에 따라 Subscription 조건이 달라질 수 있다.</p>
 <p>Docker 공식 문서에서는 대규모 기업에서의 상업적 Docker Desktop 사용에
 유료 Subscription이 필요할 수 있음을 안내한다.</p>
@@ -1624,91 +1634,91 @@ Docker Desktop 공식 설치 절차에 따라 진행한다.</p>
 각각 별도로 확인한다.</p>
 </div>
 <hr />
-<h2 id="15-docker-compose">15. Docker Compose 확인</h2>
+<h2 id="15-docker-compose">15. Docker Compose 확인<a class="headerlink" href="#15-docker-compose" title="Permanent link">&para;</a></h2>
 <p>Docker Desktop에는 Docker Compose를 함께 사용할 수 있는 구성이 제공된다.</p>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>version
+</span></code></pre></div>
 <p>정상 예:</p>
-<div class="highlight"><pre><span></span><code>Docker Compose version ...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Docker Compose version ...
+</span></code></pre></div>
 <p>현재 표준 명령은 다음 형식이다.</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>docker<span class="w"> </span>compose
+</span></code></pre></div>
 <p>Legacy Standalone Compose에서 사용하던:</p>
-<div class="highlight"><pre><span></span><code>docker-compose
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>docker-compose
+</span></code></pre></div>
 <p>형식은 기존 환경 호환 목적이 아니라면 새 가이드의 기본 명령으로 사용하지 않는다.</p>
 <p>현재 단계에서는 Compose 기능 존재 여부만 확인한다.</p>
 <p>실제 <code>compose.yml</code> 또는 <code>docker-compose.local.yml</code>은
 프로젝트가 생성된 이후 프로젝트 로컬 인프라 구성 단계에서 작성한다.</p>
 <hr />
-<h2 id="16-docker-desktop">16. Docker Desktop 기본 상태 확인</h2>
+<h2 id="16-docker-desktop">16. Docker Desktop 기본 상태 확인<a class="headerlink" href="#16-docker-desktop" title="Permanent link">&para;</a></h2>
 <p>다음 명령을 순서대로 실행한다.</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>--version
-docker<span class="w"> </span>info
-docker<span class="w"> </span>compose<span class="w"> </span>version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>docker<span class="w"> </span>--version
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>docker<span class="w"> </span>info
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>docker<span class="w"> </span>compose<span class="w"> </span>version
+</span></code></pre></div>
 <p>확인 항목:</p>
-<div class="highlight"><pre><span></span><code>Docker CLI      → 실행 가능
-Docker Engine   → Server 연결 가능
-Docker Compose  → 실행 가능
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Docker CLI      → 실행 가능
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>Docker Engine   → Server 연결 가능
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>Docker Compose  → 실행 가능
+</span></code></pre></div>
 <p>세 항목이 모두 정상이어야 이후 Oracle Container 구성을 진행한다.</p>
 <hr />
-<h2 id="17-container">17. 기본 Container 실행 테스트</h2>
+<h2 id="17-container">17. 기본 Container 실행 테스트<a class="headerlink" href="#17-container" title="Permanent link">&para;</a></h2>
 <p>Docker Engine 자체가 정상 동작하는지 간단히 확인하려면
 Docker의 기본 Test Container를 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>hello-world
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>hello-world
+</span></code></pre></div>
 <p>이 명령은 다음 과정을 확인한다.</p>
-<div class="highlight"><pre><span></span><code>Docker CLI
-   ↓
-Docker Engine
-   ↓
-Image Pull
-   ↓
-Container 생성
-   ↓
-Container 실행
-   ↓
-종료 후 --rm으로 삭제
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Docker CLI
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>   ↓
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>Docker Engine
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>   ↓
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>Image Pull
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>   ↓
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>Container 생성
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>   ↓
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>Container 실행
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>   ↓
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>종료 후 --rm으로 삭제
+</span></code></pre></div>
 <p>정상 메시지가 출력되면 Docker의 기본 실행경로가 동작하는 것이다.</p>
 <p>현재 Test는 Docker 자체 확인 목적이며 Oracle과는 무관하다.</p>
 <hr />
-<h2 id="18-image-container-volume">18. Image / Container / Volume의 차이</h2>
+<h2 id="18-image-container-volume">18. Image / Container / Volume의 차이<a class="headerlink" href="#18-image-container-volume" title="Permanent link">&para;</a></h2>
 <p>Docker를 처음 사용할 때 다음 세 개념을 혼동하기 쉽다.</p>
 <pre class="mermaid"><code>flowchart LR
     IMAGE[Image] --&gt; CONTAINER[Container]
     CONTAINER --&gt; VOLUME[Volume]</code></pre>
-<h3 id="image">Image</h3>
+<h3 id="image">Image<a class="headerlink" href="#image" title="Permanent link">&para;</a></h3>
 <p>Server Software와 실행환경의 Template이다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>Oracle Database Free Image
-</code></pre></div>
-<h3 id="container">Container</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Oracle Database Free Image
+</span></code></pre></div>
+<h3 id="container">Container<a class="headerlink" href="#container" title="Permanent link">&para;</a></h3>
 <p>Image를 기반으로 실제 실행되는 Instance이다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>microserver-oracle
-</code></pre></div>
-<h3 id="volume">Volume</h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>microserver-oracle
+</span></code></pre></div>
+<h3 id="volume">Volume<a class="headerlink" href="#volume" title="Permanent link">&para;</a></h3>
 <p>Container Life Cycle과 분리하여 Data를 보관한다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>microserver-oracle-data
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>microserver-oracle-data
+</span></code></pre></div>
 <p>특히 Database Container에서는 Volume이 중요하다.</p>
-<div class="highlight"><pre><span></span><code>Container 삭제
-    ≠
-Database Data 삭제
-
-Volume까지 삭제
-    =
-Database Data 삭제 가능
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>Container 삭제
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>    ≠
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>Database Data 삭제
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>Volume까지 삭제
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>    =
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>Database Data 삭제 가능
+</span></code></pre></div>
 <p>Oracle 문서에서 이 차이를 다시 실제 명령과 함께 설명한다.</p>
 <hr />
-<h2 id="19-docker-desktop-resource">19. Docker Desktop Resource 이해</h2>
+<h2 id="19-docker-desktop-resource">19. Docker Desktop Resource 이해<a class="headerlink" href="#19-docker-desktop-resource" title="Permanent link">&para;</a></h2>
 <p>Oracle Database는 일반적인 경량 Web Container보다
 Memory와 Disk를 더 많이 사용한다.</p>
 <p>다음 항목을 확인한다.</p>
@@ -1723,51 +1733,51 @@ Memory와 Disk를 더 많이 사용한다.</p>
 <p>현재 단계에서는 임의의 Memory Limit 값을 프로젝트 표준으로 강제하지 않는다.</p>
 <p>개발 PC 사양과 동시에 실행하는 개발 도구에 따라 Resource 요구량이 달라질 수 있기 때문이다.</p>
 <hr />
-<h2 id="20-docker-disk">20. Docker Disk 사용 확인</h2>
+<h2 id="20-docker-disk">20. Docker Disk 사용 확인<a class="headerlink" href="#20-docker-disk" title="Permanent link">&para;</a></h2>
 <p>Docker가 사용하는 Disk 현황을 확인할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>system<span class="w"> </span>df
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>docker<span class="w"> </span>system<span class="w"> </span>df
+</span></code></pre></div>
 <p>Image:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>image<span class="w"> </span>ls
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>docker<span class="w"> </span>image<span class="w"> </span>ls
+</span></code></pre></div>
 <p>Volume:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>volume<span class="w"> </span>ls
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>docker<span class="w"> </span>volume<span class="w"> </span>ls
+</span></code></pre></div>
 <p>Container:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>ps<span class="w"> </span>-a
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>docker<span class="w"> </span>ps<span class="w"> </span>-a
+</span></code></pre></div>
 <p>Oracle Image와 Database Volume을 사용하기 시작하면 Disk 사용량이 증가하므로
 정기적으로 확인할 수 있다.</p>
 <hr />
-<h2 id="21-docker-desktop-ui">21. Docker Desktop UI</h2>
+<h2 id="21-docker-desktop-ui">21. Docker Desktop UI<a class="headerlink" href="#21-docker-desktop-ui" title="Permanent link">&para;</a></h2>
 <p>Docker Desktop UI에서도 주요 상태를 확인할 수 있다.</p>
 <p>대표 영역:</p>
-<div class="highlight"><pre><span></span><code>Containers
-Images
-Volumes
-Builds
-Settings
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>Containers
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>Images
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>Volumes
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>Builds
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>Settings
+</span></code></pre></div>
 <p>CLI를 기본 기준으로 사용하되
 Container Logs나 Resource 상태를 빠르게 확인할 때 Desktop UI를 함께 사용할 수 있다.</p>
 <hr />
-<h2 id="22">22. 현재 단계에서 하지 않는 작업</h2>
+<h2 id="22">22. 현재 단계에서 하지 않는 작업<a class="headerlink" href="#22" title="Permanent link">&para;</a></h2>
 <p>현재는 Docker 실행환경 자체만 준비한다.</p>
 <p>다음 작업은 아직 하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>Oracle Database Image Pull
-Oracle Container 생성
-Oracle Volume 생성
-FREEPDB1 접속
-Spring Boot 프로젝트 생성
-Docker Compose 프로젝트 파일 작성
-application-local.yml 작성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>Oracle Database Image Pull
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>Oracle Container 생성
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>Oracle Volume 생성
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>FREEPDB1 접속
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>Spring Boot 프로젝트 생성
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>Docker Compose 프로젝트 파일 작성
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>application-local.yml 작성
+</span></code></pre></div>
 <p>Oracle 관련 실제 구성은 다음 문서에서 진행한다.</p>
 <hr />
-<h2 id="23">23. 자주 발생하는 문제</h2>
-<h3 id="231-docker">23.1 <code>docker</code> 명령을 찾을 수 없음</h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>--version
-</code></pre></div>
+<h2 id="23">23. 자주 발생하는 문제<a class="headerlink" href="#23" title="Permanent link">&para;</a></h2>
+<h3 id="231-docker">23.1 <code>docker</code> 명령을 찾을 수 없음<a class="headerlink" href="#231-docker" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>docker<span class="w"> </span>--version
+</span></code></pre></div>
 <p>명령을 찾지 못한다면:</p>
 <ul>
 <li>Docker Desktop 설치 여부 확인</li>
@@ -1775,24 +1785,24 @@ application-local.yml 작성
 <li>Windows / macOS 설치가 정상 완료되었는지 확인</li>
 </ul>
 <hr />
-<h3 id="232-docker-info-server">23.2 <code>docker info</code>에서 Server 연결 실패</h3>
+<h3 id="232-docker-info-server">23.2 <code>docker info</code>에서 Server 연결 실패<a class="headerlink" href="#232-docker-info-server" title="Permanent link">&para;</a></h3>
 <p>대표적으로 Docker Desktop이 실행되지 않았거나
 Docker Engine이 아직 시작되지 않은 경우 발생한다.</p>
 <p>Docker Desktop을 실행하고 Engine 상태를 확인한다.</p>
 <p>다시:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>info
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>docker<span class="w"> </span>info
+</span></code></pre></div>
 <hr />
-<h3 id="233-windows-wsl">23.3 Windows에서 WSL 관련 오류</h3>
+<h3 id="233-windows-wsl">23.3 Windows에서 WSL 관련 오류<a class="headerlink" href="#233-windows-wsl" title="Permanent link">&para;</a></h3>
 <p>PowerShell:</p>
-<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-status</span>
-</code></pre></div>
-<div class="highlight"><pre><span></span><code><span class="n">wsl</span> <span class="p">-</span><span class="n">-list</span> <span class="p">-</span><span class="n">-verbose</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="n">wsl</span> <span class="p">-</span><span class="n">-status</span>
+</span></code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="n">wsl</span> <span class="p">-</span><span class="n">-list</span> <span class="p">-</span><span class="n">-verbose</span>
+</span></code></pre></div>
 <p>WSL 2가 정상 활성화되어 있는지 확인한다.</p>
 <p>Docker Desktop의 WSL Integration 설정도 확인한다.</p>
 <hr />
-<h3 id="234-macos-docker-desktop">23.4 macOS에서 Docker Desktop이 실행되지 않음</h3>
+<h3 id="234-macos-docker-desktop">23.4 macOS에서 Docker Desktop이 실행되지 않음<a class="headerlink" href="#234-macos-docker-desktop" title="Permanent link">&para;</a></h3>
 <p>다음 항목을 확인한다.</p>
 <ul>
 <li>Mac CPU Architecture와 설치 Package 일치 여부</li>
@@ -1802,22 +1812,22 @@ Docker Engine이 아직 시작되지 않은 경우 발생한다.</p>
 <li>Docker Desktop Logs</li>
 </ul>
 <hr />
-<h3 id="235-docker-compose">23.5 <code>docker compose</code> 명령을 찾을 수 없음</h3>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>compose<span class="w"> </span>version
-</code></pre></div>
+<h3 id="235-docker-compose">23.5 <code>docker compose</code> 명령을 찾을 수 없음<a class="headerlink" href="#235-docker-compose" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>version
+</span></code></pre></div>
 <p>Docker Desktop Version과 설치 상태를 확인한다.</p>
 <p>새 환경에서는 Legacy <code>docker-compose</code>를 별도로 설치하기보다
 Docker Desktop에 포함된 Compose Plugin 사용을 우선한다.</p>
 <hr />
-<h3 id="236-disk">23.6 Disk 사용량이 계속 증가함</h3>
+<h3 id="236-disk">23.6 Disk 사용량이 계속 증가함<a class="headerlink" href="#236-disk" title="Permanent link">&para;</a></h3>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>system<span class="w"> </span>df
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>docker<span class="w"> </span>system<span class="w"> </span>df
+</span></code></pre></div>
 <p>불필요한 Image나 종료된 Container가 있는지 확인한다.</p>
 <p>단, Database Volume은 실제 개발 Data를 포함할 수 있으므로
 무작정 삭제하지 않는다.</p>
 <hr />
-<h2 id="24">24. 완료 상태</h2>
+<h2 id="24">24. 완료 상태<a class="headerlink" href="#24" title="Permanent link">&para;</a></h2>
 <p>Docker Desktop 기본 환경 구성이 끝나면 다음 상태가 되어야 한다.</p>
 <pre class="mermaid"><code>flowchart TB
     PC[Developer PC]
@@ -1831,43 +1841,43 @@ Docker Desktop에 포함된 Compose Plugin 사용을 우선한다.</p>
     COMPOSE --&gt; READY</code></pre>
 <p>아직 Oracle Container는 만들지 않는다.</p>
 <hr />
-<h2 id="25">25. 체크리스트</h2>
-<h3 id="windows_1">Windows</h3>
-<ul>
-<li>[ ] Docker Desktop for Windows를 설치했다.</li>
-<li>[ ] 필요한 경우 WSL 2가 활성화되어 있다.</li>
-<li>[ ] Linux Container 기반 Docker Desktop 환경을 사용한다.</li>
-<li>[ ] <code>docker --version</code>이 정상 실행된다.</li>
-<li>[ ] <code>docker info</code>가 정상 실행된다.</li>
+<h2 id="25">25. 체크리스트<a class="headerlink" href="#25" title="Permanent link">&para;</a></h2>
+<h3 id="windows_1">Windows<a class="headerlink" href="#windows_1" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Docker Desktop for Windows를 설치했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 필요한 경우 WSL 2가 활성화되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Linux Container 기반 Docker Desktop 환경을 사용한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>docker --version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>docker info</code>가 정상 실행된다.</li>
 </ul>
-<h3 id="macos_1">macOS</h3>
-<ul>
-<li>[ ] <code>uname -m</code>으로 Mac Architecture를 확인했다.</li>
-<li>[ ] Apple Silicon 또는 Intel에 맞는 Docker Desktop을 설치했다.</li>
-<li>[ ] <code>docker --version</code>이 정상 실행된다.</li>
-<li>[ ] <code>docker info</code>가 정상 실행된다.</li>
+<h3 id="macos_1">macOS<a class="headerlink" href="#macos_1" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>uname -m</code>으로 Mac Architecture를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Apple Silicon 또는 Intel에 맞는 Docker Desktop을 설치했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>docker --version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>docker info</code>가 정상 실행된다.</li>
 </ul>
-<h3 id="_1">공통</h3>
-<ul>
-<li>[ ] Docker Compose를 사용할 수 있다.</li>
-<li>[ ] <code>docker run --rm hello-world</code>가 정상 실행된다.</li>
-<li>[ ] Image / Container / Volume의 차이를 이해했다.</li>
-<li>[ ] 회사 PC라면 Docker Desktop 사용 정책과 Subscription 조건을 확인했다.</li>
-<li>[ ] Oracle Database 구성은 아직 진행하지 않았다.</li>
+<h3 id="_1">공통<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Docker Compose를 사용할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>docker run --rm hello-world</code>가 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Image / Container / Volume의 차이를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 회사 PC라면 Docker Desktop 사용 정책과 Subscription 조건을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Oracle Database 구성은 아직 진행하지 않았다.</li>
 </ul>
 <hr />
-<h2 id="26">26. 다음 단계</h2>
+<h2 id="26">26. 다음 단계<a class="headerlink" href="#26" title="Permanent link">&para;</a></h2>
 <p>Docker Desktop 준비가 완료되면 Oracle Database Free 로컬 개발환경을 구성한다.</p>
-<div class="highlight"><pre><span></span><code>Docker Desktop 설치 및 기본 환경 구성       ← 현재 완료
-        ↓
-Oracle Database Free 로컬 개발환경 구성
-        ↓
-Spring Boot 프로젝트 생성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Docker Desktop 설치 및 기본 환경 구성       ← 현재 완료
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>        ↓
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>Oracle Database Free 로컬 개발환경 구성
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>        ↓
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>Spring Boot 프로젝트 생성
+</span></code></pre></div>
 <p>Apple Silicon Mac에서는 Oracle Image Pull 전후에
 별도의 ARM64 지원 및 Architecture 검증 가이드를 참고할 수 있다.</p>
 <hr />
-<h2 id="27">27. 공식 참고 자료</h2>
+<h2 id="27">27. 공식 참고 자료<a class="headerlink" href="#27" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>Docker Desktop<br />
@@ -1907,6 +1917,8 @@ Spring Boot 프로젝트 생성
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1945,7 +1957,7 @@ Spring Boot 프로젝트 생성
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

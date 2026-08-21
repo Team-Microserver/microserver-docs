@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>VS Code 설치 및 기본 설정 - Microserver</title>
+        <title>VS Code 설치 및 기본 설정 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1415,8 +1425,8 @@
 
 
 
-<h1 id="vs-code">VS Code 설치 및 기본 설정 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="vs-code">VS Code 설치 및 기본 설정 가이드<a class="headerlink" href="#vs-code" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 MicroServer 개발환경에서 사용할 Visual Studio Code를 Windows와 macOS에 설치하고, Java / Spring Boot 개발을 시작하기 전에 필요한 VS Code 기본 환경을 구성한다.</p>
 <p>현재 단계에서는 프로젝트를 생성하지 않는다.</p>
 <p>따라서 본 문서는 다음 작업에 집중한다.</p>
@@ -1431,31 +1441,31 @@
 <li>User Settings와 Workspace Settings의 차이 이해</li>
 </ul>
 <hr />
-<h2 id="2-vs-code">2. VS Code 역할</h2>
+<h2 id="2-vs-code">2. VS Code 역할<a class="headerlink" href="#2-vs-code" title="Permanent link">&para;</a></h2>
 <p>VS Code는 기본 상태에서는 범용 Source Code Editor이다.</p>
 <p>Java 및 Spring Boot 개발 기능은 이후 Extension을 설치하여 추가한다.</p>
-<div class="highlight"><pre><span></span><code>VS Code
-  │
-  ├─ 기본 Editor 기능
-  ├─ Terminal
-  ├─ Git UI
-  └─ Extension Platform
-       │
-       ├─ Java 개발 기능
-       ├─ Spring Boot 개발 기능
-       └─ YAML / XML / Container 기능
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>VS Code
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  │
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  ├─ 기본 Editor 기능
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  ├─ Terminal
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  ├─ Git UI
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  └─ Extension Platform
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>       │
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>       ├─ Java 개발 기능
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>       ├─ Spring Boot 개발 기능
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>       └─ YAML / XML / Container 기능
+</span></code></pre></div>
 <p>즉, 먼저 VS Code 자체를 정상적으로 사용할 수 있는 상태로 만든 뒤 Extension을 단계적으로 구성한다.</p>
 <hr />
-<h1 id="3-windows">3. Windows 설치</h1>
-<h2 id="31-vs-code">3.1 VS Code 다운로드</h2>
+<h1 id="3-windows">3. Windows 설치<a class="headerlink" href="#3-windows" title="Permanent link">&para;</a></h1>
+<h2 id="31-vs-code">3.1 VS Code 다운로드<a class="headerlink" href="#31-vs-code" title="Permanent link">&para;</a></h2>
 <p>Visual Studio Code 공식 사이트에서 Windows용 설치 파일을 다운로드한다.</p>
 <p>일반적인 Windows x64 개발 PC에서는 다음 설치 형식을 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>Windows x64 User Installer
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Windows x64 User Installer
+</span></code></pre></div>
 <p>환경에 따라 System Installer를 사용할 수도 있지만 개발자 PC에서는 User Installer만으로도 충분하다.</p>
 <hr />
-<h2 id="32">3.2 설치 옵션</h2>
+<h2 id="32">3.2 설치 옵션<a class="headerlink" href="#32" title="Permanent link">&para;</a></h2>
 <p>설치 과정에서 다음 항목을 활성화하는 것을 권장한다.</p>
 <ul>
 <li>PATH에 VS Code 추가</li>
@@ -1465,37 +1475,37 @@
 </ul>
 <p>특히 <strong>PATH 등록</strong>을 활성화하면 PowerShell이나 Command Prompt에서 <code>code</code> 명령을 사용할 수 있다.</p>
 <hr />
-<h2 id="33">3.3 설치 확인</h2>
+<h2 id="33">3.3 설치 확인<a class="headerlink" href="#33" title="Permanent link">&para;</a></h2>
 <p>VS Code를 실행하여 정상적으로 시작되는지 확인한다.</p>
 <p>PowerShell을 새로 열고 다음 명령을 실행한다.</p>
-<div class="highlight"><pre><span></span><code><span class="n">code</span> <span class="p">-</span><span class="n">-version</span>
-</code></pre></div>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">code</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
 <p>정상적으로 설치되고 PATH가 등록되어 있다면 VS Code 버전이 표시된다.</p>
 <blockquote>
 <p><code>code --version</code>이 실행되지 않더라도 VS Code 애플리케이션 자체는 정상 설치되어 있을 수 있다.
 이 경우 설치 옵션의 PATH 등록 여부를 확인한다.</p>
 </blockquote>
 <hr />
-<h1 id="4-macos">4. macOS 설치</h1>
-<h2 id="41">4.1 애플리케이션 설치</h2>
+<h1 id="4-macos">4. macOS 설치<a class="headerlink" href="#4-macos" title="Permanent link">&para;</a></h1>
+<h2 id="41">4.1 애플리케이션 설치<a class="headerlink" href="#41" title="Permanent link">&para;</a></h2>
 <p>macOS용 Visual Studio Code를 다운로드한 후 애플리케이션을 다음 위치에 배치한다.</p>
-<div class="highlight"><pre><span></span><code>/Applications/Visual Studio Code.app
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>/Applications/Visual Studio Code.app
+</span></code></pre></div>
 <p>Applications에서 VS Code를 실행하여 정상적으로 시작되는지 확인한다.</p>
 <hr />
-<h2 id="42-code-path">4.2 <code>code</code> 명령 PATH 등록</h2>
+<h2 id="42-code-path">4.2 <code>code</code> 명령 PATH 등록<a class="headerlink" href="#42-code-path" title="Permanent link">&para;</a></h2>
 <p>VS Code에서 Command Palette를 연다.</p>
-<div class="highlight"><pre><span></span><code>Command + Shift + P
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Command + Shift + P
+</span></code></pre></div>
 <p>다음 명령을 검색한다.</p>
-<div class="highlight"><pre><span></span><code>Shell Command: Install 'code' command in PATH
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Shell Command: Install 'code' command in PATH
+</span></code></pre></div>
 <p>명령을 실행한 후 기존 Terminal을 종료하고 새 Terminal을 실행한다.</p>
 <p>확인:</p>
-<div class="highlight"><pre><span></span><code>code<span class="w"> </span>--version
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>code<span class="w"> </span>--version
+</span></code></pre></div>
 <hr />
-<h1 id="5-vs-code">5. VS Code 주요 화면</h1>
+<h1 id="5-vs-code">5. VS Code 주요 화면<a class="headerlink" href="#5-vs-code" title="Permanent link">&para;</a></h1>
 <p>VS Code의 주요 영역은 다음과 같다.</p>
 <table>
 <thead>
@@ -1545,28 +1555,28 @@
 </table>
 <p>Java / Spring Boot 개발에서는 Explorer, Extensions, Terminal, Problems, Output을 자주 사용하게 된다.</p>
 <hr />
-<h1 id="6-command-palette">6. Command Palette</h1>
+<h1 id="6-command-palette">6. Command Palette<a class="headerlink" href="#6-command-palette" title="Permanent link">&para;</a></h1>
 <p>Command Palette는 VS Code 및 설치된 Extension의 명령을 실행하는 핵심 기능이다.</p>
-<h3 id="windows-linux">Windows / Linux</h3>
-<div class="highlight"><pre><span></span><code>Ctrl + Shift + P
-</code></pre></div>
-<h3 id="macos">macOS</h3>
-<div class="highlight"><pre><span></span><code>Command + Shift + P
-</code></pre></div>
+<h3 id="windows-linux">Windows / Linux<a class="headerlink" href="#windows-linux" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Ctrl + Shift + P
+</span></code></pre></div>
+<h3 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Command + Shift + P
+</span></code></pre></div>
 <p>예를 들어 Java Extension을 설치하면 다음과 같은 명령이 Command Palette에 추가된다.</p>
-<div class="highlight"><pre><span></span><code>Java: ...
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Java: ...
+</span></code></pre></div>
 <p>Spring Boot Extension을 설치하면 Spring 관련 명령도 추가된다.</p>
 <p>따라서 Extension 설치가 정상적으로 되었는지를 확인할 때도 Command Palette를 활용할 수 있다.</p>
 <hr />
-<h1 id="7-extensions">7. Extensions 화면</h1>
+<h1 id="7-extensions">7. Extensions 화면<a class="headerlink" href="#7-extensions" title="Permanent link">&para;</a></h1>
 <p>Extensions 화면에서는 VS Code의 개발 기능을 추가하거나 제거할 수 있다.</p>
-<h3 id="windows-linux_1">Windows / Linux</h3>
-<div class="highlight"><pre><span></span><code>Ctrl + Shift + X
-</code></pre></div>
-<h3 id="macos_1">macOS</h3>
-<div class="highlight"><pre><span></span><code>Command + Shift + X
-</code></pre></div>
+<h3 id="windows-linux_1">Windows / Linux<a class="headerlink" href="#windows-linux_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Ctrl + Shift + X
+</span></code></pre></div>
+<h3 id="macos_1">macOS<a class="headerlink" href="#macos_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Command + Shift + X
+</span></code></pre></div>
 <p>Extensions 화면에서는 다음 작업이 가능하다.</p>
 <ul>
 <li>Extension 검색</li>
@@ -1579,77 +1589,77 @@
 </ul>
 <p>MicroServer 프로젝트에서는 Extension 이름만 보고 설치하지 말고 <strong>Publisher와 Extension ID를 함께 확인</strong>하는 것을 권장한다.</p>
 <hr />
-<h1 id="8-integrated-terminal">8. Integrated Terminal</h1>
+<h1 id="8-integrated-terminal">8. Integrated Terminal<a class="headerlink" href="#8-integrated-terminal" title="Permanent link">&para;</a></h1>
 <p>VS Code는 Editor 하단에서 Terminal을 사용할 수 있다.</p>
 <p>메뉴:</p>
-<div class="highlight"><pre><span></span><code>Terminal
-→ New Terminal
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Terminal
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>→ New Terminal
+</span></code></pre></div>
 <p>Windows에서는 PowerShell, macOS에서는 zsh를 기본으로 사용할 수 있다.</p>
 <p>향후 Git, Maven, Docker 등 개발 도구 명령을 실행할 때 사용한다.</p>
 <p>현재 단계에서는 실제 Maven Build나 애플리케이션 실행을 진행하지 않는다.</p>
 <hr />
-<h1 id="9-settings">9. Settings 열기</h1>
+<h1 id="9-settings">9. Settings 열기<a class="headerlink" href="#9-settings" title="Permanent link">&para;</a></h1>
 <p>VS Code Settings 단축키:</p>
-<h3 id="windows">Windows</h3>
-<div class="highlight"><pre><span></span><code>Ctrl + ,
-</code></pre></div>
-<h3 id="macos_2">macOS</h3>
-<div class="highlight"><pre><span></span><code>Command + ,
-</code></pre></div>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Ctrl + ,
+</span></code></pre></div>
+<h3 id="macos_2">macOS<a class="headerlink" href="#macos_2" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Command + ,
+</span></code></pre></div>
 <p>Settings는 UI 화면에서 검색하여 변경할 수 있고, JSON으로 직접 설정할 수도 있다.</p>
 <p>현재 단계에서는 프로젝트가 없으므로 개발자 PC 전체에 적용되는 기본 설정만 확인한다.</p>
 <hr />
-<h1 id="10">10. 파일 인코딩</h1>
+<h1 id="10">10. 파일 인코딩<a class="headerlink" href="#10" title="Permanent link">&para;</a></h1>
 <p>Settings에서 다음 항목을 검색한다.</p>
-<div class="highlight"><pre><span></span><code>Files Encoding
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>Files Encoding
+</span></code></pre></div>
 <p>권장 값:</p>
-<div class="highlight"><pre><span></span><code>UTF-8
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>UTF-8
+</span></code></pre></div>
 <p>MicroServer 프로젝트에서는 Java Source뿐 아니라 다음 파일도 UTF-8 기준으로 관리할 예정이다.</p>
-<div class="highlight"><pre><span></span><code>Java
-XML
-YAML
-Markdown
-Properties
-Shell Script
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Java
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>XML
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>YAML
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>Markdown
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>Properties
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>Shell Script
+</span></code></pre></div>
 <p>인코딩이 개발자별로 다르면 한글 주석이나 문서에서 불필요한 Diff가 발생할 수 있으므로 UTF-8 사용을 권장한다.</p>
 <hr />
-<h1 id="11-auto-save">11. Auto Save</h1>
+<h1 id="11-auto-save">11. Auto Save<a class="headerlink" href="#11-auto-save" title="Permanent link">&para;</a></h1>
 <p>Settings 검색:</p>
-<div class="highlight"><pre><span></span><code>Files Auto Save
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Files Auto Save
+</span></code></pre></div>
 <p>Auto Save는 개인 개발 성향에 따라 사용할 수 있다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>off
-afterDelay
-onFocusChange
-onWindowChange
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>off
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>afterDelay
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>onFocusChange
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>onWindowChange
+</span></code></pre></div>
 <p>Auto Save 여부는 프로젝트 Source의 결과에 직접 영향을 주는 설정이 아니므로 팀 공통 설정으로 강제하지 않아도 된다.</p>
 <hr />
-<h1 id="12-format-on-save">12. Format On Save</h1>
+<h1 id="12-format-on-save">12. Format On Save<a class="headerlink" href="#12-format-on-save" title="Permanent link">&para;</a></h1>
 <p>Settings 검색:</p>
-<div class="highlight"><pre><span></span><code>Editor Format On Save
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>Editor Format On Save
+</span></code></pre></div>
 <p>현재는 아직 프로젝트의 Java Formatter 정책을 정의하기 전이므로 특정 설정을 강제하지 않는다.</p>
 <p>향후 Code Style과 Formatter 정책이 확정되면 Workspace Settings나 Formatter Profile을 통해 프로젝트 공통 기준으로 관리한다.</p>
 <hr />
-<h1 id="13-trim-trailing-whitespace">13. Trim Trailing Whitespace</h1>
+<h1 id="13-trim-trailing-whitespace">13. Trim Trailing Whitespace<a class="headerlink" href="#13-trim-trailing-whitespace" title="Permanent link">&para;</a></h1>
 <p>Settings 검색:</p>
-<div class="highlight"><pre><span></span><code>Trim Trailing Whitespace
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Trim Trailing Whitespace
+</span></code></pre></div>
 <p>이 기능은 파일 저장 시 줄 끝의 불필요한 공백을 제거한다.</p>
 <p>프로젝트 공통 규칙은 프로젝트 생성 이후 <code>.editorconfig</code> 또는 Workspace Settings를 이용해 통일하는 것을 권장한다.</p>
 <hr />
-<h1 id="14-user-settings-workspace-settings">14. User Settings와 Workspace Settings</h1>
+<h1 id="14-user-settings-workspace-settings">14. User Settings와 Workspace Settings<a class="headerlink" href="#14-user-settings-workspace-settings" title="Permanent link">&para;</a></h1>
 <p>VS Code Settings는 적용 범위에 따라 구분된다.</p>
 <pre class="mermaid"><code>flowchart LR
     U[User Settings] --&gt; PC[개발자 VS Code 전체]
     W[Workspace Settings] --&gt; PRJ[특정 프로젝트]</code></pre>
-<h2 id="141-user-settings">14.1 User Settings</h2>
+<h2 id="141-user-settings">14.1 User Settings<a class="headerlink" href="#141-user-settings" title="Permanent link">&para;</a></h2>
 <p>개발자 개인 취향에 가까운 설정이다.</p>
 <p>예:</p>
 <ul>
@@ -1660,7 +1670,7 @@ onWindowChange
 <li>개인 단축키</li>
 <li>개인 Terminal 설정</li>
 </ul>
-<h2 id="142-workspace-settings">14.2 Workspace Settings</h2>
+<h2 id="142-workspace-settings">14.2 Workspace Settings<a class="headerlink" href="#142-workspace-settings" title="Permanent link">&para;</a></h2>
 <p>프로젝트 전체에 통일할 필요가 있는 설정이다.</p>
 <p>향후 다음과 같은 항목을 Workspace Settings로 관리할 수 있다.</p>
 <ul>
@@ -1672,16 +1682,16 @@ onWindowChange
 <li>프로젝트 권장 Extension</li>
 </ul>
 <p>향후 프로젝트가 생성되면 다음 구조를 사용할 수 있다.</p>
-<div class="highlight"><pre><span></span><code>microserver/
- └─ .vscode/
-     ├─ settings.json
-     └─ extensions.json
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>microserver/
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a> └─ .vscode/
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>     ├─ settings.json
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>     └─ extensions.json
+</span></code></pre></div>
 <blockquote>
 <p>현재는 아직 프로젝트가 생성되지 않았으므로 <code>.vscode/settings.json</code>이나 <code>.vscode/extensions.json</code>을 생성하지 않는다.</p>
 </blockquote>
 <hr />
-<h1 id="15">15. 현재 단계에서 확인할 사항</h1>
+<h1 id="15">15. 현재 단계에서 확인할 사항<a class="headerlink" href="#15" title="Permanent link">&para;</a></h1>
 <p>다음 기능이 정상적으로 사용 가능한지만 확인한다.</p>
 <ul>
 <li>VS Code 실행</li>
@@ -1694,36 +1704,36 @@ onWindowChange
 <li>Problems</li>
 </ul>
 <p>이 단계에서는 다음 작업을 하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>프로젝트 폴더 열기
-pom.xml 수정
-Maven Build
-Java Source 작성
-Spring Boot 실행
-Debug 실행
-JUnit Test 작성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>프로젝트 폴더 열기
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>pom.xml 수정
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>Maven Build
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>Java Source 작성
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>Spring Boot 실행
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>Debug 실행
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>JUnit Test 작성
+</span></code></pre></div>
 <hr />
-<h1 id="16">16. 체크리스트</h1>
-<ul>
-<li>[ ] VS Code가 설치되어 있다.</li>
-<li>[ ] VS Code가 정상 실행된다.</li>
-<li>[ ] <code>code --version</code>을 사용할 수 있거나 VS Code 애플리케이션 실행이 정상이다.</li>
-<li>[ ] Command Palette를 사용할 수 있다.</li>
-<li>[ ] Extensions 화면을 사용할 수 있다.</li>
-<li>[ ] Integrated Terminal을 사용할 수 있다.</li>
-<li>[ ] Files Encoding을 UTF-8로 사용할 준비가 되어 있다.</li>
-<li>[ ] User Settings와 Workspace Settings의 차이를 이해했다.</li>
-<li>[ ] 아직 프로젝트 전용 Workspace 설정을 만들지 않았다.</li>
+<h1 id="16">16. 체크리스트<a class="headerlink" href="#16" title="Permanent link">&para;</a></h1>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code가 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>code --version</code>을 사용할 수 있거나 VS Code 애플리케이션 실행이 정상이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Command Palette를 사용할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Extensions 화면을 사용할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Integrated Terminal을 사용할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Files Encoding을 UTF-8로 사용할 준비가 되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> User Settings와 Workspace Settings의 차이를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 프로젝트 전용 Workspace 설정을 만들지 않았다.</li>
 </ul>
 <hr />
-<h1 id="17">17. 다음 단계</h1>
+<h1 id="17">17. 다음 단계<a class="headerlink" href="#17" title="Permanent link">&para;</a></h1>
 <p>다음 문서에서는 VS Code에 Java 개발 기능을 추가한다.</p>
-<div class="highlight"><pre><span></span><code>VS Code 설치 및 기본 설정
-        ↓
-Java 개발 Extension 구성
-        ↓
-Spring Boot Extension 구성
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>VS Code 설치 및 기본 설정
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>        ↓
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>Java 개발 Extension 구성
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>        ↓
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>Spring Boot Extension 구성
+</span></code></pre></div>
 
 
 
@@ -1741,6 +1751,8 @@ Spring Boot Extension 구성
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -1779,7 +1791,7 @@ Spring Boot Extension 구성
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

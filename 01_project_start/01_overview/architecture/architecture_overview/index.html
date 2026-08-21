@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>아키텍처 방향 개요 - Microserver</title>
+        <title>아키텍처 방향 개요 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1647,8 +1657,8 @@
 
 
 
-<h1 id="_1">아키텍처 방향 개요</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="_1">아키텍처 방향 개요<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>Microserver는 금융 SI 프로젝트에서 반복적으로 요구되는 기술 기반을 공통화하고, 업무 개발자가 비즈니스 로직에 집중할 수 있도록 하는 <strong>Spring Boot 기반 공통 개발 플랫폼</strong>을 지향합니다.</p>
 <p>아키텍처의 핵심은 많은 기술을 처음부터 적용하는 것이 아니라 다음 원칙에 따라 단계적으로 구조를 완성하는 것입니다.</p>
 <ul>
@@ -1664,7 +1674,7 @@
 </ul>
 <p>이 문서는 이러한 전체 방향을 한눈에 이해하기 위한 상위 아키텍처 가이드입니다.</p>
 <hr />
-<h2 id="2">2. 아키텍처가 해결하려는 문제</h2>
+<h2 id="2">2. 아키텍처가 해결하려는 문제<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>금융 SI 프로젝트에서는 프로젝트가 달라져도 다음 기능이 반복적으로 구현되는 경우가 많습니다.</p>
 <ul>
 <li>인증 및 권한</li>
@@ -1689,7 +1699,7 @@
 </ol>
 <p>Microserver는 반복되는 기술 요소를 <strong>공통 기반으로 분리하고 표준화</strong>하여 이러한 문제를 줄이는 것을 목표로 합니다.</p>
 <hr />
-<h2 id="3">3. 논리 아키텍처</h2>
+<h2 id="3">3. 논리 아키텍처<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <p>Microserver의 기본 논리 구조는 다음과 같이 구분합니다.</p>
 <pre class="mermaid"><code>flowchart TB
     CLIENT[Client / Channel]
@@ -1765,7 +1775,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="4">4. 전체 요청 처리 흐름</h2>
+<h2 id="4">4. 전체 요청 처리 흐름<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>일반적인 업무 API 요청은 다음 흐름을 따릅니다.</p>
 <pre class="mermaid"><code>flowchart LR
     A[Client Request]
@@ -1844,7 +1854,7 @@
 <li>공통 오류 응답 변환</li>
 </ol>
 <hr />
-<h2 id="5">5. 요청 처리 시퀀스</h2>
+<h2 id="5">5. 요청 처리 시퀀스<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
     participant C as Client
@@ -1875,7 +1885,7 @@
     F--&gt;&gt;C: HTTP Response</code></pre>
 <p>이 흐름은 Microserver에서 가장 기본적인 요청 처리 모델이 됩니다.</p>
 <hr />
-<h2 id="6">6. 애플리케이션 시작 흐름</h2>
+<h2 id="6">6. 애플리케이션 시작 흐름<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <p>요청 처리뿐 아니라 애플리케이션 시작 과정도 공통 구조로 관리합니다.</p>
 <pre class="mermaid"><code>sequenceDiagram
     autonumber
@@ -1897,47 +1907,47 @@
     SB-&gt;&gt;APP: Application Ready</code></pre>
 <p>애플리케이션이 Ready 상태가 되기 전에 필요한 주요 기준정보를 준비하여 요청 처리 시 반복적인 조회를 줄이는 방향을 검토합니다.</p>
 <hr />
-<h2 id="7">7. 아키텍처 구축 순서</h2>
+<h2 id="7">7. 아키텍처 구축 순서<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
 <p>Microserver는 다음 순서로 발전시킵니다.</p>
-<div class="highlight"><pre><span></span><code>Spring Boot 기본 프로젝트
-        ↓
-Maven Multi Module 구성
-        ↓
-공통 Module 구성
-        ↓
-Controller / Service / DAO 기본 구조
-        ↓
-공통 Response / Exception / Logging
-        ↓
-Filter / AOP
-        ↓
-DataSource / MyBatis / Transaction
-        ↓
-Spring Security
-        ↓
-공통 데이터 / Cache
-        ↓
-업무 공통 기능
-        ↓
-전문 / MCA / EAI / FEP
-        ↓
-Gateway / WebFlux / Kubernetes
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Spring Boot 기본 프로젝트
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Maven Multi Module 구성
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>공통 Module 구성
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Controller / Service / DAO 기본 구조
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>공통 Response / Exception / Logging
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        ↓
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>Filter / AOP
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        ↓
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>DataSource / MyBatis / Transaction
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        ↓
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>Spring Security
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        ↓
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>공통 데이터 / Cache
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        ↓
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>업무 공통 기능
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        ↓
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>전문 / MCA / EAI / FEP
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>        ↓
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>Gateway / WebFlux / Kubernetes
+</span></code></pre></div>
 <p>처음부터 모든 기능을 넣지 않고 <strong>한 단계씩 동작을 확인하면서 다음 기능을 추가</strong>하는 것이 기본 원칙입니다.</p>
 <hr />
-<h2 id="8">8. 설계 원칙</h2>
-<h3 id="81">8.1 업무와 기술 공통의 분리</h3>
+<h2 id="8">8. 설계 원칙<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="81">8.1 업무와 기술 공통의 분리<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
 <p>업무 Service가 Logging, 전문 Parsing, 인증 검증과 같은 기술 로직을 직접 구현하지 않도록 합니다.</p>
-<h3 id="82">8.2 단일 책임</h3>
+<h3 id="82">8.2 단일 책임<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
 <p>각 Layer와 Module은 명확한 책임을 갖도록 구성합니다.</p>
-<h3 id="83">8.3 재사용 가능성</h3>
+<h3 id="83">8.3 재사용 가능성<a class="headerlink" href="#83" title="Permanent link">&para;</a></h3>
 <p>공통 기능은 특정 업무에 종속되지 않도록 설계하여 JAR 또는 공통 Module 형태로 재사용할 수 있도록 합니다.</p>
-<h3 id="84">8.4 단계적 확장</h3>
+<h3 id="84">8.4 단계적 확장<a class="headerlink" href="#84" title="Permanent link">&para;</a></h3>
 <p>MSA, Reactive, Gateway, Kubernetes 등은 실제 필요성이 확인되는 시점에 적용합니다.</p>
-<h3 id="85">8.5 운영 관점 포함</h3>
+<h3 id="85">8.5 운영 관점 포함<a class="headerlink" href="#85" title="Permanent link">&para;</a></h3>
 <p>개발 편의성뿐 아니라 Logging, 장애 추적, Configuration, Security, 배포 및 운영까지 고려합니다.</p>
 <hr />
-<h2 id="9">9. 관련 아키텍처 문서</h2>
+<h2 id="9">9. 관련 아키텍처 문서<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
 <p>세부 아키텍처는 다음 문서에서 각각 설명합니다.</p>
 <ul>
 <li>구축 원칙 및 개발 방식</li>
@@ -1966,6 +1976,8 @@ Gateway / WebFlux / Kubernetes
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2004,7 +2016,7 @@ Gateway / WebFlux / Kubernetes
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>

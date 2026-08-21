@@ -6,8 +6,10 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Financial SI Standard Framework & Reference Architecture">
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
       
+      
+        <meta name="author" content="Team MicroServer">
       
       
       
@@ -25,11 +27,14 @@
     
     
       
-        <title>프로젝트 JDK / VS Code Workspace 설정 - Microserver</title>
+        <title>프로젝트 JDK / VS Code Workspace 설정 - MicroServer 구축 가이드</title>
       
     
     
       <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -59,7 +64,12 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -82,7 +92,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="상단/헤더">
-    <a href="../../../.." title="Microserver" class="md-header__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -96,7 +106,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Microserver
+            MicroServer 구축 가이드
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -109,8 +119,8 @@
       </div>
     </div>
     
+      
     
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
     
@@ -330,13 +340,13 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="Microserver" class="md-nav__button md-logo" aria-label="Microserver" data-md-component="logo">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    Microserver
+    MicroServer 구축 가이드
   </label>
   
   <ul class="md-nav__list" data-md-scrollfix>
@@ -1905,8 +1915,8 @@
 
 
 
-<h1 id="jdk-vs-code-workspace">프로젝트 JDK / VS Code Workspace 설정 가이드</h1>
-<h2 id="1">1. 문서 목적</h2>
+<h1 id="jdk-vs-code-workspace">프로젝트 JDK / VS Code Workspace 설정 가이드<a class="headerlink" href="#jdk-vs-code-workspace" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>본 문서는 생성된 MicroServer Spring Boot 프로젝트를 VS Code에서 개발할 수 있도록
 <strong>프로젝트 JDK와 VS Code Workspace 설정을 실제로 구성</strong>하는 방법을 설명한다.</p>
 <p>앞 단계의 JDK 설치 가이드에서는 JDK Binary만 준비했고,
@@ -1925,21 +1935,21 @@ VS Code 환경 구성 단계에서는 프로젝트별 JDK 운영 개념만 확�
 <li>Java Runtime / Workspace 상태 확인</li>
 </ul>
 <hr />
-<h2 id="2">2. 현재 단계의 위치</h2>
+<h2 id="2">2. 현재 단계의 위치<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     A[Spring Boot Project 생성] --&gt; B[JDK / VS Code Workspace]
     B --&gt; C[Maven Wrapper / Maven 설정]
     C --&gt; D[초기 Build / Run]
     D --&gt; E[Multi Module]</code></pre>
 <p>현재:</p>
-<div class="highlight"><pre><span></span><code>Spring Boot Project 생성
-        ↓
-[ 프로젝트 JDK / VS Code Workspace 설정 ]     ← 현재
-        ↓
-Maven Wrapper 및 프로젝트 Maven 설정
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Spring Boot Project 생성
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>[ 프로젝트 JDK / VS Code Workspace 설정 ]     ← 현재
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Maven Wrapper 및 프로젝트 Maven 설정
+</span></code></pre></div>
 <hr />
-<h2 id="3">3. 가장 중요한 운영 원칙</h2>
+<h2 id="3">3. 가장 중요한 운영 원칙<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <p>MicroServer에서는 다음 세 가지를 구분한다.</p>
 <pre class="mermaid"><code>flowchart TB
     JAVA[Java Version]
@@ -1987,203 +1997,203 @@ Maven Wrapper 및 프로젝트 Maven 설정
 <p>두 설정의 역할을 혼동하지 않는다.</p>
 </div>
 <hr />
-<h2 id="4-jdk-workspace-commit">4. 왜 JDK 절대경로를 Workspace에 직접 Commit하지 않는가</h2>
+<h2 id="4-jdk-workspace-commit">4. 왜 JDK 절대경로를 Workspace에 직접 Commit하지 않는가<a class="headerlink" href="#4-jdk-workspace-commit" title="Permanent link">&para;</a></h2>
 <p>앞 단계에서 JDK를 다음처럼 준비했다.</p>
 <p>Windows:</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\temurin-26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>C:\dev\jdks\temurin-26
+</span></code></pre></div>
 <p>macOS:</p>
-<div class="highlight"><pre><span></span><code>/Users/&lt;USER&gt;/dev/jdks/temurin-26.jdk/Contents/Home
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>/Users/&lt;USER&gt;/dev/jdks/temurin-26.jdk/Contents/Home
+</span></code></pre></div>
 <p>두 OS의 경로가 다르다.</p>
 <p>개발자별 Directory도 다를 수 있다.</p>
 <p>따라서 <code>.vscode/settings.json</code>에 다음과 같이 절대경로를 넣고 Commit하면:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"java.configuration.runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-26"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:\\dev\\jdks\\temurin-26"</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nt">"java.configuration.runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-26"</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:\\dev\\jdks\\temurin-26"</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>macOS 개발자에게는 유효하지 않다.</p>
 <p>반대도 마찬가지이다.</p>
 <p>따라서 MicroServer에서는 <strong>JDK 절대경로 매핑은 VS Code User Settings에서 관리</strong>하고,
 프로젝트 Repository에는 OS에 독립적인 Workspace 설정만 공유한다.</p>
 <hr />
-<h2 id="5-vs-code-user-settings-workspace-settings">5. VS Code User Settings와 Workspace Settings</h2>
+<h2 id="5-vs-code-user-settings-workspace-settings">5. VS Code User Settings와 Workspace Settings<a class="headerlink" href="#5-vs-code-user-settings-workspace-settings" title="Permanent link">&para;</a></h2>
 <p>VS Code 설정 범위:</p>
-<div class="highlight"><pre><span></span><code>User Settings
-→ 해당 개발자의 VS Code 전체
-
-Workspace Settings
-→ 현재 Project / Workspace
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>User Settings
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>→ 해당 개발자의 VS Code 전체
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>Workspace Settings
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>→ 현재 Project / Workspace
+</span></code></pre></div>
 <p>MicroServer 운영:</p>
-<div class="highlight"><pre><span></span><code>User Settings
- └─ 실제 JDK 설치 경로
-
-Workspace Settings
- ├─ UTF-8
- ├─ Java Build Configuration Update 정책
- └─ 프로젝트 공통 IDE 설정
-
-extensions.json
- └─ 프로젝트 권장 Extension
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>User Settings
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a> └─ 실제 JDK 설치 경로
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>Workspace Settings
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a> ├─ UTF-8
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a> ├─ Java Build Configuration Update 정책
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a> └─ 프로젝트 공통 IDE 설정
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>extensions.json
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a> └─ 프로젝트 권장 Extension
+</span></code></pre></div>
 <hr />
-<h2 id="6-project-root">6. Project Root 열기</h2>
+<h2 id="6-project-root">6. Project Root 열기<a class="headerlink" href="#6-project-root" title="Permanent link">&para;</a></h2>
 <p>VS Code:</p>
-<div class="highlight"><pre><span></span><code>File
-→ Open Folder...
-→ microserver
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>File
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>→ Open Folder...
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>→ microserver
+</span></code></pre></div>
 <p>Explorer Root에서 다음 파일을 바로 확인할 수 있어야 한다.</p>
-<div class="highlight"><pre><span></span><code>pom.xml
-mvnw
-mvnw.cmd
-src/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>pom.xml
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>mvnw
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>mvnw.cmd
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>src/
+</span></code></pre></div>
 <hr />
-<h2 id="7-workspace-trust">7. Workspace Trust 확인</h2>
+<h2 id="7-workspace-trust">7. Workspace Trust 확인<a class="headerlink" href="#7-workspace-trust" title="Permanent link">&para;</a></h2>
 <p>본인이 Clone하거나 생성한 MicroServer Repository라면
 VS Code가 Workspace Trust를 요청할 때 Source를 확인한 후 Trust한다.</p>
 <p>Java Language Server, Maven, Debugger 등 일부 기능은
 Restricted Mode에서 제한될 수 있다.</p>
 <p>신뢰할 수 없는 외부 Repository는 내용을 먼저 확인한다.</p>
 <hr />
-<h2 id="8-java-project-import">8. Java Project Import</h2>
+<h2 id="8-java-project-import">8. Java Project Import<a class="headerlink" href="#8-java-project-import" title="Permanent link">&para;</a></h2>
 <p>VS Code는 <code>pom.xml</code>을 감지하여 Maven Java Project를 Import한다.</p>
 <p>Java Projects View를 확인한다.</p>
 <p>필요한 경우 Command Palette:</p>
-<div class="highlight"><pre><span></span><code>Java: Import Java Projects in Workspace
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Java: Import Java Projects in Workspace
+</span></code></pre></div>
 <p>Project Import가 완료될 때까지 Status Bar 또는 Output을 확인한다.</p>
 <hr />
-<h2 id="9-project-java-version">9. Project Java Version 확인</h2>
+<h2 id="9-project-java-version">9. Project Java Version 확인<a class="headerlink" href="#9-project-java-version" title="Permanent link">&para;</a></h2>
 <p><code>pom.xml</code>에서 Java Version을 확인한다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">&lt;properties&gt;</span>
-<span class="w">    </span><span class="nt">&lt;java.version&gt;</span>26<span class="nt">&lt;/java.version&gt;</span>
-<span class="nt">&lt;/properties&gt;</span>
-</code></pre></div>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">&lt;properties&gt;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="nt">&lt;java.version&gt;</span>26<span class="nt">&lt;/java.version&gt;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nt">&lt;/properties&gt;</span>
+</span></code></pre></div>
 <p>현재 MicroServer 기준:</p>
-<div class="highlight"><pre><span></span><code>Java 26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Java 26
+</span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Maven Project의 Java Version을 변경하려면
 VS Code 설정만 바꾸는 것이 아니라 Build Script인 <code>pom.xml</code>을 함께 변경해야 한다.</p>
 </div>
 <hr />
-<h2 id="10-windows-vs-code-user-settings-jdk">10. Windows VS Code User Settings에 JDK 등록</h2>
+<h2 id="10-windows-vs-code-user-settings-jdk">10. Windows VS Code User Settings에 JDK 등록<a class="headerlink" href="#10-windows-vs-code-user-settings-jdk" title="Permanent link">&para;</a></h2>
 <p>Command Palette:</p>
-<div class="highlight"><pre><span></span><code>Preferences: Open User Settings (JSON)
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Preferences: Open User Settings (JSON)
+</span></code></pre></div>
 <p>기존 설정이 있다면 삭제하지 말고 필요한 항목을 병합한다.</p>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"java.configuration.runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-26"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:\\dev\\jdks\\temurin-26"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="nt">"java.configuration.runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-26"</span><span class="p">,</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"C:\\dev\\jdks\\temurin-26"</span><span class="p">,</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">      </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>JDK Home:</p>
-<div class="highlight"><pre><span></span><code>C:\dev\jdks\temurin-26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>C:\dev\jdks\temurin-26
+</span></code></pre></div>
 <p>다음 경로를 넣지 않는다.</p>
-<div class="highlight"><pre><span></span><code>X C:\dev\jdks\temurin-26\bin
-X C:\dev\jdks\temurin-26\bin\java.exe
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>X C:\dev\jdks\temurin-26\bin
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>X C:\dev\jdks\temurin-26\bin\java.exe
+</span></code></pre></div>
 <hr />
-<h2 id="11-macos-vs-code-user-settings-jdk">11. macOS VS Code User Settings에 JDK 등록</h2>
+<h2 id="11-macos-vs-code-user-settings-jdk">11. macOS VS Code User Settings에 JDK 등록<a class="headerlink" href="#11-macos-vs-code-user-settings-jdk" title="Permanent link">&para;</a></h2>
 <p>실제 User Home을 확인한다.</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="nv">$HOME</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">echo</span><span class="w"> </span><span class="nv">$HOME</span>
+</span></code></pre></div>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code>/Users/jangkwan
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>/Users/jangkwan
+</span></code></pre></div>
 <p>User Settings:</p>
-<div class="highlight"><pre><span></span><code>Preferences: Open User Settings (JSON)
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>Preferences: Open User Settings (JSON)
+</span></code></pre></div>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"java.configuration.runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-26"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Users/&lt;USER&gt;/dev/jdks/temurin-26.jdk/Contents/Home"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">{</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">  </span><span class="nt">"java.configuration.runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-26"</span><span class="p">,</span>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/Users/&lt;USER&gt;/dev/jdks/temurin-26.jdk/Contents/Home"</span><span class="p">,</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">      </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>실제 <code>&lt;USER&gt;</code> 부분을 개발자 Mac의 User Name으로 변경한다.</p>
 <p>JDK Home:</p>
-<div class="highlight"><pre><span></span><code>/Users/&lt;USER&gt;/dev/jdks/temurin-26.jdk/Contents/Home
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>/Users/&lt;USER&gt;/dev/jdks/temurin-26.jdk/Contents/Home
+</span></code></pre></div>
 <p><code>.jdk</code> Bundle Root가 아니라 <code>Contents/Home</code>까지 지정한다.</p>
 <hr />
-<h2 id="12-jdk">12. 여러 JDK가 있는 경우</h2>
+<h2 id="12-jdk">12. 여러 JDK가 있는 경우<a class="headerlink" href="#12-jdk" title="Permanent link">&para;</a></h2>
 <p>예:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"java.configuration.runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-17"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/temurin-17"</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-21"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/temurin-21"</span>
-<span class="w">    </span><span class="p">},</span>
-<span class="w">    </span><span class="p">{</span>
-<span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-26"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/temurin-26"</span><span class="p">,</span>
-<span class="w">      </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-<span class="w">    </span><span class="p">}</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">{</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="nt">"java.configuration.runtimes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-17"</span><span class="p">,</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/temurin-17"</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-21"</span><span class="p">,</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/temurin-21"</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"JavaSE-26"</span><span class="p">,</span>
+</span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/path/to/temurin-26"</span><span class="p">,</span>
+</span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="w">      </span><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-20-15"><a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-20-16"><a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-20-17"><a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>현재 MicroServer Project는:</p>
-<div class="highlight"><pre><span></span><code>JavaSE-26
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>JavaSE-26
+</span></code></pre></div>
 <p>을 사용한다.</p>
 <hr />
-<h2 id="13-default-true">13. <code>default: true</code>의 의미</h2>
+<h2 id="13-default-true">13. <code>default: true</code>의 의미<a class="headerlink" href="#13-default-true" title="Permanent link">&para;</a></h2>
 <p><code>java.configuration.runtimes</code>에서:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="nt">"default"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span></code></pre></div>
 <p>를 지정할 수 있다.</p>
 <p>다만 VS Code 공식 Java 문서에서 설명하는 것처럼
 Maven / Gradle Build Project의 실제 Java Version은 Build Script의 설정이 중요하다.</p>
 <p>따라서 다음 관계를 기억한다.</p>
-<div class="highlight"><pre><span></span><code>java.configuration.runtimes
-→ VS Code가 Local JDK를 찾는 기준
-
-pom.xml
-→ Maven Project의 Build Java 기준
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>java.configuration.runtimes
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>→ VS Code가 Local JDK를 찾는 기준
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>pom.xml
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>→ Maven Project의 Build Java 기준
+</span></code></pre></div>
 <hr />
-<h2 id="14-java-runtime">14. Java Runtime 확인</h2>
+<h2 id="14-java-runtime">14. Java Runtime 확인<a class="headerlink" href="#14-java-runtime" title="Permanent link">&para;</a></h2>
 <p>Command Palette:</p>
-<div class="highlight"><pre><span></span><code>Java: Configure Java Runtime
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Java: Configure Java Runtime
+</span></code></pre></div>
 <p>화면에서 MicroServer Project가 사용하는 Runtime 정보를 확인한다.</p>
 <p>확인 대상:</p>
-<div class="highlight"><pre><span></span><code>Java 26
-Eclipse Temurin
-Project: microserver
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Java 26
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>Eclipse Temurin
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>Project: microserver
+</span></code></pre></div>
 <p>표시되는 세부 UI는 Extension Version에 따라 달라질 수 있다.</p>
 <hr />
-<h2 id="15-java-language-server-runtime-project-jdk">15. Java Language Server Runtime과 Project JDK</h2>
+<h2 id="15-java-language-server-runtime-project-jdk">15. Java Language Server Runtime과 Project JDK<a class="headerlink" href="#15-java-language-server-runtime-project-jdk" title="Permanent link">&para;</a></h2>
 <p>다음 설정이 존재한다.</p>
-<div class="highlight"><pre><span></span><code>java.jdt.ls.java.home
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>java.jdt.ls.java.home
+</span></code></pre></div>
 <p>이 설정은 <strong>Java Language Server 자체를 실행할 JDK</strong>를 지정하는 설정이다.</p>
 <p>Project Source Compile JDK와 동일한 개념이 아니다.</p>
 <p>현재 Java Extension은 Java Language Server 실행을 위해
@@ -2198,185 +2208,185 @@ Project: microserver
 팀 공통 Workspace 설정으로 Commit하기 전에 OS 차이를 고려해야 한다.</p>
 </div>
 <hr />
-<h2 id="16-vscode-directory">16. <code>.vscode</code> Directory 생성</h2>
+<h2 id="16-vscode-directory">16. <code>.vscode</code> Directory 생성<a class="headerlink" href="#16-vscode-directory" title="Permanent link">&para;</a></h2>
 <p>Project Root:</p>
-<div class="highlight"><pre><span></span><code>microserver/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>microserver/
+</span></code></pre></div>
 <p>아래에 다음 Directory를 만든다.</p>
-<div class="highlight"><pre><span></span><code>.vscode/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>.vscode/
+</span></code></pre></div>
 <p>최종:</p>
-<div class="highlight"><pre><span></span><code>microserver/
-├─ .vscode/
-├─ .mvn/
-├─ src/
-└─ pom.xml
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>microserver/
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>├─ .vscode/
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>├─ .mvn/
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>├─ src/
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>└─ pom.xml
+</span></code></pre></div>
 <hr />
-<h2 id="17-vscodesettingsjson">17. <code>.vscode/settings.json</code></h2>
+<h2 id="17-vscodesettingsjson">17. <code>.vscode/settings.json</code><a class="headerlink" href="#17-vscodesettingsjson" title="Permanent link">&para;</a></h2>
 <p>생성:</p>
-<div class="highlight"><pre><span></span><code>microserver/.vscode/settings.json
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>microserver/.vscode/settings.json
+</span></code></pre></div>
 <p>초기 권장 설정:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"files.encoding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"utf8"</span><span class="p">,</span>
-<span class="w">  </span><span class="nt">"java.configuration.updateBuildConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"automatic"</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">"files.encoding"</span><span class="p">:</span><span class="w"> </span><span class="s2">"utf8"</span><span class="p">,</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">  </span><span class="nt">"java.configuration.updateBuildConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"automatic"</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>역할:</p>
-<div class="highlight"><pre><span></span><code>files.encoding
-→ Workspace 파일 Encoding 기준
-
-java.configuration.updateBuildConfiguration
-→ pom.xml 같은 Build 설정 변경 시
-   Java Project Classpath / Configuration 갱신
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>files.encoding
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>→ Workspace 파일 Encoding 기준
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>java.configuration.updateBuildConfiguration
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>→ pom.xml 같은 Build 설정 변경 시
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>   Java Project Classpath / Configuration 갱신
+</span></code></pre></div>
 <p>이 설정에는 JDK 절대경로를 넣지 않는다.</p>
 <hr />
-<h2 id="18-build-configuration">18. Build Configuration 자동 갱신</h2>
+<h2 id="18-build-configuration">18. Build Configuration 자동 갱신<a class="headerlink" href="#18-build-configuration" title="Permanent link">&para;</a></h2>
 <p>다음 설정:</p>
-<div class="highlight"><pre><span></span><code><span class="nt">"java.configuration.updateBuildConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"automatic"</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nt">"java.configuration.updateBuildConfiguration"</span><span class="p">:</span><span class="w"> </span><span class="s2">"automatic"</span>
+</span></code></pre></div>
 <p>은 Maven <code>pom.xml</code> 등이 변경되었을 때
 VS Code Java Project의 Classpath / Build Configuration 갱신을 자동으로 수행하도록 한다.</p>
 <p>Multi Module 전환 과정에서 <code>pom.xml</code>이 많이 변경되므로
 초기 프로젝트에서는 자동 갱신을 사용한다.</p>
 <p>문제가 생기면 Command Palette에서 수동 Import / Clean 명령을 사용할 수 있다.</p>
 <hr />
-<h2 id="19-vscodeextensionsjson">19. <code>.vscode/extensions.json</code></h2>
+<h2 id="19-vscodeextensionsjson">19. <code>.vscode/extensions.json</code><a class="headerlink" href="#19-vscodeextensionsjson" title="Permanent link">&para;</a></h2>
 <p>생성:</p>
-<div class="highlight"><pre><span></span><code>microserver/.vscode/extensions.json
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>microserver/.vscode/extensions.json
+</span></code></pre></div>
 <p>권장:</p>
-<div class="highlight"><pre><span></span><code><span class="p">{</span>
-<span class="w">  </span><span class="nt">"recommendations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<span class="w">    </span><span class="s2">"vscjava.vscode-java-pack"</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">"vmware.vscode-boot-dev-pack"</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">"redhat.vscode-yaml"</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">"redhat.vscode-xml"</span><span class="p">,</span>
-<span class="w">    </span><span class="s2">"ms-azuretools.vscode-containers"</span>
-<span class="w">  </span><span class="p">]</span>
-<span class="p">}</span>
-</code></pre></div>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="p">{</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a><span class="w">  </span><span class="nt">"recommendations"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="w">    </span><span class="s2">"vscjava.vscode-java-pack"</span><span class="p">,</span>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="w">    </span><span class="s2">"vmware.vscode-boot-dev-pack"</span><span class="p">,</span>
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="w">    </span><span class="s2">"redhat.vscode-yaml"</span><span class="p">,</span>
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="w">    </span><span class="s2">"redhat.vscode-xml"</span><span class="p">,</span>
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="w">    </span><span class="s2">"ms-azuretools.vscode-containers"</span>
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a><span class="p">}</span>
+</span></code></pre></div>
 <p>역할:</p>
-<div class="highlight"><pre><span></span><code>Extension Pack for Java
-Spring Boot Extension Pack
-YAML
-XML
-Container Tools
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>Extension Pack for Java
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>Spring Boot Extension Pack
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>YAML
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>XML
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>Container Tools
+</span></code></pre></div>
 <p>VS Code는 Workspace를 처음 연 개발자에게
 권장 Extension을 확인하거나 설치할 수 있도록 안내한다.</p>
 <hr />
-<h2 id="20-vscode-git">20. <code>.vscode</code> Git 관리 원칙</h2>
+<h2 id="20-vscode-git">20. <code>.vscode</code> Git 관리 원칙<a class="headerlink" href="#20-vscode-git" title="Permanent link">&para;</a></h2>
 <p>현재 생성한:</p>
-<div class="highlight"><pre><span></span><code>.vscode/settings.json
-.vscode/extensions.json
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>.vscode/settings.json
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>.vscode/extensions.json
+</span></code></pre></div>
 <p>은 팀 공통 프로젝트 설정이므로 Git에 Commit한다.</p>
 <p>반대로 다음과 같은 개인 경로 / 개인 설정은 넣지 않는다.</p>
-<div class="highlight"><pre><span></span><code>개인 JDK 절대경로
-개인 Theme
-개인 Font
-개인 Key Binding
-개인 Terminal Profile
-개인 Credential
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>개인 JDK 절대경로
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>개인 Theme
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>개인 Font
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>개인 Key Binding
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>개인 Terminal Profile
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>개인 Credential
+</span></code></pre></div>
 <hr />
-<h2 id="21-gitignore">21. <code>.gitignore</code> 확인</h2>
+<h2 id="21-gitignore">21. <code>.gitignore</code> 확인<a class="headerlink" href="#21-gitignore" title="Permanent link">&para;</a></h2>
 <p><code>.gitignore</code>에 다음과 같이 <code>.vscode/</code> 전체가 제외되어 있다면:</p>
-<div class="highlight"><pre><span></span><code>.vscode/
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>.vscode/
+</span></code></pre></div>
 <p>현재 프로젝트 정책과 충돌한다.</p>
 <p>필요한 경우 전체 <code>.vscode</code> 제외를 제거하고
 공유하지 않을 특정 파일만 개별적으로 제외한다.</p>
 <p>현재 공유 대상:</p>
-<div class="highlight"><pre><span></span><code>.vscode/settings.json
-.vscode/extensions.json
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>.vscode/settings.json
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>.vscode/extensions.json
+</span></code></pre></div>
 <hr />
-<h2 id="22-workspace">22. Workspace 설정 구조</h2>
+<h2 id="22-workspace">22. Workspace 설정 구조<a class="headerlink" href="#22-workspace" title="Permanent link">&para;</a></h2>
 <p>현재:</p>
-<div class="highlight"><pre><span></span><code>microserver/
-├─ .vscode/
-│  ├─ settings.json
-│  └─ extensions.json
-├─ .mvn/
-├─ src/
-├─ pom.xml
-├─ mvnw
-└─ mvnw.cmd
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>microserver/
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>├─ .vscode/
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>│  ├─ settings.json
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>│  └─ extensions.json
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>├─ .mvn/
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>├─ src/
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>├─ pom.xml
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>├─ mvnw
+</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a>└─ mvnw.cmd
+</span></code></pre></div>
 <hr />
-<h2 id="23-vs-code-reload">23. VS Code Reload</h2>
+<h2 id="23-vs-code-reload">23. VS Code Reload<a class="headerlink" href="#23-vs-code-reload" title="Permanent link">&para;</a></h2>
 <p>설정 변경 후 필요하면:</p>
-<div class="highlight"><pre><span></span><code>Command Palette
-→ Developer: Reload Window
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>Command Palette
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>→ Developer: Reload Window
+</span></code></pre></div>
 <p>Java Project Import가 다시 수행될 수 있다.</p>
 <hr />
-<h2 id="24-java-language-server">24. Java Language Server 문제 해결</h2>
+<h2 id="24-java-language-server">24. Java Language Server 문제 해결<a class="headerlink" href="#24-java-language-server" title="Permanent link">&para;</a></h2>
 <p>Java Project가 비정상적으로 인식되는 경우:</p>
-<div class="highlight"><pre><span></span><code>Java: Clean Java Language Server Workspace
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>Java: Clean Java Language Server Workspace
+</span></code></pre></div>
 <p>를 사용할 수 있다.</p>
 <p>이 명령은 Java Language Server Workspace Cache를 정리하고
 Project를 다시 Import하는 문제 해결 수단이다.</p>
 <p>정상 상태에서 반복 실행할 필요는 없다.</p>
 <hr />
-<h2 id="25-maven-view">25. Maven View 확인</h2>
+<h2 id="25-maven-view">25. Maven View 확인<a class="headerlink" href="#25-maven-view" title="Permanent link">&para;</a></h2>
 <p>Explorer의 Maven View에서:</p>
-<div class="highlight"><pre><span></span><code>microserver
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>microserver
+</span></code></pre></div>
 <p>Project가 표시되는지 확인한다.</p>
 <p>현재는 Maven Goal을 본격 실행하지 않는다.</p>
 <p>Wrapper / Maven 설정은 다음 문서에서 진행한다.</p>
 <p>→ <a href="../project_maven_setup/">Maven Wrapper 및 프로젝트 Maven 설정</a></p>
 <hr />
-<h2 id="26-spring-boot-dashboard">26. Spring Boot Dashboard 확인</h2>
+<h2 id="26-spring-boot-dashboard">26. Spring Boot Dashboard 확인<a class="headerlink" href="#26-spring-boot-dashboard" title="Permanent link">&para;</a></h2>
 <p>Spring Boot Dashboard에서 Application이 표시되는지 확인한다.</p>
 <p>아직 실행하지 않는다.</p>
 <p>현재 확인 목적:</p>
-<div class="highlight"><pre><span></span><code>VS Code가 Maven Project 인식
-        ↓
-Java Extension 인식
-        ↓
-Spring Boot Extension 인식
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>VS Code가 Maven Project 인식
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>        ↓
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>Java Extension 인식
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>        ↓
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>Spring Boot Extension 인식
+</span></code></pre></div>
 <hr />
-<h2 id="27">27. 현재 단계에서 하지 않는 작업</h2>
+<h2 id="27">27. 현재 단계에서 하지 않는 작업<a class="headerlink" href="#27" title="Permanent link">&para;</a></h2>
 <p>다음은 아직 진행하지 않는다.</p>
-<div class="highlight"><pre><span></span><code>Maven Wrapper Version 변경
-clean / package
-Spring Boot 실행
-Multi Module 구성
-Oracle Driver
-Datasource
-Controller / Service / DAO
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>Maven Wrapper Version 변경
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>clean / package
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>Spring Boot 실행
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>Multi Module 구성
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>Oracle Driver
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>Datasource
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>Controller / Service / DAO
+</span></code></pre></div>
 <hr />
-<h2 id="28-git">28. Git 변경사항 확인</h2>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>status
-</code></pre></div>
+<h2 id="28-git">28. Git 변경사항 확인<a class="headerlink" href="#28-git" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>git<span class="w"> </span>status
+</span></code></pre></div>
 <p>주요 변경:</p>
-<div class="highlight"><pre><span></span><code>.vscode/settings.json
-.vscode/extensions.json
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>.vscode/settings.json
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>.vscode/extensions.json
+</span></code></pre></div>
 <p>User Settings의 JDK 경로는 Repository File이 아니므로
 Git 변경사항에 나타나지 않는 것이 정상이다.</p>
 <hr />
-<h2 id="29-git-commit">29. Git Commit</h2>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>add<span class="w"> </span>.vscode/settings.json<span class="w"> </span>.vscode/extensions.json
-git<span class="w"> </span>status
-</code></pre></div>
+<h2 id="29-git-commit">29. Git Commit<a class="headerlink" href="#29-git-commit" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>git<span class="w"> </span>add<span class="w"> </span>.vscode/settings.json<span class="w"> </span>.vscode/extensions.json
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>git<span class="w"> </span>status
+</span></code></pre></div>
 <p>Commit:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"chore: configure VS Code workspace"</span>
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"chore: configure VS Code workspace"</span>
+</span></code></pre></div>
 <p>Push:</p>
-<div class="highlight"><pre><span></span><code>git<span class="w"> </span>push
-</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>git<span class="w"> </span>push
+</span></code></pre></div>
 <hr />
-<h2 id="30">30. 완료 상태</h2>
+<h2 id="30">30. 완료 상태<a class="headerlink" href="#30" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart TB
     P[MicroServer Project]
     P --&gt; POM[pom.xml Java 26]
@@ -2388,33 +2398,33 @@ git<span class="w"> </span>status
     JDK --&gt; USER[VS Code User Settings]
     USER --&gt; P</code></pre>
 <hr />
-<h2 id="31">31. 체크리스트</h2>
-<ul>
-<li>[ ] <code>pom.xml</code>의 Java Version이 26이다.</li>
-<li>[ ] Windows/macOS에 맞는 JDK Home을 확인했다.</li>
-<li>[ ] <code>java.configuration.runtimes</code>를 User Settings에 등록했다.</li>
-<li>[ ] <code>Java: Configure Java Runtime</code>에서 Project Runtime을 확인했다.</li>
-<li>[ ] JDK 절대경로를 Workspace Repository에 Commit하지 않았다.</li>
-<li>[ ] <code>.vscode/settings.json</code>을 생성했다.</li>
-<li>[ ] <code>.vscode/extensions.json</code>을 생성했다.</li>
-<li>[ ] 권장 Extension 목록을 구성했다.</li>
-<li>[ ] Java Project가 정상 Import된다.</li>
-<li>[ ] Spring Boot Dashboard에서 Project를 확인할 수 있다.</li>
-<li>[ ] Git Commit / Push를 완료했다.</li>
+<h2 id="31">31. 체크리스트<a class="headerlink" href="#31" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>pom.xml</code>의 Java Version이 26이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Windows/macOS에 맞는 JDK Home을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>java.configuration.runtimes</code>를 User Settings에 등록했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Java: Configure Java Runtime</code>에서 Project Runtime을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JDK 절대경로를 Workspace Repository에 Commit하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.vscode/settings.json</code>을 생성했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.vscode/extensions.json</code>을 생성했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 권장 Extension 목록을 구성했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Java Project가 정상 Import된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Boot Dashboard에서 Project를 확인할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Git Commit / Push를 완료했다.</li>
 </ul>
 <hr />
-<h2 id="32">32. 다음 단계</h2>
+<h2 id="32">32. 다음 단계<a class="headerlink" href="#32" title="Permanent link">&para;</a></h2>
 <p>다음 단계에서는 Spring Initializr가 생성한 Maven Wrapper를 검토하고
 MicroServer Project의 Maven 실행 기준을 확정한다.</p>
 <p>→ <a href="../project_maven_setup/">Maven Wrapper 및 프로젝트 Maven 설정</a></p>
-<div class="highlight"><pre><span></span><code>Project 생성
-        ↓
-JDK / VS Code Workspace 설정       ← 현재 완료
-        ↓
-Maven Wrapper / Maven 설정
-</code></pre></div>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>Project 생성
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a>        ↓
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a>JDK / VS Code Workspace 설정       ← 현재 완료
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a>        ↓
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a>Maven Wrapper / Maven 설정
+</span></code></pre></div>
 <hr />
-<h2 id="33">33. 공식 참고 자료</h2>
+<h2 id="33">33. 공식 참고 자료<a class="headerlink" href="#33" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
 <p>Managing Java Projects in VS Code<br />
@@ -2450,6 +2460,8 @@ Maven Wrapper / Maven 설정
             </div>
           
           
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
         </div>
         
@@ -2488,7 +2500,7 @@ Maven Wrapper / Maven 설정
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
     
     
       <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
