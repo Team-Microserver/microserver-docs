@@ -28,6 +28,11 @@ theme:
 extra_css:
   - assets/css/extra.css
 
+extra_javascript:
+  - assets/js/toc-toggle.js
+
+  
+
 plugins:
   - search:
       lang: ko
@@ -42,6 +47,7 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+      toc_depth: 3
   - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true

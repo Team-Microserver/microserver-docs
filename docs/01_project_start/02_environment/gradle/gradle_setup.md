@@ -174,7 +174,7 @@ MicroServer에서는 첫 Gradle 프로젝트이므로 **Groovy DSL**을 사용�
 
 ---
 
-## 6. 개발 PC Gradle과 프로젝트 Gradle Wrapper 구분
+## 6. Gradle 실행 구조와 설치 원칙
 
 Gradle도 Maven과 마찬가지로 **개발 PC 설치본**과 **프로젝트 Wrapper**를 구분해야 한다.
 
@@ -195,7 +195,7 @@ flowchart TB
     PROJECT --> SETTINGS[settings.gradle]
 ```
 
-### 개발 PC Gradle
+### 6.1 개발 PC Gradle
 
 ```text
 gradle
@@ -207,7 +207,7 @@ gradle
 - Wrapper가 없는 프로젝트의 초기 Wrapper 생성
 - Gradle 명령 구조 확인
 
-### 프로젝트 Gradle Wrapper
+### 6.2 프로젝트 Gradle Wrapper
 
 Windows:
 
@@ -234,7 +234,7 @@ macOS / Linux:
 
 ---
 
-## 7. Gradle 설치는 필수인가
+### 6.3 Gradle 설치는 필수인가
 
 Gradle 공식 권장 방식은 프로젝트에 포함된 Wrapper를 사용하는 것이다.
 
@@ -256,7 +256,7 @@ MicroServer에서는 다음 기준으로 운영한다.
 
 ---
 
-## 8. 사전 준비
+### 6.4 사전 준비
 
 Gradle은 JVM에서 실행되므로 JDK가 필요하다.
 
@@ -268,13 +268,13 @@ Gradle은 JVM에서 실행되므로 JDK가 필요하다.
 
 예:
 
-### Windows
+#### Windows
 
 ```text
 C:\dev\jdks\temurin-26
 ```
 
-### macOS
+#### macOS
 
 ```text
 ~/dev/jdks/temurin-26.jdk/Contents/Home
@@ -285,9 +285,9 @@ MicroServer에서는 OS 전체 `JAVA_HOME`을 하나의 버전으로 영구 고�
 
 ---
 
-# Windows 환경
+## 7. Windows 환경 구성
 
-## 9. Windows Gradle 다운로드
+### 7.1 Gradle 다운로드
 
 Gradle 공식 Releases 페이지에서 Binary Distribution을 다운로드한다.
 
@@ -308,7 +308,7 @@ Gradle Distribution에는 일반적으로 다음 선택지가 있다.
 
 ---
 
-## 10. Windows Gradle 압축 해제
+### 7.2 Gradle 압축 해제
 
 예:
 
@@ -335,7 +335,7 @@ gradle.bat
 
 ---
 
-## 11. Windows 현재 Session에서 Gradle 실행
+### 7.3 현재 Session에서 Gradle 실행
 
 PowerShell에서 현재 Session에 JDK와 Gradle을 연결한다.
 
@@ -362,7 +362,7 @@ OS: Windows
 
 ---
 
-## 12. Windows PATH 영구 등록 여부
+### 7.4 PATH 영구 등록 여부
 
 Gradle을 개발 PC에서 자주 직접 사용할 경우 `GRADLE_HOME/bin`을 PATH에 등록할 수 있다.
 
@@ -378,9 +378,9 @@ Gradle 전역 PATH에 지나치게 의존하지 않는다.
 
 ---
 
-# macOS 환경
+## 8. macOS 환경 구성
 
-## 13. macOS Gradle 설치 Directory
+### 8.1 Gradle 설치 Directory
 
 Binary ZIP을 직접 다운로드하여 다음과 같이 관리할 수 있다.
 
@@ -400,7 +400,7 @@ brew install gradle
 
 ---
 
-## 14. macOS 현재 Session에서 Gradle 실행
+### 8.2 현재 Session에서 Gradle 실행
 
 Binary를 직접 설치한 경우:
 
@@ -425,17 +425,17 @@ gradle --version
 
 ---
 
-## 15. Gradle User Home
+## 9. Gradle User Home과 Cache
 
 Gradle은 사용자별 Cache 및 설정을 기본적으로 다음 위치에 저장한다.
 
-### Windows
+#### Windows
 
 ```text
 C:\Users\<사용자>\.gradle
 ```
 
-### macOS / Linux
+#### macOS / Linux
 
 ```text
 ~/.gradle
@@ -462,7 +462,7 @@ C:\Users\<사용자>\.gradle
 
 ---
 
-## 16. Maven `.m2`와 비교
+### 9.1 Maven `.m2`와 비교
 
 Maven에서는 일반적으로 다음 위치를 사용한다.
 
@@ -487,7 +487,7 @@ Repository 인증, Proxy, 사내 Repository 등은 Gradle에서
 
 ---
 
-## 17. Gradle 기본 명령
+## 10. Gradle 기본 명령과 Maven 대응
 
 현재는 프로젝트가 없으므로 실제 Build를 수행하지 않는다.
 
@@ -524,7 +524,7 @@ Windows PowerShell:
 
 ---
 
-## 18. Maven 명령 대응표
+### 10.1 Maven 명령 대응표
 
 | 목적 | Gradle | Maven |
 |---|---|---|
@@ -543,7 +543,7 @@ Maven의 Lifecycle과 1:1로 완전히 동일하지 않다.
 
 ---
 
-## 19. Gradle Wrapper 적용 시점
+## 11. Gradle Wrapper 적용 시점
 
 현재는 아직 프로젝트가 없으므로 Wrapper를 프로젝트에 생성하지 않는다.
 
@@ -581,11 +581,11 @@ Wrapper 상세 설정은 프로젝트 생성 이후 별도 가이드에서 진�
 
 ---
 
-## 20. `build.gradle`과 Maven `pom.xml` 비교 예고
+## 12. `build.gradle`과 Maven `pom.xml` 비교 예고
 
 프로젝트 생성 이후 다음과 같은 대응 구조를 사용한다.
 
-### Gradle
+### 12.1 Gradle
 
 ```groovy
 plugins {
@@ -613,7 +613,7 @@ dependencies {
 }
 ```
 
-### Maven 대응
+### 12.2 Maven 대응
 
 ```xml
 <parent>
@@ -642,7 +642,7 @@ dependencies {
 
 ---
 
-## 21. Gradle에서 우선 익힐 핵심 개념
+## 13. Gradle 학습 순서
 
 이번 프로젝트에서는 다음 순서로 Gradle을 학습한다.
 
@@ -682,7 +682,7 @@ Isolated Projects
 
 ---
 
-## 22. 기본 문제 해결
+## 14. 기본 문제 해결
 
 ### `gradle` 명령을 찾을 수 없는 경우
 
@@ -733,7 +733,7 @@ Cache 전체 삭제를 먼저 시도하기보다 실제 오류 원인을 확인�
 
 ---
 
-## 23. 체크리스트
+## 15. 체크리스트
 
 - [ ] Gradle이 Java 프로젝트의 Build Tool임을 이해했다.
 - [ ] MicroServer의 기본 Build Tool이 Gradle임을 확인했다.
@@ -748,7 +748,7 @@ Cache 전체 삭제를 먼저 시도하기보다 실제 오류 원인을 확인�
 
 ---
 
-## 24. 다음 단계
+## 16. 다음 단계
 
 Gradle 기본 환경 구성이 끝나면 VS Code 개발환경을 구성한다.
 
@@ -778,7 +778,7 @@ gradle/wrapper/gradle-wrapper.properties
 
 ---
 
-## 25. 공식 참고 자료
+## 17. 공식 참고 자료
 
 - Gradle Releases  
   <https://gradle.org/releases/>
