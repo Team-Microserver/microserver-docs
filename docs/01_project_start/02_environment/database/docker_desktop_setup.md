@@ -41,7 +41,7 @@ MicroServer 개발환경은 다음 순서로 준비한다.
 ```mermaid
 flowchart LR
     A[Git / GitHub] --> B[Eclipse Temurin JDK]
-    B --> C[Apache Maven]
+    B --> C[Gradle]
     C --> D[VS Code]
     D --> E[Docker Desktop]
     E --> F[Oracle Database Free]
@@ -55,7 +55,7 @@ Git / GitHub
     ↓
 Eclipse Temurin JDK
     ↓
-Apache Maven
+Gradle
     ↓
 VS Code
     ↓

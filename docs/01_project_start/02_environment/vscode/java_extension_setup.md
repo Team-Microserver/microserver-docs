@@ -32,6 +32,7 @@ flowchart TB
     PACK --> LANG[Language Support for Java]
     PACK --> DEBUG[Debugger for Java]
     PACK --> TEST[Test Runner for Java]
+    PACK --> GRADLE[Gradle for Java]
     PACK --> MAVEN[Maven for Java]
     PACK --> PROJECT[Project Manager for Java]
     PACK --> INTELLI[IntelliCode]
@@ -99,7 +100,7 @@ code --install-extension vscjava.vscode-java-pack
 개발자 B
  ├─ Language Support 설치
  ├─ Debugger 누락
- └─ Maven Extension 설치
+ └─ Gradle Extension 설치
 ```
 
 개발자마다 설치된 Extension이 다르면 IDE 기능과 가이드 화면이 달라진다.
@@ -211,7 +212,47 @@ MicroServer에서는 **필수**로 사용한다.
 
 ---
 
-# 8. Maven for Java
+# 8. Gradle for Java와 Maven for Java
+
+Extension Pack for Java에는 **Gradle for Java**와 **Maven for Java**가 함께 포함된다.
+
+MicroServer의 주 Build Tool은 Gradle이므로 Gradle for Java를 중심으로 사용하고, Maven for Java는 Maven 프로젝트를 열거나 두 Build Tool을 비교할 때 참고한다.
+
+## 8.1 Gradle for Java
+
+Extension ID:
+
+```text
+vscjava.vscode-gradle
+```
+
+주요 역할:
+
+- Gradle Project Import
+- Gradle Projects / Tasks View
+- Gradle Task 실행
+- Project Dependency 확인
+- Gradle Build Server 연계
+- `build.gradle` 작성 지원
+
+```text
+Gradle for Java Extension
+→ VS Code에서 Gradle Project를 탐색하고 Task를 실행하는 IDE 기능
+
+Gradle Wrapper
+→ 실제 프로젝트 Build 수행
+```
+
+프로젝트가 생성된 이후에는 다음 명령과 VS Code Task View를 함께 사용한다.
+
+```text
+./gradlew tasks
+./gradlew test
+./gradlew build
+./gradlew bootRun
+```
+
+## 8.2 Maven for Java
 
 Extension ID:
 
@@ -219,37 +260,22 @@ Extension ID:
 vscjava.vscode-maven
 ```
 
-VS Code에서 Maven 프로젝트를 탐색하고 Maven 명령 사용을 보조하는 Extension이다.
+Maven 프로젝트의 `pom.xml`, Lifecycle, Goal을 탐색하고 실행하는 기능을 제공한다.
 
-주요 역할:
+이번 MicroServer 프로젝트의 실제 Build에는 Maven을 사용하지 않지만, Maven 경험과 Gradle 구성을 비교하기 위해 Extension Pack에 포함된 상태를 유지한다.
 
-- Maven Project Explorer
-- Maven Project 탐색
-- Maven Goal 확인
-- Maven Lifecycle 확인
-- Maven 명령 실행 지원
-- Maven Dependency 관련 기능
-- Maven Project 관리 보조
-
-MicroServer 프로젝트는 Maven 기반으로 구성할 예정이므로 Java 개발환경에서 중요한 Extension이다.
-
-다만 역할을 다음과 같이 구분한다.
+예를 들어 다음 대응 관계를 이해할 수 있다.
 
 ```text
-Maven for Java Extension
-→ VS Code에서 Maven을 편리하게 사용하는 기능
-
-Apache Maven / Maven Wrapper
-→ 실제 프로젝트 Build 수행
+Maven for Java             Gradle for Java
+------------------------------------------------
+Maven Projects             Gradle Projects
+Lifecycle / Goal           Task
+pom.xml                    build.gradle
+mvnw                       gradlew
 ```
 
-앞 단계의 **Maven 설치 및 기본 환경 구성 가이드**에서 Apache Maven 자체는 이미 개발 PC에 준비했다.
-
-현재 단계에서는 아직 Maven 프로젝트가 없으므로 `pom.xml`, Lifecycle 실행, Dependency 구성,
-Maven Wrapper 연계 등 **프로젝트 단위 Maven 작업은 진행하지 않는다.**
-
-즉, 현재 설치하는 Maven for Java Extension은 앞에서 준비한 Maven을
-향후 VS Code의 Java 프로젝트와 연계하기 위한 IDE 지원 기능이다.
+현재 단계에서는 아직 실제 Gradle 프로젝트가 없으므로 Project Import와 Task 실행은 진행하지 않는다.
 
 ---
 
@@ -308,7 +334,8 @@ flowchart LR
     LANG[Java Language Support] --> EDIT[작성 / 탐색 / Refactoring]
     DEBUG[Debugger for Java] --> RUN[Debug]
     TEST[Test Runner] --> T[Test]
-    MAVEN[Maven for Java] --> BUILD[Build Tool 연계]
+    GRADLE[Gradle for Java] --> BUILD[Build Tool 연계]
+    MAVEN[Maven for Java] --> COMPARE[Maven 비교 / 호환]
     PM[Project Manager] --> STRUCT[Project 구조]
     INT[IntelliCode] --> ASSIST[작성 보조]
 ```
@@ -332,6 +359,7 @@ Extension Pack for Java
 Language Support for Java by Red Hat
 Debugger for Java
 Test Runner for Java
+Gradle for Java
 Maven for Java
 Project Manager for Java
 Visual Studio IntelliCode
@@ -410,8 +438,8 @@ Java Extension이 설치되었더라도 아직 다음 작업은 하지 않는다
 Java Project 생성
 Package 생성
 Class 생성
-pom.xml 작성
-Maven Build
+build.gradle / settings.gradle 확인
+Gradle Build
 JUnit Test 작성
 Debug 실행
 ```
@@ -426,7 +454,8 @@ Debug 실행
 - [ ] Language Support for Java by Red Hat이 설치되어 있다.
 - [ ] Debugger for Java가 설치되어 있다.
 - [ ] Test Runner for Java가 설치되어 있다.
-- [ ] Maven for Java가 설치되어 있다.
+- [ ] Gradle for Java가 설치되어 있다.
+- [ ] Maven for Java가 함께 설치되어 있음을 확인했다.
 - [ ] Project Manager for Java가 설치되어 있다.
 - [ ] IntelliCode가 설치되어 있다.
 - [ ] Command Palette에서 `Java:` 명령을 확인할 수 있다.
@@ -441,7 +470,7 @@ Java 개발 Extension 구성이 끝나면 Spring Boot 개발 기능을 추가한
 ```text
 JDK 준비
    ↓
-Maven 준비
+Gradle 준비
    ↓
 VS Code 설치
    ↓
@@ -452,7 +481,7 @@ Spring Boot Extension Pack
 개발 지원 Extension
 ```
 
-Apache Maven 자체는 이미 앞 단계에서 준비했으며,
+Gradle 기본 환경은 앞 단계에서 준비했으며, 실제 프로젝트 Build는 프로젝트 생성 이후 Gradle Wrapper로 수행한다.
 현재부터는 VS Code 안에서 Java / Spring Boot 개발 기능을 순차적으로 구성한다.
 
 ## 참고
@@ -465,3 +494,6 @@ Apache Maven 자체는 이미 앞 단계에서 준비했으며,
 
 - Managing Java Projects  
   <https://code.visualstudio.com/docs/java/java-project>
+
+- Java build tools in VS Code  
+  <https://code.visualstudio.com/docs/java/java-build>

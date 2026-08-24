@@ -1,22 +1,28 @@
-# Maven 기본 구조
+# Maven 기본 구조 - 비교 / 참고
 
-!!! info "작성 예정"
-    이 문서는 **Microserver 프로젝트 구축 과정에 맞춰 단계적으로 작성될 예정입니다.**
+!!! info "프로젝트 표준 변경"
+    Team-Microserver의 주 Build Tool은 **Gradle + Groovy DSL**이다.
 
-## 문서 목적
+    Maven 구조는 기존 Java / 금융 SI 프로젝트를 이해하기 위한 비교 대상으로 유지한다.
 
-이 단계에서 필요한 개념, 설정, 구현 방법, 테스트 및 검증 절차를 정리합니다.
+## 핵심 대응 관계
 
-## 작성 예정 내용
+| Gradle | Maven |
+|---|---|
+| `settings.gradle` | Parent `pom.xml`의 `<modules>` |
+| `build.gradle` | `pom.xml` |
+| `gradlew` | `mvnw` |
+| Task | Lifecycle / Goal |
+| `build/` | `target/` |
 
-- 기술 개요
-- 적용 목적 및 설계 방향
-- 환경 및 프로젝트 설정
-- 주요 소스코드
-- 실행 및 테스트 방법
-- 문제 해결 / 주의사항
-- Git Commit & Push 기준
+실제 프로젝트 구성은 다음 가이드를 따른다.
 
----
+→ [Gradle Wrapper 및 프로젝트 Gradle 설정](project_environment/project_gradle_setup.md)
 
-> 문서 상태: **준비중**
+→ [Gradle Multi-Project 기본 구성](project_structure/gradle_multi_module_setup.md)
+
+Maven 상세 비교가 필요한 경우 다음 참고 문서를 사용한다.
+
+→ [Maven Wrapper 및 프로젝트 Maven 설정 - 비교 / 참고](project_environment/project_maven_setup.md)
+
+→ [Maven 멀티모듈 기본 구성 - 비교 / 참고](project_structure/maven_multi_module_setup.md)

@@ -22,7 +22,7 @@
 다음 환경이 먼저 준비되어 있어야 한다.
 
 - Eclipse Temurin JDK 준비
-- Apache Maven 기본 환경 구성
+- Gradle 기본 환경 구성
 - VS Code 설치
 - Extension Pack for Java 설치
 
@@ -248,7 +248,8 @@ flowchart TB
     JAVA --> LANG[Java Language Support]
     JAVA --> DEBUG[Debugger]
     JAVA --> TEST[Test Runner]
-    JAVA --> MAVEN[Maven Support]
+    JAVA --> GRADLE[Gradle Support]
+    JAVA --> MAVEN[Maven Support - 비교]
 
     VS --> SPRING[Spring Boot Extension Pack]
     SPRING --> TOOLS[Spring Boot Tools]
@@ -345,7 +346,7 @@ Spring 관련 명령이 표시되면 Extension이 정상적으로 등록된 것�
 ```text
 JDK 준비
   ↓
-Maven 기본 환경 구성
+Gradle 기본 환경 구성
   ↓
 VS Code 설치
   ↓
@@ -358,7 +359,7 @@ Spring Boot Extension     ← 현재
 Spring Boot 프로젝트 생성
 ```
 
-Apache Maven 자체는 이미 앞 단계에서 준비되어 있다.
+Gradle 기본 환경은 앞 단계에서 준비되어 있다. 실제 프로젝트 Build는 Gradle Wrapper를 기준으로 한다.
 
 Spring Initializr Extension이 설치되었다고 여기서 바로 프로젝트를 생성하면
 **VS Code 환경 구성 단계와 실제 프로젝트 생성 단계가 섞이게 된다.**
@@ -375,7 +376,7 @@ Spring Initializr를 이용한 실제 프로젝트 생성은 다음 **Spring Boo
 ```text
 Spring Initializr 실행
 Spring Boot 프로젝트 생성
-pom.xml 작성
+build.gradle / settings.gradle 확인
 Spring Dependency 추가
 Application Class 작성
 application.yml 작성

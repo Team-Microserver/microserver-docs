@@ -29,9 +29,9 @@ VS Code 환경 구성 단계에서는 프로젝트별 JDK 운영 개념만 확�
 ```mermaid
 flowchart LR
     A[Spring Boot Project 생성] --> B[JDK / VS Code Workspace]
-    B --> C[Maven Wrapper / Maven 설정]
+    B --> C[Gradle Wrapper / Gradle 설정]
     C --> D[초기 Build / Run]
-    D --> E[Multi Module]
+    D --> E[Gradle Multi-Project]
 ```
 
 현재:
@@ -41,7 +41,7 @@ Spring Boot Project 생성
         ↓
 [ 프로젝트 JDK / VS Code Workspace 설정 ]     ← 현재
         ↓
-Maven Wrapper 및 프로젝트 Maven 설정
+Gradle Wrapper 및 프로젝트 Gradle 설정
 ```
 
 ---
@@ -54,7 +54,7 @@ MicroServer에서는 다음 세 가지를 구분한다.
 flowchart TB
     JAVA[Java Version]
 
-    JAVA --> BUILD[pom.xml의 Project Java Version]
+    JAVA --> BUILD[build.gradle의 Java Toolchain]
     JAVA --> LOCAL[개발자 PC의 실제 JDK 경로]
     JAVA --> IDE[VS Code Workspace 공통 설정]
 ```
@@ -63,19 +63,29 @@ flowchart TB
 
 | 구분 | 역할 | Git 공유 |
 |---|---|---|
-| `pom.xml` Java Version | 프로젝트 Build 기준 | O |
+| `build.gradle` Java Toolchain | 프로젝트 Build 기준 | O |
 | `java.configuration.runtimes` | 개발 PC의 실제 JDK 경로 매핑 | X 권장 |
 | `.vscode/settings.json` | 공유 가능한 Workspace 설정 | O |
 | `.vscode/extensions.json` | 권장 Extension 목록 | O |
 
 !!! info "중요"
 
-    **프로젝트의 Java Version 기준은 `pom.xml`이다.**
+    **프로젝트의 Java Version 기준은 `build.gradle`의 Java Toolchain이다.**
 
     VS Code의 `java.configuration.runtimes`는
     개발 PC에 설치된 실제 JDK Directory를 VS Code에 알려주는 로컬 설정이다.
 
     두 설정의 역할을 혼동하지 않는다.
+
+### Maven과 비교
+
+Maven 프로젝트에서는 Java 기준을 주로 `pom.xml`의 `<java.version>` 또는 Compiler 설정으로 관리한다.
+Gradle 프로젝트에서는 이번 가이드 기준으로 `build.gradle`의 Java Toolchain을 사용한다.
+
+```text
+Maven  : pom.xml <java.version>26</java.version>
+Gradle : build.gradle → JavaLanguageVersion.of(26)
+```
 
 ---
 
@@ -163,9 +173,10 @@ File
 Explorer Root에서 다음 파일을 바로 확인할 수 있어야 한다.
 
 ```text
-pom.xml
-mvnw
-mvnw.cmd
+build.gradle
+settings.gradle
+gradlew
+gradlew.bat
 src/
 ```
 
@@ -176,7 +187,7 @@ src/
 본인이 Clone하거나 생성한 MicroServer Repository라면
 VS Code가 Workspace Trust를 요청할 때 Source를 확인한 후 Trust한다.
 
-Java Language Server, Maven, Debugger 등 일부 기능은
+Java Language Server, Gradle, Debugger 등 일부 기능은
 Restricted Mode에서 제한될 수 있다.
 
 신뢰할 수 없는 외부 Repository는 내용을 먼저 확인한다.
@@ -185,7 +196,7 @@ Restricted Mode에서 제한될 수 있다.
 
 ## 8. Java Project Import
 
-VS Code는 `pom.xml`을 감지하여 Maven Java Project를 Import한다.
+VS Code는 `build.gradle`과 `settings.gradle`을 감지하여 Gradle Java Project를 Import한다.
 
 Java Projects View를 확인한다.
 
@@ -201,14 +212,16 @@ Project Import가 완료될 때까지 Status Bar 또는 Output을 확인한다.
 
 ## 9. Project Java Version 확인
 
-`pom.xml`에서 Java Version을 확인한다.
+`build.gradle`에서 Java Toolchain Version을 확인한다.
 
 예:
 
-```xml
-<properties>
-    <java.version>26</java.version>
-</properties>
+```groovy
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(26)
+    }
+}
 ```
 
 현재 MicroServer 기준:
@@ -219,8 +232,8 @@ Java 26
 
 !!! note
 
-    Maven Project의 Java Version을 변경하려면
-    VS Code 설정만 바꾸는 것이 아니라 Build Script인 `pom.xml`을 함께 변경해야 한다.
+    Gradle Project의 Java Version을 변경하려면
+    VS Code 설정만 바꾸는 것이 아니라 Build Script인 `build.gradle`의 Toolchain을 함께 변경해야 한다.
 
 ---
 
@@ -362,8 +375,8 @@ Maven / Gradle Build Project의 실제 Java Version은 Build Script의 설정이
 java.configuration.runtimes
 → VS Code가 Local JDK를 찾는 기준
 
-pom.xml
-→ Maven Project의 Build Java 기준
+build.gradle
+→ Gradle Project의 Build Java 기준
 ```
 
 ---
@@ -437,9 +450,10 @@ microserver/
 ```text
 microserver/
 ├─ .vscode/
-├─ .mvn/
+├─ gradle/
 ├─ src/
-└─ pom.xml
+├─ settings.gradle
+└─ build.gradle
 ```
 
 ---
@@ -468,7 +482,7 @@ files.encoding
 → Workspace 파일 Encoding 기준
 
 java.configuration.updateBuildConfiguration
-→ pom.xml 같은 Build 설정 변경 시
+→ build.gradle / settings.gradle 같은 Build 설정 변경 시
    Java Project Classpath / Configuration 갱신
 ```
 
@@ -484,10 +498,10 @@ java.configuration.updateBuildConfiguration
 "java.configuration.updateBuildConfiguration": "automatic"
 ```
 
-은 Maven `pom.xml` 등이 변경되었을 때
+은 Gradle `build.gradle` / `settings.gradle` 등이 변경되었을 때
 VS Code Java Project의 Classpath / Build Configuration 갱신을 자동으로 수행하도록 한다.
 
-Multi Module 전환 과정에서 `pom.xml`이 많이 변경되므로
+Gradle Multi-Project 전환 과정에서 Build Script가 많이 변경되므로
 초기 프로젝트에서는 자동 갱신을 사용한다.
 
 문제가 생기면 Command Palette에서 수동 Import / Clean 명령을 사용할 수 있다.
@@ -508,6 +522,7 @@ microserver/.vscode/extensions.json
 {
   "recommendations": [
     "vscjava.vscode-java-pack",
+    "vscjava.vscode-gradle",
     "vmware.vscode-boot-dev-pack",
     "redhat.vscode-yaml",
     "redhat.vscode-xml",
@@ -520,6 +535,7 @@ microserver/.vscode/extensions.json
 
 ```text
 Extension Pack for Java
+Gradle for Java
 Spring Boot Extension Pack
 YAML
 XML
@@ -586,11 +602,12 @@ microserver/
 ├─ .vscode/
 │  ├─ settings.json
 │  └─ extensions.json
-├─ .mvn/
+├─ gradle/
 ├─ src/
-├─ pom.xml
-├─ mvnw
-└─ mvnw.cmd
+├─ settings.gradle
+├─ build.gradle
+├─ gradlew
+└─ gradlew.bat
 ```
 
 ---
@@ -625,9 +642,9 @@ Project를 다시 Import하는 문제 해결 수단이다.
 
 ---
 
-## 25. Maven View 확인
+## 25. Gradle Projects View 확인
 
-Explorer의 Maven View에서:
+Explorer의 Gradle Projects View에서:
 
 ```text
 microserver
@@ -635,11 +652,11 @@ microserver
 
 Project가 표시되는지 확인한다.
 
-현재는 Maven Goal을 본격 실행하지 않는다.
+현재는 Gradle Task를 본격 실행하지 않는다.
 
-Wrapper / Maven 설정은 다음 문서에서 진행한다.
+Wrapper / Gradle 설정은 다음 문서에서 진행한다.
 
-→ [Maven Wrapper 및 프로젝트 Maven 설정](project_maven_setup.md)
+→ [Gradle Wrapper 및 프로젝트 Gradle 설정](project_gradle_setup.md)
 
 ---
 
@@ -652,7 +669,7 @@ Spring Boot Dashboard에서 Application이 표시되는지 확인한다.
 현재 확인 목적:
 
 ```text
-VS Code가 Maven Project 인식
+VS Code가 Gradle Project 인식
         ↓
 Java Extension 인식
         ↓
@@ -666,10 +683,10 @@ Spring Boot Extension 인식
 다음은 아직 진행하지 않는다.
 
 ```text
-Maven Wrapper Version 변경
-clean / package
+Gradle Wrapper Version 변경
+clean / build
 Spring Boot 실행
-Multi Module 구성
+Gradle Multi-Project 구성
 Oracle Driver
 Datasource
 Controller / Service / DAO
@@ -721,7 +738,7 @@ git push
 ```mermaid
 flowchart TB
     P[MicroServer Project]
-    P --> POM[pom.xml Java 26]
+    P --> BUILD[build.gradle Java Toolchain 26]
     P --> VS[.vscode]
     VS --> SETTINGS[settings.json]
     VS --> EXT[extensions.json]
@@ -735,15 +752,15 @@ flowchart TB
 
 ## 31. 체크리스트
 
-- [ ] `pom.xml`의 Java Version이 26이다.
+- [ ] `build.gradle`의 Java Toolchain Version이 26이다.
 - [ ] Windows/macOS에 맞는 JDK Home을 확인했다.
 - [ ] `java.configuration.runtimes`를 User Settings에 등록했다.
 - [ ] `Java: Configure Java Runtime`에서 Project Runtime을 확인했다.
 - [ ] JDK 절대경로를 Workspace Repository에 Commit하지 않았다.
 - [ ] `.vscode/settings.json`을 생성했다.
 - [ ] `.vscode/extensions.json`을 생성했다.
-- [ ] 권장 Extension 목록을 구성했다.
-- [ ] Java Project가 정상 Import된다.
+- [ ] 권장 Extension 목록에 Gradle for Java를 포함했다.
+- [ ] Java / Gradle Project가 정상 Import된다.
 - [ ] Spring Boot Dashboard에서 Project를 확인할 수 있다.
 - [ ] Git Commit / Push를 완료했다.
 
@@ -751,17 +768,17 @@ flowchart TB
 
 ## 32. 다음 단계
 
-다음 단계에서는 Spring Initializr가 생성한 Maven Wrapper를 검토하고
-MicroServer Project의 Maven 실행 기준을 확정한다.
+다음 단계에서는 Spring Initializr가 생성한 Gradle Wrapper를 검토하고
+MicroServer Project의 Gradle 실행 기준을 확정한다.
 
-→ [Maven Wrapper 및 프로젝트 Maven 설정](project_maven_setup.md)
+→ [Gradle Wrapper 및 프로젝트 Gradle 설정](project_gradle_setup.md)
 
 ```text
 Project 생성
         ↓
 JDK / VS Code Workspace 설정       ← 현재 완료
         ↓
-Maven Wrapper / Maven 설정
+Gradle Wrapper / Gradle 설정
 ```
 
 ---
@@ -779,3 +796,6 @@ Maven Wrapper / Maven 설정
 
 - Language Support for Java by Red Hat  
   <https://github.com/redhat-developer/vscode-java>
+
+- Java Build Tools in VS Code  
+  <https://code.visualstudio.com/docs/java/java-build>

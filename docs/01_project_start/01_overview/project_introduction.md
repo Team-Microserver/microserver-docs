@@ -104,7 +104,7 @@ Microserver에서 단계적으로 구축할 주요 영역은 다음과 같습니
 - Git / GitHub
 - JDK
 - VS Code
-- Maven
+- Gradle
 - Python / MkDocs 문서 환경
 - Oracle / Docker 로컬 환경
 - Spring Boot 프로젝트 생성
@@ -115,7 +115,7 @@ Microserver에서 단계적으로 구축할 주요 영역은 다음과 같습니
 
 업무 기능과 공통 기능을 분리하고 재사용할 수 있도록 프로젝트 구조를 설계합니다.
 
-- Maven Multi Module 구조
+- Gradle Multi-Project 구조
 - Common Module
 - Runtime Module
 - Admin Module

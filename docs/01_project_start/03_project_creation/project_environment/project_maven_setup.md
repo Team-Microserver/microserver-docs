@@ -1,4 +1,14 @@
-# Maven Wrapper 및 프로젝트 Maven 설정 가이드
+# Maven Wrapper 및 프로젝트 Maven 설정 가이드 - 비교 / 참고
+
+!!! info "MicroServer Build Tool 기준"
+    현재 Team-Microserver의 **주 Build Tool은 Gradle + Groovy DSL**이다.
+
+    이 문서는 Maven 프로젝트의 설정 방식을 비교하고 기존 Maven 기반 프로젝트를 이해하기 위한 참고 자료로 유지한다.
+    실제 MicroServer 구축 절차는 [Gradle Wrapper 및 프로젝트 Gradle 설정](project_gradle_setup.md)을 우선한다.
+
+    이후 가이드에서는 Gradle 설정을 먼저 제시하고 필요한 경우 Maven 대응 설정을 함께 설명한다.
+
+---
 
 ## 1. 문서 목적
 

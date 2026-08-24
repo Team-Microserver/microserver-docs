@@ -121,7 +121,7 @@ flowchart TD
    ├─ Java 개발환경
    │  ├─ JDK 설치 및 설정
    │  ├─ VS Code 개발환경 구성
-   │  └─ Maven 설치 및 설정
+   │  └─ Gradle 설치 및 설정
    └─ Database 개발환경
       └─ Oracle / Docker 로컬 환경
 ```
@@ -159,8 +159,9 @@ Team-Microserver를 개발하고 문서화하기 위한 **표준 로컬 개발�
 - JDK 설치 및 환경변수 설정
 - Visual Studio Code 설치
 - Java / Spring 개발 Extension 구성
-- Maven 설치 및 설정
+- Gradle 설치 및 설정
 - Build 및 실행환경 확인
+- 주요 Gradle 설정마다 Maven 대응 설정을 함께 비교
 
 #### Database 개발환경
 
@@ -176,7 +177,7 @@ Team-Microserver를 개발하고 문서화하기 위한 **표준 로컬 개발�
 Git Clone / Commit / Push
 MkDocs Serve
 Java 실행
-Maven Build
+Gradle Build
 VS Code Debug
 Oracle 접속
 ```
@@ -191,7 +192,7 @@ Oracle 접속
 프로젝트 시작
 └─ 프로젝트 생성
    ├─ Spring Boot 프로젝트 생성
-   ├─ Maven 기본 구조
+   ├─ Gradle 기본 구조
    ├─ Package 구조 설계
    ├─ application.yml 기본 설정
    └─ 프로젝트 최초 실행
@@ -210,12 +211,15 @@ Team-Microserver의 출발점이 되는 **최소 실행 가능한 Spring Boot �
 - 필요한 최소 Dependency 구성
 - 기본 프로젝트 생성
 
-#### 2. Maven 기본 구조 확인
+#### 2. Gradle 기본 구조 확인
 
-- `pom.xml` 구조 이해
-- Dependency 관리
-- Build Lifecycle 확인
-- 기본 Maven 명령 확인
+- `settings.gradle`과 Root Project 역할 이해
+- `build.gradle` 구조 이해
+- Plugin / Repository / Dependency Configuration 이해
+- Gradle Wrapper (`gradlew`) 이해
+- Task / Build Lifecycle 확인
+- `build`, `test`, `bootRun`, `dependencies` 기본 Task 확인
+- 같은 설정을 Maven `pom.xml`, Lifecycle과 비교
 
 #### 3. Package 구조 설계
 
@@ -232,7 +236,7 @@ Team-Microserver의 출발점이 되는 **최소 실행 가능한 Spring Boot �
 
 #### 5. 프로젝트 최초 실행
 
-- Maven Build
+- Gradle Build
 - Spring Boot 실행
 - 기본 애플리케이션 시작 확인
 - 최초 실행 결과 검증
@@ -242,7 +246,7 @@ Team-Microserver의 출발점이 되는 **최소 실행 가능한 Spring Boot �
 ```text
 Spring Boot 프로젝트 생성
         ↓
-Maven Build 성공
+Gradle Build 성공
         ↓
 애플리케이션 정상 실행
         ↓
@@ -290,7 +294,7 @@ API 개발 표준
 
 ### 주요 목표
 
-단일 Spring Boot 프로젝트를 역할별 모듈로 분리하여 **확장 가능한 Maven 멀티모듈 구조를 구축**한다.
+단일 Spring Boot 프로젝트를 역할별 모듈로 분리하여 **확장 가능한 Gradle Multi-Project 구조를 구축**한다.
 
 ### 주요 내용
 
@@ -319,13 +323,13 @@ API 개발 표준
 
 #### 멀티모듈 프로젝트
 
-각 모듈을 하나의 Maven 프로젝트 구조로 통합하고 모듈 간 의존성을 정의한다.
+각 모듈을 하나의 Gradle Multi-Project 구조로 통합하고 모듈 간 의존성을 정의한다.
 
 ### 완료 기준
 
 - 각 모듈의 역할이 명확하다.
 - 모듈 간 의존 관계가 정의되어 있다.
-- 전체 프로젝트가 Maven으로 정상 Build 된다.
+- 전체 프로젝트가 Gradle Wrapper로 정상 Build 된다.
 - 공통 기능을 여러 모듈에서 재사용할 수 있다.
 
 ---
@@ -880,8 +884,8 @@ Team-Microserver
 ├─ 프로젝트 기반
 │  ├─ 표준 개발환경
 │  ├─ Spring Boot
-│  ├─ Maven
-│  └─ Multi Module
+│  ├─ Gradle
+│  └─ Multi-Project
 │
 ├─ 공통 Framework
 │  ├─ Response

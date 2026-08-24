@@ -167,7 +167,7 @@ Java: Install New JDK
 ```text
 JDK 준비
    ↓
-Maven 기본 환경 준비
+Gradle 기본 환경 준비
    ↓
 VS Code 준비
    ↓
@@ -177,7 +177,7 @@ MicroServer Spring Boot 프로젝트 생성
    ↓
 VS Code Workspace 열기
    ↓
-프로젝트별 JDK / Maven / Workspace 설정
+프로젝트별 JDK / Gradle / Workspace 설정
 ```
 
 즉, **JDK를 선택할 수 있는 VS Code 환경은 지금 준비하지만 실제 프로젝트 경로와 연결하는 설정은 프로젝트가 생성된 뒤 수행**한다.
@@ -228,8 +228,8 @@ VS Code Workspace JDK
 
 MicroServer에서는 후자를 프로젝트 개발환경의 기준으로 삼는다.
 
-Apache Maven 자체의 개발 PC 환경은 앞 단계에서 이미 구성했지만,
-**생성된 프로젝트가 사용할 Java 버전, Maven Wrapper, `pom.xml` Build 설정은 아직 구성하지 않는다.**
+Gradle 기본 환경은 앞 단계에서 이미 준비했지만,
+**생성된 프로젝트가 사용할 Java 버전, Gradle Wrapper, `build.gradle` / `settings.gradle` Build 설정은 아직 구성하지 않는다.**
 
 이 내용은 Spring Boot 프로젝트 생성 이후의 프로젝트 개발환경 설정 단계에서 다룬다.
 
@@ -292,7 +292,7 @@ Output 목록에서 관련 Extension 로그를 확인한다.
 ```text
 Language Support for Java
 Spring Boot Tools
-Maven for Java
+Gradle for Java / Build Server for Gradle
 ```
 
 ## 11.4 Java Command 확인
@@ -359,8 +359,8 @@ Java / Spring Extension은 지속적으로 업데이트된다.
 
 ```text
 Spring Boot 프로젝트 생성
-pom.xml 작성 / 수정
-Maven Dependency 추가
+build.gradle / settings.gradle 작성 / 수정
+Gradle Dependency 추가
 Java Package 생성
 Application Class 작성
 application.yml 작성
@@ -407,7 +407,7 @@ flowchart TB
     JAVA --> LANG[Java Language Support]
     JAVA --> DEBUG[Debugger]
     JAVA --> TEST[Test Runner]
-    JAVA --> MAVEN[Maven Support]
+    JAVA --> GRADLE[Gradle Support]
 
     SPRING --> TOOLS[Spring Boot Tools]
     SPRING --> INIT[Spring Initializr]
@@ -454,7 +454,7 @@ flowchart TB
 ## 단계 확인
 
 - [ ] 아직 MicroServer Spring Boot 프로젝트를 생성하지 않았다.
-- [ ] 아직 `pom.xml`을 작성하지 않았다.
+- [ ] 아직 `build.gradle` / `settings.gradle`을 작성하지 않았다.
 - [ ] 아직 Application 실행 / Debug를 하지 않았다.
 - [ ] 실제 Workspace JDK 설정은 프로젝트 생성 이후 적용한다.
 
@@ -469,21 +469,21 @@ flowchart TB
 ```text
 JDK 설치 및 설정
         ↓
-Maven 설치 및 기본 환경 구성
+Gradle 설치 및 기본 환경 구성
         ↓
 VS Code 개발환경 구성       ← 현재 완료
         ↓
 Spring Boot 프로젝트 생성
         ↓
-프로젝트 JDK / Maven / VS Code 설정
+프로젝트 JDK / Gradle / VS Code 설정
         ↓
 프로젝트 기본 구조 구성
 ```
 
-현재까지는 개발 PC에 JDK, Maven, VS Code와 필요한 Extension을 준비한 상태이다.
+현재까지는 개발 PC에 JDK, Gradle, VS Code와 필요한 Extension을 준비한 상태이다.
 
 실제 `.vscode/settings.json`, `java.configuration.runtimes`,
-Maven Wrapper, `pom.xml`의 Java / Build 설정 등은
+Gradle Wrapper, `build.gradle` / `settings.gradle`의 Java / Build 설정 등은
 Spring Boot 프로젝트 생성 이후의 **프로젝트 개발환경 설정 단계**에서 적용한다.
 
 ## 참고

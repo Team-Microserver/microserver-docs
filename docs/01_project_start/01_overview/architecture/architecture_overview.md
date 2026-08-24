@@ -240,7 +240,7 @@ Microserver는 다음 순서로 발전시킵니다.
 ```text
 Spring Boot 기본 프로젝트
         ↓
-Maven Multi Module 구성
+Gradle Multi-Project 구성
         ↓
 공통 Module 구성
         ↓

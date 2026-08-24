@@ -318,7 +318,7 @@ git push
 | `docs` | 문서 변경 |
 | `refactor` | 리팩터링 |
 | `test` | 테스트 추가/수정 |
-| `build` | Maven, Dependency 등 빌드 변경 |
+| `build` | Gradle/Maven, Dependency 등 빌드 변경 |
 | `chore` | 기타 설정 및 유지보수 |
 
 예:
@@ -327,7 +327,7 @@ git push
 feat: add common response wrapper
 fix: handle authentication exception
 docs: add Oracle Docker setup guide
-build: configure multi-module Maven project
+build: configure Gradle multi-project build
 ```
 
 Commit은 가능한 한 **하나의 의미 있는 변경 단위**로 나눈다.
@@ -367,10 +367,12 @@ git push -u origin feature/common-filter
 Java, VS Code, Python, MkDocs, 운영체제 파일이 섞이지 않도록 기본 제외 규칙을 둔다.
 
 ```gitignore
-# Java / Maven
-target/
+# Java / Gradle
+build/
+.gradle/
 *.class
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 *.war
 
 # IDE

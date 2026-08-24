@@ -21,8 +21,8 @@ VS Code 개발환경 구성
 따라서 다음 작업은 이후 가이드에서 진행한다.
 
 - Spring Boot 프로젝트 생성
-- `pom.xml` 작성 및 수정
-- Maven Dependency 구성
+- `build.gradle` / `settings.gradle` 작성 및 수정
+- Gradle Dependency 구성
 - Java Package / Class 작성
 - `application.yml` 작성
 - 애플리케이션 실행
@@ -41,21 +41,21 @@ MicroServer 개발환경은 다음 순서로 구성한다.
 ```mermaid
 flowchart LR
     A[Git / GitHub 환경 구성] --> B[Temurin JDK 준비]
-    B --> C[Apache Maven 준비]
+    B --> C[Gradle 기본 환경]
     C --> D[VS Code 설치]
     D --> E[Java Extension 구성]
     E --> F[Spring Boot Extension 구성]
     F --> G[지원 Extension / Profile 구성]
     G --> H[JDK 연계 방식 확인]
     H --> I[Spring Boot 프로젝트 생성]
-    I --> J[프로젝트 JDK / Maven / VS Code 설정]
+    I --> J[프로젝트 JDK / Gradle / VS Code 설정]
 ```
 
 현재 가이드는 다음 범위를 담당한다.
 
 ```mermaid
 flowchart LR
-    JDK[Temurin JDK 준비] --> MAVEN[Apache Maven 준비]
+    JDK[Temurin JDK 준비] --> GRADLE[Gradle 준비]
 
     subgraph VSCODE["VS Code 개발환경 구성"]
         direction LR
@@ -72,7 +72,7 @@ flowchart LR
     SPRING[Spring Boot 프로젝트 생성]
     PROJECT[프로젝트 개발환경 설정]
 
-    MAVEN --> VSCODE
+    GRADLE --> VSCODE
     VSCODE --> SPRING
     SPRING --> PROJECT
 ```
@@ -144,7 +144,7 @@ Developer PC
 - UTF-8 등 기본 Editor 설정
 - User Settings와 Workspace Settings의 차이
 
-→ [VS Code 설치 및 기본 설정](vscode/vscode_install_basic_setup.md)
+→ [VS Code 설치 및 기본 설정](vscode_install_basic_setup.md)
 
 ### 4.2 Java 개발 Extension 구성
 
@@ -155,12 +155,13 @@ Developer PC
 - Language Support for Java
 - Debugger for Java
 - Test Runner for Java
-- Maven for Java
+- Gradle for Java
+- Maven for Java (비교/호환)
 - Project Manager for Java
 - Visual Studio IntelliCode
 - 각 Extension의 역할과 이후 사용 시점
 
-→ [Java 개발 Extension 구성](vscode/java_extension_setup.md)
+→ [Java 개발 Extension 구성](java_extension_setup.md)
 
 ### 4.3 Spring Boot Extension 구성
 
@@ -173,7 +174,7 @@ Developer PC
 - Java Extension과 Spring Extension의 관계
 - 현재 단계와 프로젝트 생성 이후 단계의 구분
 
-→ [Spring Boot Extension 구성](vscode/spring_boot_extension_setup.md)
+→ [Spring Boot Extension 구성](spring_boot_extension_setup.md)
 
 ### 4.4 개발 지원 Extension 및 Profile 구성
 
@@ -188,7 +189,7 @@ Developer PC
 - Java Spring Profile Template
 - Extension 자동 업데이트와 운영 원칙
 
-→ [개발 지원 Extension 및 Profile 구성](vscode/support_extension_profile_setup.md)
+→ [개발 지원 Extension 및 Profile 구성](support_extension_profile_setup.md)
 
 ### 4.5 JDK 연계 및 개발환경 운영
 
@@ -203,7 +204,7 @@ Developer PC
 - 현재 단계에서 하지 않는 작업
 - 최종 환경 확인 체크리스트
 
-→ [JDK 연계 및 개발환경 운영](vscode/jdk_workspace_environment_setup.md)
+→ [JDK 연계 및 개발환경 운영](jdk_workspace_environment_setup.md)
 
 ---
 
@@ -251,17 +252,17 @@ VS Code 환경 구성이 끝나면 **Spring Boot 프로젝트 생성 단계**로
 ```text
 JDK 설치 및 설정
         ↓
-Maven 설치 및 기본 환경 구성
+Gradle 설치 및 기본 환경 구성
         ↓
 VS Code 개발환경 구성       ← 현재
         ↓
 Spring Boot 프로젝트 생성
         ↓
-프로젝트 JDK / Maven / VS Code 설정
+프로젝트 JDK / Gradle / VS Code 설정
 ```
 
-JDK와 Maven은 앞 단계에서 이미 개발 PC에 준비되어 있다.
+JDK와 Gradle 기본 환경은 앞 단계에서 이미 준비되어 있다.
 
 VS Code 단계에서는 IDE와 Java / Spring Boot 개발 Extension을 준비하고,
-실제 프로젝트 JDK Runtime, Maven Wrapper, `pom.xml`, Workspace 설정 등은
+실제 프로젝트 JDK Runtime, Gradle Wrapper, `build.gradle`, `settings.gradle`, Workspace 설정 등은
 Spring Boot 프로젝트가 생성된 이후의 **프로젝트 개발환경 설정 단계**에서 적용한다.

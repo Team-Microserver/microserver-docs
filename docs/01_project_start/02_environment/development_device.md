@@ -7,7 +7,7 @@
 MicroServer 프로젝트는 단순한 예제 프로젝트가 아니라 다음 환경을 로컬에서 단계적으로 구성하는 것을 전제로 한다.
 
 - Java / Spring 기반 애플리케이션 개발
-- Maven 멀티모듈 프로젝트 빌드
+- Gradle Multi-Project 빌드
 - Oracle Database 로컬 실행
 - Docker 기반 개발 인프라 실행
 - MkDocs 기반 기술문서 작성 및 로컬 미리보기
@@ -27,7 +27,7 @@ flowchart LR
     DEV[개발자 PC] --> VSCODE[VS Code]
     DEV --> GIT[Git / GitHub]
     DEV --> JDK[JDK]
-    DEV --> MAVEN[Maven]
+    DEV --> GRADLE[Gradle]
     DEV --> PYTHON[Python / MkDocs]
     DEV --> DOCKER[Docker Desktop]
 
@@ -43,7 +43,7 @@ flowchart LR
 1. **애플리케이션 개발 장비**
    - Java 소스 편집
    - 테스트 실행
-   - Maven 빌드
+   - Gradle 빌드
    - Spring Boot 애플리케이션 실행
 
 2. **로컬 개발 서버**
@@ -155,7 +155,7 @@ MicroServer 개발 장비에는 다음 소프트웨어를 설치한다.
 | SCM | Git | 소스 형상관리 |
 | Remote SCM | GitHub | 원격 저장소 / 협업 |
 | Java | JDK | Java 컴파일 및 실행 |
-| Build | Maven | 빌드 및 의존성 관리 |
+| Build | Gradle | 빌드 및 의존성 관리 |
 | Container | Docker Desktop | 로컬 인프라 실행 |
 | Database | Oracle Database Free | 로컬 개발 DB |
 | Python | Python | MkDocs 실행 환경 |
@@ -199,26 +199,26 @@ Git 저장소는 가능하면 OneDrive, iCloud Drive 등 실시간 동기화 폴
 
 ## 7. 디스크 공간 운영 기준
 
-Java 소스 자체는 크지 않지만 Docker 이미지와 Maven 캐시가 지속적으로 증가할 수 있다.
+Java 소스 자체는 크지 않지만 Docker 이미지와 Gradle 캐시가 지속적으로 증가할 수 있다.
 
 주요 공간 사용 위치는 다음과 같다.
 
 ```text
 프로젝트 소스
-Maven Local Repository
+Gradle Cache
 Docker Image / Volume
 VS Code Extension
 Python Virtual Environment
 MkDocs Build 결과
 ```
 
-### Maven 캐시
+### Gradle 캐시
 
 기본 위치:
 
 ```text
-Windows: C:\Users\<사용자>\.m2\repository
-macOS:   ~/.m2/repository
+Windows: C:\Users\<사용자>\.gradle\caches
+macOS:   ~/.gradle/caches
 ```
 
 ### Python 가상환경
@@ -268,7 +268,7 @@ docker start microserver-oracle
 ```bash
 git --version
 java -version
-mvn -version
+gradle --version
 python --version
 # macOS에서는 python3 --version 사용 가능
 docker --version
@@ -293,7 +293,7 @@ flowchart TD
     B --> C[Python / MkDocs]
     C --> D[JDK]
     D --> E[VS Code Java 개발환경]
-    E --> F[Maven]
+    E --> F[Gradle]
     F --> G[Docker Desktop]
     G --> H[Oracle Database]
     H --> I[MicroServer 프로젝트 실행]
@@ -308,7 +308,7 @@ flowchart TD
 5. MkDocs 실행 환경 구성
 6. JDK 설치
 7. VS Code Java 확장 구성
-8. Maven 설치 및 Wrapper 확인
+8. Gradle 설치 및 Wrapper 이해
 9. Docker Desktop 설치
 10. Oracle Database 컨테이너 실행
 11. 프로젝트 빌드 및 테스트
@@ -331,7 +331,7 @@ flowchart TD
 - 환경변수
 - 로컬 전용 설정 파일
 - `.env`
-- Maven `settings.xml`
+- Gradle `gradle.properties`
 - 운영환경 Secret 관리 시스템
 
 그리고 해당 파일은 `.gitignore`에 등록한다.
@@ -355,7 +355,7 @@ flowchart TD
 - [ ] Git 명령이 실행된다.
 - [ ] GitHub 저장소에 접근할 수 있다.
 - [ ] JDK가 설치되어 있다.
-- [ ] Maven 또는 Maven Wrapper가 실행된다.
+- [ ] Gradle을 실행할 수 있고 프로젝트 생성 이후 Gradle Wrapper를 사용할 준비가 되어 있다.
 - [ ] Python 가상환경을 생성할 수 있다.
 - [ ] MkDocs 로컬 서버를 실행할 수 있다.
 - [ ] Docker Desktop이 정상 실행된다.
@@ -371,5 +371,5 @@ flowchart TD
 2. **Python / MkDocs 환경 구성**
 3. **JDK 설치 및 설정**
 4. **VS Code 개발환경 구성**
-5. **Maven 설치 및 설정**
+5. **Gradle 설치 및 설정**
 6. **Oracle / Docker 로컬 환경 구성**

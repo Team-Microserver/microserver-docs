@@ -131,9 +131,9 @@ code --install-extension redhat.vscode-xml
 - XML 구조 탐색
 - XSD 기반 지원
 
-향후 Maven 프로젝트가 생성되면 `pom.xml`과 기타 XML 파일 편집에 활용한다.
+MicroServer의 주 Build Script는 Gradle이므로 `build.gradle`에는 XML Extension이 필요하지 않다. 다만 Maven 비교 예제, XML 설정 파일, 기타 Java 생태계 XML 편집에 활용한다.
 
-> 현재 단계에서는 `pom.xml`을 생성하거나 수정하지 않는다.
+> 현재 단계에서는 실제 프로젝트의 `build.gradle` / `settings.gradle`을 생성하거나 수정하지 않는다.
 
 ---
 
@@ -240,7 +240,7 @@ Extension Pack for Java
 Language Support for Java by Red Hat
 Debugger for Java
 Test Runner for Java
-Maven for Java
+Gradle for Java
 Project Manager for Java
 Visual Studio IntelliCode
 ```
@@ -385,7 +385,7 @@ Update
 ```text
 Language Support for Java
 Debugger for Java
-Maven for Java
+Gradle for Java
 Spring Boot Tools
 Spring Boot Dashboard
 ```
@@ -448,7 +448,7 @@ microserver/
 ```text
 JDK 준비
    ↓
-Maven 준비
+Gradle 준비
    ↓
 VS Code / Java / Spring Extension
    ↓
@@ -459,8 +459,8 @@ JDK 연계 및 VS Code 환경 운영 확인
 Spring Boot 프로젝트 생성
 ```
 
-Apache Maven 환경은 이미 VS Code 구성 전에 준비되어 있으므로
-VS Code 환경 구성이 완료되면 별도의 Maven 설치 단계로 되돌아가지 않는다.
+Gradle 기본 환경은 이미 VS Code 구성 전에 준비되어 있으므로
+VS Code 환경 구성이 완료되면 별도의 Build Tool 설치 단계로 되돌아가지 않는다.
 
 ## 참고
 

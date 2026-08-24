@@ -28,7 +28,7 @@ Docker Desktop 위에 **Oracle AI Database Free 기반 로컬 Database 환경**�
 다음 내용은 Spring Boot 프로젝트 생성 이후 별도 가이드에서 진행한다.
 
 - Oracle JDBC Driver
-- `pom.xml`
+- `build.gradle`
 - Datasource
 - `application-local.yml`
 - Docker Compose 프로젝트 파일
@@ -772,7 +772,7 @@ Migration History
 ```mermaid
 flowchart TD
     A[Spring Boot 프로젝트 생성]
-    A --> B[프로젝트 Maven 설정]
+    A --> B[프로젝트 Gradle 설정]
     B --> C[Oracle JDBC Driver]
     C --> D[Datasource / Local Profile]
     D --> E[Schema / Migration]
@@ -785,7 +785,7 @@ flowchart TD
 
 ```text
 ojdbc
-pom.xml
+build.gradle
 application-local.yml
 DB_USERNAME / DB_PASSWORD
 Docker Compose
@@ -1049,7 +1049,7 @@ FREEPDB1
 ### 단계 확인
 
 - [ ] 아직 Spring Boot 프로젝트를 생성하지 않았다.
-- [ ] 아직 `pom.xml`에 Oracle Driver를 추가하지 않았다.
+- [ ] 아직 `build.gradle`에 Oracle Driver를 추가하지 않았다.
 - [ ] 아직 Datasource를 설정하지 않았다.
 - [ ] 아직 Compose 프로젝트 파일을 만들지 않았다.
 - [ ] 아직 업무 Schema Object를 생성하지 않았다.
@@ -1067,7 +1067,7 @@ Oracle Database Free              ← 현재 완료
         ↓
 Spring Boot 프로젝트 생성
         ↓
-프로젝트 JDK / Maven / VS Code 설정
+프로젝트 JDK / Gradle / VS Code 설정
         ↓
 Oracle JDBC / Datasource
         ↓

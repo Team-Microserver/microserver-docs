@@ -53,7 +53,7 @@ Class, Package, Module 및 호출 관계를 먼저 정의합니다.
 
 ### Step 3. Dependency / Configuration
 
-필요한 Maven Dependency와 `application.yml` 등의 설정을 추가합니다.
+필요한 Gradle Dependency와 `application.yml` 등의 설정을 추가합니다.
 
 ### Step 4. 구현
 
@@ -202,13 +202,13 @@ GitHub Repository
       │
       ├─ macOS 개발환경
       │    ├─ JDK
-      │    ├─ Maven
+      │    ├─ Gradle
       │    ├─ Python / .venv
       │    └─ Docker
       │
       └─ Windows 개발환경
            ├─ JDK
-           ├─ Maven
+           ├─ Gradle
            ├─ Python / .venv
            └─ Docker
 ```

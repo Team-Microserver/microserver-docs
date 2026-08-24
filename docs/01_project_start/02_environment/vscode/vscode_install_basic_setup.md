@@ -217,9 +217,9 @@ Terminal
 
 Windows에서는 PowerShell, macOS에서는 zsh를 기본으로 사용할 수 있다.
 
-향후 Git, Maven, Docker 등 개발 도구 명령을 실행할 때 사용한다.
+향후 Git, Gradle, Docker 등 개발 도구 명령을 실행할 때 사용한다.
 
-현재 단계에서는 실제 Maven Build나 애플리케이션 실행을 진행하지 않는다.
+현재 단계에서는 실제 Gradle Build나 애플리케이션 실행을 진행하지 않는다.
 
 ---
 
@@ -391,8 +391,8 @@ microserver/
 
 ```text
 프로젝트 폴더 열기
-pom.xml 수정
-Maven Build
+build.gradle / settings.gradle 수정
+Gradle Build
 Java Source 작성
 Spring Boot 실행
 Debug 실행

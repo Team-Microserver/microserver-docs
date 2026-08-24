@@ -60,11 +60,11 @@ Spring Boot를 기반으로 금융 SI 프로젝트에서 반복적으로 필요�
 
 Team-Microserver는 기능 구현과 함께 프로젝트 전체 구조에 대한 표준을 확립한다.
 
-기존 MicroServer에서 사용한 Maven 멀티모듈 구조와 Common, Runtime, Admin 등의 역할을 참고하여 기능별 책임을 분리하고 향후 확장이 가능한 구조를 설계한다.
+Common, Runtime, Admin 등의 역할을 분리하는 멀티모듈 구조를 참고하되, 이번 프로젝트에서는 Gradle Multi-Project 방식으로 기능별 책임을 분리하고 향후 확장이 가능한 구조를 설계한다.
 
 주요 목표는 다음과 같다.
 
-- Maven 기반 멀티모듈 프로젝트 구성
+- Gradle 기반 Multi-Project 구성
 - 공통 기능과 업무 기능의 명확한 분리
 - 모듈 간 의존성 최소화
 - 공통 기능의 재사용성 확보
@@ -184,13 +184,13 @@ Team-Microserver의 표준 개발 IDE는 **Visual Studio Code(VS Code)** 를 사
 개발 환경은 다음 항목을 표준화한다.
 
 - Java 개발 환경
-- Maven
+- Gradle
 - Visual Studio Code
 - VS Code Java Extension
 - Lombok
 - Git / GitHub
 - Spring Boot 실행 및 Debug
-- Maven Build
+- Gradle Build
 - Markdown 문서 작성 및 Preview
 
 운영체제에 따른 차이가 필요한 경우 Windows와 macOS 환경을 구분하여 가이드한다.
@@ -280,7 +280,7 @@ Team-Microserver의 최종 목적은 한 번의 학습이나 테스트로 끝나
 | 구분 | 구축 자산 |
 | --- | --- |
 | 소스코드 | 표준 Spring Boot 기반 프레임워크 |
-| 프로젝트 구조 | Maven 멀티모듈 및 패키지 구조 |
+| 프로젝트 구조 | Gradle Multi-Project 및 패키지 구조 |
 | 공통 기능 | 인증, 보안, DB, 로그, 예외, API 등 |
 | 연계 기능 | REST, MCA, EAI, FEP 확장 기반 |
 | 개발 표준 | 개발 방법 및 구현 규칙 |

@@ -4,7 +4,7 @@
 
 본 문서는 MicroServer 프로젝트의 Java 개발환경을 구성하기 위해 **Eclipse Temurin JDK(Java Development Kit)** 를 준비하고, Windows 및 macOS에서 JDK가 정상적으로 동작하는지 확인하는 방법을 설명한다.
 
-현재 단계에서는 아직 Maven, VS Code, Spring Boot 프로젝트를 구성하지 않는다.
+현재 단계에서는 아직 Gradle, VS Code, Spring Boot 프로젝트를 구성하지 않는다.
 
 따라서 본 문서에서는 다음 내용만 다룬다.
 
@@ -18,14 +18,14 @@
 
 다음 내용은 이후 단계의 가이드에서 별도로 다룬다.
 
-- Maven 설치 및 설정
+- Gradle 설치 및 설정
 - VS Code 설치 및 Extension 구성
 - VS Code에서 프로젝트별 JDK 연결
 - `.vscode/settings.json`
 - `java.configuration.runtimes`
 - Spring Boot 프로젝트 생성
-- `pom.xml` 설정
-- Maven Wrapper 설정
+- `build.gradle` / `settings.gradle` 설정
+- Gradle Wrapper 설정
 - 애플리케이션 실행 및 Build
 
 ---
@@ -37,7 +37,7 @@ MicroServer 프로젝트의 개발환경은 다음 순서로 구성한다.
 ```mermaid
 flowchart LR
     A[Git / GitHub 환경 구성] --> B[Eclipse Temurin JDK]
-    B --> C[Apache Maven]
+    B --> C[Gradle]
     C --> D[VS Code]
     D --> E[Spring Boot 프로젝트 생성]
     E --> F[프로젝트 개발환경 설정]
@@ -50,14 +50,14 @@ Git / GitHub 환경 구성
         ↓
 [ Eclipse Temurin JDK 준비 ]   ← 현재
         ↓
-Apache Maven 설치
+Gradle 기본 환경 구성
         ↓
 VS Code 개발환경 구성
         ↓
 Spring Boot 프로젝트 생성
 ```
 
-JDK는 이후 Maven과 VS Code, Spring Boot 프로젝트가 공통으로 사용하는 Java 개발 기반이므로 가장 먼저 준비한다.
+JDK는 이후 Gradle과 VS Code, Spring Boot 프로젝트가 공통으로 사용하는 Java 개발 기반이므로 가장 먼저 준비한다.
 
 ---
 
@@ -328,7 +328,7 @@ X  C:\dev\jdks\temurin-26\bin
 X  C:\dev\jdks\temurin-26\bin\java.exe
 ```
 
-이 JDK Home 경로는 이후 Maven 및 VS Code 개발환경 구성에서 다시 사용한다.
+이 JDK Home 경로는 이후 Gradle 및 VS Code 개발환경 구성에서 다시 사용한다.
 
 ---
 
@@ -501,7 +501,7 @@ JDK Home
 ~/dev/jdks/temurin-26.jdk/Contents/Home
 ```
 
-이 JDK Home 경로는 이후 Maven 및 VS Code 개발환경 구성에서 다시 사용한다.
+이 JDK Home 경로는 이후 Gradle 및 VS Code 개발환경 구성에서 다시 사용한다.
 
 ---
 
@@ -596,7 +596,7 @@ Temurin 26.x.x
 
 - 프로젝트 표준 JDK Major Version이 변경되는지
 - 기존 JDK 디렉터리를 바로 삭제할 필요가 있는지
-- 이후 Maven / VS Code / CI/CD가 참조하는 경로가 있는지
+- 이후 Gradle / VS Code / CI/CD가 참조하는 경로가 있는지
 - 팀 전체에 동일한 버전 적용이 필요한지
 
 기존 JDK를 즉시 덮어쓰기보다 새로운 디렉터리에 준비하고 검증 후 전환하는 방식을 권장한다.
@@ -749,9 +749,9 @@ JDK Home:
 
 - [ ] VS Code 관련 설정을 아직 진행하지 않았다.
 - [ ] 프로젝트별 JDK Runtime 설정을 아직 만들지 않았다.
-- [ ] Maven 프로젝트 설정을 아직 진행하지 않았다.
+- [ ] Gradle 프로젝트 설정을 아직 진행하지 않았다.
 - [ ] Spring Boot 프로젝트를 아직 생성하지 않았다.
-- [ ] `pom.xml`을 아직 작성하거나 수정하지 않았다.
+- [ ] `build.gradle` / `settings.gradle`을 아직 작성하거나 수정하지 않았다.
 
 ---
 
@@ -762,16 +762,16 @@ JDK 준비가 완료되면 다음 가이드로 진행한다.
 ```text
 JDK 설치 및 설정                ← 현재 완료
         ↓
-Maven 설치 및 기본 환경 구성
+Gradle 설치 및 기본 환경 구성
         ↓
 VS Code 개발환경 구성
         ↓
 Spring Boot 프로젝트 생성
         ↓
-프로젝트 JDK / Maven / VS Code 설정
+프로젝트 JDK / Gradle / VS Code 설정
 ```
 
-다음 단계에서는 Apache Maven을 개발 PC에 준비하고, 앞에서 설치한 Temurin JDK를 이용하여 Maven이 정상 실행되는지 확인한다.
+다음 단계에서는 Gradle을 개발 PC에 준비하고, 앞에서 설치한 Temurin JDK를 이용하여 Gradle이 정상 실행되는지 확인한다. 실제 프로젝트 Build는 프로젝트 생성 이후 Gradle Wrapper를 기준으로 한다.
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## 1. 문서 목적
 
-본 문서는 앞 단계에서 준비한 JDK, Maven, VS Code, Docker / Oracle 로컬 개발환경을 기반으로
+본 문서는 앞 단계에서 준비한 JDK, Gradle, VS Code, Docker / Oracle 로컬 개발환경을 기반으로
 MicroServer의 **최초 Spring Boot 프로젝트를 생성**하는 방법을 설명한다.
 
 현재 단계에서는 애플리케이션의 기본 골격만 생성한다.
@@ -10,8 +10,8 @@ MicroServer의 **최초 Spring Boot 프로젝트를 생성**하는 방법을 설
 아직 다음 작업은 진행하지 않는다.
 
 - 프로젝트별 VS Code Workspace JDK 상세 설정
-- Maven Wrapper 버전 표준화
-- Maven Multi Module 구성
+- Gradle Wrapper 버전 표준화
+- Gradle Multi-Project 구성
 - Controller / Service / DAO 구현
 - Filter / AOP 구현
 - Spring Security 구성
@@ -45,26 +45,26 @@ MicroServer 프로젝트 구축 흐름은 다음과 같다.
 flowchart LR
     A[개발환경 구성] --> B[Spring Boot 프로젝트 생성]
     B --> C[프로젝트 JDK / VS Code 설정]
-    C --> D[Maven Wrapper / Maven 설정]
+    C --> D[Gradle Wrapper / Gradle 설정]
     D --> E[초기 실행 / Build 검증]
-    E --> F[Maven Multi Module]
+    E --> F[Gradle Multi-Project]
     F --> G[공통 프레임워크 구현]
 ```
 
 현재 문서는 다음 위치에 해당한다.
 
 ```text
-JDK / Maven / VS Code / Oracle 환경 준비
+JDK / Gradle / VS Code / Oracle 환경 준비
         ↓
 [ Spring Boot 프로젝트 생성 ]          ← 현재
         ↓
 프로젝트 JDK / VS Code Workspace 설정
         ↓
-Maven Wrapper 및 프로젝트 Maven 설정
+Gradle Wrapper 및 프로젝트 Gradle 설정
         ↓
 초기 실행 및 Build 검증
         ↓
-Maven Multi Module 구성
+Gradle Multi-Project 구성
 ```
 
 !!! info "프로젝트 생성 단계의 원칙"
@@ -80,14 +80,14 @@ Maven Multi Module 구성
 
 ## 3. Spring Boot 버전 기준
 
-본 가이드 작성 기준일은 **2026-08-19**이다.
+본 가이드 작성 기준일은 **2026-08-24**이다.
 
 MicroServer 초기 프로젝트는 다음 버전을 기준으로 한다.
 
 ```text
 Spring Boot : 4.1.0
 Java        : 26
-Build Tool  : Maven
+Build Tool  : Gradle - Groovy
 Packaging   : JAR
 ```
 
@@ -96,7 +96,7 @@ Spring Boot 4.1.0은 공식 문서 기준으로 다음 환경을 지원한다.
 ```text
 Minimum Java : 17
 Maximum Java : 26
-Maven        : 3.6.3 이상
+Gradle       : 8.14 이상 8.x 또는 9.x
 ```
 
 MicroServer는 앞 단계에서 준비한 Eclipse Temurin JDK 26을 사용한다.
@@ -108,7 +108,7 @@ MicroServer는 앞 단계에서 준비한 Eclipse Temurin JDK 26을 사용한다
     따라서 단순히 `Default` 또는 `Latest`를 선택하지 않고
     **프로젝트 생성 시점의 프로젝트 표준 Version을 명시적으로 확인하여 선택**한다.
 
-    프로젝트 표준 Version을 변경할 경우 JDK, Maven, Build, CI/CD 및 관련 문서를 함께 검토한다.
+    프로젝트 표준 Version을 변경할 경우 JDK, Gradle, Build, CI/CD 및 관련 문서를 함께 검토한다.
 
 ---
 
@@ -176,7 +176,7 @@ Kafka
         ↓
 기본 Build / Run 검증
         ↓
-Multi Module 구성
+Gradle Multi-Project 구성
         ↓
 필요 기능을 단계별 추가
 ```
@@ -186,7 +186,7 @@ Multi Module 구성
 
 ---
 
-## 6. Maven Coordinate 기준
+## 6. Project Coordinate 기준
 
 본 가이드에서는 다음 값을 프로젝트 생성 예시로 사용한다.
 
@@ -198,7 +198,7 @@ Package     : io.github.teammicroserver
 Version     : 0.0.1-SNAPSHOT
 ```
 
-Maven Coordinate:
+Project Coordinate (Maven 표기와 동일한 개념):
 
 ```text
 io.github.teammicroserver:microserver:0.0.1-SNAPSHOT
@@ -223,10 +223,11 @@ MicroServer에서는 Spring Initializr를 사용한다.
 Spring Initializr는 다음 기본 파일을 생성한다.
 
 ```text
-pom.xml
-mvnw
-mvnw.cmd
-.mvn/
+build.gradle
+settings.gradle
+gradlew
+gradlew.bat
+gradle/wrapper/
 src/main/java/
 src/main/resources/
 src/test/java/
@@ -234,7 +235,7 @@ src/test/java/
 ```
 
 또한 선택한 Spring Boot Version과 Java Version,
-Dependency에 맞는 기본 Maven Project를 생성한다.
+Dependency에 맞는 기본 Gradle Project를 생성한다.
 
 ---
 
@@ -263,10 +264,10 @@ Command + Shift + P
 Spring Initializr
 ```
 
-Spring Initializr의 Maven Project 생성 명령을 선택한다.
+Spring Initializr의 Gradle Project 생성 명령을 선택한다.
 
 VS Code Extension Version에 따라 표시되는 명령 문구가 조금 달라질 수 있으므로
-`Spring Initializr`로 검색하여 Maven Project 생성 Wizard를 시작한다.
+`Spring Initializr`로 검색하여 Gradle Project 생성 Wizard를 시작한다.
 
 ---
 
@@ -276,7 +277,7 @@ Wizard에서는 다음 기준으로 선택한다.
 
 | 항목 | 선택 값 |
 |---|---|
-| Build Tool | Maven |
+| Build Tool | Gradle - Groovy |
 | Language | Java |
 | Spring Boot | 4.1.0 |
 | Group | `io.github.teammicroserver` |
@@ -292,6 +293,19 @@ Dependency:
 ```text
 Spring Web
 ```
+
+### Maven과 비교
+
+같은 프로젝트를 Maven으로 생성했다면 Build Tool 선택과 생성 파일은 다음처럼 달라진다.
+
+| 구분 | Gradle - Groovy | Maven |
+|---|---|---|
+| Build Script | `build.gradle` | `pom.xml` |
+| Project 구조 | `settings.gradle` | Parent / Module `pom.xml` |
+| Wrapper | `gradlew`, `gradlew.bat` | `mvnw`, `mvnw.cmd` |
+| Wrapper 설정 | `gradle/wrapper/` | `.mvn/wrapper/` |
+
+이번 프로젝트에서는 **Gradle을 실제 Build 기준으로 사용하고 Maven은 대응 개념을 이해하기 위한 비교 대상으로 사용한다.**
 
 ---
 
@@ -354,18 +368,19 @@ workspace/
 └─ microserver/                 ← 기존 Git Repository
 ```
 
-최종적으로 Spring Boot Project의 `pom.xml`이
+최종적으로 Spring Boot Project의 `build.gradle`과 `settings.gradle`이
 Git Repository Root에 위치하도록 한다.
 
 ```text
 microserver/
 ├─ .git/
-├─ .mvn/
+├─ gradle/
 ├─ src/
 ├─ .gitignore
-├─ mvnw
-├─ mvnw.cmd
-└─ pom.xml
+├─ gradlew
+├─ gradlew.bat
+├─ settings.gradle
+└─ build.gradle
 ```
 
 다음처럼 한 단계 더 중첩되지 않도록 주의한다.
@@ -373,7 +388,7 @@ microserver/
 ```text
 X microserver/
     └─ microserver/
-        ├─ pom.xml
+        ├─ build.gradle
         └─ src/
 ```
 
@@ -381,7 +396,7 @@ X microserver/
 
 ```text
 O microserver/
-    ├─ pom.xml
+    ├─ build.gradle
     └─ src/
 ```
 
@@ -443,9 +458,10 @@ Command + Shift + .
 ```text
 microserver/
 ├─ .git/
-├─ .mvn/
+├─ gradle/
 │  └─ wrapper/
-│     └─ maven-wrapper.properties
+│     ├─ gradle-wrapper.jar
+│     └─ gradle-wrapper.properties
 ├─ src/
 │  ├─ main/
 │  │  ├─ java/
@@ -458,9 +474,10 @@ microserver/
 │        └─ io/github/teammicroserver/
 │           └─ *ApplicationTests.java
 ├─ .gitignore
-├─ mvnw
-├─ mvnw.cmd
-└─ pom.xml
+├─ gradlew
+├─ gradlew.bat
+├─ settings.gradle
+└─ build.gradle
 ```
 
 Spring Initializr Version에 따라 생성 파일의 세부 구성이 달라질 수 있다.
@@ -540,21 +557,21 @@ Cache
 
 ---
 
-## 18. `pom.xml` 기본 확인
+## 18. `build.gradle` / `settings.gradle` 기본 확인
 
-현재는 `pom.xml`을 적극적으로 수정하지 않고
+현재는 `build.gradle`과 `settings.gradle`을 적극적으로 수정하지 않고
 Spring Initializr가 생성한 내용을 확인만 한다.
 
 확인 항목:
 
 ```text
-Spring Boot Parent Version
-Group ID
-Artifact ID
+Spring Boot Gradle Plugin Version
+Group
+Project Name
 Version
-Java Version
+Java Toolchain
 Dependencies
-Spring Boot Maven Plugin
+Spring Boot Gradle Plugin
 ```
 
 기대 기준:
@@ -570,23 +587,23 @@ Initializr가 선택한 Version에 맞게 생성한 값을 우선한다.
 
 ---
 
-## 19. Maven Wrapper 파일 확인
+## 19. Gradle Wrapper 파일 확인
 
-Spring Initializr Maven Project에는 Maven Wrapper가 함께 생성된다.
+Spring Initializr Gradle Project에는 Gradle Wrapper가 함께 생성된다.
 
 확인:
 
 ```text
-.mvn/
-mvnw
-mvnw.cmd
+gradle/wrapper/
+gradlew
+gradlew.bat
 ```
 
 현재 단계에서는 Wrapper Version을 변경하지 않는다.
 
-다음 문서에서 실제 Project Maven 표준을 확인한다.
+다음 문서에서 실제 Project Gradle 표준을 확인한다.
 
-→ [Maven Wrapper 및 프로젝트 Maven 설정](project_environment/project_maven_setup.md)
+→ [Gradle Wrapper 및 프로젝트 Gradle 설정](project_environment/project_gradle_setup.md)
 
 ---
 
@@ -597,7 +614,8 @@ Spring Initializr가 생성한 `.gitignore`를 확인한다.
 대표적으로 Build 결과 Directory인 다음 항목이 Git에서 제외되어야 한다.
 
 ```text
-target/
+.gradle/
+build/
 ```
 
 기존 Repository에 `.gitignore`가 이미 존재했다면
@@ -615,7 +633,7 @@ Project 생성
         ↓
 JDK / VS Code Workspace 설정
         ↓
-Maven Wrapper 설정
+Gradle Wrapper 설정
         ↓
 Build / Run 검증
 ```
@@ -625,9 +643,9 @@ Build / Run 검증
 따라서 현재는:
 
 ```text
-mvn clean package
-./mvnw clean package
-spring-boot:run
+gradle build
+./gradlew build
+./gradlew bootRun
 ```
 
 등을 아직 실행하지 않는다.
@@ -649,25 +667,26 @@ File
 microserver/
 ```
 
-즉 `pom.xml`이 바로 보이는 Directory를 Workspace Root로 연다.
+즉 `build.gradle`과 `settings.gradle`이 바로 보이는 Directory를 Workspace Root로 연다.
 
 정상:
 
 ```text
 Explorer
 microserver
- ├─ .mvn
+ ├─ gradle
  ├─ src
- ├─ pom.xml
- ├─ mvnw
- └─ mvnw.cmd
+ ├─ settings.gradle
+ ├─ build.gradle
+ ├─ gradlew
+ └─ gradlew.bat
 ```
 
 ---
 
 ## 23. Java Project 인식 확인
 
-VS Code Java Extension은 Maven `pom.xml`이 있는 Folder를 열면
+VS Code Java / Gradle Extension은 `build.gradle`이 있는 Folder를 열면
 Java Project를 자동으로 Import할 수 있다.
 
 Explorer에서 Java Projects View가 나타나는지 확인한다.
@@ -726,10 +745,11 @@ git status
 예상:
 
 ```text
-new file: .mvn/...
-new file: mvnw
-new file: mvnw.cmd
-new file: pom.xml
+new file: gradle/wrapper/...
+new file: gradlew
+new file: gradlew.bat
+new file: settings.gradle
+new file: build.gradle
 new file: src/...
 ```
 
@@ -763,7 +783,7 @@ git push
     MicroServer 프로젝트는 한 번에 모든 구조를 만드는 대신
     각 단계별로 정상 상태를 Commit하여 변경 기준점을 남긴다.
 
-    이후 Workspace, Maven, Multi Module 설정에서 문제가 생겼을 때
+    이후 Workspace, Gradle, Multi-Project 설정에서 문제가 생겼을 때
     어느 단계의 변경인지 쉽게 비교할 수 있다.
 
 ---
@@ -773,10 +793,10 @@ git push
 ```mermaid
 flowchart TB
     P[Spring Boot Project]
-    P --> POM[pom.xml]
+    P --> BUILD[build.gradle / settings.gradle]
     P --> SRC[src/main]
     P --> TEST[src/test]
-    P --> WRAPPER[Maven Wrapper]
+    P --> WRAPPER[Gradle Wrapper]
     P --> GIT[Git Repository]
 ```
 
@@ -784,14 +804,14 @@ flowchart TB
 
 ```text
 Spring Boot Project     → 생성 완료
-pom.xml                 → 생성 완료
+build.gradle / settings.gradle → 생성 완료
 Main Class              → 생성 완료
 기본 Test               → 생성 완료
-Maven Wrapper           → 생성 여부 확인
+Gradle Wrapper           → 생성 여부 확인
 Git Repository          → 변경사항 Commit
 
 Workspace JDK           → 다음 단계
-Maven 표준화            → 이후 단계
+Gradle 표준화            → 이후 단계
 Build / Run             → 이후 단계
 Multi Module            → 이후 단계
 ```
@@ -802,11 +822,11 @@ Multi Module            → 이후 단계
 
 - [ ] Spring Boot 4.1.0을 선택했다.
 - [ ] Java 26을 선택했다.
-- [ ] Maven Project를 생성했다.
+- [ ] Gradle - Groovy Project를 생성했다.
 - [ ] Packaging을 JAR로 선택했다.
 - [ ] Spring Web Dependency만 우선 추가했다.
-- [ ] Project Root에 `pom.xml`이 있다.
-- [ ] `.mvn`, `mvnw`, `mvnw.cmd`를 확인했다.
+- [ ] Project Root에 `build.gradle`과 `settings.gradle`이 있다.
+- [ ] `gradle/wrapper`, `gradlew`, `gradlew.bat`을 확인했다.
 - [ ] Main Application Class를 확인했다.
 - [ ] 기본 Test Class를 확인했다.
 - [ ] VS Code에서 Project Root를 열었다.
@@ -829,7 +849,7 @@ Spring Boot Project 생성        ← 현재 완료
         ↓
 프로젝트 JDK / VS Code Workspace 설정
         ↓
-Maven Wrapper / Maven 설정
+Gradle Wrapper / Gradle 설정
         ↓
 초기 실행 및 Build 검증
 ```

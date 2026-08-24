@@ -6,7 +6,7 @@
 
 Team-Microserver는 금융 SI 프로젝트에서 반복적으로 필요한 기술 기능을 공통 프레임워크로 제공하고, 업무 개발자는 공통 기술의 세부 구현보다 **도메인 및 비즈니스 로직 개발에 집중할 수 있는 구조**를 지향한다.
 
-이를 위해 프로젝트는 Maven 멀티모듈 구조를 기반으로 구성하며, 공통 기능은 독립적인 서브프로젝트에서 개발한 후 **JAR 형태의 라이브러리로 빌드하여 애플리케이션에 제공**한다.
+이를 위해 프로젝트는 Gradle Multi-Project 구조를 기반으로 구성하며, 공통 기능은 독립적인 서브프로젝트에서 개발한 후 **JAR 형태의 라이브러리로 빌드하여 애플리케이션에 제공**한다.
 
 또한 요청 처리, 보안, 로깅, 예외 처리, 데이터 접근, 캐시, 애플리케이션 기동 기능 등 프로젝트 전반에서 반복되는 기능은 공통 영역에서 표준화하고, 실제 업무 처리는 Controller / Service / DAO 계층으로 명확하게 분리한다.
 
@@ -18,7 +18,7 @@ Team-Microserver의 아키텍처는 다음 방향을 중심으로 구성한다.
 
 | 구분 | 아키텍처 방향 |
 | --- | --- |
-| 프로젝트 구조 | Maven 기반 멀티모듈 프로젝트 |
+| 프로젝트 구조 | Gradle 기반 Multi-Project Build |
 | 공통 기능 | 서브프로젝트로 분리하고 JAR 형태로 제공 |
 | 업무 기능 | Domain 영역으로 분리하여 업무 개발 집중 |
 | 요청 선처리 | Servlet Filter 기반 공통 처리 |
@@ -97,24 +97,24 @@ flowchart TB
 
 ---
 
-# 4. Maven 멀티모듈 아키텍처
+# 4. Gradle Multi-Project 아키텍처
 
 ## 4.1 기본 방향
 
-Team-Microserver는 하나의 대형 프로젝트에 모든 기능을 포함시키지 않고 **Maven Multi-Module 프로젝트**로 구성한다.
+Team-Microserver는 하나의 대형 프로젝트에 모든 기능을 포함시키지 않고 **Gradle Multi-Project Build**로 구성한다.
 
-Parent 프로젝트는 전체 프로젝트의 공통 Build 설정과 Dependency 버전을 관리하며, 실제 기능은 역할별 서브모듈에서 구현한다.
+Root Project는 전체 Build의 공통 Plugin Version, Repository, Group / Version 등의 정책을 관리하고, `settings.gradle`에서 실제 Subproject를 선언한다. 기능 구현은 역할별 Subproject에서 수행한다.
 
 ```mermaid
 flowchart TB
-    PARENT["team-microserver-parent<br/>Parent POM"]
+    ROOT["microserver<br/>Root Gradle Build"]
 
-    PARENT --> COMMON["module-common<br/>Common JAR"]
-    PARENT --> FRAMEWORK["module-framework<br/>Framework JAR"]
-    PARENT --> SECURITY["module-security<br/>Security JAR"]
-    PARENT --> AGENT["module-agent<br/>Agent JAR"]
-    PARENT --> RUNTIME["runtime<br/>Executable Application"]
-    PARENT --> ADMIN["admin<br/>Executable Application"]
+    ROOT --> COMMON["module-common<br/>Common JAR"]
+    ROOT --> FRAMEWORK["module-framework<br/>Framework JAR"]
+    ROOT --> SECURITY["module-security<br/>Security JAR"]
+    ROOT --> AGENT["module-agent<br/>Agent JAR"]
+    ROOT --> RUNTIME["runtime<br/>Executable Application"]
+    ROOT --> ADMIN["admin<br/>Executable Application"]
 
     COMMON --> RUNTIME
     FRAMEWORK --> RUNTIME
@@ -126,32 +126,78 @@ flowchart TB
     SECURITY --> ADMIN
 ```
 
+`settings.gradle` 개념 예:
+
+```groovy
+rootProject.name = 'microserver'
+
+include 'module-common'
+include 'runtime'
+include 'admin'
+```
+
 > 위 모듈명은 아키텍처 역할을 설명하기 위한 기준이며 실제 프로젝트 구성 과정에서 세부 모듈은 조정할 수 있다.
+
+### Maven과 비교
+
+Maven에서는 같은 역할을 Parent `pom.xml`의 `<modules>`와 Parent Build 설정으로 구성한다.
+
+```xml
+<modules>
+    <module>module-common</module>
+    <module>runtime</module>
+    <module>admin</module>
+</modules>
+```
+
+이번 프로젝트에서는 Gradle을 실제 Build 기준으로 사용하고, Maven 설정은 대응 개념 이해를 위한 비교 예제로 제공한다.
 
 ---
 
 ## 4.2 공통 영역의 JAR 제공 방식
 
-공통 기능은 애플리케이션과 직접 결합하지 않고 독립적인 Maven 서브프로젝트로 개발한다.
+공통 기능은 애플리케이션과 직접 결합하지 않고 독립적인 Gradle Subproject로 개발한다.
 
-각 공통 서브프로젝트는 다음과 같이 JAR로 Build한다.
+공통 Library Module은 `java-library` Plugin을 기준으로 구성한다.
+
+```groovy
+plugins {
+    id 'java-library'
+}
+```
+
+실행 Module에서는 공통 Module을 Project Dependency로 사용한다.
+
+```groovy
+dependencies {
+    implementation project(':module-common')
+}
+```
+
+Maven에서는 같은 목적을 다음처럼 표현할 수 있다.
 
 ```xml
 <packaging>jar</packaging>
+
+<dependency>
+    <groupId>io.github.teammicroserver</groupId>
+    <artifactId>module-common</artifactId>
+    <version>${project.version}</version>
+</dependency>
 ```
 
 Build된 공통 JAR는 Runtime, Admin 또는 다른 업무 애플리케이션에서 Dependency로 사용한다.
 
 ```mermaid
 flowchart LR
-    COMMON_SOURCE["Common Source"] --> BUILD["Maven Build"]
+    COMMON_SOURCE["Common Source"] --> BUILD["Gradle Build"]
     BUILD --> JAR["Common Framework JAR"]
     JAR --> APP1["Runtime Application"]
     JAR --> APP2["Admin Application"]
     JAR --> APP3["Other Domain Application"]
 ```
 
-이 구조를 사용하면 공통 기능을 특정 업무 애플리케이션 내부에 복사하지 않고 동일한 JAR를 여러 애플리케이션에서 사용할 수 있다.
+개발 중에는 JAR 파일을 수동 복사하지 않고 Gradle Project Dependency가 Build 순서와 Classpath를 관리한다. 필요해지면 공통 JAR을 별도 Artifact Repository에 Publish하는 구조로 확장한다.
 
 ### 공통 JAR의 주요 대상
 
@@ -608,7 +654,7 @@ Team-Microserver는 일반적인 HTTP 요청 기반 Web Application뿐만 아니
 ```mermaid
 flowchart TB
     AGENT_PROJECT["module-agent<br/>Common Sub Project"]
-    BUILD["Maven Build"]
+    BUILD["Gradle Build"]
     AGENT_JAR["Agent Framework JAR"]
     APPLICATION["Domain Application"]
     RUNNER["ApplicationRunner"]
@@ -1254,7 +1300,7 @@ Team-Microserver는 처음부터 모든 구조를 한 번에 적용하지 않는
 
 ```mermaid
 flowchart TD
-    STEP1["1. Spring Boot / Maven 기반"]
+    STEP1["1. Spring Boot / Gradle 기반"]
     STEP2["2. Multi Module 구조"]
     STEP3["3. Common JAR"]
     STEP4["4. Controller / Service / DAO"]

@@ -3,24 +3,24 @@
 ## 1. 문서 목적
 
 본 문서는 Spring Boot 프로젝트 생성과
-JDK / VS Code / Maven Wrapper 설정이 완료된 상태에서
+JDK / VS Code / Gradle Wrapper 설정이 완료된 상태에서
 **최초 단일 Module Spring Boot Project가 정상적으로 Build되고 실행되는지 검증**한다.
 
-이 단계는 Maven Multi Module 구조로 변경하기 전에 수행한다.
+이 단계는 Gradle Multi-Project 구조로 변경하기 전에 수행한다.
 
 왜 먼저 검증하는가?
 
 ```text
 초기 단일 Project 정상
         ↓
-Multi Module 변경
+Multi-Project 변경
         ↓
 문제 발생
         ↓
-Multi Module 변경사항을 원인으로 좁힐 수 있음
+Multi-Project 변경사항을 원인으로 좁힐 수 있음
 ```
 
-반대로 초기 Project를 검증하지 않고 바로 Multi Module로 변경하면
+반대로 초기 Project를 검증하지 않고 바로 Multi-Project로 변경하면
 문제가 Project 생성 때문인지 구조 변경 때문인지 구분하기 어렵다.
 
 ---
@@ -30,8 +30,8 @@ Multi Module 변경사항을 원인으로 좁힐 수 있음
 현재 검증:
 
 - Java 26
-- Maven Wrapper
-- Maven Project Import
+- Gradle Wrapper
+- Gradle Project Import
 - Compile
 - 기본 Spring Boot Test
 - Package
@@ -51,7 +51,7 @@ Multi Module 변경사항을 원인으로 좁힐 수 있음
 - AOP
 - Transaction
 - Cache
-- Multi Module
+- Multi-Project
 
 ---
 
@@ -60,9 +60,9 @@ Multi Module 변경사항을 원인으로 좁힐 수 있음
 ```mermaid
 flowchart TD
     A[JDK Session 준비]
-    A --> B[Maven Wrapper Version]
+    A --> B[Gradle Wrapper Version]
     B --> C[clean test]
-    C --> D[package]
+    C --> D[build]
     D --> E[Executable JAR 확인]
     E --> F[Spring Boot Run]
     F --> G[VS Code Run 확인]
@@ -76,7 +76,7 @@ flowchart TD
 VS Code에서 Project JDK를 설정했다고 해서
 Integrated Terminal의 Shell 환경변수가 자동으로 동일하게 설정되는 것은 아니다.
 
-Maven Wrapper Script는 Terminal에서 Java를 찾아야 한다.
+Gradle Wrapper Script는 Terminal에서 Java를 찾아야 한다.
 
 MicroServer에서는 시스템 `JAVA_HOME`을 영구 고정하지 않으므로
 현재 Terminal Session에 JDK를 임시 연결한다.
@@ -140,32 +140,33 @@ pwd
 다음 파일이 있어야 한다.
 
 ```text
-pom.xml
-mvnw
-mvnw.cmd
+build.gradle
+settings.gradle
+gradlew
+gradlew.bat
 src/
 ```
 
 ---
 
-## 8. Maven Wrapper Version 확인
+## 8. Gradle Wrapper Version 확인
 
 ### Windows
 
 ```powershell
-.\mvnw.cmd -version
+.\gradlew.bat --version
 ```
 
 ### macOS
 
 ```bash
-./mvnw -version
+./gradlew --version
 ```
 
 확인:
 
 ```text
-Apache Maven 3.9.16
+Gradle 9.7.1
 Java version: 26
 ```
 
@@ -176,23 +177,23 @@ Java version: 26
 ### Windows
 
 ```powershell
-.\mvnw.cmd clean test
+.\gradlew.bat clean test
 ```
 
 ### macOS
 
 ```bash
-./mvnw clean test
+./gradlew clean test
 ```
 
-Maven Lifecycle:
+Gradle Task 흐름:
 
 ```text
 clean
   ↓
-compile
+compileJava / processResources
   ↓
-testCompile
+compileTestJava / testClasses
   ↓
 test
 ```
@@ -203,10 +204,10 @@ test
 
 ## 10. Test 성공 확인
 
-Maven 마지막 부분에서 다음 상태를 확인한다.
+Gradle 마지막 부분에서 다음 상태를 확인한다.
 
 ```text
-BUILD SUCCESS
+BUILD SUCCESSFUL
 ```
 
 Test:
@@ -216,7 +217,7 @@ Failures: 0
 Errors: 0
 ```
 
-실제 출력 형식은 Maven / Plugin Version에 따라 다를 수 있다.
+실제 출력 형식은 Gradle / Plugin Version에 따라 다를 수 있다.
 
 ---
 
@@ -250,7 +251,7 @@ Spring Boot ApplicationContext
 
 ## 12. Test 실패 시 바로 다음 단계로 넘어가지 않는다
 
-다음과 같은 문제가 발생하면 Multi Module 구성을 진행하지 않는다.
+다음과 같은 문제가 발생하면 Multi-Project 구성을 진행하지 않는다.
 
 ```text
 Compilation Error
@@ -271,16 +272,16 @@ Test 성공 후 Package를 수행한다.
 ### Windows
 
 ```powershell
-.\mvnw.cmd package
+.\gradlew.bat build
 ```
 
 ### macOS
 
 ```bash
-./mvnw package
+./gradlew build
 ```
 
-Maven은 Test도 기본 Lifecycle에 포함하여 수행한다.
+Gradle의 `build` Task는 일반적으로 Test와 Assemble 관련 Task를 함께 수행한다.
 
 ---
 
@@ -289,7 +290,7 @@ Maven은 Test도 기본 Lifecycle에 포함하여 수행한다.
 정상 Build 후:
 
 ```text
-target/
+build/
 ```
 
 Directory가 생성된다.
@@ -299,13 +300,13 @@ Directory가 생성된다.
 Windows:
 
 ```powershell
-Get-ChildItem .\target
+Get-ChildItem .\build\libs
 ```
 
 macOS:
 
 ```bash
-ls -la target
+ls -la build/libs
 ```
 
 Spring Boot Executable JAR가 생성된다.
@@ -316,35 +317,35 @@ Spring Boot Executable JAR가 생성된다.
 microserver-0.0.1-SNAPSHOT.jar
 ```
 
-실제 Artifact 이름은 `pom.xml` 값에 따라 달라질 수 있다.
+실제 Artifact 이름은 `build.gradle` / Project 이름 설정에 따라 달라질 수 있다.
 
 ---
 
-## 15. `target/` Git 제외 확인
+## 15. `build/` Git 제외 확인
 
 ```bash
 git status
 ```
 
 정상적으로 `.gitignore`가 적용되어 있다면
-`target/` Build 결과는 Git 변경사항으로 나타나지 않아야 한다.
+`build/` Build 결과는 Git 변경사항으로 나타나지 않아야 한다.
 
 Build Artifact를 Git에 Commit하지 않는다.
 
 ---
 
-## 16. Spring Boot Maven Plugin 실행
+## 16. Spring Boot Gradle Plugin 실행
 
 ### Windows
 
 ```powershell
-.\mvnw.cmd spring-boot:run
+.\gradlew.bat bootRun
 ```
 
 ### macOS
 
 ```bash
-./mvnw spring-boot:run
+./gradlew bootRun
 ```
 
 Application Log를 확인한다.
@@ -410,36 +411,49 @@ Package 결과를 직접 실행할 수도 있다.
 먼저 JAR 이름 확인:
 
 ```bash
-ls target
+ls build/libs
 ```
 
 Windows PowerShell:
 
 ```powershell
-java -jar .\target\microserver-0.0.1-SNAPSHOT.jar
+java -jar .\build\libs\microserver-0.0.1-SNAPSHOT.jar
 ```
 
 macOS:
 
 ```bash
-java -jar target/microserver-0.0.1-SNAPSHOT.jar
+java -jar build/libs/microserver-0.0.1-SNAPSHOT.jar
 ```
 
 실제 JAR 이름이 다르면 해당 파일명을 사용한다.
 
 ---
 
-## 21. Maven 실행과 JAR 실행의 차이
+## 21. Gradle 실행과 JAR 실행의 차이
 
 ```text
-./mvnw spring-boot:run
-→ Maven Plugin을 통해 실행
+./gradlew bootRun
+→ Gradle Plugin을 통해 실행
 
-java -jar target/...jar
+java -jar build/...jar
 → Package된 Executable JAR 직접 실행
 ```
 
 두 방식 모두 정상적으로 Application을 실행할 수 있어야 한다.
+
+### Maven 명령과 비교
+
+| 검증 목적 | Gradle | Maven |
+|---|---|---|
+| Wrapper 버전 | `./gradlew --version` | `./mvnw -version` |
+| Test | `./gradlew clean test` | `./mvnw clean test` |
+| Build / Packaging | `./gradlew build` | `./mvnw package` |
+| Spring Boot 실행 | `./gradlew bootRun` | `./mvnw spring-boot:run` |
+| Artifact 위치 | `build/libs/` | `target/` |
+| Dependency Cache | `~/.gradle/caches` | `~/.m2/repository` |
+
+이번 프로젝트의 실제 검증 명령은 Gradle Wrapper를 사용하고, Maven 명령은 대응 개념 학습용으로 본다.
 
 ---
 
@@ -522,7 +536,7 @@ View
 
 ```text
 Language Support for Java
-Maven for Java
+Gradle for Java / Build Server for Gradle
 Spring Boot Tools
 ```
 
@@ -530,20 +544,20 @@ Spring Boot Tools
 
 ## 26. Dependency Download
 
-첫 Maven Build에서는 Local Repository에 없는 Dependency를 Download한다.
+첫 Gradle Build에서는 Local Cache에 없는 Dependency와 필요한 Gradle Distribution을 Download할 수 있다.
 
-Local Repository:
+Gradle Cache:
 
 Windows:
 
 ```text
-C:\Users\<USER>\.m2\repository
+C:\Users\<USER>\.gradle\caches
 ```
 
 macOS:
 
 ```text
-~/.m2/repository
+~/.gradle/caches
 ```
 
 첫 Build가 이후 Build보다 오래 걸릴 수 있다.
@@ -558,11 +572,11 @@ Dependency Download 실패 시 다음을 확인한다.
 Internet
 Proxy
 회사 Nexus / Artifactory
-~/.m2/settings.xml
+~/.gradle/gradle.properties
 Repository 인증
 ```
 
-개인 `settings.xml` 문제라면 Project `pom.xml`에 Credential을 추가하지 않는다.
+개인 `gradle.properties` 또는 사내 Repository 인증 문제라면 Project `build.gradle`에 Credential을 직접 추가하여 Commit하지 않는다.
 
 ---
 
@@ -635,7 +649,7 @@ Terminal에서 현재 Session JDK를 다시 연결한다.
 
 ---
 
-## 31. `pom.xml` 변경 후 VS Code가 반영하지 않는 경우
+## 31. `build.gradle` / `settings.gradle` 변경 후 VS Code가 반영하지 않는 경우
 
 Command Palette:
 
@@ -660,10 +674,10 @@ Java: Clean Java Language Server Workspace
 ```text
 Wrapper Version      → OK
 Java 26              → OK
-clean test           → BUILD SUCCESS
-package              → BUILD SUCCESS
+clean test           → BUILD SUCCESSFUL
+build                → BUILD SUCCESSFUL
 Executable JAR       → 생성
-spring-boot:run      → 정상 기동
+bootRun              → 정상 기동
 VS Code Run          → 정상
 Spring Dashboard     → Project 인식
 ```
@@ -685,7 +699,7 @@ SampleService
 현재 생성된 Spring Boot Application 자체의 정상 여부만 확인한다.
 
 업무 / Framework Source는
-Multi Module 구조를 먼저 만든 후 해당 구조 안에서 작성한다.
+Multi-Project 구조를 먼저 만든 후 해당 구조 안에서 작성한다.
 
 ---
 
@@ -731,20 +745,20 @@ flowchart LR
     RUN --> READY[Baseline Ready]
 ```
 
-이 상태는 다음 Multi Module 변경 전의 **Baseline**이다.
+이 상태는 다음 Multi-Project 변경 전의 **Baseline**이다.
 
 ---
 
 ## 37. 체크리스트
 
-- [ ] Maven Wrapper가 Maven 3.9.16을 사용한다.
+- [ ] Gradle Wrapper가 Gradle 9.7.1을 사용한다.
 - [ ] Wrapper가 Java 26을 사용한다.
 - [ ] `clean test`가 성공한다.
 - [ ] 기본 `contextLoads` Test가 성공한다.
-- [ ] `package`가 성공한다.
+- [ ] `build`가 성공한다.
 - [ ] Executable JAR가 생성된다.
-- [ ] `target/`이 Git에서 제외된다.
-- [ ] `spring-boot:run`으로 정상 기동된다.
+- [ ] `build/`이 Git에서 제외된다.
+- [ ] `bootRun`으로 정상 기동된다.
 - [ ] 8080 Port에서 Web Server가 실행된다.
 - [ ] Controller가 없으므로 `/`의 404가 정상일 수 있음을 확인했다.
 - [ ] `java -jar` 실행이 가능하다.
@@ -760,14 +774,14 @@ flowchart LR
 초기 단일 Module Project가 정상임을 확인했다.
 
 다음 단계에서는 Project를
-**Parent + Application Module + Common JAR Module** 구조로 전환한다.
+**Root Project + Application Subproject + Common JAR Subproject** 구조로 전환한다.
 
-→ [Maven 멀티모듈 기본 구성](../project_structure/maven_multi_module_setup.md)
+→ [Gradle Multi-Project 기본 구성](../project_structure/gradle_multi_module_setup.md)
 
 ```text
 Single Module Baseline 검증       ← 현재 완료
         ↓
-Maven Multi Module 구성
+Gradle Multi-Project 구성
         ↓
 공통 Framework 구현
 ```
@@ -776,11 +790,11 @@ Maven Multi Module 구성
 
 ## 39. 공식 참고 자료
 
-- Spring Boot Maven Plugin  
-  <https://docs.spring.io/spring-boot/maven-plugin/>
+- Spring Boot Gradle Plugin  
+  <https://docs.spring.io/spring-boot/gradle-plugin/>
 
-- Apache Maven Build Lifecycle  
-  <https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html>
+- Gradle Build Lifecycle  
+  <https://docs.gradle.org/current/userguide/build_lifecycle.html>
 
 - Running and Debugging Java in VS Code  
   <https://code.visualstudio.com/docs/java/java-debugging>
