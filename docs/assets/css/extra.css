@@ -353,10 +353,10 @@
    --------------------------------------------------------- */
 
 /*
- * 데스크톱/노트북 레이아웃에서만 사용자 TOC 토글을 적용한다.
+ * 오른쪽 TOC가 독립 Sidebar로 표시되는 폭에서만 사용자 TOC 토글을 적용한다.
  * 작은 화면에서는 Material for MkDocs의 기본 반응형 Navigation을 그대로 사용한다.
  */
-@media screen and (min-width: 76.25em) {
+@media screen and (min-width: 60em) {
   .toc-toggle-button {
     position: fixed;
     top: 8.4rem;
@@ -442,8 +442,8 @@
   }
 }
 
-/* Material의 모바일/태블릿 레이아웃에서는 별도 버튼을 노출하지 않는다. */
-@media screen and (max-width: 76.234375em) {
+/* Material이 TOC를 모바일 Navigation 내부로 통합하는 폭에서는 별도 버튼을 노출하지 않는다. */
+@media screen and (max-width: 59.984375em) {
   .toc-toggle-button {
     display: none !important;
   }

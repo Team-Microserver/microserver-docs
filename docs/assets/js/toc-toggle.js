@@ -5,9 +5,9 @@
   const COLLAPSED = "collapsed";
   const EXPANDED = "expanded";
 
-  // Material for MkDocs의 데스크톱 레이아웃이 적용되는 폭 이상에서만
+  // Material for MkDocs에서 오른쪽 TOC가 독립 Sidebar로 표시되는 폭 이상에서만
   // 별도 TOC 토글을 사용한다.
-  const desktopQuery = window.matchMedia("(min-width: 76.25em)");
+  const desktopQuery = window.matchMedia("(min-width: 60em)");
 
   // 저장된 사용자 선택이 없으면 노트북/작은 데스크톱에서는 TOC를 접어
   // 본문 폭을 우선 확보한다. 1800px보다 넓은 화면에서는 기본 표시한다.
@@ -103,7 +103,11 @@
     if (!available) return;
 
     const current = document.documentElement.dataset.tocState;
-    applyState(current === COLLAPSED || current === EXPANDED ? current : resolveInitialState());
+    applyState(
+      current === COLLAPSED || current === EXPANDED
+        ? current
+        : resolveInitialState()
+    );
   }
 
   function initialize() {
@@ -127,7 +131,7 @@
     document$.subscribe(() => refresh());
   }
 
-  // 저장값이 없는 최초 상태에서는 화면 폭 변화에 따라 자동 기본값을 조정한다.
+  // 화면 폭이 Material 반응형 기준점을 넘나들 때 버튼 노출 여부를 즉시 갱신한다.
   const handleViewportChange = () => {
     if (!readSavedState()) {
       applyState(resolveInitialState());
