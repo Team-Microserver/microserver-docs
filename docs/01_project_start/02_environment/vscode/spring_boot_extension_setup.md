@@ -25,6 +25,7 @@
 - Gradle 기본 환경 구성
 - VS Code 설치
 - Extension Pack for Java 설치
+- MicroServer Windows 환경에서는 Portable VS Code가 `C:\local-microserver\tools\vscode`에 준비되어 있어야 한다.
 
 Spring Boot Extension은 Java 개발환경을 대체하는 것이 아니라 그 위에 Spring Boot 관련 기능을 추가한다.
 
@@ -42,7 +43,38 @@ Spring Boot 전용 개발 기능
 
 ---
 
-# 3. Spring Boot Extension Pack 설치
+
+### 2.1 Portable Mode와 Spring Boot Extension
+
+MicroServer Windows 환경에서 설치하는 Spring Boot Extension도
+Portable VS Code의 Extension Directory에 저장된다.
+
+```text
+C:\local-microserver\tools\vscode\data\extensions
+```
+
+따라서 Java Extension과 Spring Boot Extension을 모두 준비한 Portable VS Code를
+개발환경 Package에 포함할 수 있다.
+
+```text
+Portable VS Code
+└─ data
+   ├─ user-data
+   └─ extensions
+      ├─ Java Extension...
+      ├─ Spring Boot Tools...
+      ├─ Spring Initializr...
+      └─ Spring Boot Dashboard...
+```
+
+!!! note "Extension이 포함되어도 프로젝트는 아직 없음"
+    Portable Package에 Spring Initializr와 Spring Boot Dashboard가 포함되어 있어도
+    현재 단계에서는 실제 Spring Boot 프로젝트를 생성하지 않는다.
+
+    프로젝트 생성은 VS Code 개발환경 구성이 끝난 다음 단계에서 진행한다.
+
+
+## 3. Spring Boot Extension Pack 설치
 
 Extensions 화면:
 
@@ -74,7 +106,19 @@ vmware.vscode-boot-dev-pack
 
 설치한다.
 
-CLI:
+Windows Portable 환경:
+
+```powershell
+& "C:\local-microserver\tools\vscode\bin\code.cmd" --install-extension vmware.vscode-boot-dev-pack
+```
+
+현재 PATH가 Portable VS Code의 `bin`을 포함한다면:
+
+```powershell
+code --install-extension vmware.vscode-boot-dev-pack
+```
+
+macOS:
 
 ```bash
 code --install-extension vmware.vscode-boot-dev-pack
@@ -84,7 +128,7 @@ VS Code 공식 Java 문서에서도 Spring Boot 개발환경을 위해 Java Exte
 
 ---
 
-# 4. Spring Boot Extension Pack 구성
+## 4. Spring Boot Extension Pack 구성
 
 Spring Boot 개발에서 사용되는 주요 구성요소는 다음과 같다.
 
@@ -108,7 +152,7 @@ flowchart TB
 
 ---
 
-# 5. Spring Boot Tools
+## 5. Spring Boot Tools
 
 Extension ID:
 
@@ -149,7 +193,7 @@ Spring Boot Tools는 Java Language Support와 별개의 Java Engine이 아니라
 
 ---
 
-# 6. Spring Boot 설정 파일 지원
+## 6. Spring Boot 설정 파일 지원
 
 Spring Boot Tools는 향후 다음과 같은 파일을 편집할 때 Spring Boot Configuration Property 지원을 제공한다.
 
@@ -171,7 +215,7 @@ application-*.yml
 
 ---
 
-# 7. Spring Initializr Java Support
+## 7. Spring Initializr Java Support
 
 Extension ID:
 
@@ -204,7 +248,7 @@ Spring Initializr
 
 ---
 
-# 8. Spring Boot Dashboard
+## 8. Spring Boot Dashboard
 
 Extension ID:
 
@@ -236,7 +280,7 @@ MicroServer Application 표시
 
 ---
 
-# 9. Java Extension과 Spring Boot Extension의 관계
+## 9. Java Extension과 Spring Boot Extension의 관계
 
 두 Extension Pack은 서로 중복 설치가 아니다.
 
@@ -273,7 +317,7 @@ Spring Boot Extension Pack
 
 ---
 
-# 10. 설치 상태 확인
+## 10. 설치 상태 확인
 
 Extensions 검색:
 
@@ -290,10 +334,16 @@ Spring Initializr Java Support
 Spring Boot Dashboard
 ```
 
-CLI:
+Windows Portable 환경:
 
-```bash
-code --list-extensions
+```powershell
+& "C:\local-microserver\tools\vscode\bin\code.cmd" --list-extensions
+```
+
+Portable Extension 저장 위치:
+
+```text
+C:\local-microserver\tools\vscode\data\extensions
 ```
 
 주요 Extension ID:
@@ -307,7 +357,7 @@ vscjava.vscode-spring-boot-dashboard
 
 ---
 
-# 11. Spring 관련 명령 확인
+## 11. Spring 관련 명령 확인
 
 Command Palette:
 
@@ -339,7 +389,7 @@ Spring 관련 명령이 표시되면 Extension이 정상적으로 등록된 것�
 
 ---
 
-# 12. Spring Initializr를 지금 실행하지 않는 이유
+## 12. Spring Initializr를 지금 실행하지 않는 이유
 
 현재 MicroServer 환경 구성 순서는 다음과 같다.
 
@@ -367,9 +417,11 @@ Spring Initializr Extension이 설치되었다고 여기서 바로 프로젝트�
 따라서 현재는 Spring Boot 개발에 필요한 Extension을 준비하고 역할을 이해하는 데까지만 진행한다.
 Spring Initializr를 이용한 실제 프로젝트 생성은 다음 **Spring Boot 프로젝트 생성 가이드**에서 수행한다.
 
+**[Spring Boot 프로젝트 생성](../../03_project_creation/spring_boot_project_create.md)**
+
 ---
 
-# 13. 현재 단계에서 하지 않는 작업
+## 13. 현재 단계에서 하지 않는 작업
 
 다음 작업은 아직 진행하지 않는다.
 
@@ -389,10 +441,11 @@ Actuator 설정
 
 ---
 
-# 14. 체크리스트
+## 14. 체크리스트
 
 - [ ] Extension Pack for Java가 먼저 설치되어 있다.
-- [ ] Spring Boot Extension Pack이 설치되어 있다.
+- [ ] MicroServer Portable VS Code에 Spring Boot Extension Pack이 설치되어 있다.
+- [ ] Windows에서는 Spring 관련 Extension이 Portable `data\extensions` 아래에서 관리됨을 이해했다.
 - [ ] Spring Boot Tools가 설치되어 있다.
 - [ ] Spring Initializr Java Support가 설치되어 있다.
 - [ ] Spring Boot Dashboard가 설치되어 있다.
@@ -403,7 +456,7 @@ Actuator 설정
 
 ---
 
-# 15. 다음 단계
+## 15. 다음 단계
 
 다음 문서에서는 Java / Spring Boot 개발 과정에서 사용할 지원 Extension과 VS Code Profile을 구성한다.
 
@@ -416,6 +469,8 @@ JDK 연계 및 환경 운영 확인
 ```
 
 ## 참고
+
+- [VS Code Portable Mode](https://code.visualstudio.com/docs/setup/portable)
 
 - Spring Boot in Visual Studio Code  
   <https://code.visualstudio.com/docs/java/java-spring-boot>

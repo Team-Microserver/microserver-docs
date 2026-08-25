@@ -21,6 +21,38 @@ Gradle을 처음 사용할 때 가장 중요하면서도 혼동하기 쉬운 개
 - CI/CD에서는 어떤 Gradle을 사용하는가?
 - Gradle Version을 Upgrade할 때 무엇을 변경해야 하는가?
 
+
+!!! info "현재 단계에서는 Wrapper의 개념과 운영 원칙을 이해"
+    현재 MicroServer 개발환경 구성 단계에서는 **JDK와 Gradle 설치까지 완료하고,
+    아직 Spring Boot 프로젝트는 생성하지 않은 상태**를 기준으로 한다.
+
+    따라서 이 문서에 나오는 다음 명령은 현재 바로 실행하는 것이 아니라,
+    **Gradle Wrapper가 어떤 역할을 하고 프로젝트 생성 이후 어떻게 사용하는지 이해하기 위한 예시**로 본다.
+
+    ```text
+    ./gradlew build
+    .\gradlew.bat build
+
+    ./gradlew --version
+    .\gradlew.bat --version
+    ```
+
+    현재는 아직 실제 Gradle 프로젝트가 없으므로 다음 Wrapper 파일도 존재하지 않는다.
+
+    ```text
+    gradlew
+    gradlew.bat
+    gradle/wrapper/gradle-wrapper.jar
+    gradle/wrapper/gradle-wrapper.properties
+    ```
+
+    Spring Boot 프로젝트를 Gradle 기반으로 생성하면 일반적으로 Wrapper 파일이 프로젝트에 함께 포함된다.
+
+    프로젝트가 생성된 이후에는 다음 가이드에서 Wrapper 파일과 Version을 실제로 확인하고,
+    프로젝트 Gradle 실행환경을 구성한다.
+
+    **[Gradle Wrapper 및 프로젝트 Gradle 설정](../../03_project_creation/project_environment/project_gradle_setup.md)**
+
 ---
 
 ## 2. Wrapper를 한 문장으로 이해하기
@@ -145,6 +177,17 @@ gradlew
 → Gradle Wrapper
 ```
 
+
+!!! tip "현재 단계에서 실행 가능한 명령"
+    지금은 개발 PC에 설치한 Gradle 자체를 확인하는 단계이므로 다음 명령을 사용한다.
+
+    ```powershell
+    gradle --version
+    ```
+
+    `gradlew` / `gradlew.bat`은 프로젝트 파일이므로
+    Spring Boot 프로젝트 생성 이후부터 실제로 실행할 수 있다.
+
 ---
 
 ## 5. Wrapper 동작 흐름
@@ -155,7 +198,7 @@ gradlew
 distributionUrl=https\://services.gradle.org/distributions/gradle-9.7.1-bin.zip
 ```
 
-개발자가 처음 다음 명령을 실행한다.
+Spring Boot / Gradle 프로젝트가 생성된 이후 개발자가 처음 다음 명령을 실행한다고 가정한다.
 
 ```bash
 ./gradlew build
@@ -314,7 +357,9 @@ gradle-9.7.1-bin.zip
 
 Wrapper가 다운로드한 Gradle Distribution은 일반적으로 사용자 Gradle Home 아래에 저장된다.
 
-Windows 기본 위치:
+Gradle의 기본 위치는 일반적으로 다음과 같다.
+
+Windows:
 
 ```text
 C:\Users\<사용자>\.gradle
@@ -325,6 +370,29 @@ macOS / Linux:
 ```text
 ~/.gradle
 ```
+
+MicroServer의 Windows 개발환경에서는 개발자 사용자 Home에 대한 의존성을 줄이기 위해
+`GRADLE_USER_HOME`을 다음 위치에서 관리하는 것을 기본 방향으로 한다.
+
+```text
+C:\local-microserver\gradle-home
+```
+
+따라서 Wrapper가 다운로드하는 Gradle Distribution과 Cache도
+`GRADLE_USER_HOME` 설정이 적용된 환경에서는 해당 Directory 아래에서 관리된다.
+
+!!! tip "MicroServer의 GRADLE_USER_HOME"
+    일반 Gradle 기본값과 MicroServer 프로젝트의 관리 기준을 구분한다.
+
+    ```text
+    Gradle 기본값
+    C:\Users\<사용자>\.gradle
+
+    MicroServer Windows 기준
+    C:\local-microserver\gradle-home
+    ```
+
+    실제 환경변수 적용은 프로젝트 로컬 개발환경과 Gradle 설치 가이드에서 정의한 기준을 사용한다.
 
 그 아래 Wrapper Distribution이 저장된다.
 
@@ -346,7 +414,7 @@ Git Project
         │
         │ "9.7.1을 사용하라"
         ↓
-사용자 ~/.gradle/wrapper/dists/
+GRADLE_USER_HOME/wrapper/dists/
 └─ 실제 Gradle Distribution
 ```
 
@@ -408,6 +476,17 @@ Gradle Wrapper
 
 Spring Initializr로 Gradle 프로젝트를 생성하면 Wrapper 파일이 함께 생성되는 경우가 일반적이므로 프로젝트 구성원이 직접 Wrapper를 처음 만드는 상황은 많지 않다.
 
+
+!!! note "MicroServer에서는 프로젝트 생성 이후 확인"
+    MicroServer 프로젝트는 이후 **Spring Boot 프로젝트 생성** 단계에서 Gradle 기반 프로젝트를 생성한다.
+
+    따라서 현재 환경구성 단계에서 `gradle wrapper` 명령으로 Wrapper를 미리 생성하지 않는다.
+
+    프로젝트 생성 이후 Wrapper 파일이 함께 생성되었는지 확인하고,
+    실제 설정과 Version 검증은 다음 가이드에서 진행한다.
+
+    **[Gradle Wrapper 및 프로젝트 Gradle 설정](../../03_project_creation/project_environment/project_gradle_setup.md)**
+
 ---
 
 ## 14. MicroServer 프로젝트 구성 원칙
@@ -437,6 +516,15 @@ gradle build
 ```
 
 이 명령은 시스템 설치 Gradle에 의존하기 때문이다.
+
+
+!!! info "현재는 Build 명령을 실행하지 않음"
+    이 절은 **프로젝트 생성 이후 MicroServer Build 명령의 기준을 미리 이해하기 위한 내용**이다.
+
+    현재는 아직 Build할 Spring Boot 프로젝트가 없으므로
+    `./gradlew build` 또는 `.\gradlew.bat build`를 실행하지 않는다.
+
+    실제 Build 확인은 프로젝트 생성 이후의 가이드에서 진행한다.
 
 ---
 
@@ -492,9 +580,30 @@ Wrapper Version 변경은 Gradle의 `wrapper` Task를 사용한다.
 
 ---
 
-## 17. Gradle Version 확인
+## 17. 프로젝트 생성 이후 Gradle Version 확인
 
-현재 프로젝트 Wrapper Version을 확인한다.
+프로젝트가 생성된 이후 현재 프로젝트의 Wrapper Version을 확인한다.
+
+!!! warning "현재 단계에서는 실행하지 않음"
+    현재는 아직 Spring Boot / Gradle 프로젝트가 생성되지 않았기 때문에
+    `gradlew`와 `gradlew.bat` 파일이 존재하지 않는다.
+
+    따라서 지금 다음 명령을 실행하면 파일을 찾을 수 없어 정상적으로 실행되지 않는다.
+
+    ```powershell
+    .\gradlew.bat --version
+    ```
+
+    현재 Gradle 설치 자체를 확인할 때는 다음 명령을 사용한다.
+
+    ```powershell
+    gradle --version
+    ```
+
+    `gradlew` / `gradlew.bat`을 이용한 Wrapper Version 확인은
+    Spring Boot 프로젝트 생성 이후 다음 가이드에서 실제로 수행한다.
+
+    **[Gradle Wrapper 및 프로젝트 Gradle 설정](../../03_project_creation/project_environment/project_gradle_setup.md)**
 
 macOS / Linux:
 
@@ -512,14 +621,21 @@ Windows:
 
 ```text
 Gradle 9.7.1
-JVM 26
+JVM 25
 ```
 
 ---
 
-## 18. Wrapper Version Upgrade
+## 18. 프로젝트 생성 이후 Wrapper Version Upgrade
 
 Gradle 공식 문서에서는 Wrapper Task를 이용한 Upgrade를 권장한다.
+
+
+!!! note "실제 Upgrade는 프로젝트 운영 단계에서 수행"
+    이 절의 명령도 Wrapper가 존재하는 프로젝트를 전제로 한다.
+
+    현재 환경구성 단계에서는 명령의 의미만 이해하고,
+    실제 Wrapper Version 변경은 프로젝트 생성 및 초기 설정 이후 필요할 때 수행한다.
 
 macOS / Linux:
 
@@ -684,6 +800,11 @@ Wrapper를 사용하면 개발 PC의 Gradle 설치 위치는 프로젝트 Build 
 
 Spring Boot 프로젝트 생성 이후 다음을 확인한다.
 
+
+실제 확인은 다음 가이드에서 진행한다.
+
+**[Gradle Wrapper 및 프로젝트 Gradle 설정](../../03_project_creation/project_environment/project_gradle_setup.md)**
+
 - [ ] `gradlew`가 존재한다.
 - [ ] `gradlew.bat`가 존재한다.
 - [ ] `gradle/wrapper/gradle-wrapper.jar`가 존재한다.
@@ -697,9 +818,19 @@ Spring Boot 프로젝트 생성 이후 다음을 확인한다.
 
 ---
 
-## 24. 다음 문서
+## 24. 다음 단계 및 관련 문서
 
-Wrapper를 이해했다면 Gradle의 실제 실행 명령, Cache 구조 및 문제 해결 방법을 확인한다.
+현재 환경구성 단계에서는 Wrapper의 개념과 프로젝트 운영 원칙까지 이해하고 넘어간다.
+
+개발환경 구성이 완료된 이후 Spring Boot 프로젝트를 생성한다.
+
+**[Spring Boot 프로젝트 생성](../../03_project_creation/spring_boot_project_create.md)**
+
+프로젝트 생성 이후에는 Wrapper 파일과 프로젝트 Gradle Version을 실제로 확인하고 설정한다.
+
+**[Gradle Wrapper 및 프로젝트 Gradle 설정](../../03_project_creation/project_environment/project_gradle_setup.md)**
+
+Gradle의 일반적인 실행 명령, Cache 구조 및 문제 해결 내용은 다음 문서를 참고한다.
 
 → [Gradle 명령어·Cache·문제 해결](gradle_usage.md)
 

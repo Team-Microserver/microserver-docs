@@ -105,8 +105,9 @@ nav:
             - Maven 설치 및 기본 환경 구성 (비교 / 참고): 01_project_start/02_environment/gradle/maven_setup.md
 
           - VS Code 개발환경:
-            - 구성 개요: 01_project_start/02_environment/vscode/vscode_setup.md
-            - VS Code 설치 및 기본 설정: 01_project_start/02_environment/vscode/vscode_install_basic_setup.md
+            - VS Code 설정 원칙: 01_project_start/02_environment/vscode/vscode_setup.md
+            - VS Code 설치: 01_project_start/02_environment/vscode/vscode_install.md
+            - VS Code 기본 설정: 01_project_start/02_environment/vscode/vscode_basic_setup.md   
             - Java 개발 Extension 구성: 01_project_start/02_environment/vscode/java_extension_setup.md
             - Spring Boot Extension 구성: 01_project_start/02_environment/vscode/spring_boot_extension_setup.md
             - 개발 지원 Extension 및 Profile 구성: 01_project_start/02_environment/vscode/support_extension_profile_setup.md

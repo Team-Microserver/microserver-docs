@@ -51,7 +51,156 @@ flowchart LR
 
 ---
 
-# 3. MicroServer의 JDK 운영 방향
+## 3. Portable VS Code와 JDK / Gradle 환경의 관계
+
+Eclipse와 VS Code는 JDK를 연결하는 방식이 다르다.
+
+Eclipse는 `eclipse.ini`의 `-vm` 설정으로 Eclipse 자체가 사용할 JVM을
+명시적으로 지정하는 구성이 익숙하다.
+
+반면 VS Code 자체는 Java JDK로 실행되는 프로그램이 아니다.
+
+```text
+VS Code 자체 실행
+→ Code.exe / Electron Runtime
+
+Java 개발 기능
+→ Java Extension이 JDK 사용
+
+Gradle 개발 기능
+→ Gradle / Gradle Extension / 향후 Wrapper가 JDK 사용
+
+Integrated Terminal
+→ VS Code Process가 상속한 환경변수 사용 가능
+```
+
+따라서 VS Code Portable Mode에서 중요한 것은
+`Code.exe`의 JVM을 지정하는 것이 아니라 **Java Extension과 개발 Terminal이
+MicroServer의 JDK / Gradle을 일관되게 찾을 수 있게 만드는 것**이다.
+
+### 3.1 Windows 개발환경 구조
+
+MicroServer Windows 기준:
+
+```text
+C:\local-microserver
+│
+├─ tools
+│  ├─ jdk
+│  │  └─ temurin-25
+│  │
+│  ├─ gradle
+│  │  └─ gradle-9.7.1
+│  │
+│  └─ vscode
+│     ├─ Code.exe
+│     └─ data
+│        ├─ user-data
+│        └─ extensions
+│
+├─ gradle-home
+└─ env
+   └─ start-vscode.cmd
+```
+
+### 3.2 `start-vscode.cmd`에서 Session 환경 주입
+
+VS Code를 실행하기 전에 다음 환경을 현재 Process에 구성할 수 있다.
+
+```cmd
+@echo off
+
+set "LOCAL_MICROSERVER=C:\local-microserver"
+
+set "JAVA_HOME=%LOCAL_MICROSERVER%\tools\jdk\temurin-25"
+set "GRADLE_HOME=%LOCAL_MICROSERVER%\tools\gradle\gradle-9.7.1"
+set "GRADLE_USER_HOME=%LOCAL_MICROSERVER%\gradle-home"
+
+set "PATH=%LOCAL_MICROSERVER%\tools\vscode\bin;%JAVA_HOME%\bin;%GRADLE_HOME%\bin;%PATH%"
+
+start "" "%LOCAL_MICROSERVER%\tools\vscode\Code.exe"
+```
+
+이 Script를 통해 시작된 VS Code는 부모 Process의 환경을 상속받는다.
+
+```mermaid
+flowchart LR
+    SCRIPT["start-vscode.cmd"]
+    --> ENV["JAVA_HOME / GRADLE_HOME<br/>GRADLE_USER_HOME / PATH"]
+    --> CODE["Portable Code.exe"]
+    --> JAVA["Java Extension"]
+    --> TERM["Integrated Terminal"]
+```
+
+이 방식은 Windows 시스템 환경변수에 MicroServer JDK를 영구 등록하는 것과 다르다.
+
+### 3.3 세 가지 Java 설정 범위를 구분
+
+MicroServer에서는 Java 환경을 다음 세 범위로 구분해서 이해한다.
+
+| 구분 | 역할 | 현재 기준 |
+|---|---|---|
+| 시스템 전역 `JAVA_HOME` | Windows 전체 기본 Java | 프로젝트용으로 영구 고정하지 않음 |
+| Session `JAVA_HOME` | `start-vscode.cmd`에서 시작되는 VS Code / Terminal Bootstrap | Temurin 25 사용 가능 |
+| Workspace JDK | 실제 MicroServer Project의 Java Runtime | 프로젝트 생성 이후 명시적으로 설정 |
+
+즉 `start-vscode.cmd`의 `JAVA_HOME`은
+**프로젝트 생성 전 VS Code Java 개발환경을 안정적으로 시작하기 위한 Bootstrap 기준**이고,
+실제 프로젝트 JDK의 최종 기준은 프로젝트 생성 이후 Workspace에서 다시 확인한다.
+
+### 3.4 이미 실행 중인 VS Code와 환경변수
+
+VS Code는 같은 User Data Instance가 이미 실행 중이면
+새로 실행한 Process가 기존 Instance와 연결될 수 있다.
+
+따라서 `start-vscode.cmd`의 JDK / Gradle 경로를 변경한 뒤에는
+다음 순서를 권장한다.
+
+```text
+MicroServer Portable VS Code 완전 종료
+        ↓
+start-vscode.cmd 실행
+        ↓
+새 환경변수를 상속한 VS Code 시작
+        ↓
+Integrated Terminal 새로 생성
+        ↓
+java -version / gradle --version 확인
+```
+
+현재는 아직 Spring Boot 프로젝트가 없으므로
+`gradlew.bat`이나 프로젝트 Build는 실행하지 않는다.
+
+### 3.5 Portable Mode와 프로젝트 Workspace 설정의 역할 차이
+
+Portable Mode:
+
+```text
+VS Code Settings / Extension / Profile 저장 위치를 독립화
+```
+
+Session Script:
+
+```text
+VS Code 시작 시 사용할 JDK / Gradle 환경 제공
+```
+
+Workspace Settings:
+
+```text
+프로젝트가 생성된 이후 해당 프로젝트의 JDK / IDE 설정 고정
+```
+
+세 가지를 함께 사용하면
+**개발도구 Package의 이동성**과 **프로젝트 설정의 재현성**을 동시에 확보할 수 있다.
+
+관련 문서:
+
+- [VS Code 설치 및 기본 설정](vscode_install_basic_setup.md)
+- [프로젝트 JDK / VS Code Workspace 설정](../../03_project_creation/project_environment/project_jdk_vscode_setup.md)
+
+
+## 4. MicroServer의 JDK 운영 방향
 
 일반적인 Java 개발환경 구성에서는 다음 방식을 많이 사용한다.
 
@@ -82,22 +231,23 @@ Workspace에서 프로젝트별 JDK 지정
 예:
 
 ```text
-Developer PC
- ├─ jdks/
- │   ├─ temurin-17/
- │   ├─ temurin-21/
- │   └─ temurin-26/
- │
- └─ projects/
-     ├─ legacy-project/    → JDK 17
-     └─ microserver/       → 프로젝트 기준 JDK
+C:\local-microserver
+├─ tools
+│  └─ jdk
+│     ├─ temurin-17
+│     ├─ temurin-21
+│     └─ temurin-25
+│
+└─ repos
+   ├─ legacy-project      → JDK 17
+   └─ microserver         → JDK 25 LTS
 ```
 
 이 방식은 STS/Eclipse에서 프로젝트별 Installed JRE/JDK를 선택하는 방식과 비슷한 목적을 가진다.
 
 ---
 
-# 4. 프로젝트별 JDK 운영의 장점
+## 5. 프로젝트별 JDK 운영의 장점
 
 다음과 같은 장점이 있다.
 
@@ -112,7 +262,7 @@ Developer PC
 
 ---
 
-# 5. VS Code Java Runtime 명령 확인
+## 6. VS Code Java Runtime 명령 확인
 
 Java Extension Pack이 설치되어 있으면 Command Palette에서 Java Runtime 관련 명령을 사용할 수 있다.
 
@@ -142,7 +292,7 @@ Java: Configure Java Runtime
 
 ---
 
-# 6. Java: Install New JDK
+## 7. Java: Install New JDK
 
 Java Extension 환경에서는 다음과 같은 명령도 확인할 수 있다.
 
@@ -158,7 +308,7 @@ Java: Install New JDK
 
 ---
 
-# 7. 실제 프로젝트별 JDK 설정 시점
+## 8. 실제 프로젝트별 JDK 설정 시점
 
 현재는 아직 MicroServer 프로젝트가 없으므로 실제 Workspace JDK 설정을 만들지 않는다.
 
@@ -184,7 +334,7 @@ VS Code Workspace 열기
 
 ---
 
-# 8. 향후 Workspace 구조
+## 9. 향후 Workspace 구조
 
 프로젝트가 생성되면 다음과 같은 구조를 사용할 수 있다.
 
@@ -210,7 +360,7 @@ extensions.json
 
 ---
 
-# 9. JAVA_HOME과 프로젝트 JDK의 관계
+## 10. JAVA_HOME과 프로젝트 JDK의 관계
 
 시스템 `JAVA_HOME`은 운영체제 Terminal이나 외부 도구가 Java를 찾을 때 사용될 수 있다.
 
@@ -228,6 +378,24 @@ VS Code Workspace JDK
 
 MicroServer에서는 후자를 프로젝트 개발환경의 기준으로 삼는다.
 
+다만 Portable VS Code를 시작할 때 사용하는 **Session `JAVA_HOME`**도 구분해야 한다.
+
+```text
+System JAVA_HOME
+→ Windows 시스템 전체에 영구 등록하는 Java
+
+Session JAVA_HOME
+→ start-vscode.cmd에서 현재 VS Code Process에 전달하는 Java
+
+Workspace JDK
+→ Spring Boot 프로젝트 생성 이후 해당 프로젝트가 사용할 Java
+```
+
+MicroServer는 System `JAVA_HOME`을 프로젝트 전용 값으로 영구 고정하지 않으며,
+Portable VS Code 실행 시 Session 환경을 제공하고
+프로젝트가 생성되면 Workspace JDK를 명시적으로 확인하는 구조를 사용한다.
+
+
 Gradle 기본 환경은 앞 단계에서 이미 준비했지만,
 **생성된 프로젝트가 사용할 Java 버전, Gradle Wrapper, `build.gradle` / `settings.gradle` Build 설정은 아직 구성하지 않는다.**
 
@@ -235,7 +403,7 @@ Gradle 기본 환경은 앞 단계에서 이미 준비했지만,
 
 ---
 
-# 10. Java Language Server와 Project JDK
+## 11. Java Language Server와 Project JDK
 
 VS Code의 Java 개발기능은 Java Language Server를 통해 제공된다.
 
@@ -253,11 +421,11 @@ Project Source를 컴파일할 때 사용할 JDK
 
 ---
 
-# 11. Extension 문제 확인
+## 12. Extension 문제 확인
 
 Java나 Spring 관련 메뉴가 정상적으로 보이지 않는 경우 다음 순서로 확인한다.
 
-## 11.1 Extension Enabled 확인
+### 12.1 Extension Enabled 확인
 
 ```text
 Extensions
@@ -266,7 +434,7 @@ Extensions
 → Enabled 상태 확인
 ```
 
-## 11.2 VS Code Reload
+### 12.2 VS Code Reload
 
 Command Palette:
 
@@ -276,7 +444,7 @@ Developer: Reload Window
 
 VS Code Window를 Reload한 후 다시 확인한다.
 
-## 11.3 Output 확인
+### 12.3 Output 확인
 
 메뉴:
 
@@ -295,7 +463,7 @@ Spring Boot Tools
 Gradle for Java / Build Server for Gradle
 ```
 
-## 11.4 Java Command 확인
+### 12.4 Java Command 확인
 
 Command Palette:
 
@@ -305,7 +473,7 @@ Java:
 
 Java 관련 명령이 나타나는지 확인한다.
 
-## 11.5 Spring Command 확인
+### 12.5 Spring Command 확인
 
 Command Palette:
 
@@ -321,7 +489,7 @@ Spring Boot
 
 ---
 
-# 12. Java Language Server 문제 대응
+## 13. Java Language Server 문제 대응
 
 향후 프로젝트를 열었을 때 Java Project 인식이 비정상인 경우 다음 명령을 사용할 수 있다.
 
@@ -336,7 +504,7 @@ Java: Clean Java Language Server Workspace
 
 ---
 
-# 13. Extension 업데이트 이후 문제
+## 14. Extension 업데이트 이후 문제
 
 Java / Spring Extension은 지속적으로 업데이트된다.
 
@@ -353,7 +521,7 @@ Java / Spring Extension은 지속적으로 업데이트된다.
 
 ---
 
-# 14. 현재 단계에서 하지 않는 작업
+## 15. 현재 단계에서 하지 않는 작업
 
 본 문서가 끝나더라도 아직 다음 작업은 하지 않는다.
 
@@ -388,7 +556,7 @@ Temurin JDK 준비
 
 ---
 
-# 15. VS Code 환경 구성 완료 상태
+## 16. VS Code 환경 구성 완료 상태
 
 환경 구성이 완료되면 개발 PC는 다음 상태가 된다.
 
@@ -420,38 +588,41 @@ flowchart TB
 
 ---
 
-# 16. 최종 체크리스트
+## 17. 최종 체크리스트
 
-## VS Code
+### VS Code
 
+- [ ] Windows Portable VS Code가 `C:\local-microserver\tools\vscode`에 준비되어 있다.
+- [ ] Portable `data` Directory의 역할을 이해했다.
+- [ ] `start-vscode.cmd`를 이용한 Session 환경 주입 방식을 이해했다.
 - [ ] VS Code가 정상 설치되어 있다.
 - [ ] Command Palette를 사용할 수 있다.
 - [ ] Extensions 화면을 사용할 수 있다.
 - [ ] Terminal을 사용할 수 있다.
 - [ ] Output을 확인할 수 있다.
 
-## Java
+### Java
 
 - [ ] Eclipse Temurin JDK가 앞 단계에서 준비되어 있다.
 - [ ] Extension Pack for Java가 설치되어 있다.
 - [ ] `Java: Configure Java Runtime` 명령을 확인할 수 있다.
 - [ ] 프로젝트별 JDK 운영 방향을 이해했다.
-- [ ] 시스템 `JAVA_HOME`과 Workspace JDK의 차이를 이해했다.
+- [ ] System `JAVA_HOME`, Session `JAVA_HOME`, Workspace JDK의 차이를 이해했다.
 
-## Spring Boot
+### Spring Boot
 
 - [ ] Spring Boot Extension Pack이 설치되어 있다.
 - [ ] Spring Boot Tools가 설치되어 있다.
 - [ ] Spring Initializr가 설치되어 있다.
 - [ ] Spring Boot Dashboard가 설치되어 있다.
 
-## 지원 환경
+### 지원 환경
 
 - [ ] YAML이 설치되어 있다.
 - [ ] XML이 설치되어 있다.
 - [ ] Container Tools가 설치되어 있다.
 
-## 단계 확인
+### 단계 확인
 
 - [ ] 아직 MicroServer Spring Boot 프로젝트를 생성하지 않았다.
 - [ ] 아직 `build.gradle` / `settings.gradle`을 작성하지 않았다.
@@ -460,11 +631,13 @@ flowchart TB
 
 ---
 
-# 17. 다음 단계
+## 18. 다음 단계
 
 이 문서까지 완료하면 VS Code 개발환경 구성은 끝난다.
 
 다음 단계에서는 **Spring Boot 프로젝트를 실제로 생성**한다.
+
+**[Spring Boot 프로젝트 생성](../../03_project_creation/spring_boot_project_create.md)**
 
 ```text
 JDK 설치 및 설정
@@ -487,6 +660,9 @@ Gradle Wrapper, `build.gradle` / `settings.gradle`의 Java / Build 설정 등은
 Spring Boot 프로젝트 생성 이후의 **프로젝트 개발환경 설정 단계**에서 적용한다.
 
 ## 참고
+
+- [VS Code Portable Mode](https://code.visualstudio.com/docs/setup/portable)
+- [VS Code Command Line Interface](https://code.visualstudio.com/docs/configure/command-line)
 
 - Managing Java Projects in VS Code  
   <https://code.visualstudio.com/docs/java/java-project>

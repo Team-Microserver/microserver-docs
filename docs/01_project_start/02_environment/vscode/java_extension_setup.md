@@ -45,7 +45,43 @@ Extension Pack을 사용하면 개발자별 필수 Extension 누락을 줄일 �
 
 ---
 
-# 3. Extension Pack for Java 설치
+
+### 2.1 Portable Mode에서 Extension이 저장되는 위치
+
+Windows 일반 설치에서는 Extension이 보통 사용자 Home의 다음 위치에 저장된다.
+
+```text
+C:\Users\<사용자>\.vscode\extensions
+```
+
+MicroServer의 Windows Portable VS Code에서는 Extension을
+Portable `data` Directory 아래에서 관리한다.
+
+```text
+C:\local-microserver\tools\vscode\data\extensions
+```
+
+즉 Java Extension Pack을 Portable VS Code에 설치하면
+Extension Binary도 `C:\local-microserver` 개발환경 Package에 포함할 수 있다.
+
+```mermaid
+flowchart LR
+    VS["Portable VS Code"]
+    --> DATA["data"]
+    DATA --> USER["user-data<br/>Settings / Profile"]
+    DATA --> EXT["extensions"]
+    EXT --> JAVA["Extension Pack for Java"]
+```
+
+!!! important "Portable VS Code에서 Extension을 설치해야 함"
+    PC에 일반 설치된 다른 VS Code가 있다면
+    그 VS Code에 설치한 Extension과 MicroServer Portable VS Code의 Extension은 별개일 수 있다.
+
+    반드시 **MicroServer Portable VS Code를 실행한 상태에서 Extension을 설치**하거나,
+    Portable VS Code의 `bin\code.cmd`를 명시적으로 사용한다.
+
+
+## 3. Extension Pack for Java 설치
 
 VS Code에서 Extensions 화면을 연다.
 
@@ -77,15 +113,33 @@ vscjava.vscode-java-pack
 
 설치 버튼을 선택한다.
 
-CLI를 사용할 경우:
+Windows Portable 환경에서 CLI를 사용할 경우:
+
+```powershell
+& "C:\local-microserver\tools\vscode\bin\code.cmd" --install-extension vscjava.vscode-java-pack
+```
+
+`setup.cmd` 또는 `start-vscode.cmd`를 통해 Portable VS Code의 `bin`이 현재 PATH에 포함되어 있다면 다음과 같이 실행할 수도 있다.
+
+```powershell
+code --install-extension vscjava.vscode-java-pack
+```
+
+macOS에서 `code` 명령이 등록되어 있다면:
 
 ```bash
 code --install-extension vscjava.vscode-java-pack
 ```
 
+!!! tip "어느 VS Code에 설치되는지 확인"
+    개발 PC에 일반 VS Code와 MicroServer Portable VS Code가 함께 존재한다면
+    단순히 `code`만 실행했을 때 어느 VS Code CLI가 선택되는지 확인해야 한다.
+
+    MicroServer 표준 Extension 설치 시에는 위와 같이 Portable `code.cmd`의 절대경로를 사용하면 명확하다.
+
 ---
 
-# 4. Extension Pack을 사용하는 이유
+## 4. Extension Pack을 사용하는 이유
 
 필요한 Java Extension을 개별적으로 설치할 수도 있다.
 
@@ -109,7 +163,7 @@ Extension Pack을 사용하면 공통 Java 개발환경을 보다 쉽게 맞출 
 
 ---
 
-# 5. Language Support for Java by Red Hat
+## 5. Language Support for Java by Red Hat
 
 Extension ID:
 
@@ -154,7 +208,7 @@ MicroServer에서는 **필수**로 사용한다.
 
 ---
 
-# 6. Debugger for Java
+## 6. Debugger for Java
 
 Extension ID:
 
@@ -185,7 +239,7 @@ MicroServer에서는 **필수**로 사용한다.
 
 ---
 
-# 7. Test Runner for Java
+## 7. Test Runner for Java
 
 Extension ID:
 
@@ -212,13 +266,13 @@ MicroServer에서는 **필수**로 사용한다.
 
 ---
 
-# 8. Gradle for Java와 Maven for Java
+## 8. Gradle for Java와 Maven for Java
 
 Extension Pack for Java에는 **Gradle for Java**와 **Maven for Java**가 함께 포함된다.
 
 MicroServer의 주 Build Tool은 Gradle이므로 Gradle for Java를 중심으로 사용하고, Maven for Java는 Maven 프로젝트를 열거나 두 Build Tool을 비교할 때 참고한다.
 
-## 8.1 Gradle for Java
+### 8.1 Gradle for Java
 
 Extension ID:
 
@@ -252,7 +306,7 @@ Gradle Wrapper
 ./gradlew bootRun
 ```
 
-## 8.2 Maven for Java
+### 8.2 Maven for Java
 
 Extension ID:
 
@@ -279,7 +333,7 @@ mvnw                       gradlew
 
 ---
 
-# 9. Project Manager for Java
+## 9. Project Manager for Java
 
 Extension ID:
 
@@ -304,7 +358,7 @@ Java 프로젝트의 구조와 Dependency를 VS Code에서 관리할 수 있도�
 
 ---
 
-# 10. Visual Studio IntelliCode
+## 10. Visual Studio IntelliCode
 
 Extension ID:
 
@@ -325,7 +379,7 @@ Java Language Support가 Java Source 분석의 기반이라면 IntelliCode는 �
 
 ---
 
-# 11. Java Extension의 관계
+## 11. Java Extension의 관계
 
 각 Extension은 서로 역할이 다르다.
 
@@ -344,7 +398,7 @@ flowchart LR
 
 ---
 
-# 12. 설치 상태 확인
+## 12. 설치 상태 확인
 
 Extensions 화면에서 다음 검색 조건을 사용할 수 있다.
 
@@ -365,15 +419,27 @@ Project Manager for Java
 Visual Studio IntelliCode
 ```
 
-CLI:
+Windows Portable 환경:
 
-```bash
+```powershell
+& "C:\local-microserver\tools\vscode\bin\code.cmd" --list-extensions
+```
+
+현재 PATH가 Portable VS Code를 가리키는 경우:
+
+```powershell
 code --list-extensions
+```
+
+설치 Directory도 함께 확인할 수 있다.
+
+```text
+C:\local-microserver\tools\vscode\data\extensions
 ```
 
 ---
 
-# 13. Java 명령 확인
+## 13. Java 명령 확인
 
 Command Palette를 연다.
 
@@ -409,7 +475,7 @@ Java: ...
 
 ---
 
-# 14. Java Extension 설치 후 주의사항
+## 14. Java Extension 설치 후 주의사항
 
 Extension 설치 직후 Java 관련 명령이 보이지 않는 경우 VS Code를 Reload한다.
 
@@ -430,7 +496,40 @@ Extensions
 
 ---
 
-# 15. 현재 단계에서 하지 않는 작업
+
+## 14.1 Java Extension과 개발환경 Package
+
+Portable VS Code에 Java Extension Pack을 설치한 뒤 배포용 Package를 만들면
+다른 개발자가 Extension을 하나씩 다시 설치하는 작업을 줄일 수 있다.
+
+배포용 구조 예:
+
+```text
+C:\local-microserver\tools\vscode
+├─ Code.exe
+└─ data
+   ├─ user-data
+   └─ extensions
+      ├─ redhat.java-...
+      ├─ vscjava.vscode-java-debug-...
+      ├─ vscjava.vscode-java-test-...
+      ├─ vscjava.vscode-gradle-...
+      └─ ...
+```
+
+다만 Extension은 지속적으로 Update되므로
+**배포 Package를 만들 때 어떤 VS Code / Extension Version을 기준으로 했는지 기록**하는 것이 좋다.
+
+또한 Java Extension이 설치되어 있어도 JDK Binary 자체가 Extension 안에 포함되는 것은 아니다.
+
+MicroServer에서는 JDK를 별도로 다음 위치에서 관리한다.
+
+```text
+C:\local-microserver\tools\jdk\temurin-25
+```
+
+
+## 15. 현재 단계에서 하지 않는 작업
 
 Java Extension이 설치되었더라도 아직 다음 작업은 하지 않는다.
 
@@ -448,9 +547,10 @@ Debug 실행
 
 ---
 
-# 16. 체크리스트
+## 16. 체크리스트
 
-- [ ] Extension Pack for Java가 설치되어 있다.
+- [ ] MicroServer Portable VS Code에 Extension Pack for Java가 설치되어 있다.
+- [ ] Windows에서는 Extension이 `C:\local-microserver\tools\vscode\data\extensions` 아래에서 관리되는 구조를 이해했다.
 - [ ] Language Support for Java by Red Hat이 설치되어 있다.
 - [ ] Debugger for Java가 설치되어 있다.
 - [ ] Test Runner for Java가 설치되어 있다.
@@ -463,7 +563,7 @@ Debug 실행
 
 ---
 
-# 17. 다음 단계
+## 17. 다음 단계
 
 Java 개발 Extension 구성이 끝나면 Spring Boot 개발 기능을 추가한다.
 
@@ -485,6 +585,8 @@ Gradle 기본 환경은 앞 단계에서 준비했으며, 실제 프로젝트 Bu
 현재부터는 VS Code 안에서 Java / Spring Boot 개발 기능을 순차적으로 구성한다.
 
 ## 참고
+
+- [VS Code Portable Mode](https://code.visualstudio.com/docs/setup/portable)
 
 - VS Code Java Extensions  
   <https://code.visualstudio.com/docs/java/extensions>
