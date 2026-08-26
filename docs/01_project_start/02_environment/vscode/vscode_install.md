@@ -25,6 +25,7 @@ VS Code : 1.134.0
 - `data` Directory 생성 및 Portable Mode 활성화
 - VS Code 실행 및 Version 확인
 - `start-vscode.cmd`를 이용한 독립 실행
+- 개발자별 Local Secret을 `local-env.cmd`로 분리
 - Portable VS Code Update
 - 다른 개발자에게 전달할 배포용 Portable 환경 구성
 - macOS에서의 VS Code 설치 및 Portable Mode 참고
@@ -375,63 +376,114 @@ VS Code Portable 자체의 실행 확인에는 위와 같이 **절대경로로 �
 code --version
 ```
 
-### 2.7 `start-vscode.cmd`를 이용한 독립 실행
+### 2.7 `start-vscode.cmd`와 Local 환경변수 구성
 
-VS Code는 Eclipse처럼 `eclipse.ini`에 JVM 경로를 지정해서 VS Code 자체를 Java로 실행하는 구조가 아니다.
+MicroServer에서는 VS Code를 시작하기 전에
+공통 개발도구 환경과 개발자별 Local 환경변수를 준비한 뒤
+Portable VS Code를 실행하는 방식을 사용할 수 있다.
 
-VS Code 자체는 Java JDK로 실행되는 프로그램이 아니며,
-**Java Extension과 Integrated Terminal이 JDK / Gradle 환경을 사용**한다.
+권장 구조:
 
-따라서 MicroServer에서는 VS Code를 실행하기 전에 현재 Process에
-프로젝트 개발도구 환경을 설정한 뒤 VS Code를 시작하는 Script를 사용할 수 있다.
+```text
+C:\local-microserver\env
+├─ setup.cmd
+├─ setup.ps1
+├─ start-vscode.cmd
+├─ local-env.example.cmd     ← 개발환경 Package에 포함
+└─ local-env.cmd             ← 실제 Local Secret / Package에서 제외
+```
 
-예:
+### 2.7.1 역할 분리
+
+```text
+start-vscode.cmd
+→ JAVA_HOME
+→ GRADLE_HOME
+→ GRADLE_USER_HOME
+→ PATH
+→ local-env.cmd 호출
+→ VS Code 실행
+
+local-env.cmd
+→ ORACLE_PWD 등 개발자별 Local 값
+```
+
+`start-vscode.cmd`에 실제 Password를 직접 작성하지 않는다.
+
+### 2.7.2 `local-env.example.cmd`
 
 ```cmd
 @echo off
 
+rem 이 파일을 local-env.cmd로 복사한 뒤 개인 값을 설정한다.
+set "ORACLE_PWD=<strong-local-password>"
+```
+
+개발자는 다음과 같이 자신의 파일을 만든다.
+
+```text
+local-env.example.cmd
+        ↓ 복사
+local-env.cmd
+```
+
+실제 파일 예:
+
+```cmd
+@echo off
+
+set "ORACLE_PWD=<개발자-개인-로컬-비밀번호>"
+```
+
+!!! danger "`local-env.cmd`는 배포하지 않음"
+    `C:\local-microserver`는 Git Repository가 아니므로
+    이 파일을 보호하기 위해 Root `.gitignore`를 만드는 방식은 사용하지 않는다.
+
+    실제 `local-env.cmd`는 개발환경 ZIP / 배포 Package 생성 시 제외한다.
+
+### 2.7.3 `start-vscode.cmd`
+
+```cmd
+@echo off
+setlocal
+
 set "LOCAL_MICROSERVER=C:\local-microserver"
 
-set "JAVA_HOME=%LOCAL_MICROSERVER%\tools\jdk\temurin-26"
+set "JAVA_HOME=%LOCAL_MICROSERVER%\tools\jdk\temurin-25"
 set "GRADLE_HOME=%LOCAL_MICROSERVER%\tools\gradle\gradle-9.7.1"
 set "GRADLE_USER_HOME=%LOCAL_MICROSERVER%\gradle-home"
+
+if exist "%LOCAL_MICROSERVER%\env\local-env.cmd" (
+    call "%LOCAL_MICROSERVER%\env\local-env.cmd"
+) else (
+    echo [INFO] local-env.cmd not found.
+    echo [INFO] Copy local-env.example.cmd to local-env.cmd if local settings are required.
+)
 
 set "PATH=%LOCAL_MICROSERVER%\tools\vscode\bin;%JAVA_HOME%\bin;%GRADLE_HOME%\bin;%PATH%"
 
 start "" "%LOCAL_MICROSERVER%\tools\vscode\Code.exe"
+
+endlocal
 ```
 
-권장 위치:
+환경변수 설정 여부만 확인:
 
-```text
-C:\local-microserver\env\start-vscode.cmd
+```powershell
+if ($env:ORACLE_PWD) {
+    "ORACLE_PWD is set"
+} else {
+    "ORACLE_PWD is not set"
+}
 ```
 
-동작 흐름:
+!!! note "System 환경변수를 영구 변경하는 방식이 아님"
+    Script에서 설정한 값은 해당 Process Tree에 전달된다.
 
-```mermaid
-flowchart TD
-    A["start-vscode.cmd 실행"]
-    --> B["LOCAL_MICROSERVER 설정"]
-    --> C["JAVA_HOME 설정"]
-    --> D["GRADLE_HOME / GRADLE_USER_HOME 설정"]
-    --> E["PATH에 JDK / Gradle / VS Code bin 추가"]
-    --> F["Portable Code.exe 실행"]
-    --> G["VS Code Process가 환경변수 상속"]
-    --> H["Java Extension / Integrated Terminal에서 사용"]
-```
+!!! warning "환경변수 변경 후 VS Code 재시작"
+    Local 환경변수를 바꿨다면 Portable VS Code를 완전히 종료한 뒤
+    `start-vscode.cmd`로 다시 실행한다.
 
-!!! note "System 환경변수를 영구 변경하는 Script가 아님"
-    위 Script의 `set` 명령은 Script에서 시작되는 Process Tree에 환경을 전달하기 위한 것이다.
-
-    Windows 시스템 전체의 `JAVA_HOME`이나 PATH를 영구 변경하는 방식과 구분한다.
-
-!!! warning "이미 실행 중인 VS Code가 있을 때"
-    VS Code는 이미 실행 중인 동일 User Data Instance가 있으면
-    새 Process가 기존 Instance와 연결될 수 있다.
-
-    JDK / Gradle 환경변수를 변경한 뒤 확실하게 새 환경을 적용하려면
-    **MicroServer Portable VS Code를 완전히 종료한 후 `start-vscode.cmd`로 다시 실행**한다.
 
 ### 2.8 Windows 설치 및 Portable Mode 확인
 
@@ -491,11 +543,11 @@ Update할 때는 다음 순서로 관리한다.
 MicroServer 개발환경 Package는 다음처럼 구성할 수 있다.
 
 ```text
-C:\local-microserver
+C:\local-microserver                       ← Git Repository 아님
 │
 ├─ tools
 │  ├─ jdk
-│  │  └─ temurin-26
+│  │  └─ temurin-25
 │  ├─ gradle
 │  │  └─ gradle-9.7.1
 │  └─ vscode
@@ -505,12 +557,19 @@ C:\local-microserver
 │        └─ extensions
 │
 ├─ gradle-home
-├─ workspace
-├─ repos
-└─ env
+│
+├─ workspace                               ← 실제 Git Repository 보관
+│  ├─ microserver
+│  │  └─ .git
+│  └─ microserver-docs
+│     └─ .git
+│
+└─ env                                     ← Git Repository 밖
    ├─ setup.cmd
    ├─ setup.ps1
-   └─ start-vscode.cmd
+   ├─ start-vscode.cmd
+   ├─ local-env.example.cmd                ← 배포 포함
+   └─ local-env.cmd                        ← 배포 제외
 ```
 
 이 구조의 장점은 다음과 같다.
@@ -520,6 +579,7 @@ C:\local-microserver
 - 공통 VS Code Settings를 미리 적용할 수 있다.
 - Windows 시스템 전역 Java / Gradle 설정에 대한 의존성을 줄일 수 있다.
 - 개발환경 Package를 압축하여 동일 Root에 풀어 재사용하기 쉽다.
+- 실제 Source Repository는 `workspace` 아래에서 개별 Git Repository로 관리할 수 있다.
 
 하지만 **실제 개인 개발에 사용한 `data` 폴더를 그대로 다른 개발자에게 전달하는 것은 피한다.**
 
@@ -544,6 +604,16 @@ VS Code 완전 종료
         ↓
 배포 Package 생성
 ```
+
+!!! important "Git 관리 범위와 개발환경 Package 범위는 다름"
+    `C:\local-microserver` 자체는 Git Repository가 아니다.
+
+    따라서 `C:\local-microserver\.gitignore`는 필요하지 않다.
+
+    `.gitignore`는 `workspace\microserver` 같은 실제 Repository 내부에서 관리한다.
+
+    반면 `local-env.cmd`는 Git과 관계없이 ZIP에 포함될 수 있으므로
+    개발환경 배포 Package에서 별도로 제외한다.
 
 !!! important "계정 / Credential / 개인 상태를 Package에 포함하지 않음"
     Portable `data`는 Settings와 Extension뿐 아니라 VS Code의 여러 User Data를 함께 관리한다.
@@ -683,6 +753,8 @@ macOS Application은 일반적인 VS Code Update 방식을 사용할 수 있으�
 - [ ] `code.cmd --version`으로 Version을 확인했다.
 - [ ] Portable Mode에서는 Settings와 Extension이 `data` 아래에서 관리됨을 이해했다.
 - [ ] `resources` Directory 유무는 설치 성공 여부의 판단 기준이 아님을 이해했다.
+- [ ] `local-env.example.cmd`와 `local-env.cmd`의 역할을 구분했다.
+- [ ] `C:\local-microserver` Root는 Git Repository가 아님을 이해했다.
 
 ### 4.2 배포 환경
 
@@ -691,6 +763,8 @@ macOS Application은 일반적인 VS Code Update 방식을 사용할 수 있으�
 - [ ] 배포용 Instance에서는 개인 계정 로그인과 Settings Sync를 사용하지 않는다.
 - [ ] 프로젝트 표준 Extension과 공통 Settings만 포함한다.
 - [ ] JDK / Gradle / Git / Docker 등 VS Code 외부 도구의 관리 범위를 구분한다.
+- [ ] 실제 `local-env.cmd`는 개발환경 배포 Package에서 제외한다.
+- [ ] `.gitignore`는 `workspace` 아래 실제 Repository에서 관리한다.
 
 ## 5. 다음 단계
 

@@ -231,7 +231,7 @@ Developer PC
 Windows 개발환경은 가능한 한 다음 Root 아래에서 관리한다.
 
 ```text
-C:\local-microserver
+C:\local-microserver                       ← Git Repository 아님
 │
 ├─ tools
 │  ├─ jdk
@@ -245,18 +245,35 @@ C:\local-microserver
 │        └─ extensions
 │
 ├─ gradle-home
-├─ workspace
-├─ repos
-└─ env
+│
+├─ workspace                               ← Repository 보관 Directory
+│  ├─ microserver                          ← Git Repository
+│  │  └─ .git
+│  └─ microserver-docs                     ← 별도 Git Repository
+│     └─ .git
+│
+└─ env                                     ← Git Repository 밖
    ├─ setup.cmd
    ├─ setup.ps1
-   └─ start-vscode.cmd
+   ├─ start-vscode.cmd
+   ├─ local-env.example.cmd                ← 배포 가능
+   └─ local-env.cmd                        ← 개인 Secret / 배포 제외
 ```
 
-이렇게 구성하면 개발환경을 다른 개발자에게 전달할 때
-JDK, Gradle, VS Code, Extension, 공통 Settings를 하나의 기준 Directory에서 관리할 수 있다.
+`C:\local-microserver`는 개발환경 Package Root이며 Git Repository가 아니다.
+`workspace` 역시 Repository들을 담는 상위 Directory일 뿐 Git Repository가 아니다.
 
-다만 **개발자가 실제로 사용하던 Portable VS Code의 `data`를 그대로 배포하지 않는다.**
+실제 Git Repository는 다음과 같이 프로젝트별로 존재한다.
+
+```text
+workspace\microserver
+workspace\microserver-docs
+```
+
+!!! important "MicroServer Root와 workspace Root에는 `.gitignore`가 필요하지 않음"
+    두 Directory 모두 Git Repository가 아니므로 프로젝트용 `.gitignore`를 둘 필요가 없다.
+
+    `.gitignore`는 실제 Repository Root에서 관리한다.
 
 배포용 환경은 별도로 깨끗하게 구성하여 다음 원칙을 적용한다.
 
@@ -266,10 +283,35 @@ JDK, Gradle, VS Code, Extension, 공통 Settings를 하나의 기준 Directory�
 - 프로젝트 공통 Extension만 설치한다.
 - 프로젝트 공통 Settings만 적용한다.
 - 개인 인증정보나 Token을 저장하지 않는다.
+- 실제 `local-env.cmd`를 배포 Package에 포함하지 않는다.
 - 배포 전 VS Code를 완전히 종료한 후 Package를 만든다.
 
-이를 통해 VS Code Portable Mode의 장점은 유지하면서
-개인 환경이 다른 개발자에게 전달되는 위험을 줄인다.
+### 3.7 Local Secret은 Git이 아니라 개발환경 Package 정책으로 분리
+
+`ORACLE_PWD` 같은 개발자별 Local Secret은 다음 파일에 둘 수 있다.
+
+```text
+C:\local-microserver\env\local-env.cmd
+```
+
+이 파일은 `workspace\microserver` Git Repository 밖에 있으므로
+프로젝트 `.gitignore`로 제외하는 파일이 아니다.
+
+```text
+Repository 내부 .env
+→ .gitignore 사용
+
+Repository 밖 local-env.cmd
+→ Git 대상 아님
+→ 개발환경 ZIP / 배포 Package에서 제외
+```
+
+Sample 파일:
+
+```text
+local-env.example.cmd    ← 배포
+local-env.cmd            ← 배포 제외
+```
 
 
 ---
@@ -284,6 +326,8 @@ JDK, Gradle, VS Code, Extension, 공통 Settings를 하나의 기준 Directory�
 - `C:\local-microserver\tools\vscode` 표준 배치
 - Portable `data` Directory와 User Data / Extension 저장 구조
 - `start-vscode.cmd`를 이용한 독립 실행환경 구성
+- `local-env.example.cmd` / `local-env.cmd`를 이용한 Local Secret 분리
+- Git Repository와 개발환경 Package Root의 경계 구분
 - Portable VS Code Update 및 배포 Package 관리
 - macOS VS Code 설치와 Portable Mode 참고
 - `code` 명령 사용 방식
@@ -294,7 +338,9 @@ JDK, Gradle, VS Code, Extension, 공통 Settings를 하나의 기준 Directory�
 - UTF-8 등 기본 Editor 설정
 - User Settings와 Workspace Settings의 차이
 
-→ [VS Code 설치 및 기본 설정](vscode_install_basic_setup.md)
+→ [VS Code 설치](vscode_install.md)
+
+→ [VS Code 기본 설정](vscode_basic_setup.md)
 
 ### 4.2 Java 개발 Extension 구성
 
@@ -308,7 +354,6 @@ JDK, Gradle, VS Code, Extension, 공통 Settings를 하나의 기준 Directory�
 - Gradle for Java
 - Maven for Java (비교/호환)
 - Project Manager for Java
-- Visual Studio IntelliCode
 - 각 Extension의 역할과 이후 사용 시점
 
 → [Java 개발 Extension 구성](java_extension_setup.md)
@@ -394,6 +439,8 @@ flowchart TB
 - Eclipse Temurin JDK가 준비되어 있다.
 - VS Code의 Settings / Extension이 Portable `data` 영역에서 관리되는 구조를 이해했다.
 - VS Code에서 프로젝트별 JDK를 연결할 수 있는 구조를 이해했다.
+- `C:\local-microserver` Root와 실제 Git Repository 범위를 구분할 수 있다.
+- Repository 밖의 `local-env.cmd`는 `.gitignore`가 아니라 배포 Package에서 제외한다.
 - 아직 Spring Boot 프로젝트를 생성하지 않았다.
 
 ---

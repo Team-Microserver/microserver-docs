@@ -35,13 +35,26 @@ flowchart TB
     PACK --> GRADLE[Gradle for Java]
     PACK --> MAVEN[Maven for Java]
     PACK --> PROJECT[Project Manager for Java]
-    PACK --> INTELLI[IntelliCode]
 ```
 
 Extension Pack을 사용하면 개발자별 필수 Extension 누락을 줄일 수 있다.
 
 > Extension Pack의 실제 포함 구성은 VS Code/Marketplace 업데이트에 따라 변경될 수 있다.
 > MicroServer 문서에서는 Java 개발에 필요한 주요 구성요소와 역할을 기준으로 관리한다.
+
+!!! note "2026-08 현재 Extension Pack 구성 기준"
+    현재 Visual Studio Marketplace의 **Extension Pack for Java** 페이지에는 다음 6개 Extension이 포함 대상으로 안내된다.
+
+    - Language Support for Java™ by Red Hat
+    - Debugger for Java
+    - Test Runner for Java
+    - Maven for Java
+    - Gradle for Java
+    - Project Manager for Java
+
+    일부 VS Code Java 문서에는 과거 구성인 **Visual Studio IntelliCode**가 아직 표시될 수 있지만,
+    현재 Marketplace의 실제 Extension Pack 구성에는 포함되어 있지 않으므로
+    MicroServer 표준 필수 Extension에서는 제외한다.
 
 ---
 
@@ -136,6 +149,114 @@ code --install-extension vscjava.vscode-java-pack
     단순히 `code`만 실행했을 때 어느 VS Code CLI가 선택되는지 확인해야 한다.
 
     MicroServer 표준 Extension 설치 시에는 위와 같이 Portable `code.cmd`의 절대경로를 사용하면 명확하다.
+
+
+### 3.1 Portable VS Code에 JDK Runtime 등록
+
+Extension Pack for Java를 설치한 뒤에는 Java Extension이 사용할 JDK 위치를 VS Code에 등록한다.
+
+MicroServer Windows 표준 JDK 위치:
+
+```text
+C:\local-microserver\tools\jdk\temurin-25
+```
+
+JDK 설치 여부는 PowerShell에서 다음과 같이 확인할 수 있다.
+
+```powershell
+C:\local-microserver\tools\jdk\temurin-25\bin\java.exe -version
+C:\local-microserver\tools\jdk\temurin-25\bin\javac.exe -version
+```
+
+Portable VS Code의 User Settings는 다음 위치에서 관리된다.
+
+```text
+C:\local-microserver\tools\vscode\data\user-data\User\settings.json
+```
+
+이 설정은 Windows 전체의 전역 설정이 아니라
+**해당 Portable VS Code 인스턴스에서 여는 모든 Workspace에 공통 적용되는 User Settings**이다.
+
+Command Palette에서 다음 명령으로 설정 파일을 열 수 있다.
+
+```text
+Preferences: Open User Settings (JSON)
+```
+
+JDK 25를 기본 Runtime으로 사용할 경우 다음과 같이 등록한다.
+
+```json
+{
+    "java.jdt.ls.java.home": "C:\\local-microserver\\tools\\jdk\\temurin-25",
+
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-25",
+            "path": "C:\\local-microserver\\tools\\jdk\\temurin-25",
+            "default": true
+        }
+    ]
+}
+```
+
+`java.configuration.runtimes`는 배열이므로 여러 JDK를 함께 등록할 수 있다.
+
+예를 들어 JDK 21과 JDK 25를 함께 관리한다면:
+
+```json
+{
+    "java.jdt.ls.java.home": "C:\\local-microserver\\tools\\jdk\\temurin-25",
+
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-21",
+            "path": "C:\\local-microserver\\tools\\jdk\\temurin-21"
+        },
+        {
+            "name": "JavaSE-25",
+            "path": "C:\\local-microserver\\tools\\jdk\\temurin-25",
+            "default": true
+        }
+    ]
+}
+```
+
+각 설정의 역할은 다음과 같이 구분한다.
+
+| 설정 | 역할 |
+|---|---|
+| `java.jdt.ls.java.home` | Java Language Server 자체를 실행할 JDK |
+| `java.configuration.runtimes` | VS Code에서 프로젝트용으로 선택 가능한 JDK 목록 |
+| Gradle Toolchain | 실제 프로젝트가 Compile / Build에 사용할 Java Version |
+
+!!! important "JDK 경로는 bin 폴더가 아닌 JDK Home을 지정"
+    다음과 같이 `bin`까지 지정하지 않는다.
+
+    ```text
+    C:\local-microserver\tools\jdk\temurin-25\bin   ← 잘못된 예
+    ```
+
+    JDK Home을 지정한다.
+
+    ```text
+    C:\local-microserver\tools\jdk\temurin-25       ← 올바른 예
+    ```
+
+설정 변경 후 다음 명령으로 VS Code를 Reload한다.
+
+```text
+Developer: Reload Window
+```
+
+현재 단계에서는 아직 Java / Spring Boot 프로젝트를 생성하지 않았으므로
+`Java: Configure Java Runtime`을 실행했을 때 다음과 같은 메시지가 나타날 수 있다.
+
+```text
+There are no Java projects opened in the current workspace.
+```
+
+이 메시지는 JDK를 찾지 못했다는 의미가 아니라
+**현재 Workspace에 Java 프로젝트가 아직 없다는 의미**이므로 정상이다.
 
 ---
 
@@ -358,28 +479,7 @@ Java 프로젝트의 구조와 Dependency를 VS Code에서 관리할 수 있도�
 
 ---
 
-## 10. Visual Studio IntelliCode
-
-Extension ID:
-
-```text
-VisualStudioExptTeam.vscodeintellicode
-```
-
-코드 작성 시 IntelliSense 추천 기능을 보조한다.
-
-주요 역할:
-
-- 자동완성 경험 보조
-- 코드 추천
-- 자주 사용되는 API 후보 추천
-- Java 코드 작성 생산성 향상
-
-Java Language Support가 Java Source 분석의 기반이라면 IntelliCode는 자동완성 경험을 보조하는 역할이다.
-
----
-
-## 11. Java Extension의 관계
+## 10. Java Extension의 관계
 
 각 Extension은 서로 역할이 다르다.
 
@@ -391,14 +491,13 @@ flowchart LR
     GRADLE[Gradle for Java] --> BUILD[Build Tool 연계]
     MAVEN[Maven for Java] --> COMPARE[Maven 비교 / 호환]
     PM[Project Manager] --> STRUCT[Project 구조]
-    INT[IntelliCode] --> ASSIST[작성 보조]
 ```
 
 단순히 Extension Pack을 설치했다고 끝내기보다 각 Extension이 어느 영역을 담당하는지 이해하는 것이 중요하다.
 
 ---
 
-## 12. 설치 상태 확인
+## 11. 설치 상태 확인
 
 Extensions 화면에서 다음 검색 조건을 사용할 수 있다.
 
@@ -407,6 +506,7 @@ Extensions 화면에서 다음 검색 조건을 사용할 수 있다.
 ```
 
 Java 관련 주요 Extension이 설치되어 있는지 확인한다.
+현재 Marketplace의 Extension Pack 구성 기준으로 다음 항목을 확인한다.
 
 ```text
 Extension Pack for Java
@@ -416,7 +516,6 @@ Test Runner for Java
 Gradle for Java
 Maven for Java
 Project Manager for Java
-Visual Studio IntelliCode
 ```
 
 Windows Portable 환경:
@@ -439,7 +538,7 @@ C:\local-microserver\tools\vscode\data\extensions
 
 ---
 
-## 13. Java 명령 확인
+## 12. Java 명령 확인
 
 Command Palette를 연다.
 
@@ -473,9 +572,15 @@ Java: ...
 
 현재 단계에서는 명령의 존재 여부만 확인한다.
 
+!!! note "아직 Java 프로젝트가 없는 경우"
+    `Java: Configure Java Runtime` 명령 자체는 표시되더라도,
+    설정 화면에는 `There are no Java projects opened in the current workspace.` 메시지가 나타날 수 있다.
+
+    현재 단계에서는 Spring Boot / Java 프로젝트를 아직 생성하지 않았으므로 정상이다.
+
 ---
 
-## 14. Java Extension 설치 후 주의사항
+## 13. Java Extension 설치 후 주의사항
 
 Extension 설치 직후 Java 관련 명령이 보이지 않는 경우 VS Code를 Reload한다.
 
@@ -497,7 +602,7 @@ Extensions
 ---
 
 
-## 14.1 Java Extension과 개발환경 Package
+## 13.1 Java Extension과 개발환경 Package
 
 Portable VS Code에 Java Extension Pack을 설치한 뒤 배포용 Package를 만들면
 다른 개발자가 Extension을 하나씩 다시 설치하는 작업을 줄일 수 있다.
@@ -529,7 +634,7 @@ C:\local-microserver\tools\jdk\temurin-25
 ```
 
 
-## 15. 현재 단계에서 하지 않는 작업
+## 14. 현재 단계에서 하지 않는 작업
 
 Java Extension이 설치되었더라도 아직 다음 작업은 하지 않는다.
 
@@ -547,7 +652,7 @@ Debug 실행
 
 ---
 
-## 16. 체크리스트
+## 15. 체크리스트
 
 - [ ] MicroServer Portable VS Code에 Extension Pack for Java가 설치되어 있다.
 - [ ] Windows에서는 Extension이 `C:\local-microserver\tools\vscode\data\extensions` 아래에서 관리되는 구조를 이해했다.
@@ -557,13 +662,14 @@ Debug 실행
 - [ ] Gradle for Java가 설치되어 있다.
 - [ ] Maven for Java가 함께 설치되어 있음을 확인했다.
 - [ ] Project Manager for Java가 설치되어 있다.
-- [ ] IntelliCode가 설치되어 있다.
+- [ ] Portable VS Code User Settings에 JDK 25 Runtime 경로가 등록되어 있다.
+- [ ] `java.configuration.runtimes`가 여러 JDK를 등록할 수 있는 배열 설정임을 이해했다.
 - [ ] Command Palette에서 `Java:` 명령을 확인할 수 있다.
 - [ ] 아직 Java / Spring Boot 프로젝트를 생성하지 않았다.
 
 ---
 
-## 17. 다음 단계
+## 16. 다음 단계
 
 Java 개발 Extension 구성이 끝나면 Spring Boot 개발 기능을 추가한다.
 
@@ -585,6 +691,8 @@ Gradle 기본 환경은 앞 단계에서 준비했으며, 실제 프로젝트 Bu
 현재부터는 VS Code 안에서 Java / Spring Boot 개발 기능을 순차적으로 구성한다.
 
 ## 참고
+
+- [Visual Studio Marketplace - Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
 
 - [VS Code Portable Mode](https://code.visualstudio.com/docs/setup/portable)
 
