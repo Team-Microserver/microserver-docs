@@ -24,8 +24,8 @@ VS Code : 1.134.0
 - `C:\local-microserver\tools\vscode`에 압축 해제
 - `data` Directory 생성 및 Portable Mode 활성화
 - VS Code 실행 및 Version 확인
-- `start-vscode.cmd`를 이용한 독립 실행
-- 개발자별 Local Secret을 `local-env.cmd`로 분리
+- `start-vscode.ps1`을 이용한 독립 실행
+- 개발자별 Local Secret을 `local-env.ps1`로 분리
 - Portable VS Code Update
 - 다른 개발자에게 전달할 배포용 Portable 환경 구성
 - macOS에서의 VS Code 설치 및 Portable Mode 참고
@@ -369,105 +369,241 @@ CLI Version 확인:
 
 VS Code Portable 자체의 실행 확인에는 위와 같이 **절대경로로 실행**해도 된다.
 
-향후 `setup.cmd` 또는 `start-vscode.cmd`에서 VS Code의 `bin` Directory를
+향후 `setup.ps1` 또는 `start-vscode.ps1`에서 VS Code의 `bin` Directory를
 현재 Session PATH에 추가하면 다음 명령도 사용할 수 있다.
 
 ```powershell
 code --version
 ```
 
-### 2.7 `start-vscode.cmd`와 Local 환경변수 구성
+### 2.7 PowerShell 기반 MicroServer VS Code 실행
 
-MicroServer에서는 VS Code를 시작하기 전에
-공통 개발도구 환경과 개발자별 Local 환경변수를 준비한 뒤
-Portable VS Code를 실행하는 방식을 사용할 수 있다.
+MicroServer Windows 개발환경의 실행 Script는 **PowerShell(`.ps1`)을 기본으로 사용**한다.
 
-권장 구조:
+기존 CMD Script를 병행하지 않고 다음 역할을 PowerShell Script로 분리한다.
 
 ```text
-C:\local-microserver\env
-├─ setup.cmd
-├─ setup.ps1
-├─ start-vscode.cmd
-├─ local-env.example.cmd     ← 개발환경 Package에 포함
-└─ local-env.cmd             ← 실제 Local Secret / Package에서 제외
+C:\local-microserver
+│
+├─ env
+│  ├─ setup.ps1
+│  ├─ start-vscode.ps1
+│  ├─ create-vscode-shortcut.ps1
+│  ├─ local-env.example.ps1
+│  └─ local-env.ps1
+│
+├─ icons
+│  └─ microserver.ico
+│
+└─ MicroServer VS Code.lnk
 ```
 
-### 2.7.1 역할 분리
+역할:
+
+| 파일 | 역할 |
+|---|---|
+| `setup.ps1` | 현재 PowerShell Session에 JDK / Gradle / PATH / Local 환경변수 적용 |
+| `start-vscode.ps1` | 환경을 준비한 뒤 Portable VS Code 실행 |
+| `local-env.example.ps1` | 개발자별 Local 설정 Sample |
+| `local-env.ps1` | 개발자 개인 Local Secret / 설정 |
+| `create-vscode-shortcut.ps1` | MicroServer Root에 VS Code 실행 바로가기 생성 |
+| `icons\microserver.ico` | 바로가기에서 사용할 MicroServer Icon |
+
+!!! important "CMD Script를 기본 실행 방식으로 사용하지 않음"
+    MicroServer Windows 개발환경의 공통 Script는 PowerShell을 기준으로 작성한다.
+
+    `setup.ps1`, `start-vscode.ps1`, `local-env.ps1`를 기본 Package에 함께 제공하지 않는다.
+
+### 2.7.1 `local-env.example.ps1`
+
+배포 Package에는 실제 Secret이 없는 Sample을 포함한다.
+
+```powershell
+# MicroServer Local Environment Example
+
+$env:ORACLE_PWD = '<strong-local-password>'
+```
+
+개발자는 최초 1회 다음과 같이 파일을 복사한다.
 
 ```text
-start-vscode.cmd
-→ JAVA_HOME
-→ GRADLE_HOME
-→ GRADLE_USER_HOME
-→ PATH
-→ local-env.cmd 호출
-→ VS Code 실행
-
-local-env.cmd
-→ ORACLE_PWD 등 개발자별 Local 값
-```
-
-`start-vscode.cmd`에 실제 Password를 직접 작성하지 않는다.
-
-### 2.7.2 `local-env.example.cmd`
-
-```cmd
-@echo off
-
-rem 이 파일을 local-env.cmd로 복사한 뒤 개인 값을 설정한다.
-set "ORACLE_PWD=<strong-local-password>"
-```
-
-개발자는 다음과 같이 자신의 파일을 만든다.
-
-```text
-local-env.example.cmd
+local-env.example.ps1
         ↓ 복사
-local-env.cmd
+local-env.ps1
 ```
 
-실제 파일 예:
+실제 `local-env.ps1` 예:
 
-```cmd
-@echo off
+```powershell
+# Developer Local Environment
 
-set "ORACLE_PWD=<개발자-개인-로컬-비밀번호>"
+$env:ORACLE_PWD = '<개발자-개인-로컬-비밀번호>'
 ```
 
-!!! danger "`local-env.cmd`는 배포하지 않음"
-    `C:\local-microserver`는 Git Repository가 아니므로
-    이 파일을 보호하기 위해 Root `.gitignore`를 만드는 방식은 사용하지 않는다.
+!!! danger "`local-env.ps1`은 배포하지 않음"
+    실제 Password, Token 등 개발자별 Secret이 들어갈 수 있으므로
+    `C:\local-microserver` 개발환경 Package를 다른 개발자에게 전달할 때
+    현재 개발자의 `local-env.ps1`은 제외한다.
 
-    실제 `local-env.cmd`는 개발환경 ZIP / 배포 Package 생성 시 제외한다.
+    이 파일은 실제 Source Git Repository 밖에 있으므로
+    프로젝트 `.gitignore`로 보호하는 파일이 아니다.
 
-### 2.7.3 `start-vscode.cmd`
+### 2.7.2 `setup.ps1`
 
-```cmd
-@echo off
-setlocal
+`setup.ps1`은 현재 PowerShell Session에 MicroServer 개발환경을 적용하는 보조 Script이다.
 
-set "LOCAL_MICROSERVER=C:\local-microserver"
+주요 설정:
 
-set "JAVA_HOME=%LOCAL_MICROSERVER%\tools\jdk\temurin-25"
-set "GRADLE_HOME=%LOCAL_MICROSERVER%\tools\gradle\gradle-9.7.1"
-set "GRADLE_USER_HOME=%LOCAL_MICROSERVER%\gradle-home"
-
-if exist "%LOCAL_MICROSERVER%\env\local-env.cmd" (
-    call "%LOCAL_MICROSERVER%\env\local-env.cmd"
-) else (
-    echo [INFO] local-env.cmd not found.
-    echo [INFO] Copy local-env.example.cmd to local-env.cmd if local settings are required.
-)
-
-set "PATH=%LOCAL_MICROSERVER%\tools\vscode\bin;%JAVA_HOME%\bin;%GRADLE_HOME%\bin;%PATH%"
-
-start "" "%LOCAL_MICROSERVER%\tools\vscode\Code.exe"
-
-endlocal
+```text
+LOCAL_MICROSERVER
+JAVA_HOME
+GRADLE_HOME
+GRADLE_USER_HOME
+PATH
+ORACLE_PWD 등 Local 환경변수
 ```
 
-환경변수 설정 여부만 확인:
+일반 PowerShell에서 직접 Build 또는 환경 검증을 할 때는
+**Dot Sourcing** 방식으로 실행한다.
+
+```powershell
+. C:\local-microserver\env\setup.ps1
+```
+
+앞의 `.`은 Script가 설정한 환경변수를 현재 PowerShell Session에 적용하기 위한 것이다.
+
+### 2.7.3 `start-vscode.ps1`
+
+일상적인 VS Code 개발에서는 `setup.ps1`을 직접 실행하기보다
+`start-vscode.ps1`이 환경을 준비한 뒤 Portable VS Code를 실행한다.
+
+동작 흐름:
+
+```mermaid
+flowchart TD
+    A["start-vscode.ps1"]
+    --> B["setup.ps1 Load"]
+    --> C["JDK / Gradle / PATH 설정"]
+    --> D{"local-env.ps1 존재?"}
+    D -->|Yes| E["Local 환경변수 Load"]
+    D -->|No| F["공통 환경만 사용"]
+    E --> G["Portable VS Code 실행"]
+    F --> G
+    G --> H["Integrated Terminal이 환경변수 상속"]
+```
+
+개념적인 실행 Script:
+
+```powershell
+$setupScript = Join-Path $PSScriptRoot 'setup.ps1'
+
+. $setupScript -Quiet
+
+$codeExe = Join-Path $env:LOCAL_MICROSERVER 'tools\vscode\Code.exe'
+
+Start-Process -FilePath $codeExe
+```
+
+### 2.7.4 MicroServer 실행 Icon
+
+바로가기에서 사용할 Icon은 개발환경 Package에 다음 위치로 제공한다.
+
+```text
+C:\local-microserver\icons\microserver.ico
+```
+
+Icon 파일은 개발환경 Package 안에 계속 보관한다.
+
+바탕화면에 `.ico` 파일 자체를 복사하는 것이 아니라
+**이 Icon을 참조하는 Windows 바로가기(`.lnk`)를 바탕화면으로 복사해서 사용**한다.
+
+### 2.7.5 VS Code 실행 바로가기 생성
+
+다음 Script를 한 번 실행하면:
+
+```text
+C:\local-microserver\env\create-vscode-shortcut.ps1
+```
+
+다음 바로가기가 생성된다.
+
+```text
+C:\local-microserver\MicroServer VS Code.lnk
+```
+
+PowerShell:
+
+```powershell
+& C:\local-microserver\env\create-vscode-shortcut.ps1
+```
+
+생성되는 바로가기의 역할:
+
+```text
+MicroServer VS Code.lnk 더블클릭
+        ↓
+PowerShell 실행
+        ↓
+start-vscode.ps1
+        ↓
+setup.ps1
+        ↓
+local-env.ps1
+        ↓
+Portable VS Code
+```
+
+바로가기는 다음 Icon을 사용한다.
+
+```text
+C:\local-microserver\icons\microserver.ico
+```
+
+### 2.7.6 바탕화면에서 사용하는 방법
+
+`create-vscode-shortcut.ps1` 실행 후 Windows Explorer에서 다음 파일을 찾는다.
+
+```text
+C:\local-microserver\MicroServer VS Code.lnk
+```
+
+이 파일을 **복사하여 Windows 바탕화면에 붙여넣는다.**
+
+```text
+C:\local-microserver\MicroServer VS Code.lnk
+        ↓ 복사
+Windows 바탕화면
+        ↓
+더블클릭
+        ↓
+MicroServer 개발환경이 적용된 VS Code 실행
+```
+
+!!! tip "바로가기 원본은 MicroServer Root에 유지"
+    개발환경 Package에는 `C:\local-microserver\MicroServer VS Code.lnk`를 기준 바로가기로 유지한다.
+
+    개발자는 필요할 경우 해당 바로가기를 바탕화면으로 복사하여 사용한다.
+
+    Shortcut의 Target과 Icon은 `C:\local-microserver` 내부 경로를 참조하므로
+    개발환경을 표준 경로에 배치하는 것이 중요하다.
+
+!!! note "PowerShell Script 실행이 차단되는 경우"
+    회사 보안정책이나 PowerShell 실행정책에 의해 `.ps1` Script 실행이 제한될 수 있다.
+
+    본 가이드에서는 보안정책 변경이나 실행정책 우회 명령을 별도로 안내하지 않는다.
+
+    **Script 실행이 차단되거나 권한 관련 경고가 발생하면 개발환경을 배포하거나 운영하는 팀에 문의한다.**
+
+### 2.7.7 환경변수 확인
+
+바로가기를 통해 VS Code를 실행한 뒤 Integrated PowerShell에서 설정 여부를 확인할 수 있다.
+
+```powershell
+$env:JAVA_HOME
+$env:GRADLE_HOME
+```
+
+Secret 값은 직접 출력하지 않고 설정 여부만 확인한다.
 
 ```powershell
 if ($env:ORACLE_PWD) {
@@ -477,12 +613,9 @@ if ($env:ORACLE_PWD) {
 }
 ```
 
-!!! note "System 환경변수를 영구 변경하는 방식이 아님"
-    Script에서 설정한 값은 해당 Process Tree에 전달된다.
-
-!!! warning "환경변수 변경 후 VS Code 재시작"
-    Local 환경변수를 바꿨다면 Portable VS Code를 완전히 종료한 뒤
-    `start-vscode.cmd`로 다시 실행한다.
+!!! warning "Local 환경변수 변경 후 VS Code 재시작"
+    `local-env.ps1`을 수정한 경우 기존 Portable VS Code를 완전히 종료하고
+    `MicroServer VS Code` 바로가기로 다시 실행한다.
 
 
 ### 2.8 Windows 설치 및 Portable Mode 확인
@@ -558,18 +691,24 @@ C:\local-microserver                       ← Git Repository 아님
 │
 ├─ gradle-home
 │
-├─ workspace                               ← 실제 Git Repository 보관
-│  ├─ microserver
+├─ workspace
+│  ├─ microserver.code-workspace
+│  ├─ microserver                         ← Git Repository
 │  │  └─ .git
-│  └─ microserver-docs
+│  └─ microserver-docs                    ← 별도 Git Repository
 │     └─ .git
 │
-└─ env                                     ← Git Repository 밖
-   ├─ setup.cmd
-   ├─ setup.ps1
-   ├─ start-vscode.cmd
-   ├─ local-env.example.cmd                ← 배포 포함
-   └─ local-env.cmd                        ← 배포 제외
+├─ env
+│  ├─ setup.ps1
+│  ├─ start-vscode.ps1
+│  ├─ create-vscode-shortcut.ps1
+│  ├─ local-env.example.ps1               ← 배포 포함
+│  └─ local-env.ps1                       ← 배포 제외
+│
+├─ icons
+│  └─ microserver.ico
+│
+└─ MicroServer VS Code.lnk
 ```
 
 이 구조의 장점은 다음과 같다.
@@ -612,7 +751,7 @@ VS Code 완전 종료
 
     `.gitignore`는 `workspace\microserver` 같은 실제 Repository 내부에서 관리한다.
 
-    반면 `local-env.cmd`는 Git과 관계없이 ZIP에 포함될 수 있으므로
+    반면 `local-env.ps1`는 Git과 관계없이 ZIP에 포함될 수 있으므로
     개발환경 배포 Package에서 별도로 제외한다.
 
 !!! important "계정 / Credential / 개인 상태를 Package에 포함하지 않음"
@@ -753,7 +892,7 @@ macOS Application은 일반적인 VS Code Update 방식을 사용할 수 있으�
 - [ ] `code.cmd --version`으로 Version을 확인했다.
 - [ ] Portable Mode에서는 Settings와 Extension이 `data` 아래에서 관리됨을 이해했다.
 - [ ] `resources` Directory 유무는 설치 성공 여부의 판단 기준이 아님을 이해했다.
-- [ ] `local-env.example.cmd`와 `local-env.cmd`의 역할을 구분했다.
+- [ ] `local-env.example.cmd`와 `local-env.ps1`의 역할을 구분했다.
 - [ ] `C:\local-microserver` Root는 Git Repository가 아님을 이해했다.
 
 ### 4.2 배포 환경
@@ -763,8 +902,11 @@ macOS Application은 일반적인 VS Code Update 방식을 사용할 수 있으�
 - [ ] 배포용 Instance에서는 개인 계정 로그인과 Settings Sync를 사용하지 않는다.
 - [ ] 프로젝트 표준 Extension과 공통 Settings만 포함한다.
 - [ ] JDK / Gradle / Git / Docker 등 VS Code 외부 도구의 관리 범위를 구분한다.
-- [ ] 실제 `local-env.cmd`는 개발환경 배포 Package에서 제외한다.
+- [ ] 실제 `local-env.ps1`는 개발환경 배포 Package에서 제외한다.
 - [ ] `.gitignore`는 `workspace` 아래 실제 Repository에서 관리한다.
+- [ ] `icons\microserver.ico`가 준비되어 있다.
+- [ ] `MicroServer VS Code.lnk`를 생성하고 필요한 경우 바탕화면에 복사했다.
+- [ ] PowerShell Script 실행이 보안정책으로 차단되면 개발환경 배포/운영 팀에 문의한다.
 
 ## 5. 다음 단계
 

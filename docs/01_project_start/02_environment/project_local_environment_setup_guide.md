@@ -31,7 +31,7 @@ C:\local-microserver
 
 !!! tip "권장 방향"
     `C:\local-microserver` 자체를 하나의 Git 저장소로 만드는 것이 아니라,
-    프로젝트 소스별 Git 로컬 저장소를 하위 `repos` 디렉터리에 구성하는 방식을 권장한다.
+    실제 프로젝트별 Git 로컬 저장소를 하위 `workspace` 디렉터리에서 각각 관리하는 방식을 권장한다.
 
 ---
 
@@ -40,50 +40,71 @@ C:\local-microserver
 MicroServer 프로젝트의 Windows 로컬 개발환경은 다음 구조를 기본으로 한다.
 
 ```text
-C:\local-microserver
+C:\local-microserver                       ← Git Repository 아님
 │
 ├─ tools
-│  └─ jdk
-│      └─ <project-jdk>
+│  ├─ jdk
+│  │  └─ <project-jdk>
+│  ├─ gradle
+│  │  └─ <gradle-version>
+│  └─ vscode
+│     ├─ Code.exe
+│     └─ data
 │
 ├─ gradle-home
 │
 ├─ workspace
-│  └─ microserver.code-workspace
-│
-├─ repos
-│  ├─ microserver
-│  │  ├─ .git
-│  │  ├─ gradlew
-│  │  ├─ gradlew.bat
-│  │  ├─ gradle
-│  │  │  └─ wrapper
-│  │  ├─ settings.gradle
-│  │  ├─ build.gradle
-│  │  └─ ...
-│  │
-│  └─ ...
+│  ├─ microserver.code-workspace
+│  ├─ microserver                         ← Git Repository
+│  │  └─ .git
+│  └─ microserver-docs                    ← 별도 Git Repository
+│     └─ .git
 │
 ├─ env
-│  ├─ setup.cmd
-│  └─ setup.ps1
+│  ├─ setup.ps1
+│  ├─ start-vscode.ps1
+│  ├─ create-vscode-shortcut.ps1
+│  ├─ local-env.example.ps1
+│  └─ local-env.ps1
+│
+├─ icons
+│  └─ microserver.ico
+│
+├─ MicroServer VS Code.lnk
 │
 └─ README.md
 ```
 
-각 디렉터리는 다음 역할을 담당한다.
+각 디렉터리와 파일은 다음 역할을 담당한다.
 
 | 경로 | 역할 |
 | --- | --- |
 | `tools` | 프로젝트에서 사용하는 로컬 개발 도구 보관 |
 | `tools\jdk` | 프로젝트 표준 JDK 배치 |
-| `gradle-home` | Gradle Wrapper 다운로드 파일 및 Gradle 사용자 캐시 저장 |
-| `workspace` | VS Code Workspace 파일 저장 |
-| `repos` | Git으로 관리되는 실제 프로젝트 소스 저장 |
-| `env` | VS Code 외부 터미널에서 사용할 프로젝트 로컬 환경 초기화 스크립트 저장 |
-| `README.md` | 개발환경 기본 사용 방법 및 전달 시 안내사항 작성 |
+| `tools\gradle` | 프로젝트 환경에서 사용할 Gradle 배포본 배치 |
+| `tools\vscode` | Windows ZIP Portable VS Code 배치 |
+| `gradle-home` | Gradle 사용자 캐시와 관련 데이터 저장 |
+| `workspace` | VS Code Workspace 파일과 실제 Git Repository 보관 |
+| `env` | PowerShell 기반 개발환경 Script 보관 |
+| `icons` | 개발환경 Shortcut 등에 사용할 공통 Icon 보관 |
+| `MicroServer VS Code.lnk` | 개발환경이 적용된 Portable VS Code 실행 바로가기 |
+| `README.md` | 개발환경 기본 사용 방법 및 전달 시 안내사항 |
 
-이 구조의 중요한 점은 **개발도구와 소스코드가 하나의 루트 아래에 있지만 서로 다른 역할의 디렉터리로 명확하게 분리되어 있다는 것**이다.
+!!! important "PowerShell을 Windows 표준 Script로 사용"
+    환경 초기화와 VS Code 실행 Script는 `.ps1`을 기본으로 한다.
+
+    기본 Package에서는 동일 기능의 `.cmd` Script를 별도로 제공하지 않는다.
+
+!!! important "MicroServer Root와 workspace Root는 Git Repository가 아님"
+    `.git`은 다음과 같은 실제 프로젝트 Directory에만 존재한다.
+
+    ```text
+    C:\local-microserver\workspace\microserver\.git
+    C:\local-microserver\workspace\microserver-docs\.git
+    ```
+
+    따라서 `C:\local-microserver` 및 `C:\local-microserver\workspace` 자체에는
+    프로젝트용 `.gitignore`를 둘 필요가 없다.
 
 ---
 
@@ -172,7 +193,7 @@ MicroServer 프로젝트에서는 가능하면 개발자 PC 전체에 영향을 
 
 - VS Code에서 프로젝트 JDK 지정
 - 프로젝트 실행 환경에서 JDK 경로 지정
-- 개발환경 초기화 Script에서 세션 단위 환경변수 적용
+- 개발PowerShell 환경 Script에서 세션 단위 환경변수 적용
 
 현재 단계에서는 이러한 구성 방향만 이해하고, 실제 설정은 이후 전용 가이드에서 수행한다.
 
@@ -216,7 +237,7 @@ C:\local-microserver\gradle-home
 개념적인 구조는 다음과 같다.
 
 ```text
-repos
+workspace
 └─ microserver
    ├─ gradlew
    ├─ gradlew.bat
@@ -241,7 +262,9 @@ Wrapper를 사용하면 개발자 PC에 설치된 전역 Gradle보다 **프로�
 
 ### 6.1 루트 디렉터리 전체를 Git 저장소로 만들지 않는다
 
-다음과 같이 `C:\local-microserver` 전체를 하나의 Git Repository로 만드는 방식은 권장하지 않는다.
+`C:\local-microserver` 전체를 하나의 Git Repository로 만들지 않는다.
+
+잘못된 구조:
 
 ```text
 C:\local-microserver
@@ -249,58 +272,67 @@ C:\local-microserver
 ├─ tools
 ├─ gradle-home
 ├─ workspace
-└─ repos
+├─ env
+└─ icons
 ```
 
-이렇게 구성하면 JDK, Gradle 캐시, 개발도구 등 Git으로 관리할 필요가 없는 파일까지 하나의 저장소 관리 범위에 포함될 수 있다.
+이렇게 구성하면 JDK, Gradle Cache, Portable VS Code, Local Secret 등
+Git으로 관리할 필요가 없는 개발환경 파일까지 하나의 Work Tree에 포함될 수 있다.
 
-따라서 Git은 실제 소스코드가 있는 Repository 단위로 관리한다.
+실제 Git Repository는 `workspace` 아래 프로젝트별로 관리한다.
 
 ```text
 C:\local-microserver
-└─ repos
-   └─ microserver
-      ├─ .git
-      ├─ build.gradle
-      ├─ settings.gradle
-      ├─ gradlew
-      ├─ gradlew.bat
-      └─ src
-```
-
-즉 다음 경로가 MicroServer 프로젝트의 Git 로컬 저장소가 된다.
-
-```text
-C:\local-microserver\repos\microserver
-```
-
-### 6.2 여러 Repository를 사용하는 경우
-
-프로젝트가 여러 Git Repository로 분리되는 경우에도 동일한 기준을 사용한다.
-
-```text
-C:\local-microserver
-└─ repos
+└─ workspace
    ├─ microserver
-   ├─ microserver-common
-   ├─ microserver-sample
+   │  ├─ .git
+   │  ├─ build.gradle
+   │  ├─ settings.gradle
+   │  ├─ gradlew
+   │  ├─ gradlew.bat
+   │  └─ src
+   │
    └─ microserver-docs
+      ├─ .git
+      ├─ mkdocs.yml
+      └─ docs
 ```
 
-각 디렉터리는 독립적인 Git Repository가 된다.
+### 6.2 `workspace`의 의미
+
+`workspace`는 여러 Repository와 VS Code Workspace 파일을 함께 보관하는 상위 Directory이다.
 
 ```text
-repos
+workspace
+├─ microserver.code-workspace
 ├─ microserver
-│  └─ .git
-├─ microserver-common
-│  └─ .git
 └─ microserver-docs
-   └─ .git
+```
+
+`workspace` 자체를 GitHub에 Push하는 것이 아니다.
+
+각 프로젝트 Directory가 독립적인 Git Repository로 동작한다.
+
+### 6.3 `.gitignore` 위치
+
+`.gitignore`는 실제 Git Repository Root에서 관리한다.
+
+예:
+
+```text
+C:\local-microserver\workspace\microserver\.gitignore
+C:\local-microserver\workspace\microserver-docs\.gitignore
+```
+
+다음 위치에는 프로젝트용 `.gitignore`가 필요하지 않다.
+
+```text
+C:\local-microserver
+C:\local-microserver\workspace
 ```
 
 !!! tip "Git / GitHub 상세 구성"
-    Git 설치, GitHub Repository 연결, Clone / Commit / Push 등의 실제 형상관리 환경 구성은 다음 가이드에서 진행한다.
+    Git 설치, GitHub 연결, Clone / Commit / Push, Repository별 `.gitignore` 정책은 다음 가이드에서 진행한다.
 
     **[Git / GitHub 환경 구성](git_github_setup.md)**
 
@@ -308,192 +340,189 @@ repos
 
 ## 7. VS Code Workspace 배치 기준
 
-VS Code Workspace는 다음 위치에서 관리하는 것을 권장한다.
+VS Code Workspace 파일은 다음 위치에서 관리한다.
 
 ```text
 C:\local-microserver\workspace\microserver.code-workspace
 ```
 
-Workspace 파일을 별도 디렉터리에 두면 여러 Git Repository를 하나의 개발 Workspace로 구성할 수 있고, 개발환경 전달 시에도 Workspace 위치를 일정하게 유지할 수 있다.
+실제 Repository도 같은 `workspace` 아래에서 관리하므로
+Workspace 파일에서는 상대경로로 각 Repository를 연결할 수 있다.
 
-이 문서에서는 Workspace의 **배치 위치와 상대경로 사용 원칙**까지만 정의한다.
-
-예를 들어 Repository를 Workspace에서 연결할 때 개발자의 사용자 경로를 직접 작성하는 것보다 다음과 같이 상대경로를 사용하는 것이 좋다.
+예:
 
 ```json
 {
   "folders": [
     {
-      "path": "../repos/microserver"
+      "path": "microserver"
+    },
+    {
+      "path": "microserver-docs"
     }
   ]
 }
 ```
 
-이렇게 하면 전체 `local-microserver` 디렉터리 구조를 동일하게 유지하는 한 개발자별 사용자 계정 경로 차이에 대한 영향을 줄일 수 있다.
+이 구조는 개발자 개인 사용자 경로에 대한 의존성을 줄이고
+`C:\local-microserver` 구조만 동일하게 유지하면 Workspace 관계도 일정하게 유지할 수 있다.
 
-!!! tip "VS Code에서는 프로젝트 환경을 자동 적용"
-    MicroServer의 일반 개발환경에서는 VS Code Workspace를 열었을 때
-    프로젝트 JDK와 Gradle 관련 설정을 자동으로 사용할 수 있도록 구성하는 것을 목표로 한다.
+!!! tip "VS Code 실행은 공통 Shortcut 사용"
+    Windows에서는 다음 바로가기를 VS Code 개발의 기본 진입점으로 사용한다.
 
-    따라서 평소 VS Code를 이용한 개발에서는 매번 `setup.ps1` 또는 `setup.cmd`를 먼저 실행하는 방식보다,
-    Workspace / Java Runtime / Gradle 실행환경 설정을 통해 자동 적용되도록 구성한다.
+    ```text
+    C:\local-microserver\MicroServer VS Code.lnk
+    ```
 
-    단, VS Code Integrated Terminal의 환경변수와 Java / Gradle Extension이 사용하는 Runtime 설정은
-    적용 범위가 다를 수 있으므로 각각 필요한 설정을 명확하게 구성해야 한다.
+    필요하면 이 바로가기를 Windows 바탕화면으로 복사하여 사용한다.
+
+    Shortcut은 다음 Icon을 계속 참조한다.
+
+    ```text
+    C:\local-microserver\icons\microserver.ico
+    ```
 
 !!! tip "VS Code 상세 구성은 다음 가이드에서 진행"
-    VS Code 설치, Java / Spring Boot Extension, Profile, Workspace 설정 등은 다음 문서에서 단계별로 설명한다.
-
     **[VS Code 개발환경 구성 개요](vscode/vscode_setup.md)**
-
-    프로젝트 JDK와 VS Code Workspace의 실제 연계 방법은 다음 문서에서 자세히 다룬다.
 
     **[JDK 연계 및 개발환경 운영](vscode/jdk_workspace_environment_setup.md)**
 
 ---
 
-## 8. 환경 초기화 Script 관리
+## 8. PowerShell 환경 Script 관리
 
-프로젝트의 주요 경로와 환경변수를 개발자 PC의 시스템 전역 설정으로 모두 등록하기보다,
-필요한 경우 프로젝트 전용 환경 초기화 Script를 사용할 수 있다.
-
-권장 위치는 다음과 같다.
+Windows 환경 Script는 다음 위치에서 관리한다.
 
 ```text
 C:\local-microserver\env
 ```
 
-예:
+구성:
 
 ```text
 env
-├─ setup.cmd
-└─ setup.ps1
+├─ setup.ps1
+├─ start-vscode.ps1
+├─ create-vscode-shortcut.ps1
+├─ local-env.example.ps1
+└─ local-env.ps1
 ```
 
-환경 초기화 Script는 다음과 같은 값을 **현재 터미널 세션에 적용**하는 용도로 사용할 수 있다.
+### 8.1 `setup.ps1`
+
+일반 PowerShell에서 직접 Build, Test, 개발도구 검증을 수행할 때
+현재 Session에 MicroServer 환경을 적용한다.
+
+```powershell
+. C:\local-microserver\env\setup.ps1
+```
+
+주요 환경:
 
 ```text
 LOCAL_MICROSERVER
 JAVA_HOME
+GRADLE_HOME
 GRADLE_USER_HOME
 PATH
+개발자별 Local 환경변수
 ```
 
-예를 들어 기본적인 개념은 다음과 같다.
+### 8.2 `start-vscode.ps1`
+
+일상적인 VS Code 개발용 Launcher이다.
 
 ```text
-LOCAL_MICROSERVER
-        │
-        ├─ JAVA_HOME
-        │    └─ tools\jdk\...
-        │
-        └─ GRADLE_USER_HOME
-             └─ gradle-home
+start-vscode.ps1
+        ↓
+setup.ps1
+        ↓
+local-env.ps1
+        ↓
+Portable VS Code
 ```
 
-중요한 점은 `setup.cmd`, `setup.ps1`이 Windows 시스템 환경변수를 영구적으로 변경하기 위한 Script가 아니라는 것이다.
+개발자가 매번 `setup.ps1`을 직접 실행하지 않아도
+VS Code 실행 시 필요한 Process 환경을 먼저 구성한다.
 
-기본적으로 해당 Script를 실행한 **현재 Command Prompt 또는 PowerShell 세션에서만 프로젝트 전용 환경을 활성화**하는 용도로 사용한다.
+### 8.3 `local-env.example.ps1`과 `local-env.ps1`
 
-예를 들어 일반 PowerShell에서 직접 Gradle Build를 수행하는 경우에는 다음과 같은 흐름을 사용할 수 있다.
+배포용 Sample:
 
 ```text
-PowerShell 실행
-      ↓
-setup.ps1 실행
-      ↓
-현재 PowerShell Session에
-JAVA_HOME / GRADLE_USER_HOME 적용
-      ↓
-gradlew build
-또는
-gradlew bootRun
+local-env.example.ps1
 ```
 
-Command Prompt에서는 동일한 역할을 `setup.cmd`가 담당한다.
+개발자 개인 파일:
 
-!!! tip "setup.cmd / setup.ps1을 매번 실행해야 하는가?"
-    **일반 Command Prompt 또는 PowerShell에서 직접 Build / 실행 명령을 수행하는 경우에는**
-    해당 터미널에 프로젝트 전용 `JAVA_HOME`, `GRADLE_USER_HOME` 등이 설정되어 있지 않다면
-    먼저 `setup.cmd` 또는 `setup.ps1`을 실행해야 한다.
+```text
+local-env.ps1
+```
 
-    하지만 MicroServer 프로젝트의 일반적인 개발 방식은 **VS Code Workspace를 기준으로 개발환경을 자동 구성**하는 방향으로 한다.
+예:
 
-    따라서 VS Code를 통해 개발하는 경우에는 Workspace와 Java / Gradle 관련 설정을 통해
-    프로젝트 JDK와 주요 환경값이 자동으로 적용되도록 구성하여,
-    개발자가 매번 `setup.ps1` 또는 `setup.cmd`를 수동으로 실행하지 않도록 한다.
+```powershell
+$env:ORACLE_PWD = '<개발자-개인-로컬-비밀번호>'
+```
 
-    즉 다음과 같이 역할을 구분한다.
+`local-env.ps1`은 개발환경 Package를 다른 개발자에게 전달할 때 제외한다.
 
-    ```mermaid
-    flowchart TD
-        A["C:\local-microserver"] --> B["프로젝트 환경 기준"]
+### 8.4 `create-vscode-shortcut.ps1`
 
-        B --> C["VS Code 개발"]
-        B --> D["일반 Terminal"]
+한 번 실행하면 MicroServer Root에 Windows 바로가기를 생성한다.
 
-        C --> E["Workspace / Java / Gradle 설정<br/>자동 환경 적용"]
-        D --> F["setup.ps1 / setup.cmd<br/>세션 환경 적용"]
+```powershell
+& C:\local-microserver\env\create-vscode-shortcut.ps1
+```
 
-        E --> G["동일한 JDK / Gradle 환경"]
-        F --> G
+생성 결과:
 
-        G --> H["Build / Run"]
-    ```
+```text
+C:\local-microserver\MicroServer VS Code.lnk
+```
 
-    VS Code에서 Terminal을 새로 생성할 때 적용되는 환경변수와
-    Java Extension, Gradle Extension, Run / Debug에서 사용하는 JDK 설정은 적용 범위가 서로 다를 수 있다.
+사용 Icon:
 
-    따라서 실제 Workspace 설정에서는 단순히 Terminal 환경변수만 지정하는 것이 아니라
-    **Java Runtime, Gradle 실행 JDK, Run / Debug 환경까지 프로젝트 JDK를 일관되게 사용하도록 구성**한다.
+```text
+C:\local-microserver\icons\microserver.ico
+```
 
-    이 상세 설정은 다음 가이드에서 진행한다.
+개발자는 생성된 `.lnk` 파일을 Windows 바탕화면으로 복사하여 사용한다.
 
-    **[JDK 연계 및 개발환경 운영](vscode/jdk_workspace_environment_setup.md)**
+```text
+MicroServer Root의 기준 Shortcut
+        ↓ 복사
+Windows 바탕화면
+        ↓ 더블클릭
+MicroServer VS Code 실행
+```
 
-!!! note "환경 Script의 역할"
-    `setup.cmd`, `setup.ps1`은 VS Code 개발환경을 대체하는 것이 아니라
-    **VS Code 외부의 일반 터미널에서도 동일한 MicroServer 프로젝트 환경을 사용할 수 있도록 제공하는 보조 진입점**이다.
+!!! note "PowerShell Script 실행이 차단되는 경우"
+    회사 보안정책 또는 PowerShell 실행정책으로 인해 `.ps1` 실행이 제한될 수 있다.
 
-    예를 들어 다음과 같은 상황에서 사용할 수 있다.
+    본 문서에서는 보안정책 변경이나 실행정책 우회 방법을 별도로 설명하지 않는다.
 
-    - Windows PowerShell에서 직접 `gradlew` 명령을 실행하는 경우
-    - Command Prompt에서 프로젝트 Build를 수행하는 경우
-    - VS Code를 실행하지 않고 간단한 Build / Test를 수행하는 경우
-    - 개발환경 문제 발생 시 JDK / Gradle 환경을 독립적으로 검증하는 경우
+    **실행이 차단되거나 권한 관련 경고가 발생하면 개발환경을 배포하거나 운영하는 팀에 문의한다.**
 
-!!! warning "Script 실행 방식 주의"
-    `setup.cmd`는 Command Prompt에서, `setup.ps1`은 PowerShell에서 사용하는 것을 기본으로 한다.
+### 8.5 Script 역할 정리
 
-    예를 들어 PowerShell에서 `setup.cmd`를 별도 `cmd.exe` 프로세스로 실행하면
-    해당 CMD 프로세스에서 설정된 환경변수가 현재 PowerShell 세션으로 전달되지 않는다.
+```mermaid
+flowchart TD
+    ROOT["C:\local-microserver"]
+    --> SHORTCUT["MicroServer VS Code.lnk"]
+    SHORTCUT --> START["start-vscode.ps1"]
+    START --> SETUP["setup.ps1"]
+    SETUP --> LOCAL["local-env.ps1"]
+    LOCAL --> VS["Portable VS Code"]
 
-    또한 Script 파일을 Windows Explorer에서 더블클릭하여 실행하면
-    별도의 터미널 프로세스가 실행되었다가 종료되므로 현재 개발 터미널의 환경변수 설정 용도로는 적절하지 않다.
+    ROOT --> TERM["일반 PowerShell"]
+    TERM --> DOT[". setup.ps1"]
+    DOT --> BUILD["Build / Test / 환경검증"]
+```
 
-    따라서 다음과 같이 **현재 사용 중인 터미널에서 직접 실행**하는 방식을 사용한다.
+PowerShell Script는 Windows 시스템 환경변수를 영구 변경하는 용도가 아니다.
 
-    PowerShell:
-
-    ```powershell
-    .\env\setup.ps1
-    ```
-
-    Command Prompt:
-
-    ```cmd
-    env\setup.cmd
-    ```
-
-!!! note "환경 Script는 개발도구 설정 이후 확정"
-    `setup.cmd`, `setup.ps1`에 들어갈 실제 JDK 경로와 Gradle 관련 환경변수는
-    JDK 및 Gradle 개발환경 가이드를 진행한 이후 최종 확정한다.
-
-    현재 문서에서는 Script의 **역할, 저장 위치, 사용 원칙만 정의**한다.
-
-    실제 Script 내용과 VS Code 자동 환경 적용 설정은 이후 관련 가이드에서 단계별로 구성한다.
+현재 Process와 그 하위 Process에 프로젝트 개발환경을 제공하는 방식으로 사용한다.
 
 ---
 
@@ -532,17 +561,14 @@ VS Code Workspace 실행
 tools
 workspace
 env
+icons
+MicroServer VS Code.lnk
 README.md
 ```
 
-프로젝트 소스까지 함께 전달하는 경우 다음 디렉터리도 포함할 수 있다.
+실제 프로젝트 Source는 일반적으로 `workspace` 아래 각 Git Repository에서 Clone하여 구성한다.
 
-```text
-repos
-```
-
-다만 실제 프로젝트에서는 소스코드는 Git Repository에서 Clone하는 방식을 기본으로 하고,
-로컬 개발환경 구조와 필요한 개발도구만 별도로 전달하는 방식도 사용할 수 있다.
+개발환경 Package에는 `local-env.example.ps1`은 포함하되 실제 개발자의 `local-env.ps1`은 제외한다.
 
 ### 9.2 Gradle 캐시 포함 여부
 
@@ -603,8 +629,9 @@ Log
 
 ```text
 JDK
-환경 초기화 Script
+PowerShell 환경 Script
 VS Code Workspace
+MicroServer VS Code Shortcut / Icon
 프로젝트 기본 디렉터리 구조
 ```
 
@@ -649,7 +676,7 @@ C:\local-microserver
 VS Code Workspace에서는 가능하면 상대경로를 사용한다.
 
 ```text
-../repos/microserver
+microserver
 ```
 
 이렇게 하면 개발자 계정명이 변경되어도 프로젝트 경로 구조를 유지할 수 있다.
@@ -661,13 +688,11 @@ VS Code Workspace에서는 가능하면 상대경로를 사용한다.
 ```text
 local-microserver
 ├─ workspace
-│    └─ ../repos/... 참조
-│
-├─ repos
-│
+│  ├─ microserver.code-workspace
+│  └─ microserver
 ├─ tools
-│
-└─ env
+├─ env
+└─ icons
 ```
 
 즉 특정 개발자의 사용자 홈 디렉터리에 의존하기보다
@@ -688,6 +713,7 @@ API Key
 인증서 개인키
 사내 시스템 계정정보
 개인 SSH Private Key
+local-env.ps1
 ```
 
 이러한 값은 별도의 보안 기준에 따라 관리한다.
@@ -754,51 +780,72 @@ Spring Boot 프로젝트 생성
 
 ## 14. 최종 권장 구조
 
-MicroServer 프로젝트의 Windows 로컬 개발환경은 다음 구성을 기본으로 한다.
+MicroServer Windows 로컬 개발환경은 다음 구성을 기본으로 한다.
 
 ```text
 C:\local-microserver
 │
 ├─ tools
-│  └─ jdk
-│      └─ <project-jdk>
+│  ├─ jdk
+│  │  └─ <project-jdk>
+│  ├─ gradle
+│  │  └─ <gradle-version>
+│  └─ vscode
+│     ├─ Code.exe
+│     └─ data
 │
 ├─ gradle-home
 │
 ├─ workspace
-│  └─ microserver.code-workspace
-│
-├─ repos
-│  └─ microserver
-│      ├─ .git
-│      ├─ gradlew
-│      ├─ gradlew.bat
-│      ├─ gradle
-│      │  └─ wrapper
-│      ├─ settings.gradle
-│      ├─ build.gradle
-│      └─ src
+│  ├─ microserver.code-workspace
+│  ├─ microserver
+│  │  ├─ .git
+│  │  ├─ gradlew
+│  │  ├─ gradlew.bat
+│  │  ├─ gradle
+│  │  ├─ settings.gradle
+│  │  ├─ build.gradle
+│  │  └─ src
+│  └─ microserver-docs
+│     └─ .git
 │
 ├─ env
-│  ├─ setup.cmd
-│  └─ setup.ps1
+│  ├─ setup.ps1
+│  ├─ start-vscode.ps1
+│  ├─ create-vscode-shortcut.ps1
+│  ├─ local-env.example.ps1
+│  └─ local-env.ps1
+│
+├─ icons
+│  └─ microserver.ico
+│
+├─ MicroServer VS Code.lnk
 │
 └─ README.md
 ```
 
-개발환경 관리 기준을 정리하면 다음과 같다.
+개발환경 관리 기준:
 
 | 구분 | 기본 원칙 |
 | --- | --- |
 | 개발환경 기준 경로 | `C:\local-microserver` |
 | JDK | `tools\jdk` 하위에서 프로젝트 전용으로 관리 |
-| Gradle | 전역 설치보다 프로젝트 Gradle / Wrapper 중심으로 관리 |
-| Gradle 사용자 데이터 | 필요 시 `gradle-home`으로 통합 |
-| Git Repository | `repos` 하위에서 Repository별 관리 |
-| VS Code | `workspace` 하위에 Workspace 배치 |
-| 환경변수 | 시스템 전역 설정보다 프로젝트 로컬 설정 우선 |
-| 환경 Script | `env` 하위에서 관리하며 일반 터미널용 보조 환경 초기화 수단으로 사용 |
-| 프로젝트 전달 | 동일한 디렉터리 구조를 기준으로 패키징 가능 |
+| Gradle | `tools\gradle` + 프로젝트 Gradle Wrapper 기준 |
+| Gradle 사용자 데이터 | `gradle-home`으로 통합 가능 |
+| Git Repository | `workspace` 하위 프로젝트별 관리 |
+| VS Code Workspace | `workspace\microserver.code-workspace` |
+| Windows 환경 Script | PowerShell(`.ps1`) 사용 |
+| Local Secret | `env\local-env.ps1`, 배포 Package에서 제외 |
+| 실행 진입점 | `MicroServer VS Code.lnk` |
+| Shortcut Icon | `icons\microserver.ico` |
+| 바탕화면 사용 | Root의 Shortcut을 바탕화면으로 복사 |
+| 프로젝트 전달 | 동일한 Directory 구조를 기준으로 Package 구성 |
+
+!!! note "권한 문제 처리 원칙"
+    PowerShell Script 실행이 회사 정책에 의해 제한되는 경우
+    개발자가 임의로 정책을 변경하거나 우회하는 방식으로 해결하지 않는다.
+
+    **개발환경을 배포하거나 운영하는 팀에 문의한다.**
 
 ---
 
@@ -828,7 +875,7 @@ C:\local-microserver
         ├─ Gradle 사용자 환경
         ├─ VS Code Workspace
         ├─ Git Repository
-        └─ 환경 초기화 Script
+        └─ PowerShell 환경 Script
 ```
 
 현재 문서의 핵심은 특정 JDK나 Gradle의 설치 방법을 설명하는 것이 아니다.
@@ -841,15 +888,19 @@ JDK, Gradle, VS Code와 같은 개발도구의 실제 설치 및 설정은 이�
 또한 개발환경 사용 방식은 다음 원칙으로 구분한다.
 
 ```text
-VS Code 사용
-   └─ Workspace / Java / Gradle 설정을 통해 자동 환경 적용
+일상적인 VS Code 개발
+→ MicroServer VS Code.lnk 더블클릭
+→ start-vscode.ps1
+→ setup.ps1
+→ Portable VS Code
 
-일반 PowerShell / Command Prompt 사용
-   └─ setup.ps1 / setup.cmd로 현재 터미널 세션 환경 초기화
+일반 PowerShell 사용
+→ . setup.ps1
+→ 현재 Session에 동일한 개발환경 적용
 ```
 
-따라서 `setup.cmd`, `setup.ps1`을 모든 Build와 애플리케이션 실행 전에 반드시 수행해야 하는 구조로 만들지 않는다.
-**일상적인 VS Code 개발은 자동화하고, 환경 Script는 VS Code 외부에서도 동일한 프로젝트 환경을 재현하기 위한 보조 수단으로 사용한다.**
+**Windows 환경 Script는 PowerShell로 통일하고,
+일상적인 VS Code 실행은 바탕화면 Shortcut을 통해 단순화한다.**
 
 이 구조를 기준으로 개발환경을 구성하면 신규 개발자가 프로젝트에 참여하거나
 다른 PC로 개발환경을 이전할 때 경로 차이와 개발자별 설정 차이로 발생하는 문제를 줄일 수 있다.

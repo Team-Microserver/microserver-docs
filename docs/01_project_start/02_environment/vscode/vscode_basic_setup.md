@@ -148,6 +148,85 @@ Windows에서는 PowerShell, macOS에서는 zsh를 기본으로 사용할 수 �
 
 현재 단계에서는 실제 Gradle Build나 애플리케이션 실행을 진행하지 않는다.
 
+
+### 6.1 MicroServer VS Code를 실행하는 권장 방법
+
+Windows에서는 다음 바로가기를 통해 Portable VS Code를 실행하는 것을 권장한다.
+
+```text
+C:\local-microserver\MicroServer VS Code.lnk
+```
+
+이 바로가기는 내부적으로 다음 흐름으로 실행된다.
+
+```text
+MicroServer VS Code.lnk
+        ↓
+start-vscode.ps1
+        ↓
+setup.ps1
+        ↓
+local-env.ps1
+        ↓
+Portable VS Code
+```
+
+따라서 이 방식으로 실행된 VS Code의 Integrated Terminal은
+`JAVA_HOME`, `GRADLE_HOME`, `GRADLE_USER_HOME`과
+필요한 Local 환경변수를 상속받을 수 있다.
+
+VS Code 내부 PowerShell에서 확인:
+
+```powershell
+$env:JAVA_HOME
+$env:GRADLE_HOME
+```
+
+Secret 값은 직접 출력하지 않고 설정 여부만 확인한다.
+
+```powershell
+if ($env:ORACLE_PWD) {
+    "ORACLE_PWD is set"
+} else {
+    "ORACLE_PWD is not set"
+}
+```
+
+!!! tip "바탕화면 바로가기 사용"
+    `C:\local-microserver\MicroServer VS Code.lnk`를
+    Windows 바탕화면으로 복사해 두면 이후에는 해당 Icon을 더블클릭하여 VS Code를 시작할 수 있다.
+
+    Icon 원본은 다음 위치에 계속 유지한다.
+
+    ```text
+    C:\local-microserver\icons\microserver.ico
+    ```
+
+!!! note "PowerShell Script 실행이 차단되는 경우"
+    회사 보안정책이나 PowerShell 실행정책으로 인해 바로가기를 통한 Script 실행이 차단될 수 있다.
+
+    본 가이드에서는 정책 변경 또는 우회 방법을 별도로 제공하지 않는다.
+
+    **권한 또는 Script 실행 문제가 발생하면 개발환경을 배포하거나 운영하는 팀에 문의한다.**
+
+### 6.2 `Code.exe` 직접 실행과의 차이
+
+다음 파일을 직접 실행해도 VS Code 자체는 정상 실행된다.
+
+```text
+C:\local-microserver\tools\vscode\Code.exe
+```
+
+하지만 `Code.exe`를 직접 실행하면
+`start-vscode.ps1`에서 구성하는 Local 환경변수를 거치지 않는다.
+
+따라서 MicroServer 개발에서는 일상적인 실행 진입점을 다음으로 통일하는 것을 권장한다.
+
+```text
+MicroServer VS Code.lnk
+```
+
+
 ---
 
 ## 7. VS Code Settings 이해 및 열기
@@ -869,6 +948,8 @@ Java와 Markdown처럼 파일 성격이 다른 경우 유용하다.
 - [ ] Command Palette를 사용할 수 있다.
 - [ ] Extensions 화면을 사용할 수 있다.
 - [ ] Integrated Terminal을 사용할 수 있다.
+- [ ] `MicroServer VS Code.lnk`를 통한 권장 실행 흐름을 이해했다.
+- [ ] Shortcut으로 실행한 Integrated Terminal에서 MicroServer 환경변수가 상속되는 구조를 이해했다.
 - [ ] Output / Problems 화면을 확인할 수 있다.
 - [ ] Status Bar에서 Encoding과 Line Ending 등의 상태를 확인할 수 있다.
 

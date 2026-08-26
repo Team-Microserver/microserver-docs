@@ -228,7 +228,7 @@ Developer PC
 
 ### 3.6 개발환경은 Directory 단위로 전달 가능한 구조를 지향
 
-Windows 개발환경은 가능한 한 다음 Root 아래에서 관리한다.
+Windows 개발환경은 다음 구조를 기본으로 한다.
 
 ```text
 C:\local-microserver                       ← Git Repository 아님
@@ -241,57 +241,104 @@ C:\local-microserver                       ← Git Repository 아님
 │  └─ vscode
 │     ├─ Code.exe
 │     └─ data
-│        ├─ user-data
-│        └─ extensions
 │
 ├─ gradle-home
 │
-├─ workspace                               ← Repository 보관 Directory
-│  ├─ microserver                          ← Git Repository
-│  │  └─ .git
-│  └─ microserver-docs                     ← 별도 Git Repository
-│     └─ .git
+├─ workspace
+│  ├─ microserver.code-workspace
+│  ├─ microserver                         ← Git Repository
+│  └─ microserver-docs                    ← 별도 Git Repository
 │
-└─ env                                     ← Git Repository 밖
-   ├─ setup.cmd
-   ├─ setup.ps1
-   ├─ start-vscode.cmd
-   ├─ local-env.example.cmd                ← 배포 가능
-   └─ local-env.cmd                        ← 개인 Secret / 배포 제외
+├─ env
+│  ├─ setup.ps1
+│  ├─ start-vscode.ps1
+│  ├─ create-vscode-shortcut.ps1
+│  ├─ local-env.example.ps1
+│  └─ local-env.ps1
+│
+├─ icons
+│  └─ microserver.ico
+│
+└─ MicroServer VS Code.lnk
 ```
 
 `C:\local-microserver`는 개발환경 Package Root이며 Git Repository가 아니다.
-`workspace` 역시 Repository들을 담는 상위 Directory일 뿐 Git Repository가 아니다.
+`workspace` 아래 실제 프로젝트 Directory가 각각 Git Repository가 된다.
 
-실제 Git Repository는 다음과 같이 프로젝트별로 존재한다.
+PowerShell Script를 Windows 표준 환경 Script로 사용한다.
 
 ```text
-workspace\microserver
-workspace\microserver-docs
+setup.ps1
+→ 일반 PowerShell Session 환경 구성
+
+start-vscode.ps1
+→ 환경 구성 + Portable VS Code 실행
+
+local-env.example.ps1
+→ 배포 가능한 Local 설정 Sample
+
+local-env.ps1
+→ 개발자 개인 Secret / 배포 제외
+
+create-vscode-shortcut.ps1
+→ MicroServer VS Code.lnk 생성
 ```
 
-!!! important "MicroServer Root와 workspace Root에는 `.gitignore`가 필요하지 않음"
-    두 Directory 모두 Git Repository가 아니므로 프로젝트용 `.gitignore`를 둘 필요가 없다.
+### 3.7 VS Code 실행은 PowerShell + Windows 바로가기 방식 사용
 
-    `.gitignore`는 실제 Repository Root에서 관리한다.
+일상적인 개발에서는 `.ps1` 파일을 직접 찾아 실행하기보다
+MicroServer Root에 생성된 다음 바로가기를 사용하는 것을 권장한다.
 
-배포용 환경은 별도로 깨끗하게 구성하여 다음 원칙을 적용한다.
+```text
+C:\local-microserver\MicroServer VS Code.lnk
+```
 
-- Microsoft / GitHub 계정에 로그인하지 않는다.
-- Settings Sync를 사용하지 않는다.
-- 개인 프로젝트나 개인 Workspace를 열지 않는다.
-- 프로젝트 공통 Extension만 설치한다.
-- 프로젝트 공통 Settings만 적용한다.
-- 개인 인증정보나 Token을 저장하지 않는다.
-- 실제 `local-env.cmd`를 배포 Package에 포함하지 않는다.
-- 배포 전 VS Code를 완전히 종료한 후 Package를 만든다.
+바로가기의 Icon:
 
-### 3.7 Local Secret은 Git이 아니라 개발환경 Package 정책으로 분리
+```text
+C:\local-microserver\icons\microserver.ico
+```
+
+사용 흐름:
+
+```mermaid
+flowchart LR
+    A["MicroServer VS Code.lnk"]
+    --> B["start-vscode.ps1"]
+    --> C["setup.ps1"]
+    --> D["local-env.ps1"]
+    --> E["Portable VS Code"]
+```
+
+개발환경 Package를 구성한 뒤 `create-vscode-shortcut.ps1`을 실행하여
+MicroServer Root에 기준 바로가기를 생성한다.
+
+개발자는 해당 바로가기 파일을 **Windows 바탕화면으로 복사하여**
+일상적인 VS Code 실행 진입점으로 사용할 수 있다.
+
+!!! tip "Icon 파일은 MicroServer Root 아래에 유지"
+    바탕화면에는 `microserver.ico` 파일을 직접 복사하지 않는다.
+
+    `MicroServer VS Code.lnk`만 복사하고
+    실제 Icon 파일은 다음 표준 위치에 유지한다.
+
+    ```text
+    C:\local-microserver\icons\microserver.ico
+    ```
+
+!!! note "PowerShell Script 권한 또는 실행 제한"
+    회사 PC의 보안정책에 의해 PowerShell Script 실행이 차단되거나 권한 경고가 발생할 수 있다.
+
+    본 가이드에서는 실행정책 변경 또는 보안정책 우회 방법을 안내하지 않는다.
+
+    **이 경우 개발환경을 배포하거나 운영하는 팀에 문의한다.**
+
+### 3.8 Local Secret은 Git이 아니라 개발환경 Package 정책으로 분리
 
 `ORACLE_PWD` 같은 개발자별 Local Secret은 다음 파일에 둘 수 있다.
 
 ```text
-C:\local-microserver\env\local-env.cmd
+C:\local-microserver\env\local-env.ps1
 ```
 
 이 파일은 `workspace\microserver` Git Repository 밖에 있으므로
@@ -301,7 +348,7 @@ C:\local-microserver\env\local-env.cmd
 Repository 내부 .env
 → .gitignore 사용
 
-Repository 밖 local-env.cmd
+Repository 밖 local-env.ps1
 → Git 대상 아님
 → 개발환경 ZIP / 배포 Package에서 제외
 ```
@@ -309,8 +356,8 @@ Repository 밖 local-env.cmd
 Sample 파일:
 
 ```text
-local-env.example.cmd    ← 배포
-local-env.cmd            ← 배포 제외
+local-env.example.ps1    ← 배포
+local-env.ps1            ← 배포 제외
 ```
 
 
@@ -325,8 +372,10 @@ local-env.cmd            ← 배포 제외
 - Windows ZIP 배포본을 이용한 Portable Mode 구성
 - `C:\local-microserver\tools\vscode` 표준 배치
 - Portable `data` Directory와 User Data / Extension 저장 구조
-- `start-vscode.cmd`를 이용한 독립 실행환경 구성
-- `local-env.example.cmd` / `local-env.cmd`를 이용한 Local Secret 분리
+- `start-vscode.ps1`을 이용한 독립 실행환경 구성
+- `MicroServer VS Code.lnk`를 이용한 더블클릭 실행
+- `icons\microserver.ico`를 이용한 공통 Shortcut Icon 적용
+- `local-env.example.ps1` / `local-env.ps1`를 이용한 Local Secret 분리
 - Git Repository와 개발환경 Package Root의 경계 구분
 - Portable VS Code Update 및 배포 Package 관리
 - macOS VS Code 설치와 Portable Mode 참고
@@ -440,7 +489,9 @@ flowchart TB
 - VS Code의 Settings / Extension이 Portable `data` 영역에서 관리되는 구조를 이해했다.
 - VS Code에서 프로젝트별 JDK를 연결할 수 있는 구조를 이해했다.
 - `C:\local-microserver` Root와 실제 Git Repository 범위를 구분할 수 있다.
-- Repository 밖의 `local-env.cmd`는 `.gitignore`가 아니라 배포 Package에서 제외한다.
+- Repository 밖의 `local-env.ps1`은 `.gitignore`가 아니라 배포 Package에서 제외한다.
+- PowerShell Script를 Windows 환경 Script의 기본 형식으로 사용한다.
+- `MicroServer VS Code.lnk`를 바탕화면에 복사하여 실행 진입점으로 사용할 수 있다.
 - 아직 Spring Boot 프로젝트를 생성하지 않았다.
 
 ---
