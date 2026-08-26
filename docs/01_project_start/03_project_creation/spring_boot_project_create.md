@@ -3,37 +3,59 @@
 ## 1. 문서 목적
 
 본 문서는 앞 단계에서 준비한 JDK, Gradle, VS Code, Docker / Oracle 로컬 개발환경을 기반으로
-MicroServer의 **최초 Spring Boot 프로젝트를 생성**하는 방법을 설명한다.
+MicroServer의 **최초 Spring Boot 프로젝트를 VS Code의 Spring Initializr로 생성하는 실제 절차**를 설명한다.
 
-현재 단계에서는 애플리케이션의 기본 골격만 생성한다.
+이 문서는 VS Code에서 프로젝트를 생성할 때 나타나는 Wizard 흐름과
+가이드의 설명 순서를 최대한 동일하게 맞추는 것을 기준으로 한다.
+
+현재 단계에서는 다음까지 진행한다.
+
+```text
+workspace Directory 준비
+        ↓
+VS Code Spring Initializr 실행
+        ↓
+Spring Boot Version 선택
+        ↓
+Language 선택
+        ↓
+Group ID 입력
+        ↓
+Artifact ID 입력
+        ↓
+Packaging 선택
+        ↓
+Java Version 선택
+        ↓
+Dependency 선택
+        ↓
+프로젝트 생성 위치 선택
+        ↓
+Spring Boot Project 생성
+        ↓
+Git Repository 초기화
+        ↓
+생성 상태 확인
+```
 
 아직 다음 작업은 진행하지 않는다.
 
 - 프로젝트별 VS Code Workspace JDK 상세 설정
-- Gradle Wrapper 버전 표준화
+- Gradle Wrapper Version 표준화
+- Build / Run 검증
 - Gradle Multi-Project 구성
+- Oracle JDBC Driver / Datasource 구성
 - Controller / Service / DAO 구현
 - Filter / AOP 구현
-- Spring Security 구성
-- Oracle JDBC Driver 추가
-- Datasource 구성
-- Transaction 구성
-- Cache 구성
-- 업무 Table / Schema 구성
+- Security / Transaction / Cache 구성
+- 업무 Schema Object 구현
 
-이 문서의 목표는 다음과 같다.
+!!! info "프로젝트 생성과 Git 초기화의 순서"
+    본 가이드에서는 **Spring Boot 프로젝트를 먼저 생성한 뒤 `git init`을 수행**한다.
 
-```text
-Spring Initializr
-        ↓
-Spring Boot 기본 프로젝트 생성
-        ↓
-프로젝트 파일 구조 확인
-        ↓
-Git 변경사항 확인
-        ↓
-다음 프로젝트 개발환경 설정 단계로 이동
-```
+    Spring Initializr의 프로젝트 생성 자체에는 Git Repository가 필요하지 않으며,
+    프로젝트가 정상적으로 생성된 뒤 해당 Directory를 Git Repository로 만드는 편이
+    생성 과정과 Git 초기화를 명확하게 분리할 수 있다.
 
 ---
 
@@ -43,108 +65,442 @@ MicroServer 프로젝트 구축 흐름은 다음과 같다.
 
 ```mermaid
 flowchart LR
-    A[개발환경 구성] --> B[Spring Boot 프로젝트 생성]
-    B --> C[프로젝트 JDK / VS Code 설정]
-    C --> D[Gradle Wrapper / Gradle 설정]
-    D --> E[초기 실행 / Build 검증]
-    E --> F[Gradle Multi-Project]
-    F --> G[공통 프레임워크 구현]
+    A["개발환경 구성"]
+    --> B["Spring Boot 프로젝트 생성"]
+    --> C["생성 프로젝트 구조 확인"]
+    --> D["프로젝트 JDK / VS Code 설정"]
+    --> E["Gradle Wrapper / Gradle 설정"]
+    --> F["초기 Build / Run 검증"]
+    --> G["Gradle Multi-Project"]
+    --> H["공통 Framework 구현"]
 ```
 
-현재 문서는 다음 위치에 해당한다.
+현재 문서:
 
 ```text
 JDK / Gradle / VS Code / Oracle 환경 준비
         ↓
-[ Spring Boot 프로젝트 생성 ]          ← 현재
+[ Spring Boot 프로젝트 생성 ]             ← 현재
+        ↓
+생성 프로젝트 구조 확인 및 초기 정리
         ↓
 프로젝트 JDK / VS Code Workspace 설정
         ↓
-Gradle Wrapper 및 프로젝트 Gradle 설정
+Gradle Wrapper / 프로젝트 Gradle 설정
         ↓
-초기 실행 및 Build 검증
-        ↓
-Gradle Multi-Project 구성
+초기 Build / Run 검증
 ```
-
-!!! info "프로젝트 생성 단계의 원칙"
-
-    이번 단계에서는 **Spring Boot 기본 프로젝트를 만들기만 한다.**
-
-    프로젝트 생성 직후 여러 설정과 기능을 한꺼번에 추가하지 않는다.
-
-    이후 각 단계에서 설정을 하나씩 적용하고 검증함으로써,
-    문제가 발생했을 때 어느 단계에서 문제가 생겼는지 추적할 수 있도록 한다.
 
 ---
 
-## 3. Spring Boot 버전 기준
+## 3. 프로젝트 생성 Directory 기준
 
-본 가이드 작성 기준일은 **2026-08-24**이다.
-
-MicroServer 초기 프로젝트는 다음 버전을 기준으로 한다.
+MicroServer 로컬 개발환경 Root:
 
 ```text
-Spring Boot : 4.1.0
-Java        : 26
+C:\local-microserver
+```
+
+프로젝트 Source는 다음 `workspace` Directory 아래에 둔다.
+
+```text
+C:\local-microserver
+└─ workspace
+```
+
+Spring Boot 프로젝트가 생성되면 최종 구조는 다음이 된다.
+
+```text
+C:\local-microserver
+└─ workspace
+   └─ microserver
+      ├─ build.gradle
+      ├─ settings.gradle
+      ├─ gradlew
+      ├─ gradlew.bat
+      ├─ gradle
+      └─ src
+```
+
+### 3.1 `workspace` Directory 생성
+
+아직 `workspace` Directory가 없다면 PowerShell에서 생성한다.
+
+```powershell
+New-Item -ItemType Directory -Force C:\local-microserver\workspace
+```
+
+확인:
+
+```powershell
+Get-ChildItem C:\local-microserver
+```
+
+다음 Directory가 보이면 된다.
+
+```text
+workspace
+```
+
+!!! important "`microserver` Directory는 지금 수동으로 만들지 않음"
+    VS Code Spring Initializr에서 `Artifact ID`를 `microserver`로 입력한 뒤
+    생성 위치로 `C:\local-microserver\workspace`를 선택하면
+    Initializr가 프로젝트 Directory를 생성하도록 한다.
+
+    최종 목표:
+
+    ```text
+    C:\local-microserver\workspace\microserver
+    ```
+
+    이렇게 하면 다음과 같은 중첩 Directory를 만드는 실수를 피할 수 있다.
+
+    ```text
+    X C:\local-microserver\workspace\microserver\microserver
+    ```
+
+---
+
+## 4. 프로젝트 생성 기준
+
+현재 MicroServer 프로젝트 생성 기준:
+
+```text
+Spring Boot : 4.1.1
+Java        : 25
 Build Tool  : Gradle - Groovy
 Packaging   : JAR
 ```
 
-Spring Boot 4.1.0은 공식 문서 기준으로 다음 환경을 지원한다.
+프로젝트 식별정보:
 
 ```text
-Minimum Java : 17
-Maximum Java : 26
-Gradle       : 8.14 이상 8.x 또는 9.x
+Team / Organization : team-microserver
+Java Group          : io.github.microserverlab
+Project             : microserver
 ```
 
-MicroServer는 앞 단계에서 준비한 Eclipse Temurin JDK 26을 사용한다.
+Spring Initializr 입력 기준:
 
-!!! info "Spring Boot 버전 운영"
+| 항목 | 입력 / 선택 값 |
+|---|---|
+| Build Tool | Gradle |
+| Spring Boot | `4.1.1` |
+| Language | Java |
+| Group ID | `io.github.microserverlab` |
+| Artifact ID | `microserver` |
+| Packaging | JAR |
+| Java | `25` |
+| Dependency | Spring Web |
 
-    Spring Initializr의 기본 Version은 시간이 지나면 변경될 수 있다.
+생성 후 기준값:
 
-    따라서 단순히 `Default` 또는 `Latest`를 선택하지 않고
-    **프로젝트 생성 시점의 프로젝트 표준 Version을 명시적으로 확인하여 선택**한다.
+```text
+Project Name      : microserver
+Gradle Root Name  : microserver
+Base Package      : io.github.microserverlab.microserver
+```
 
-    프로젝트 표준 Version을 변경할 경우 JDK, Gradle, Build, CI/CD 및 관련 문서를 함께 검토한다.
+!!! note "VS Code Initializr에서 직접 묻지 않는 값"
+    VS Code의 Spring Initializr Java Support Wizard는
+    주로 다음 값을 순서대로 입력 / 선택하도록 구성한다.
+
+    ```text
+    Spring Boot Version
+    Language
+    Group ID
+    Artifact ID
+    Packaging
+    Java Version
+    Dependencies
+    생성 위치
+    ```
+
+    웹 기반 `start.spring.io` 화면에서 볼 수 있는
+    `Name`, `Description`, `Package Name` 등의 항목이
+    VS Code Wizard에서 별도 입력 단계로 나타나지 않을 수 있다.
+
+    따라서 본 가이드에서는 **실제 VS Code Wizard에서 나타나는 항목을 기준으로 진행**한다.
 
 ---
 
-## 4. Spring Boot 4의 Web Starter
+## 5. Spring Initializr 실행
 
-Spring Boot 4에서는 기능별 Starter가 보다 세분화되었다.
+MicroServer Portable VS Code를 실행한다.
 
-Spring MVC 기반 Web Application의 주요 Starter는 다음과 같다.
-
-```text
-spring-boot-starter-webmvc
-```
-
-Test 지원 Starter:
+Windows에서는 다음 Shortcut을 사용하는 것을 기준으로 한다.
 
 ```text
-spring-boot-starter-webmvc-test
+MicroServer VS Code.lnk
 ```
 
-Spring Initializr 화면에서는 일반적으로 다음 Dependency를 선택한다.
+Command Palette를 연다.
+
+```text
+Ctrl + Shift + P
+```
+
+검색:
+
+```text
+Spring Initializr
+```
+
+다음과 같은 Gradle 프로젝트 생성 명령을 선택한다.
+
+```text
+Spring Initializr: Create a Gradle Project...
+```
+
+또는 Extension Version에 따라 다음처럼 표시될 수 있다.
+
+```text
+Spring Initializr: Generate a Gradle Project...
+```
+
+!!! note "Command 이름은 Version에 따라 조금 다를 수 있음"
+    중요한 기준은 다음 두 가지이다.
+
+    ```text
+    Spring Initializr
+    Gradle Project
+    ```
+
+---
+
+## 6. Step 1 - Spring Boot Version 선택
+
+Spring Initializr가 먼저 Spring Boot Version을 묻는다.
+
+현재 선택:
+
+```text
+4.1.1
+```
+
+선택 흐름:
+
+```text
+Specify Spring Boot version
+        ↓
+4.1.1
+```
+
+!!! important "Default가 아니라 프로젝트 표준 Version 확인"
+    Spring Initializr의 기본 Version은 시간이 지나면 달라질 수 있다.
+
+    따라서 화면의 첫 번째 항목을 무조건 선택하지 않고
+    현재 MicroServer 프로젝트 표준 Version을 확인한다.
+
+현재 기준:
+
+```text
+Spring Boot 4.1.1
+```
+
+---
+
+## 7. Step 2 - Project Language 선택
+
+다음으로 Project Language를 선택한다.
+
+```text
+Java
+```
+
+선택 흐름:
+
+```text
+Specify project language
+        ↓
+Java
+```
+
+현재 프로젝트에서는 Kotlin이나 Groovy를 사용하지 않는다.
+
+---
+
+## 8. Step 3 - Group ID 입력
+
+다음 화면에서 Group ID를 입력한다.
+
+입력:
+
+```text
+io.github.microserverlab
+```
+
+흐름:
+
+```text
+Input Group Id
+        ↓
+io.github.microserverlab
+```
+
+### 8.1 Group ID 의미
+
+`Group`은 Gradle / Maven Artifact와 Java Namespace의 기준이 되는 식별값이다.
+
+```text
+io.github.microserverlab
+```
+
+구조:
+
+```text
+io.github
+└─ microserverlab
+```
+
+Team 이름과 Java Group은 서로 다른 값이다.
+
+```text
+Team / Organization : team-microserver
+Java Group          : io.github.microserverlab
+```
+
+!!! note "회사 프로젝트에서는 공식 Naming Rule 우선"
+    `io.github.microserverlab`은 현재 MicroServer 프로젝트에서 정한 Group이다.
+
+    실제 회사 프로젝트에서는 공식 Domain이나 Java Package Naming Rule이 있다면
+    해당 기준을 우선한다.
+
+---
+
+## 9. Step 4 - Artifact ID 입력
+
+다음 화면에서 Artifact ID를 입력한다.
+
+```text
+microserver
+```
+
+흐름:
+
+```text
+Input Artifact Id
+        ↓
+microserver
+```
+
+`Artifact ID`는 현재 프로젝트 이름과 동일하게 사용한다.
+
+```text
+Project  : microserver
+Artifact : microserver
+```
+
+이 값은 이후 생성되는 Project Directory 이름에도 사용된다.
+
+최종 Directory:
+
+```text
+C:\local-microserver\workspace\microserver
+```
+
+!!! important "Team 이름을 Artifact에 사용하지 않음"
+    다음처럼 입력하지 않는다.
+
+    ```text
+    X team-microserver
+    X microserverlab
+    ```
+
+    프로젝트 이름은 다음이다.
+
+    ```text
+    O microserver
+    ```
+
+---
+
+## 10. Step 5 - Packaging 선택
+
+Packaging Type을 선택한다.
+
+```text
+JAR
+```
+
+흐름:
+
+```text
+Specify packaging type
+        ↓
+JAR
+```
+
+현재 MicroServer는 Spring Boot Embedded Server 기반 Application 실행을 기준으로 하므로
+기본 Packaging은 JAR을 사용한다.
+
+현재 선택하지 않음:
+
+```text
+WAR
+```
+
+---
+
+## 11. Step 6 - Java Version 선택
+
+Java Version 선택 화면에서 다음을 선택한다.
+
+```text
+25
+```
+
+흐름:
+
+```text
+Specify Java version
+        ↓
+25
+```
+
+현재 로컬 표준 JDK:
+
+```text
+C:\local-microserver\tools\jdk\temurin-25
+```
+
+따라서 Initializr에서도 Java 25를 선택한다.
+
+!!! warning "지원 가능한 최대 Version과 프로젝트 표준 Version은 다를 수 있음"
+    Spring Boot가 더 높은 Java Version을 지원하더라도
+    프로젝트에서 준비한 표준 JDK Version을 기준으로 선택한다.
+
+---
+
+## 12. Step 7 - Dependency 선택
+
+다음 화면에서 Dependency를 선택한다.
+
+현재 최초 생성 단계에서 선택할 Dependency:
 
 ```text
 Spring Web
 ```
 
-Initializr가 선택한 Spring Boot Version에 맞는 Starter 구성을 생성하도록 한다.
+Dependency 검색창에 다음을 입력한다.
 
-현재 단계에서는 Web Application의 기본 기동을 검증할 수 있도록 **Spring Web만 추가**한다.
+```text
+Spring Web
+```
 
----
+검색 결과에서 `Spring Web`을 선택한다.
 
-## 5. 최초 프로젝트 Dependency 원칙
+선택 완료 후:
 
-Spring Initializr에서 Dependency를 많이 선택하지 않는다.
+```text
+Selected 1 dependency
+```
 
-현재 선택:
+또는 이와 유사한 선택 완료 항목을 눌러 다음 단계로 이동한다.
+
+### 12.1 왜 Spring Web만 선택하는가
+
+현재 단계에서는 최소 Spring Boot Web Project를 만든다.
 
 ```text
 Spring Web
@@ -169,706 +525,591 @@ Batch
 Kafka
 ```
 
-이유는 다음과 같다.
+구성 원칙:
 
 ```text
-최소 Spring Boot Project
+최소 프로젝트 생성
         ↓
-기본 Build / Run 검증
+프로젝트 구조 확인
         ↓
-Gradle Multi-Project 구성
-        ↓
-필요 기능을 단계별 추가
-```
-
-처음부터 많은 Dependency를 추가하면
-문제가 발생했을 때 원인을 특정하기 어려워진다.
-
----
-
-## 6. Project Coordinate 기준
-
-본 가이드에서는 다음 값을 프로젝트 생성 예시로 사용한다.
-
-```text
-Group       : io.github.teammicroserver
-Artifact    : microserver
-Name        : microserver
-Package     : io.github.teammicroserver
-Version     : 0.0.1-SNAPSHOT
-```
-
-Project Coordinate (Maven 표기와 동일한 개념):
-
-```text
-io.github.teammicroserver:microserver:0.0.1-SNAPSHOT
-```
-
-!!! note "Group ID"
-
-    `groupId`는 일반적으로 조직이 관리하는 Domain / Namespace를 기준으로 정한다.
-
-    현재 값은 Team-Microserver 프로젝트를 위한 프로젝트 Namespace 예시이다.
-
-    실제 회사 또는 조직의 공식 Java Package Naming Rule이 별도로 있다면
-    프로젝트 생성 전에 해당 기준으로 변경한다.
-
----
-
-## 7. Spring Initializr를 사용하는 이유
-
-Spring Boot 프로젝트를 수동으로 처음부터 만들 수도 있지만
-MicroServer에서는 Spring Initializr를 사용한다.
-
-Spring Initializr는 다음 기본 파일을 생성한다.
-
-```text
-build.gradle
-settings.gradle
-gradlew
-gradlew.bat
-gradle/wrapper/
-src/main/java/
-src/main/resources/
-src/test/java/
-.gitignore
-```
-
-또한 선택한 Spring Boot Version과 Java Version,
-Dependency에 맞는 기본 Gradle Project를 생성한다.
-
----
-
-## 8. VS Code에서 Spring Initializr 실행
-
-앞 단계에서 Spring Boot Extension Pack과
-Spring Initializr Java Support Extension이 설치되어 있어야 한다.
-
-Command Palette:
-
-### Windows
-
-```text
-Ctrl + Shift + P
-```
-
-### macOS
-
-```text
-Command + Shift + P
-```
-
-검색:
-
-```text
-Spring Initializr
-```
-
-Spring Initializr의 Gradle Project 생성 명령을 선택한다.
-
-VS Code Extension Version에 따라 표시되는 명령 문구가 조금 달라질 수 있으므로
-`Spring Initializr`로 검색하여 Gradle Project 생성 Wizard를 시작한다.
-
----
-
-## 9. Spring Initializr 선택 값
-
-Wizard에서는 다음 기준으로 선택한다.
-
-| 항목 | 선택 값 |
-|---|---|
-| Build Tool | Gradle - Groovy |
-| Language | Java |
-| Spring Boot | 4.1.0 |
-| Group | `io.github.teammicroserver` |
-| Artifact | `microserver` |
-| Name | `microserver` |
-| Description | MicroServer Framework |
-| Package Name | `io.github.teammicroserver` |
-| Packaging | JAR |
-| Java | 26 |
-
-Dependency:
-
-```text
-Spring Web
-```
-
-### Maven과 비교
-
-같은 프로젝트를 Maven으로 생성했다면 Build Tool 선택과 생성 파일은 다음처럼 달라진다.
-
-| 구분 | Gradle - Groovy | Maven |
-|---|---|---|
-| Build Script | `build.gradle` | `pom.xml` |
-| Project 구조 | `settings.gradle` | Parent / Module `pom.xml` |
-| Wrapper | `gradlew`, `gradlew.bat` | `mvnw`, `mvnw.cmd` |
-| Wrapper 설정 | `gradle/wrapper/` | `.mvn/wrapper/` |
-
-이번 프로젝트에서는 **Gradle을 실제 Build 기준으로 사용하고 Maven은 대응 개념을 이해하기 위한 비교 대상으로 사용한다.**
-
----
-
-## 10. 이미 Git Repository를 Clone한 경우
-
-MicroServer Source Repository를 이미 Clone해 두었다면
-**`.git` 디렉터리를 삭제하거나 덮어쓰지 않는 것**이 중요하다.
-
-예:
-
-```text
-workspace/
-└─ microserver/
-   ├─ .git/
-   ├─ README.md
-   └─ ...
-```
-
-Spring Initializr Extension의 생성 방식이나 Version에 따라
-선택한 Directory 아래에 Artifact 이름의 하위 Directory가 추가될 수 있다.
-
-따라서 기존 Git Repository가 있는 경우 다음 방법을 권장한다.
-
-```text
-1. Spring Initializr Project를 임시 Directory에 생성
-2. 생성 결과 확인
-3. 생성된 Project 파일을 기존 microserver Repository Root로 이동
-4. 기존 .git Directory는 유지
-```
-
-!!! warning "`.git` Directory"
-
-    기존 Repository의 `.git` Directory는 Project Source가 아니라
-    Git Repository 자체의 Metadata이다.
-
-    Spring Boot Project를 넣는 과정에서 `.git`을 삭제하거나
-    다른 Repository의 `.git`으로 교체하지 않는다.
-
----
-
-## 11. 생성 위치 예시
-
-예:
-
-```text
-C:\dev\workspace\
-```
-
-또는:
-
-```text
-~/dev/workspace/
-```
-
-임시 생성 결과:
-
-```text
-workspace/
-├─ microserver-generated/
-└─ microserver/                 ← 기존 Git Repository
-```
-
-최종적으로 Spring Boot Project의 `build.gradle`과 `settings.gradle`이
-Git Repository Root에 위치하도록 한다.
-
-```text
-microserver/
-├─ .git/
-├─ gradle/
-├─ src/
-├─ .gitignore
-├─ gradlew
-├─ gradlew.bat
-├─ settings.gradle
-└─ build.gradle
-```
-
-다음처럼 한 단계 더 중첩되지 않도록 주의한다.
-
-```text
-X microserver/
-    └─ microserver/
-        ├─ build.gradle
-        └─ src/
-```
-
-원하는 구조:
-
-```text
-O microserver/
-    ├─ build.gradle
-    └─ src/
-```
-
----
-
-## 12. Windows에서 생성 파일 이동 예시
-
-생성 Project가 임시 Directory에 있다면
-필요한 파일을 기존 Repository Root로 이동한다.
-
-GUI Explorer를 이용해도 된다.
-
-PowerShell을 사용하는 경우 실제 경로를 확인한 후 진행한다.
-
-예:
-
-```powershell
-Get-ChildItem -Force
-```
-
-숨김 Directory인 `.mvn`도 반드시 함께 이동한다.
-
-!!! warning
-
-    이동 명령은 실제 Directory 상태에 따라 달라지므로
-    `.git` Directory를 포함한 전체 Directory를 통째로 덮어쓰는 명령을 사용하지 않는다.
-
----
-
-## 13. macOS에서 생성 파일 확인
-
-Terminal:
-
-```bash
-ls -la
-```
-
-생성 결과에서 다음 Hidden File / Directory도 확인한다.
-
-```text
-.mvn
-.gitignore
-```
-
-Finder에서 Hidden File을 확인해야 하는 경우:
-
-```text
-Command + Shift + .
-```
-
-를 사용할 수 있다.
-
----
-
-## 14. 생성 후 기본 구조
-
-정상적으로 생성되면 다음과 유사한 구조가 된다.
-
-```text
-microserver/
-├─ .git/
-├─ gradle/
-│  └─ wrapper/
-│     ├─ gradle-wrapper.jar
-│     └─ gradle-wrapper.properties
-├─ src/
-│  ├─ main/
-│  │  ├─ java/
-│  │  │  └─ io/github/teammicroserver/
-│  │  │     └─ *Application.java
-│  │  └─ resources/
-│  │     └─ application.properties
-│  └─ test/
-│     └─ java/
-│        └─ io/github/teammicroserver/
-│           └─ *ApplicationTests.java
-├─ .gitignore
-├─ gradlew
-├─ gradlew.bat
-├─ settings.gradle
-└─ build.gradle
-```
-
-Spring Initializr Version에 따라 생성 파일의 세부 구성이 달라질 수 있다.
-
----
-
-## 15. Main Application Class
-
-생성된 Java Source에는 Spring Boot Main Class가 존재한다.
-
-형태:
-
-```java
-@SpringBootApplication
-public class ...Application {
-
-    public static void main(String[] args) {
-        SpringApplication.run(...Application.class, args);
-    }
-}
-```
-
-`@SpringBootApplication`은 Spring Boot Application의 기본 Entry Point를 구성한다.
-
-현재는 이 Class를 수정하지 않는다.
-
----
-
-## 16. Test Class
-
-Spring Initializr는 기본 Test Class도 생성한다.
-
-형태:
-
-```java
-@SpringBootTest
-class ...ApplicationTests {
-
-    @Test
-    void contextLoads() {
-    }
-}
-```
-
-현재 Test는 Application Context가 기본적으로 구성되는지를 확인하기 위한 최소 Test이다.
-
-삭제하지 않는다.
-
-이 Test는 이후 **초기 실행 및 Build 검증 가이드**에서 사용한다.
-
----
-
-## 17. `application.properties`
-
-Spring Initializr가 다음 파일을 생성할 수 있다.
-
-```text
-src/main/resources/application.properties
-```
-
-현재는 이 파일을 비워둔 상태로 유지해도 된다.
-
-아직 다음 설정을 하지 않는다.
-
-```text
-server.port
-Datasource
-Oracle URL
-Logging
-Spring Profile
-Security
-Cache
-```
-
-`application.yml`로 변경하는 작업도
-설정 파일 운영 기준을 정하는 단계에서 진행한다.
-
----
-
-## 18. `build.gradle` / `settings.gradle` 기본 확인
-
-현재는 `build.gradle`과 `settings.gradle`을 적극적으로 수정하지 않고
-Spring Initializr가 생성한 내용을 확인만 한다.
-
-확인 항목:
-
-```text
-Spring Boot Gradle Plugin Version
-Group
-Project Name
-Version
-Java Toolchain
-Dependencies
-Spring Boot Gradle Plugin
-```
-
-기대 기준:
-
-```text
-Spring Boot 4.1.0
-Java 26
-Spring Web
-```
-
-Spring Boot 4의 실제 Starter Artifact 이름은
-Initializr가 선택한 Version에 맞게 생성한 값을 우선한다.
-
----
-
-## 19. Gradle Wrapper 파일 확인
-
-Spring Initializr Gradle Project에는 Gradle Wrapper가 함께 생성된다.
-
-확인:
-
-```text
-gradle/wrapper/
-gradlew
-gradlew.bat
-```
-
-현재 단계에서는 Wrapper Version을 변경하지 않는다.
-
-다음 문서에서 실제 Project Gradle 표준을 확인한다.
-
-→ [Gradle Wrapper 및 프로젝트 Gradle 설정](project_environment/project_gradle_setup.md)
-
----
-
-## 20. `.gitignore` 확인
-
-Spring Initializr가 생성한 `.gitignore`를 확인한다.
-
-대표적으로 Build 결과 Directory인 다음 항목이 Git에서 제외되어야 한다.
-
-```text
-.gradle/
-build/
-```
-
-기존 Repository에 `.gitignore`가 이미 존재했다면
-단순히 한 파일로 덮어쓰지 말고 기존 항목과 Initializr 생성 항목을 병합한다.
-
----
-
-## 21. 현재는 Build하지 않는다
-
-Spring Boot Project가 생성되면 바로 실행하고 싶을 수 있지만
-현재 문서에서는 아직 Build를 실행하지 않는다.
-
-```text
-Project 생성
-        ↓
-JDK / VS Code Workspace 설정
-        ↓
-Gradle Wrapper 설정
+JDK / Gradle 설정
         ↓
 Build / Run 검증
+        ↓
+필요 Dependency 단계별 추가
 ```
 
-이 순서를 유지한다.
-
-따라서 현재는:
-
-```text
-gradle build
-./gradlew build
-./gradlew bootRun
-```
-
-등을 아직 실행하지 않는다.
+Spring Boot 4에서 `Spring Web` 선택 결과의 실제 Gradle Dependency는
+생성된 `build.gradle`을 기준으로 확인한다.
 
 ---
 
-## 22. VS Code로 Project Root 열기
+## 13. Step 8 - 프로젝트 생성 위치 선택
+
+Dependency 선택이 끝나면 Windows Folder 선택 창이 열린다.
+
+이 화면은 **JDK나 Gradle 설치 경로를 선택하는 화면이 아니다.**
+
+Spring Boot 프로젝트를 어느 Directory 아래에 생성할지 선택하는 화면이다.
+
+현재 선택할 Directory:
+
+```text
+C:\local-microserver\workspace
+```
+
+즉 Windows Folder 선택 창에서 다음 경로로 이동한다.
+
+```text
+C:
+└─ local-microserver
+   └─ workspace
+```
+
+`workspace` Directory를 선택한 상태에서:
+
+```text
+Generate into this folder
+```
+
+버튼을 누른다.
+
+### 13.1 왜 `workspace`를 선택하는가
+
+Artifact ID가 다음으로 설정되어 있다.
+
+```text
+microserver
+```
+
+따라서 프로젝트가 다음 구조로 생성되는 것을 목표로 한다.
+
+```text
+C:\local-microserver\workspace
+└─ microserver
+   ├─ build.gradle
+   ├─ settings.gradle
+   ├─ gradlew
+   ├─ gradlew.bat
+   ├─ gradle
+   └─ src
+```
+
+!!! warning "`microserver` 안에 다시 `microserver`를 만들지 않음"
+    Folder 선택 화면에서 생성 위치를 잘못 지정하면
+    Directory가 불필요하게 중첩될 수 있다.
+
+    최종적으로 다음 구조인지 반드시 확인한다.
+
+    ```text
+    O C:\local-microserver\workspace\microserver\build.gradle
+    ```
+
+    다음 구조는 사용하지 않는다.
+
+    ```text
+    X C:\local-microserver\workspace\microserver\microserver\build.gradle
+    ```
+
+---
+
+## 14. Step 9 - 프로젝트 생성 완료
+
+Spring Initializr가 프로젝트 생성을 완료하면
+VS Code 오른쪽 아래에 프로젝트 생성 완료 메시지가 나타날 수 있다.
+
+Extension 설정에 따라 다음과 같은 선택지가 표시될 수 있다.
+
+```text
+Open
+Add to Workspace
+```
+
+현재는 생성된 프로젝트를 확인할 수 있도록 `Open`을 선택하거나,
+직접 다음 Directory를 연다.
+
+```text
+C:\local-microserver\workspace\microserver
+```
 
 VS Code:
 
 ```text
 File
 → Open Folder...
+→ C:\local-microserver\workspace\microserver
 ```
 
-다음 Directory를 연다.
+---
 
-```text
-microserver/
+## 15. 생성 Directory 확인
+
+PowerShell에서 확인한다.
+
+```powershell
+Get-ChildItem C:\local-microserver\workspace\microserver -Force
 ```
 
-즉 `build.gradle`과 `settings.gradle`이 바로 보이는 Directory를 Workspace Root로 연다.
-
-정상:
+최소 다음 파일 / Directory가 존재하는지 확인한다.
 
 ```text
-Explorer
 microserver
- ├─ gradle
- ├─ src
- ├─ settings.gradle
- ├─ build.gradle
- ├─ gradlew
- └─ gradlew.bat
+├─ gradle
+│  └─ wrapper
+├─ src
+├─ .gitignore
+├─ build.gradle
+├─ settings.gradle
+├─ gradlew
+└─ gradlew.bat
 ```
 
----
-
-## 23. Java Project 인식 확인
-
-VS Code Java / Gradle Extension은 `build.gradle`이 있는 Folder를 열면
-Java Project를 자동으로 Import할 수 있다.
-
-Explorer에서 Java Projects View가 나타나는지 확인한다.
-
-필요한 경우 Command Palette:
+Spring Initializr Version에 따라 다음 파일도 있을 수 있다.
 
 ```text
-Java: Import Java Projects in Workspace
+.gitattributes
+HELP.md
 ```
 
-현재는 Import 상태만 확인한다.
+!!! important "아직 Build하지 않음"
+    지금은 Spring Boot Project가 정상적으로 생성되었는지만 확인한다.
+
+    아직 다음 명령은 실행하지 않는다.
+
+    ```text
+    gradlew.bat build
+    gradlew.bat bootRun
+    ```
 
 ---
 
-## 24. Spring Boot Dashboard 확인
+## 16. Git Repository 초기화
 
-Spring Boot Dashboard를 열어
-생성한 Application이 인식되는지 확인할 수 있다.
+Spring Boot 프로젝트 생성이 정상적으로 끝난 뒤
+프로젝트 Root를 Git Repository로 만든다.
 
-현재는 Dashboard에 Application이 표시되는지만 확인하고
-실행은 이후 검증 단계에서 진행한다.
+Project Root:
+
+```text
+C:\local-microserver\workspace\microserver
+```
+
+PowerShell:
+
+```powershell
+Set-Location C:\local-microserver\workspace\microserver
+```
+
+현재 Git 상태 확인:
+
+```powershell
+git status
+```
+
+아직 Git Repository가 아니라면 다음과 같은 오류가 나올 수 있다.
+
+```text
+fatal: not a git repository
+```
+
+이제 Git Repository를 초기화한다.
+
+```powershell
+git init
+```
+
+확인:
+
+```powershell
+git rev-parse --show-toplevel
+```
+
+기대 결과:
+
+```text
+C:/local-microserver/workspace/microserver
+```
+
+구조:
+
+```text
+C:\local-microserver
+└─ workspace
+   └─ microserver
+      ├─ .git
+      ├─ gradle
+      ├─ src
+      ├─ build.gradle
+      └─ settings.gradle
+```
+
+!!! important "`workspace` 자체에는 git init하지 않음"
+    다음 위치에서는 `git init`을 실행하지 않는다.
+
+    ```text
+    X C:\local-microserver
+    X C:\local-microserver\workspace
+    ```
+
+    실제 Source Repository Root에서만 실행한다.
+
+    ```text
+    O C:\local-microserver\workspace\microserver
+    ```
 
 ---
 
-## 25. 현재 단계에서 수정하지 않는 항목
+## 17. `.gitignore` 확인
 
-다음 파일을 미리 만들거나 수정하지 않는다.
+Spring Initializr가 생성한 `.gitignore`를 확인한다.
+
+```powershell
+Get-Content .gitignore
+```
+
+Gradle Project의 대표적인 제외 대상:
+
+```gitignore
+.gradle/
+build/
+```
+
+반대로 Gradle Wrapper는 Git 관리 대상이다.
+
+```text
+gradlew
+gradlew.bat
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+```
+
+!!! note "Repository 밖 Secret은 별도 관리"
+    다음 파일은 Source Repository 밖에 있다.
+
+    ```text
+    C:\local-microserver\env\local-env.ps1
+    ```
+
+    따라서 Project `.gitignore`로 제외하는 대상이 아니다.
+
+    실제 개발환경 ZIP / 배포 Package에서는 제외한다.
+
+---
+
+## 18. 최초 Git 상태 확인
+
+Git 초기화 후:
+
+```powershell
+git status
+```
+
+다음과 같은 Spring Boot 생성 파일이 Untracked 상태로 보일 수 있다.
+
+```text
+.gradle 관련 제외 항목을 제외한 생성 파일
+build.gradle
+settings.gradle
+gradlew
+gradlew.bat
+gradle/wrapper/...
+src/...
+.gitignore
+.gitattributes
+```
+
+아직 Build / Run 설정 등을 추가하지 않은
+**순수 Spring Boot 생성 상태**를 첫 Git 기준점으로 남긴다.
+
+---
+
+## 19. 최초 Commit
+
+전체 변경사항 추가:
+
+```powershell
+git add .
+```
+
+확인:
+
+```powershell
+git status
+```
+
+Commit:
+
+```powershell
+git commit -m "chore: create initial Spring Boot project"
+```
+
+현재 단계에서 Remote Repository 연결 여부는 별도로 결정할 수 있다.
+
+### 19.1 Remote Repository가 아직 없는 경우
+
+현재 Local Repository만 유지해도 된다.
+
+```text
+C:\local-microserver\workspace\microserver
+└─ .git
+```
+
+나중에 GitHub Repository를 만든 후 Remote를 연결한다.
+
+### 19.2 GitHub에 빈 Repository가 이미 있는 경우
+
+Remote URL을 연결한 후 Push할 수 있다.
+
+개념:
+
+```powershell
+git remote add origin <GitHub Repository URL>
+git branch -M main
+git push -u origin main
+```
+
+!!! warning "Remote에 기존 Commit이 있는 경우"
+    GitHub Repository를 생성하면서 README, LICENSE, `.gitignore` 등을 미리 생성했다면
+    Remote Repository에 이미 Commit History가 존재할 수 있다.
+
+    이 경우 단순 Push 전에 Remote History를 확인해야 한다.
+
+    MicroServer 신규 Source Repository는 가능하면
+    **빈 GitHub Repository를 만들고 Local Initial Commit을 Push하는 방식**을 권장한다.
+
+---
+
+## 20. 왜 프로젝트 생성 후 `git init`을 하는가
+
+두 가지 방법 모두 기술적으로 가능하다.
+
+```text
+방법 A
+git init
+→ Spring Boot 생성
+
+방법 B
+Spring Boot 생성
+→ git init
+```
+
+본 가이드는 **방법 B**를 사용한다.
+
+```text
+workspace 준비
+        ↓
+Spring Initializr Project 생성
+        ↓
+생성 결과 확인
+        ↓
+git init
+        ↓
+Initial Commit
+```
+
+이 방식의 장점:
+
+- Spring Initializr 생성 작업과 Git 초기화를 분리할 수 있다.
+- `.git` Directory와 Initializr 생성 파일의 충돌을 신경 쓸 필요가 없다.
+- 프로젝트가 실제로 생성된 Directory를 확인한 뒤 Repository Root를 확정할 수 있다.
+- `microserver\microserver`와 같은 Directory 중첩 여부를 Git 초기화 전에 확인할 수 있다.
+- 임시 Directory에 생성한 뒤 복사하는 불필요한 절차를 제거할 수 있다.
+
+따라서 **신규 MicroServer 프로젝트 생성 기준은 `Project 생성 → git init` 순서로 통일**한다.
+
+---
+
+## 21. 기존 Git Repository를 Clone한 경우
+
+이미 GitHub에 Source Repository와 Commit이 존재하고
+이를 먼저 Clone한 상황은 신규 생성 절차와 다르다.
+
+예:
+
+```text
+C:\local-microserver\workspace\microserver
+├─ .git
+├─ README.md
+└─ ...
+```
+
+이 경우에는 Spring Initializr로 기존 Repository 위에 바로 생성하기 전에
+기존 파일과 생성 파일의 충돌 여부를 검토해야 한다.
+
+```text
+기존 Repository Clone
+        ↓
+Initializr 임시 생성
+        ↓
+생성 파일 확인
+        ↓
+기존 Repository Root로 병합
+        ↓
+git status
+```
+
+!!! note "현재 신규 프로젝트 표준 절차와 구분"
+    이 절은 **이미 Source Repository에 기존 Commit이 있는 경우에만** 적용한다.
+
+    처음 MicroServer 프로젝트를 만드는 현재 표준 절차는 다음이다.
+
+    ```text
+    Spring Initializr 생성
+    → git init
+    → Initial Commit
+    → Remote 연결
+    ```
+
+---
+
+## 22. 현재 단계에서 수정하지 않는 항목
+
+다음 항목은 아직 추가하거나 수정하지 않는다.
 
 ```text
 .vscode/settings.json
 .vscode/extensions.json
 application-local.yml
+Oracle JDBC Driver
+Datasource
 Docker Compose
-Oracle JDBC Dependency
-업무 Package
 Controller
 Service
 DAO
 Filter
 AOP
 Security
+Transaction
+Cache
+Gradle Multi-Project
 ```
 
-각각 이후 단계에서 목적을 설명한 후 추가한다.
-
----
-
-## 26. Git 변경사항 확인
-
-Repository Root:
-
-```bash
-git status
-```
-
-예상:
+또한 아직 다음 명령을 실행하지 않는다.
 
 ```text
-new file: gradle/wrapper/...
-new file: gradlew
-new file: gradlew.bat
-new file: settings.gradle
-new file: build.gradle
-new file: src/...
+gradlew.bat build
+gradlew.bat bootRun
 ```
 
-기존 README나 `.gitignore`가 있다면 변경사항도 함께 검토한다.
+현재 단계는 **프로젝트 생성 + Git 기준점 생성**까지만 담당한다.
 
 ---
 
-## 27. Git Commit
-
-Project 생성 상태를 하나의 기준점으로 남긴다.
-
-```bash
-git add .
-git status
-```
-
-Commit 예:
-
-```bash
-git commit -m "chore: create initial Spring Boot project"
-```
-
-Remote Repository에 Push:
-
-```bash
-git push
-```
-
-!!! tip "단계별 Commit"
-
-    MicroServer 프로젝트는 한 번에 모든 구조를 만드는 대신
-    각 단계별로 정상 상태를 Commit하여 변경 기준점을 남긴다.
-
-    이후 Workspace, Gradle, Multi-Project 설정에서 문제가 생겼을 때
-    어느 단계의 변경인지 쉽게 비교할 수 있다.
-
----
-
-## 28. 완료 상태
+## 23. 전체 생성 절차 요약
 
 ```mermaid
-flowchart TB
-    P[Spring Boot Project]
-    P --> BUILD[build.gradle / settings.gradle]
-    P --> SRC[src/main]
-    P --> TEST[src/test]
-    P --> WRAPPER[Gradle Wrapper]
-    P --> GIT[Git Repository]
+flowchart TD
+    A["C:\local-microserver\workspace 생성"]
+    --> B["VS Code Spring Initializr 실행"]
+    --> C["Spring Boot 4.1.1"]
+    --> D["Java"]
+    --> E["Group: io.github.microserverlab"]
+    --> F["Artifact: microserver"]
+    --> G["Packaging: JAR"]
+    --> H["Java 25"]
+    --> I["Dependency: Spring Web"]
+    --> J["생성 위치: C:\local-microserver\workspace"]
+    --> K["microserver Project 생성"]
+    --> L["생성 Directory 확인"]
+    --> M["git init"]
+    --> N["git add / commit"]
 ```
 
-현재 완료 상태:
+최종 구조:
 
 ```text
-Spring Boot Project     → 생성 완료
-build.gradle / settings.gradle → 생성 완료
-Main Class              → 생성 완료
-기본 Test               → 생성 완료
-Gradle Wrapper           → 생성 여부 확인
-Git Repository          → 변경사항 Commit
-
-Workspace JDK           → 다음 단계
-Gradle 표준화            → 이후 단계
-Build / Run             → 이후 단계
-Multi Module            → 이후 단계
+C:\local-microserver
+└─ workspace
+   └─ microserver
+      ├─ .git
+      ├─ .gitignore
+      ├─ gradle
+      │  └─ wrapper
+      ├─ src
+      ├─ build.gradle
+      ├─ settings.gradle
+      ├─ gradlew
+      └─ gradlew.bat
 ```
 
 ---
 
-## 29. 체크리스트
+## 24. 체크리스트
 
-- [ ] Spring Boot 4.1.0을 선택했다.
-- [ ] Java 26을 선택했다.
-- [ ] Gradle - Groovy Project를 생성했다.
-- [ ] Packaging을 JAR로 선택했다.
-- [ ] Spring Web Dependency만 우선 추가했다.
-- [ ] Project Root에 `build.gradle`과 `settings.gradle`이 있다.
-- [ ] `gradle/wrapper`, `gradlew`, `gradlew.bat`을 확인했다.
-- [ ] Main Application Class를 확인했다.
-- [ ] 기본 Test Class를 확인했다.
-- [ ] VS Code에서 Project Root를 열었다.
-- [ ] Java Project가 인식된다.
-- [ ] 아직 Build / Application 실행을 하지 않았다.
-- [ ] 아직 Oracle / Datasource를 연결하지 않았다.
-- [ ] Git Commit / Push를 완료했다.
+### 24.1 Directory
+
+- [ ] `C:\local-microserver\workspace` Directory를 생성했다.
+- [ ] `workspace` 자체에는 `git init`을 하지 않았다.
+- [ ] 프로젝트 최종 위치가 `C:\local-microserver\workspace\microserver`이다.
+- [ ] `microserver\microserver`처럼 Directory가 중첩되지 않았다.
+
+### 24.2 Spring Initializr
+
+- [ ] `Spring Initializr: Create/Generate a Gradle Project`를 실행했다.
+- [ ] Spring Boot `4.1.1`을 선택했다.
+- [ ] Language는 Java를 선택했다.
+- [ ] Group ID는 `io.github.microserverlab`이다.
+- [ ] Artifact ID는 `microserver`이다.
+- [ ] Packaging은 JAR이다.
+- [ ] Java Version은 `25`이다.
+- [ ] Dependency는 우선 `Spring Web`만 선택했다.
+- [ ] 생성 위치로 `C:\local-microserver\workspace`를 선택했다.
+- [ ] `Generate into this folder`를 실행했다.
+
+### 24.3 생성 결과
+
+- [ ] `build.gradle`이 존재한다.
+- [ ] `settings.gradle`이 존재한다.
+- [ ] `gradlew` / `gradlew.bat`이 존재한다.
+- [ ] `gradle/wrapper/`가 존재한다.
+- [ ] `src/main` / `src/test`가 존재한다.
+
+### 24.4 Git
+
+- [ ] Project 생성 후 `C:\local-microserver\workspace\microserver`에서 `git init`을 실행했다.
+- [ ] `git rev-parse --show-toplevel` 결과가 Project Root이다.
+- [ ] `.gitignore`를 확인했다.
+- [ ] Gradle Wrapper는 Git 관리 대상이다.
+- [ ] 최초 생성 상태를 Commit했다.
+
+### 24.5 단계 범위
+
+- [ ] 아직 Build / Run을 하지 않았다.
+- [ ] 아직 Project JDK / VS Code 상세 설정을 하지 않았다.
+- [ ] 아직 Oracle JDBC / Datasource를 연결하지 않았다.
+- [ ] 아직 Gradle Multi-Project를 구성하지 않았다.
 
 ---
 
-## 30. 다음 단계
+## 25. 다음 단계
 
-다음 단계에서는 생성된 실제 Project를 기준으로
-JDK와 VS Code Workspace 환경을 구성한다.
-
-→ [프로젝트 JDK / VS Code Workspace 설정](project_environment/project_jdk_vscode_setup.md)
+다음 문서에서는 생성된 Spring Boot Project의 구조와
+Initializr가 생성한 주요 파일을 하나씩 확인한다.
 
 ```text
-Spring Boot Project 생성        ← 현재 완료
+Spring Boot 프로젝트 생성
+        ↓
+Git Repository 초기화             ← 현재 완료
+        ↓
+생성 프로젝트 구조 확인 및 초기 정리
         ↓
 프로젝트 JDK / VS Code Workspace 설정
         ↓
 Gradle Wrapper / Gradle 설정
         ↓
-초기 실행 및 Build 검증
+초기 Build / Run 검증
 ```
+
+다음 문서:
+
+**[생성 프로젝트 구조 확인 및 초기 정리](spring_boot_project_initial_review.md)**
 
 ---
 
-## 31. 공식 참고 자료
+## 26. 공식 참고 자료
 
-- Spring Initializr  
-  <https://start.spring.io/>
-
-- Spring Boot  
-  <https://spring.io/projects/spring-boot>
-
-- Spring Boot System Requirements  
-  <https://docs.spring.io/spring-boot/system-requirements.html>
-
-- Spring Boot 4 Modularization  
-  <https://spring.io/blog/2025/10/28/modularizing-spring-boot>
-
-- Spring Boot in Visual Studio Code  
-  <https://code.visualstudio.com/docs/java/java-spring-boot>
+- [Spring Initializr](https://start.spring.io/)
+- [Spring Boot](https://spring.io/projects/spring-boot/)
+- [Spring Boot System Requirements](https://docs.spring.io/spring-boot/system-requirements.html)
+- [Spring Initializr Java Support](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-spring-initializr)
+- [Spring Boot in Visual Studio Code](https://code.visualstudio.com/docs/java/java-spring-boot)

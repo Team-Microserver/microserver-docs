@@ -124,7 +124,9 @@ nav:
 
 
       - 프로젝트 생성:
-        - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
+        - 프로젝트 생성:
+            - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
+            - 생성 프로젝트 구조 확인 및 초기 정리: 01_project_start/03_project_creation/spring_boot_project_initial_review.md
         - 프로젝트 개발환경 설정:
             - 프로젝트 JDK / VS Code Workspace 설정: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_setup.md
             - Gradle Wrapper 및 프로젝트 Gradle 설정: 01_project_start/03_project_creation/project_environment/project_gradle_setup.md
