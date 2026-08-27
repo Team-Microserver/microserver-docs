@@ -23,13 +23,12 @@ Workspace Settings는 특정 Project에 적용되는 VS Code 설정이다.
 
 MicroServer에서는 Project Root의 `.vscode` Directory를 사용한다.
 
-현재 Project의 `.vscode` 구조는 다음과 같이 본다.
+정상적으로 Project 생성 후 초기 처리가 끝난 상태의 구조는 다음과 같이 본다.
 
 ```text
 microserver/
 ├─ .vscode/
 │  ├─ extensions.json
-│  ├─ NEWLY_CREATED_BY_SPRING_INITIALIZR
 │  └─ settings.json
 ├─ build.gradle
 ├─ settings.gradle
@@ -44,31 +43,36 @@ microserver/
 |---|---|---|
 | `.vscode/settings.json` | Project 공통 VS Code 설정 | O |
 | `.vscode/extensions.json` | Project 권장 Extension 목록 | O |
-| `.vscode/NEWLY_CREATED_BY_SPRING_INITIALIZR` | Spring Initializr가 생성한 Project임을 표시하는 Marker | 기존 파일 유지 |
 
-!!! note "`NEWLY_CREATED_BY_SPRING_INITIALIZR`는 삭제하지 않음"
+!!! note "`NEWLY_CREATED_BY_SPRING_INITIALIZR`는 일회성 Marker"
 
     Spring Initializr Extension으로 Project를 생성하면
-    다음 Marker File이 생성될 수 있다.
+    다음 파일이 임시로 생성될 수 있다.
 
     ```text
     .vscode/NEWLY_CREATED_BY_SPRING_INITIALIZR
     ```
 
-    이 파일은 Spring Initializr가 생성한 Project임을 식별하는 데 사용되는 Marker이다.
+    이 파일은 Project가 Spring Initializr로 생성되었다는 정보를
+    영구적으로 보관하기 위한 Project 설정 파일이 아니다.
 
-    현재 Project에 이미 생성되어 있다면
-    특별한 이유가 없는 한 삭제하지 않고 그대로 유지한다.
-
-    즉 `.vscode` Directory를 정리할 때 다음 두 파일만 남기는 구조로 바꾸지 않는다.
+    새로 생성된 Project Root를 VS Code로 처음 열면
+    Spring Initializr Extension이 이 Marker를 감지하고
+    `HELP.md` 또는 `README.md`를 Preview한 뒤 Marker를 삭제한다.
 
     ```text
-    X .vscode/
-      ├─ settings.json
-      └─ extensions.json
+    Spring Initializr로 Project 생성
+            ↓
+    NEWLY_CREATED_BY_SPRING_INITIALIZR 생성
+            ↓
+    Project Root를 VS Code로 Open
+            ↓
+    HELP.md / README.md Preview
+            ↓
+    Marker 삭제
     ```
 
-    현재 생성된 Marker까지 포함하여 유지한다.
+    따라서 이 파일은 **팀 공통 Workspace 설정이 아니며 Git으로 공유하지 않는다.**
 
 !!! important "개발자 개인 JDK 절대경로는 저장하지 않음"
 
@@ -140,18 +144,19 @@ Trust하지 않으면 **Restricted Mode**로 열리며
 
 ## 5. `.vscode/settings.json`
 
-Project Root 아래에 다음 파일을 생성한다.
+Project Root 아래의 다음 파일을 사용한다.
 
 ```text
 microserver/.vscode/settings.json
 ```
 
-권장 설정:
+MicroServer 권장 설정:
 
 ```json
 {
   "files.encoding": "utf8",
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.compile.nullAnalysis.mode": "automatic"
 }
 ```
 
@@ -159,11 +164,74 @@ microserver/.vscode/settings.json
 
 | 설정 | 역할 |
 |---|---|
-| `files.encoding` | Workspace 기본 Encoding |
+| `files.encoding` | Workspace 기본 Encoding을 UTF-8로 사용 |
 | `java.configuration.updateBuildConfiguration` | Gradle Build 설정 변경 시 Java Project 구성 자동 갱신 |
+| `java.compile.nullAnalysis.mode` | Null Annotation 감지 시 Null Analysis 자동 활성화 |
+
+### 5.1 `java.configuration.updateBuildConfiguration`
 
 `build.gradle`이나 `settings.gradle`이 변경되면
 Java Extension이 Project Classpath / Build Configuration을 갱신할 수 있다.
+
+```text
+build.gradle / settings.gradle 변경
+        ↓
+Java Project Build Configuration 갱신
+        ↓
+Classpath / Dependency / Project Model 반영
+```
+
+### 5.2 Null Analysis를 Workspace 설정으로 관리하는 이유
+
+Java Extension은 Project에서 `@NonNull`, `@Nullable`,
+`@NullMarked` 등의 Null 관련 Annotation Type을 감지할 수 있다.
+
+기본 모드는 `interactive`이므로 처음 감지했을 때 다음과 같이 사용자에게 묻는다.
+
+```text
+Null annotation types have been detected in the project.
+Do you wish to enable null analysis for this project?
+```
+
+MicroServer에서는 Null Analysis를 팀 공통으로 사용하기 위해
+다음 값을 Workspace Settings에 명시한다.
+
+```json
+"java.compile.nullAnalysis.mode": "automatic"
+```
+
+의미:
+
+```text
+Null Annotation 감지
+        ↓
+사용자에게 Enable / Disable 질문하지 않음
+        ↓
+Null Analysis 자동 활성화
+```
+
+따라서 개발자가 Repository를 Clone해서 열어도
+`.vscode/settings.json`이 Git으로 전달되므로 동일한 Null Analysis 정책을 사용할 수 있다.
+
+!!! tip "Portable VS Code를 복사해 주더라도 Workspace에 명시하는 이유"
+
+    Portable VS Code의 `data` Directory까지 복사하면
+    User Settings와 설치된 Extension 등 개인 개발환경도 함께 전달할 수 있다.
+
+    하지만 Project 공통 정책은 Portable VS Code 복사본에 의존하지 않고
+    Repository의 Workspace Settings에 명시하는 것이 더 명확하다.
+
+    ```text
+    Portable VS Code data/
+    → 개발자 개인 VS Code 환경
+
+    .vscode/settings.json
+    → MicroServer Project 공통 개발 정책
+    → Git으로 공유
+    ```
+
+    따라서 Null Analysis처럼 팀 전체에 동일하게 적용할 설정은
+    Workspace Settings에 두는 것이 적합하다.
 
 !!! important "JDK 절대경로를 넣지 않음"
 
@@ -176,8 +244,6 @@ Java Extension이 Project Classpath / Build Configuration을 갱신할 수 있�
     ```
 
     개발 PC별 JDK 경로는 VS Code User Settings에서 관리한다.
-
----
 
 ## 6. `.vscode/extensions.json`
 
@@ -358,23 +424,43 @@ VS Code가 현재 Project를 Java Project로 인식하는 과정이다.
 
 ## 8. `.gitignore` 확인
 
-다음 파일은 팀 공통 Workspace 설정이므로 Git으로 공유한다.
+MicroServer에서는 필요한 `.vscode` 공통 설정만 Git으로 공유한다.
 
-```text
-.vscode/settings.json
-.vscode/extensions.json
-```
-
-또한 Spring Initializr가 생성한 다음 Marker File이 이미 존재한다면 유지한다.
-
-```text
-.vscode/NEWLY_CREATED_BY_SPRING_INITIALIZR
-```
-
-따라서 `.gitignore`에 다음 항목이 있으면 현재 정책과 충돌한다.
+현재 권장 정책:
 
 ```gitignore
-.vscode/
+# ------------------------------------------------------------
+# VS Code
+# ------------------------------------------------------------
+
+# .vscode 하위 파일은 기본적으로 Git 제외
+.vscode/*
+
+# Project 공통 VS Code 설정만 Git 관리
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/tasks.json
+!.vscode/launch.json
+```
+
+이 규칙에 따라:
+
+```text
+.vscode/settings.json                     → Git O
+.vscode/extensions.json                   → Git O
+.vscode/tasks.json                        → 존재하면 Git O
+.vscode/launch.json                       → 존재하면 Git O
+
+.vscode/NEWLY_CREATED_BY_SPRING_INITIALIZR
+                                         → Git X
+```
+
+따라서 Spring Initializr의 일회성 Marker를 위한
+별도의 예외 규칙은 추가하지 않는다.
+
+```gitignore
+# 추가하지 않음
+# !.vscode/NEWLY_CREATED_BY_SPRING_INITIALIZR
 ```
 
 !!! note "User Settings와 구분"
@@ -382,10 +468,16 @@ VS Code가 현재 Project를 Java Project로 인식하는 과정이다.
     User Settings의 JDK 절대경로는 Repository 밖에 있으므로
     `.gitignore`로 제외할 필요가 없다.
 
-    Git은 JSON 내부의 특정 설정 Key가 아니라
-    Repository 안의 파일을 관리한다.
+    ```text
+    VS Code User Settings
+    → 개발 PC 개인 설정
+    → Repository 밖
 
----
+    .vscode/settings.json
+    → Project 공통 설정
+    → Repository 안
+    → Git 공유
+    ```
 
 ## 9. 설정 완료 확인
 
@@ -394,26 +486,25 @@ Workspace 구성:
 ```text
 .vscode/settings.json
 → Project 공통 설정
+→ Encoding / Build Configuration / Null Analysis 정책
 
 .vscode/extensions.json
 → Project 권장 Extension 목록
-
-.vscode/NEWLY_CREATED_BY_SPRING_INITIALIZR
-→ Spring Initializr 생성 Marker
-→ 기존 파일 유지
 ```
 
 확인:
 
 - [ ] Project Root를 `microserver`로 열었다.
 - [ ] Workspace Trust 상태를 확인했다.
-- [ ] `.vscode/settings.json`을 생성했다.
+- [ ] `.vscode/settings.json`에 UTF-8 설정이 있다.
+- [ ] `java.configuration.updateBuildConfiguration`이 `automatic`이다.
+- [ ] `java.compile.nullAnalysis.mode`가 `automatic`이다.
+- [ ] `.vscode/settings.json`에 개발자 개인 JDK 절대경로가 없다.
 - [ ] `.vscode/extensions.json`에 Project 권장 Extension 목록이 있다.
-- [ ] `NEWLY_CREATED_BY_SPRING_INITIALIZR`가 기존에 존재한다면 삭제하지 않고 유지했다.
 - [ ] `extensions.json`은 Extension 재설치가 아니라 Project 권장 목록임을 이해했다.
-- [ ] `.vscode/settings.json`에 JDK 절대경로가 없다.
+- [ ] `NEWLY_CREATED_BY_SPRING_INITIALIZR`는 일회성 Marker이며 Git 공유 대상이 아님을 확인했다.
 - [ ] `JAVA PROJECTS`에 `microserver`가 표시된다.
-- [ ] `.vscode` 공통 설정 파일이 Git 공유 대상임을 확인했다.
+- [ ] `.vscode/settings.json`과 `.vscode/extensions.json`이 Git 공유 대상임을 확인했다.
 
 다음 단계에서는 Java / Gradle / Spring Boot 인식 상태를 상세 확인하거나
 Gradle Wrapper / Project Gradle 설정을 진행한다.
