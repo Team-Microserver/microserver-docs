@@ -358,32 +358,123 @@ Transaction
 
 ## 9. `settings.gradle` 확인
 
-`settings.gradle`은 Gradle Build의 Project 이름과 이후 Multi-Project 구조의 기준이 되는 파일이다.
+`settings.gradle`은 **이 Gradle Build에 어떤 Project가 포함되는지 정의하는 시작점**이다.
 
-현재 단계에서는 내용을 적극적으로 수정하지 않고 생성값을 확인한다.
-
-대표 확인 항목:
-
-```text
-rootProject.name
-```
-
-기대 개념:
+현재 MicroServer는 아직 **단일 Project**이므로 내용이 매우 단순하다.
+첨부된 실제 생성 파일은 다음 한 줄이다.
 
 ```groovy
 rootProject.name = 'microserver'
 ```
 
-!!! important "프로젝트 이름은 `microserver`"
-    Team / Organization 이름은 `team-microserver`이고,
-    Gradle Root Project 이름은 실제 프로젝트 이름인 `microserver`를 사용한다.
+이 한 줄만 있는 것은 누락이 아니라 **현재 단계에서 정상적인 상태**이다.
 
-정확한 생성 문법은 Initializr 결과를 기준으로 한다.
+### 9.1 지금 무엇을 확인하는가
 
-!!! note "Multi-Project는 아직 구성하지 않음"
-    이후 Gradle Multi-Project 단계에서는 `settings.gradle`에 Subproject를 등록하게 된다.
+현재 단계에서는 `settings.gradle`을 수정하는 것이 아니라 다음 3가지만 확인한다.
 
-    현재는 단일 Spring Boot Project 상태를 유지한다.
+```text
+1. settings.gradle이 Project Root에 존재하는가?
+2. rootProject.name이 'microserver'로 되어 있는가?
+3. 아직 include(...)로 Subproject가 추가되어 있지 않은가?
+```
+
+Project Root 기준 위치:
+
+```text
+C:\local-microserver\workspace\microserver\settings.gradle
+```
+
+정상 내용:
+
+```groovy
+rootProject.name = 'microserver'
+```
+
+!!! important "현재 `settings.gradle` 확인 기준"
+    현재 MicroServer 프로젝트에서는 아래 상태면 정상이다.
+
+    ```text
+    파일 존재                    → O
+    rootProject.name             → microserver
+    include(...)                 → 없음
+    Multi-Project 구성           → 아직 안 함
+    ```
+
+    따라서 현재 생성된 `settings.gradle`은 **그대로 유지하면 된다.**
+
+### 9.2 `rootProject.name`은 무엇인가
+
+`rootProject.name`은 Gradle이 현재 Build의 **최상위 Project 이름**으로 사용하는 값이다.
+
+현재 프로젝트 구조는 다음과 같다.
+
+```text
+Team / Organization : team-microserver
+Java Group          : io.github.microserverlab
+Gradle Root Project : microserver
+```
+
+즉 다음 값들은 서로 역할이 다르다.
+
+| 구분 | 현재 값 | 의미 |
+|---|---|---|
+| Team / Organization | `team-microserver` | GitHub Organization / Team 식별 |
+| Java Group | `io.github.microserverlab` | Java Package / Artifact Namespace 기준 |
+| Gradle Root Project | `microserver` | Gradle Build에서 사용하는 Root Project 이름 |
+
+!!! tip "`settings.gradle`에는 왜 한 줄밖에 없나?"
+    현재는 하나의 Spring Boot Project만 존재하기 때문이다.
+
+    Gradle Multi-Project 구조로 확장하면 이후 다음과 같이
+    `include(...)` 항목이 추가될 수 있다.
+
+    ```groovy
+    rootProject.name = 'microserver'
+
+    include 'microserver-core'
+    include 'microserver-api'
+    ```
+
+    하지만 **지금은 Multi-Project 단계가 아니므로 추가하지 않는다.**
+
+### 9.3 `build.gradle`과 역할을 혼동하지 않기
+
+`settings.gradle`과 `build.gradle`은 역할이 다르다.
+
+```text
+settings.gradle
+    → 어떤 Project들이 이 Gradle Build에 포함되는가?
+    → Root Project 이름은 무엇인가?
+
+build.gradle
+    → 어떤 Plugin을 사용하는가?
+    → Java Version은 무엇인가?
+    → 어떤 Dependency를 사용하는가?
+    → Build Task를 어떻게 구성하는가?
+```
+
+따라서 다음 값은 `settings.gradle`에서 확인하지 않는다.
+
+```text
+Spring Boot Version
+Java Toolchain
+Group
+Version
+Dependencies
+Repositories
+```
+
+이 값들은 `build.gradle`에서 확인한다.
+
+!!! note "현재 단계에서 `settings.gradle`은 수정하지 않음"
+    지금은 Spring Initializr가 생성한 다음 값만 확인한다.
+
+    ```groovy
+    rootProject.name = 'microserver'
+    ```
+
+    Subproject 등록은 이후 **Gradle Multi-Project 구성 단계**에서 진행한다.
 
 ---
 
@@ -807,32 +898,258 @@ microserver
 
 ---
 
-## 14. Java Project 인식 확인
+## 14. VS Code Java Project 인식 확인
 
-VS Code Java / Gradle Extension은
-`build.gradle`이 있는 Folder를 열면 Java Project를 Import할 수 있다.
+이 단계의 목적은 **이미 생성되어 있는 Spring Boot / Gradle 프로젝트를 VS Code가 Java Project로 정상 인식했는지 확인하는 것**이다.
 
-확인 항목:
+여기서 사용하는 `Import`라는 표현은 프로젝트 파일을 다른 위치에서 복사하거나 다시 생성한다는 의미가 아니다.
+
+### 14.1 먼저 알아둘 것: `Import`는 파일을 가져오는 작업이 아니다
+
+현재 프로젝트는 이미 다음 위치에 생성되어 있다.
 
 ```text
-Java Projects View
-Gradle View
-Java: Ready 상태
+C:\local-microserver\workspace\microserver
 ```
 
-필요한 경우 Command Palette에서:
+그리고 Project Root에는 다음 파일이 존재한다.
 
 ```text
+build.gradle
+settings.gradle
+gradlew
+gradlew.bat
+src/
+```
+
+VS Code Java Extension에서 말하는 **Java Project Import**는 이 파일들을 새로 가져오는 것이 아니라,
+현재 Workspace 안의 `build.gradle` 등을 분석해서 다음 정보를 VS Code 내부의 Java Project Model로 구성하는 과정이다.
+
+```text
+build.gradle / settings.gradle 발견
+        ↓
+Gradle Project 구조 분석
+        ↓
+src/main/java / src/test/java 인식
+        ↓
+Java Toolchain / Dependency / Classpath 정보 구성
+        ↓
+VS Code에서 Java Project로 사용 가능
+```
+
+!!! note "Project 생성과 Java Project Import는 다른 개념"
+    **Project 생성**은 실제 파일과 Directory를 만드는 작업이다.
+
+    ```text
+    build.gradle
+    settings.gradle
+    src/
+    gradlew
+    ...
+    ```
+
+    반면 **Java Project Import**는 이미 존재하는 프로젝트를
+    VS Code Java Extension이 분석하여 IDE에서 사용할 수 있게 인식하는 과정이다.
+
+### 14.2 현재 프로젝트에서 Import를 직접 해야 하는가?
+
+**일반적으로 직접 할 필요가 없다.**
+
+VS Code에서 다음 Project Root를 `File → Open Folder...`로 열면:
+
+```text
+C:\local-microserver\workspace\microserver
+```
+
+Java / Gradle Extension이 `build.gradle`을 발견하고
+**Java Project를 자동으로 감지하고 Import한다.**
+
+즉 현재 단계의 기본 흐름은 다음이다.
+
+```text
+Project 생성 완료
+        ↓
+VS Code에서 Project Root Open
+        ↓
+build.gradle 발견
+        ↓
+Java / Gradle Extension이 자동 Import
+        ↓
+Java Project 인식 상태 확인
+```
+
+!!! important "현재는 `Import` 명령을 먼저 실행하는 단계가 아님"
+    `Java: Import Java Projects in Workspace` 명령은
+    매번 프로젝트를 열 때 반드시 실행하는 명령이 아니다.
+
+    **정상적인 경우 VS Code가 자동으로 Import하므로 아무 작업도 하지 않는다.**
+
+    먼저 Java Project가 이미 인식되어 있는지 확인하고,
+    인식되지 않았을 때만 수동 Import 명령을 사용한다.
+
+### 14.3 이미 자동 Import 되었는지 확인하는 방법
+
+VS Code에서 다음 항목을 순서대로 확인한다.
+
+#### 1) Java Projects View
+
+Explorer 아래의 **JAVA PROJECTS** 영역에서
+현재 프로젝트가 표시되는지 확인한다.
+
+기대 개념:
+
+```text
+JAVA PROJECTS
+└─ microserver
+```
+
+`microserver`가 보인다면 VS Code Java Extension이
+현재 프로젝트를 Java Project로 인식한 상태이다.
+
+#### 2) Gradle View
+
+Gradle Side Bar 또는 Gradle Projects View에서
+현재 Gradle Project가 표시되는지 확인한다.
+
+기대 개념:
+
+```text
+GRADLE PROJECTS
+└─ microserver
+   ├─ Tasks
+   └─ Dependencies
+```
+
+이는 Gradle Extension이 현재 Workspace의 Gradle Project를 인식했다는 의미이다.
+
+#### 3) Java Language 상태
+
+`MicroserverApplication.java` 같은 Java 파일을 열었을 때
+Java Language Server가 정상적으로 준비되어 있는지 확인한다.
+
+대표적인 정상 상태 예:
+
+```text
+Java: Ready
+```
+
+!!! note "상태 표시 문구는 VS Code / Extension Version에 따라 다를 수 있음"
+    상태 표시의 정확한 문구나 Icon은 Version에 따라 달라질 수 있다.
+
+    따라서 `Java: Ready`라는 문자열 자체만 보는 것보다
+    **JAVA PROJECTS 표시 여부와 Java 언어 기능이 정상 동작하는지 함께 확인**한다.
+
+또는 Java 파일에서 다음 IDE 기능이 정상 동작하는지 확인할 수 있다.
+
+```text
+문법 Highlight
+자동완성
+Class / Method 탐색
+Import 제안
+Java 오류 표시
+```
+
+!!! tip "세 가지가 정상이라면 이미 Import 된 상태"
+    다음 상태라면 별도의 수동 Import 작업은 하지 않는다.
+
+    ```text
+    JAVA PROJECTS에 microserver 표시     → O
+    Gradle Projects에 microserver 표시   → O
+    Java Language Server 정상            → O
+    ```
+
+    즉 **이미 자동 Import가 완료된 것**으로 보면 된다.
+
+### 14.4 수동 Import 명령은 언제 사용하는가
+
+자동 인식이 되지 않았거나 Workspace에 새로운 Java / Gradle Module을 추가한 경우에만
+Command Palette에서 다음 명령을 사용할 수 있다.
+
+```text
+Ctrl + Shift + P
+    ↓
 Java: Import Java Projects in Workspace
 ```
 
-를 사용할 수 있다.
+대표적인 사용 상황:
 
-!!! note "Import와 Build 검증은 다른 작업"
-    VS Code가 Project를 Java Project로 인식하는 것은
-    실제 `gradlew build`가 성공했다는 의미가 아니다.
+```text
+build.gradle은 존재하지만 JAVA PROJECTS에 프로젝트가 보이지 않음
+새로운 Gradle Subproject / Module을 Workspace에 추가함
+프로젝트 구조를 변경했지만 Java Project View에 반영되지 않음
+VS Code를 다시 열지 않고 새 Project / Module을 다시 검색하고 싶음
+```
 
-    현재는 Project Import / 인식 상태까지만 확인한다.
+!!! warning "정상 인식 상태에서 반복 실행할 필요 없음"
+    Java Project가 이미 정상적으로 표시되고 있다면
+    `Java: Import Java Projects in Workspace`를 다시 실행할 필요가 없다.
+
+    이 명령은 **초기 필수 절차가 아니라 재검색 / 재인식이 필요할 때 사용하는 보조 명령**으로 이해한다.
+
+### 14.5 Import와 Gradle Build는 별개의 확인이다
+
+Java Project가 Import되었다고 해서 다음 명령이 성공했다는 뜻은 아니다.
+
+```powershell
+.\gradlew.bat build
+```
+
+VS Code의 Import 과정은 IDE가 Java / Gradle Project 구조와 Dependency 정보를 이해하기 위한 과정이다.
+반면 `gradlew build`는 실제 Gradle Build를 수행하여 Compile / Test / Packaging 등의 성공 여부를 검증한다.
+
+```text
+VS Code Java Project Import
+        ↓
+IDE가 Project 구조를 인식
+
+Gradle Build
+        ↓
+실제 Compile / Test / Build 성공 여부 검증
+```
+
+!!! note "VS Code 내부 동작과 `gradlew build`를 구분"
+    Java Language Server 또는 Gradle Extension이 Project 정보를 구성하면서
+    내부적으로 Project Sync / 분석 작업을 수행할 수 있다.
+
+    그러나 이것은 개발자가 명시적으로 실행하는
+    `gradlew build` 성공 검증과는 다른 의미이다.
+
+    따라서 현재 단계에서는 **VS Code의 Java Project 인식 상태까지만 확인**하고,
+    실제 Build / Test 검증은 이후 단계에서 진행한다.
+
+### 14.6 현재 단계에서 실제로 할 작업
+
+현재 단계에서는 아래 순서만 수행하면 된다.
+
+```text
+1. VS Code에서 microserver Project Root를 연다.
+
+2. Java / Gradle Extension이 자동으로 Project를 인식하도록 둔다.
+
+3. JAVA PROJECTS에서 microserver가 보이는지 확인한다.
+
+4. Gradle Projects에서 microserver가 보이는지 확인한다.
+
+5. Java Language Server가 정상 상태인지 확인한다.
+
+6. 모두 정상이라면 Import 작업은 끝난 것이다.
+
+7. 프로젝트가 보이지 않는 경우에만
+   Java: Import Java Projects in Workspace
+   명령을 실행한다.
+```
+
+현재 단계의 판단 기준:
+
+```text
+정상 인식됨
+    → 수동 Import 하지 않음
+    → 다음 단계로 진행
+
+정상 인식되지 않음
+    → Java: Import Java Projects in Workspace 실행
+    → 다시 인식 상태 확인
+```
 
 ---
 
@@ -1022,7 +1339,7 @@ Main Class                         → 확인 완료
 기본 Test                          → 확인 완료
 Gradle Wrapper                     → 존재 확인
 .gitignore                         → 병합 / 확인
-VS Code Java Project               → 인식 확인
+VS Code Java Project               → 자동 Import / 인식 확인
 Spring Boot Dashboard              → 인식 확인
 Git Commit                         → 생성 기준점 기록
 
@@ -1048,7 +1365,8 @@ Oracle Datasource                  → 이후 단계
 ### 21.2 Spring Boot / Java
 
 - [ ] Spring Boot Plugin Version이 `4.1.1`이다.
-- [ ] Gradle `rootProject.name`은 `microserver`이다.
+- [ ] `settings.gradle`이 Project Root에 존재하고 `rootProject.name = 'microserver'`로 설정되어 있다.
+- [ ] `settings.gradle`에 아직 `include(...)` Subproject 설정을 추가하지 않았다.
 - [ ] Team 이름 `team-microserver`, Java Group `io.github.microserverlab`, 프로젝트 이름 `microserver`를 구분했다.
 - [ ] `Group`은 `io.github.microserverlab`이다.
 - [ ] Java 기준이 `25`이다.
@@ -1070,7 +1388,9 @@ Oracle Datasource                  → 이후 단계
 
 ### 21.4 VS Code / Git
 
-- [ ] VS Code가 Project를 Java Project로 인식한다.
+- [ ] VS Code의 JAVA PROJECTS에서 `microserver`가 표시된다.
+- [ ] Gradle Projects에서 `microserver`가 표시된다.
+- [ ] 정상 인식된 경우 `Java: Import Java Projects in Workspace`를 불필요하게 다시 실행하지 않았다.
 - [ ] Spring Boot Dashboard에서 Application을 확인할 수 있다.
 - [ ] 아직 Application을 실행하지 않았다.
 - [ ] `git status`로 생성 변경사항을 확인했다.
@@ -1107,3 +1427,5 @@ Gradle Wrapper / 프로젝트 Gradle 설정
 - [Spring Boot System Requirements](https://docs.spring.io/spring-boot/system-requirements.html)
 - [Spring Boot Build Systems](https://docs.spring.io/spring-boot/reference/using/build-systems.html)
 - [Spring Boot in Visual Studio Code](https://code.visualstudio.com/docs/java/java-spring-boot)
+- [Managing Java Projects in VS Code](https://code.visualstudio.com/docs/java/java-project)
+- [Java Build Tools in VS Code](https://code.visualstudio.com/docs/java/java-build)
