@@ -86,6 +86,22 @@ C:/local-microserver/workspace/microserver
 !!! important "Repository Root를 먼저 확인"
     이후 모든 Project 파일은 이 Repository Root를 기준으로 확인한다.
 
+    이 문서에서 `.` 또는 `.\`로 시작하는 PowerShell 상대경로 명령도
+    특별한 설명이 없는 한 다음 위치에서 실행하는 것을 기준으로 한다.
+
+    ```text
+    C:\local-microserver\workspace\microserver
+    ```
+
+    예를 들어:
+
+    ```powershell
+    Get-ChildItem .\gradle\wrapper
+    ```
+
+    는 현재 위치가 Project Root일 때
+    `C:\local-microserver\workspace\microserver\gradle\wrapper`를 확인한다.
+
     다음처럼 한 단계 더 중첩되어 있으면 정리해야 한다.
 
     ```text
@@ -495,27 +511,204 @@ Spring Boot 4에서는 Test Starter도 기능별로 세분화될 수 있다.
 
 ## 11. Gradle Wrapper 확인
 
-Spring Initializr로 Gradle Project를 만들면 Wrapper 파일이 함께 생성된다.
+Spring Initializr로 Gradle Project를 만들면 Gradle Wrapper 관련 파일이 함께 생성된다.
 
-확인:
+Gradle Wrapper는 **개발자가 PC에 별도의 Gradle을 직접 설치하지 않아도 프로젝트에서 정한 Gradle Version으로 Build할 수 있게 해주는 실행 환경**이다.
+
+현재 단계에서는 Wrapper를 실행하거나 Version을 변경하지 않고, **필요한 파일이 정상적으로 생성되어 있는지만 확인**한다.
+
+### 11.1 확인해야 하는 파일
+
+Project Root 기준으로 다음 파일이 존재해야 한다.
 
 ```text
-gradle/
-└─ wrapper/
-   ├─ gradle-wrapper.jar
-   └─ gradle-wrapper.properties
-
-gradlew
-gradlew.bat
+C:\local-microserver\workspace\microserver
+│
+├─ gradle
+│  └─ wrapper
+│     ├─ gradle-wrapper.jar
+│     └─ gradle-wrapper.properties
+│
+├─ gradlew
+└─ gradlew.bat
 ```
 
-PowerShell:
+각 파일의 역할은 다음과 같다.
+
+| 파일 | 역할 |
+|---|---|
+| `gradlew` | macOS / Linux에서 사용하는 Gradle Wrapper 실행 Script |
+| `gradlew.bat` | Windows에서 사용하는 Gradle Wrapper 실행 Script |
+| `gradle-wrapper.jar` | Wrapper 실행에 필요한 Gradle Wrapper Program |
+| `gradle-wrapper.properties` | 사용할 Gradle Distribution / Version 정보 |
+
+현재 단계에서 확인하려는 핵심은 다음과 같다.
+
+```text
+Spring Initializr가 Gradle Project를 정상 생성했는가?
+        ↓
+Gradle Wrapper 관련 파일이 모두 존재하는가?
+```
+
+### 11.2 반드시 Project Root에서 실행
+
+아래 명령의 `.`은 **현재 Directory**를 의미한다.
 
 ```powershell
 Get-ChildItem .\gradle\wrapper
 ```
 
-현재 단계에서는 Wrapper Version을 변경하지 않는다.
+따라서 이 명령은 실제로 다음 의미이다.
+
+```text
+현재 Directory
+    └─ gradle
+       └─ wrapper
+```
+
+즉, PowerShell의 현재 위치가 반드시 MicroServer Project Root여야 한다.
+
+```text
+C:\local-microserver\workspace\microserver
+```
+
+먼저 현재 위치를 확인한다.
+
+```powershell
+Get-Location
+```
+
+기대 위치:
+
+```text
+Path
+----
+C:\local-microserver\workspace\microserver
+```
+
+다른 위치에 있다면 Project Root로 이동한다.
+
+```powershell
+Set-Location C:\local-microserver\workspace\microserver
+```
+
+PowerShell Prompt도 다음처럼 보여야 한다.
+
+```text
+PS C:\local-microserver\workspace\microserver>
+```
+
+!!! important "이 문서의 Project 상대경로 명령은 Project Root 기준"
+    이후 문서에서 다음처럼 `.`으로 시작하는 상대경로 명령은 특별한 설명이 없는 한
+    `C:\local-microserver\workspace\microserver`에서 실행하는 것을 기준으로 한다.
+
+    ```powershell
+    .\gradlew.bat
+    .\gradle\wrapper
+    .\src
+    ```
+
+### 11.3 Wrapper Directory 확인
+
+Project Root에서 다음 명령을 실행한다.
+
+```powershell
+Get-ChildItem .\gradle\wrapper
+```
+
+`Get-ChildItem`은 지정한 Directory의 파일과 하위 항목을 조회하는 PowerShell 명령이다.
+
+따라서 위 명령은 다음 의미이다.
+
+```text
+현재 Project Root의 gradle\wrapper Directory에
+어떤 파일이 존재하는지 확인한다.
+```
+
+정상적인 경우 다음과 유사한 결과가 출력된다.
+
+```text
+디렉터리: C:\local-microserver\workspace\microserver\gradle\wrapper
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+-a----                                    ...    gradle-wrapper.jar
+-a----                                    ...    gradle-wrapper.properties
+```
+
+확인 포인트:
+
+```text
+gradle-wrapper.jar          → 존재
+gradle-wrapper.properties   → 존재
+```
+
+파일의 Size나 LastWriteTime은 생성 시점과 Initializr Version에 따라 달라질 수 있으므로
+**파일 이름과 존재 여부를 중심으로 확인**한다.
+
+### 11.4 `경로가 존재하지 않습니다` 오류가 발생하는 경우
+
+예를 들어 현재 위치가 다음과 같다고 가정한다.
+
+```text
+PS C:\local-microserver\workspace>
+```
+
+이 상태에서 다음 명령을 실행하면:
+
+```powershell
+Get-ChildItem .\gradle\wrapper
+```
+
+PowerShell은 실제로 다음 경로를 찾는다.
+
+```text
+C:\local-microserver\workspace\gradle\wrapper
+```
+
+하지만 실제 Wrapper 위치는 다음이다.
+
+```text
+C:\local-microserver\workspace\microserver\gradle\wrapper
+```
+
+따라서 다음과 같은 오류가 발생한다.
+
+```text
+경로는 존재하지 않으므로 찾을 수 없습니다.
+```
+
+이 오류는 Gradle Wrapper가 반드시 누락되었다는 의미가 아니라,
+**현재 명령을 실행한 Directory가 Project Root가 아닌 경우에도 발생할 수 있다.**
+
+해결 방법:
+
+```powershell
+Set-Location C:\local-microserver\workspace\microserver
+Get-ChildItem .\gradle\wrapper
+```
+
+또는 `workspace` Directory에 그대로 있는 상태라면 전체 상대경로를 지정할 수도 있다.
+
+```powershell
+Get-ChildItem .\microserver\gradle\wrapper
+```
+
+하지만 프로젝트 가이드에서는 명령 기준 위치가 혼동되지 않도록
+**먼저 Project Root로 이동한 뒤 명령을 실행하는 방식을 권장**한다.
+
+### 11.5 현재 단계에서는 Version을 변경하지 않음
+
+현재 단계에서는 Wrapper 파일 존재 여부만 확인한다.
+
+다음 작업은 아직 수행하지 않는다.
+
+```text
+Gradle Version 변경
+gradle-wrapper.properties 수정
+Wrapper 재생성
+Build 실행
+```
 
 다음 문서:
 
@@ -525,7 +718,7 @@ Get-ChildItem .\gradle\wrapper
 Gradle Wrapper 및 프로젝트 Gradle 설정
 ```
 
-에서 MicroServer 표준 Gradle 기준과 비교한다.
+에서 실제 Wrapper Version을 확인하고 MicroServer 표준 Gradle 기준과 비교한다.
 
 !!! important "Gradle Wrapper는 Git 관리 대상"
     다음 파일은 Git에 포함한다.
@@ -866,9 +1059,12 @@ Oracle Datasource                  → 이후 단계
 
 ### 21.3 Gradle
 
+- [ ] PowerShell 현재 위치가 Project Root인 `C:\local-microserver\workspace\microserver`인지 확인했다.
 - [ ] `gradlew`가 존재한다.
 - [ ] `gradlew.bat`이 존재한다.
 - [ ] `gradle/wrapper/`가 존재한다.
+- [ ] `gradle-wrapper.jar`가 존재한다.
+- [ ] `gradle-wrapper.properties`가 존재한다.
 - [ ] Maven용 `.mvn`을 만들거나 복사하지 않았다.
 - [ ] 아직 Wrapper Version을 임의로 변경하지 않았다.
 

@@ -86,7 +86,7 @@ nav:
             - 금융 시스템 연계 아키텍처: 01_project_start/01_overview/architecture/financial_integration_architecture.md
             - 확장 및 운영 아키텍처: 01_project_start/01_overview/architecture/extension_operation_architecture.md
 
-      - 프로젝트 환경 구성:
+      - Local 개발 환경 구성:
           - 개발 장비 구성: 01_project_start/02_environment/development_device.md
           - 프로젝트 로컬 개발환경 구성: 01_project_start/02_environment/project_local_environment_setup_guide.md
           - Git / GitHub 환경 구성: 01_project_start/02_environment/git_github_setup.md
@@ -123,18 +123,17 @@ nav:
 
 
 
-      - 프로젝트 생성:
-        - 프로젝트 생성:
-            - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
-            - Git Repository 초기화 및 최초 Commit: 01_project_start/03_project_creation/spring_boot_git_init.md
-            - 생성 프로젝트 구조 확인 및 초기 정리: 01_project_start/03_project_creation/spring_boot_project_initial_review.md 
+      - Microserver 프로젝트 생성:
+#        - Spring Boot 프로젝트 생성 :
+        - VS Code Spring Initializr: 01_project_start/03_project_creation/spring_boot_project_create.md
+        - Git Repository 초기화 및 최초 Commit: 01_project_start/03_project_creation/spring_boot_git_init.md
+        - 생성 프로젝트 구조 확인 및 초기 정리: 01_project_start/03_project_creation/spring_boot_project_initial_review.md 
         
  
-        - 프로젝트 개발환경 설정:
+        - VS Code 프로젝트 설정:
             - 프로젝트 JDK / VS Code Workspace 설정: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_setup.md
             - Gradle Wrapper 및 프로젝트 Gradle 설정: 01_project_start/03_project_creation/project_environment/project_gradle_setup.md
             - Maven Wrapper 및 프로젝트 Maven 설정 (비교 / 참고): 01_project_start/03_project_creation/project_environment/project_maven_setup.md
-        - 프로젝트 초기 실행 및 검증:
             - Spring Boot 초기 실행 및 Build 검증: 01_project_start/03_project_creation/project_verification/project_initial_run_verification.md
         - 프로젝트 기본 구조 구성:
             - Gradle Multi-Project 기본 구성: 01_project_start/03_project_creation/project_structure/gradle_multi_module_setup.md
@@ -147,14 +146,17 @@ nav:
 
 
 
-  - 공통 기능 개발:
-      - 프로젝트 공통 구조:
+  - 마이크로서버 F/W 구성:
+      - 마이크로서버 멀티모듈 구조:
+          - 멀티모듈 구조 및 역할: 02_framework/01_project_structure/multi_module_structure.md
+          - 리소스 / 설정 관리 아키텍처: 02_framework/01_project_structure/resource_configuration_architecture.md
           - module-common 구성: 02_framework/01_project_structure/module_common.md
           - runtime 모듈 구성: 02_framework/01_project_structure/runtime_module.md
           - admin 모듈 구성: 02_framework/01_project_structure/admin_module.md
-          - 멀티모듈 프로젝트 구조: 02_framework/01_project_structure/multi_module_structure.md
+          - Spring Boot YAML 공통 설정: 02_framework/01_project_structure/spring_boot_configuration.md
+          - Profile / 외부 리소스 구성: 02_framework/01_project_structure/profile_external_resources.md
 
-      - 공통 Framework:
+      - 마이크로서버 F/W 설정:
           - 공통 Response 구조: 02_framework/02_common_framework/common_response.md
           - 공통 예외 처리: 02_framework/02_common_framework/exception_handling.md
           - Logging 구성: 02_framework/02_common_framework/logging.md
@@ -182,6 +184,10 @@ nav:
           - Repository / Mapper 개발 표준: 02_framework/05_api/repository.md
           - Validation: 02_framework/05_api/validation.md
           - OpenAPI / Swagger: 02_framework/05_api/openapi_swagger.md
+
+
+
+
 
   - 업무 및 금융 연계:
       - 업무 공통:
