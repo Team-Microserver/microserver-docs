@@ -1,0 +1,2280 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../project_initial_run_verification/">
+      
+      
+        <link rel="next" href="../first_run_legacy/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Spring Boot 실행 방법 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#spring-boot" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Spring Boot 실행 방법
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../02_development_environment/01_foundation/development_device/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-tabs__link">
+          
+  
+  
+  배포 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-tabs__link">
+          
+  
+  
+  운영 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../02_development_environment/01_foundation/development_device/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 생성 및 검증
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02_project_environment/project_jdk_vscode_concepts/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 개발환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 초기 실행 및 검증
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 초기 실행 및 검증
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_initial_build_verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    초기 Build 및 Test 검증
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_initial_run_verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    초기 실행 검증
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot 실행 방법
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot 실행 방법
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-gradle-bootrun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Gradle bootRun으로 실행
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Gradle bootRun으로 실행">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 정상 기동 Log 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-localhost8080" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. localhost:8080 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Application 종료
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-executable-jar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Executable JAR 직접 실행
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-bootrun-java-jar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. bootRun과 java -jar 실행 차이
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. bootRun과 java -jar 실행 차이">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maven 명령과 비교
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-vs-code-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. VS Code Run으로 실행
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-vs-code-debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. VS Code Debug로 실행
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-spring-boot-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Spring Boot Dashboard에서 실행
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Spring Boot Dashboard에서 실행">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application이 실행되지 않은 상태
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application이 실행된 상태
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apps-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apps 상위 영역의 Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 실행 방법 한눈에 비교
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../first_run_legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    최초 실행 문서 (기존)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_initial_verification_summary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    초기 Project 검증 및 Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    배포 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    운영 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-gradle-bootrun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Gradle bootRun으로 실행
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Gradle bootRun으로 실행">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 정상 기동 Log 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-localhost8080" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. localhost:8080 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Application 종료
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-executable-jar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Executable JAR 직접 실행
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-bootrun-java-jar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. bootRun과 java -jar 실행 차이
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. bootRun과 java -jar 실행 차이">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maven 명령과 비교
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-vs-code-run" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. VS Code Run으로 실행
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-vs-code-debug" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. VS Code Debug로 실행
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-spring-boot-dashboard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Spring Boot Dashboard에서 실행
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Spring Boot Dashboard에서 실행">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#application" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application이 실행되지 않은 상태
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#application_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Application이 실행된 상태
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#apps-action" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Apps 상위 영역의 Action
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 실행 방법 한눈에 비교
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="spring-boot">Spring Boot 실행 방법 가이드<a class="headerlink" href="#spring-boot" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 초기 Build / Test 검증이 완료된 Spring Boot Project를
+<strong>여러 방식으로 실행하고 각 실행 방법의 차이를 이해하는 것</strong>을 목적으로 한다.</p>
+<p>현재 확인하는 실행 방법은 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>1. Gradle bootRun
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>2. Executable JAR 직접 실행
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>3. VS Code Run
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>4. VS Code Debug
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>5. Spring Boot Dashboard
+</span></code></pre></div>
+<p>먼저 Build / Test가 완료되어 있어야 한다.</p>
+<p>→ <a href="../project_initial_build_verification/">Spring Boot 초기 Build 및 Test 검증</a></p>
+<h2 id="2-gradle-bootrun">2. Gradle <code>bootRun</code>으로 실행<a class="headerlink" href="#2-gradle-bootrun" title="Permanent link">&para;</a></h2>
+<p>Spring Boot Gradle Plugin이 제공하는 <code>bootRun</code> Task를 이용하면
+Build된 JAR를 직접 실행하지 않고도 Application을 실행할 수 있다.</p>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">bootRun</span>
+</span></code></pre></div>
+<h3 id="macos-linux">macOS / Linux<a class="headerlink" href="#macos-linux" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>./gradlew<span class="w"> </span>bootRun
+</span></code></pre></div>
+<p>Application Log를 확인한다.</p>
+<p><code>bootRun</code>은 Spring Boot Application을 실행한 뒤 바로 종료되는 Task가 아니다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>.\gradlew.bat bootRun
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>        ↓
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Spring Boot Application 시작
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        ↓
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>Embedded Tomcat 기동
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        ↓
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>8080 Port Listen
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        ↓
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>계속 실행 상태 유지
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        ↓
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>Ctrl + C
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        ↓
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>종료
+</span></code></pre></div>
+<p>따라서 Terminal에 <code>EXECUTING</code> 상태가 계속 표시되어도
+Application이 정상 기동된 상태라면 문제가 아니다.</p>
+<hr />
+<h2 id="3-log">3. 정상 기동 Log 확인<a class="headerlink" href="#3-log" title="Permanent link">&para;</a></h2>
+<p>Log에서 다음 정보를 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Spring Boot Version
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Java Version
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Embedded Servlet Container
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>HTTP Port
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>Started ...Application
+</span></code></pre></div>
+<p>현재 MicroServer의 초기 Web MVC 구성에서는
+기본 설정 기준으로 Embedded Servlet Container가 기동된다.</p>
+<p>Port를 별도로 변경하지 않았다면 기본 HTTP Port는 <code>8080</code>이다.</p>
+<div class="admonition important">
+<p class="admonition-title">기동 성공의 핵심 기준</p>
+<p>Browser 화면보다 먼저 Application Log에서
+다음과 같은 <strong>정상 Start 완료 메시지</strong>가 출력되는지를 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Started ...Application
+</span></code></pre></div>
+<p>실제 로그 문구와 부가 정보는 Spring Boot Version 및 설정에 따라 달라질 수 있다.</p>
+</div>
+<hr />
+<h2 id="4-localhost8080">4. <code>localhost:8080</code> 확인<a class="headerlink" href="#4-localhost8080" title="Permanent link">&para;</a></h2>
+<p>Browser:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>http://localhost:8080
+</span></code></pre></div>
+<p>현재 Controller / Static Page를 아직 만들지 않았다면
+<code>/</code> 요청에 404 Response가 나타날 수 있다.</p>
+<div class="admonition info">
+<p class="admonition-title">404가 실패를 의미하지 않음</p>
+<p>현재 검증 목적은 Business 화면을 확인하는 것이 아니라
+Application과 Web Server가 정상 기동되었는지 확인하는 것이다.</p>
+<p>따라서 다음 조건이라면 <code>/</code>의 404는 정상일 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Application 정상 Start
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>+ 8080 Port 정상 Listen
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>+ &quot;/&quot;에 매핑된 Controller / Static Resource 없음
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>→ 404 가능
+</span></code></pre></div>
+<p>단, Connection Refused처럼 Server 자체에 연결할 수 없는 상태는
+정상 기동으로 보지 않는다.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Whitelabel Error Page / 404</p>
+<p>현재 <code>/</code> 경로에 연결된 Controller 또는 Static Resource가 없다면
+Browser에서 다음과 같은 화면이 표시될 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>Whitelabel Error Page
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>status=404
+</span></code></pre></div>
+<p>이것은 Server가 기동되지 않았다는 뜻이 아니다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Application 정상 기동
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>+ Tomcat 8080 정상 Listen
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>+ &quot;/&quot; Mapping 없음
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>→ 404 가능
+</span></code></pre></div>
+<p>반면 <code>ERR_CONNECTION_REFUSED</code>처럼 Server 자체에 연결할 수 없다면
+정상 기동 상태로 보지 않는다.</p>
+</div>
+<hr />
+<h2 id="5-application">5. Application 종료<a class="headerlink" href="#5-application" title="Permanent link">&para;</a></h2>
+<p>Terminal:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Ctrl + C
+</span></code></pre></div>
+<p>정상 종료되는지 확인한다.</p>
+<hr />
+<h2 id="6-executable-jar">6. Executable JAR 직접 실행<a class="headerlink" href="#6-executable-jar" title="Permanent link">&para;</a></h2>
+<p>Build 결과로 생성된 Spring Boot Executable JAR를 직접 실행한다.</p>
+<p>먼저 JAR 목록 확인:</p>
+<p>Windows PowerShell:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">Get-ChildItem</span> <span class="p">.\</span><span class="n">build</span><span class="p">\</span><span class="n">libs</span><span class="p">\*.</span><span class="n">jar</span>
+</span></code></pre></div>
+<p>macOS / Linux:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>ls<span class="w"> </span>-la<span class="w"> </span>build/libs/*.jar
+</span></code></pre></div>
+<p>현재 기본 Artifact 이름 기준 실행 예:</p>
+<p>Windows PowerShell:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">java</span> <span class="n">-jar</span> <span class="p">.\</span><span class="n">build</span><span class="p">\</span><span class="n">libs</span><span class="p">\</span><span class="n">microserver</span><span class="p">-</span><span class="n">0</span><span class="p">.</span><span class="n">0</span><span class="p">.</span><span class="n">1-SNAPSHOT</span><span class="p">.</span><span class="n">jar</span>
+</span></code></pre></div>
+<p>macOS / Linux:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>java<span class="w"> </span>-jar<span class="w"> </span>build/libs/microserver-0.0.1-SNAPSHOT.jar
+</span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title"><code>-plain.jar</code>를 실행 대상으로 선택하지 않음</p>
+<p>다음과 같은 Plain JAR가 함께 생성된 경우:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>microserver-0.0.1-SNAPSHOT-plain.jar
+</span></code></pre></div>
+<p>Spring Boot Executable JAR 검증에는
+classifier가 없는 Executable JAR를 사용한다.</p>
+</div>
+<p>실제 JAR 이름이 다르면 <code>build/libs</code>의 결과를 확인하여 해당 파일명을 사용한다.</p>
+<p>정상 기동을 확인한 후 <code>Ctrl + C</code>로 종료한다.</p>
+<hr />
+<h2 id="7-bootrun-java-jar">7. <code>bootRun</code>과 <code>java -jar</code> 실행 차이<a class="headerlink" href="#7-bootrun-java-jar" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./gradlew bootRun
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>→ Source / Runtime Classpath를 이용하여
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>  Spring Boot Gradle Plugin을 통해 실행
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>java -jar build/...jar
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>→ 이미 Package된 Spring Boot Executable JAR를 직접 실행
+</span></code></pre></div>
+<p>두 방식이 모두 정상이라면
+개발 단계 실행과 Package Artifact 실행을 각각 확인한 것이다.</p>
+<h3 id="maven">Maven 명령과 비교<a class="headerlink" href="#maven" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>검증 목적</th>
+<th>Gradle</th>
+<th>Maven</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wrapper 버전</td>
+<td><code>./gradlew --version</code></td>
+<td><code>./mvnw -version</code></td>
+</tr>
+<tr>
+<td>Test</td>
+<td><code>./gradlew clean test</code></td>
+<td><code>./mvnw clean test</code></td>
+</tr>
+<tr>
+<td>Build / Packaging</td>
+<td><code>./gradlew build</code></td>
+<td><code>./mvnw package</code></td>
+</tr>
+<tr>
+<td>Spring Boot 실행</td>
+<td><code>./gradlew bootRun</code></td>
+<td><code>./mvnw spring-boot:run</code></td>
+</tr>
+<tr>
+<td>Artifact 위치</td>
+<td><code>build/libs/</code></td>
+<td><code>target/</code></td>
+</tr>
+<tr>
+<td>Dependency Cache</td>
+<td><code>GRADLE_USER_HOME/caches</code></td>
+<td><code>~/.m2/repository</code> 기본값</td>
+</tr>
+</tbody>
+</table>
+<p>이번 프로젝트의 실제 검증 명령은 Gradle Wrapper를 사용하고,
+Maven 명령은 대응 개념 학습용으로 본다.</p>
+<hr />
+<h2 id="8-vs-code-run">8. VS Code <code>Run</code>으로 실행<a class="headerlink" href="#8-vs-code-run" title="Permanent link">&para;</a></h2>
+<p>생성된 다음 Main Class를 연다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>*Application.java
+</span></code></pre></div>
+<p>Main Method 위에 표시되는 <code>Run | Debug</code> 링크에서 <code>Run</code>을 선택하거나
+Editor의 Run 기능으로 실행한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Run | Debug
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>public static void main(...)
+</span></code></pre></div>
+<p>여기서 <code>Run | Debug</code>는 <strong>CodeLens</strong>로 표시되는 실행 기능이다.</p>
+<p>CodeLens 자체는 VS Code의 기본 UI 기능이며,
+Java Extension이 Java Source를 분석한 뒤 실행 가능한 <code>main()</code> Method 위에
+<code>Run | Debug</code> 같은 Action을 표시한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>VS Code CodeLens
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>        +
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Java Extension
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>        ↓
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>main() Method 인식
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>        ↓
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>Run | Debug 표시
+</span></code></pre></div>
+<p>Java Extension과 Spring Boot Extension이 Project를 정상 인식하면
+VS Code에서도 Application 실행이 가능하다.</p>
+<div class="admonition note">
+<p class="admonition-title">CLI 검증 후 수행</p>
+<p>VS Code 실행 확인은 Gradle Wrapper 기반 CLI Baseline이 성공한 뒤 수행한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>CLI Build / Run 정상
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>+ VS Code Run 정상
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>→ Project와 IDE 연계 모두 정상
+</span></code></pre></div>
+<p>CLI는 정상인데 VS Code Run만 실패한다면
+Project Build 문제와 IDE 설정 문제를 분리해서 확인할 수 있다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Run / Debug JDK</p>
+<p>VS Code의 Java Language Server JDK,
+Gradle Build Toolchain JDK,
+Run / Debug 시 사용하는 Java Runtime은 개념적으로 구분할 수 있다.</p>
+<p>현재 MicroServer 초기 단계에서는 모두 Java 25 기준으로 맞추고 있으며,
+별도의 <code>launch.json</code>에서 Run / Debug용 Java 실행경로를 강제로 지정하지 않는다.</p>
+<p>OS 종속적인 절대경로는 Project 설정에 가능한 한 넣지 않고,
+Project에는 Java Version 기준을 중심으로 유지한다.</p>
+</div>
+<hr />
+<h2 id="9-vs-code-debug">9. VS Code <code>Debug</code>로 실행<a class="headerlink" href="#9-vs-code-debug" title="Permanent link">&para;</a></h2>
+<p>Main Class의 <code>Run | Debug</code> CodeLens에서 <code>Debug</code>를 선택한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>Run | Debug
+</span></code></pre></div>
+<p><code>Debug</code>는 VS Code Java Debugger를 이용하여 Application을 실행한다.</p>
+<p>현재 Breakpoint를 별도로 만들 필요는 없다.</p>
+<p>목적:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>VS Code Java Debugger
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>        ↓
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>Project JDK
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>        ↓
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>Spring Boot Application
+</span></code></pre></div>
+<p>연계가 가능한지 확인한다.</p>
+<p>Application 기동 후 종료한다.</p>
+<hr />
+<h2 id="10-spring-boot-dashboard">10. Spring Boot Dashboard에서 실행<a class="headerlink" href="#10-spring-boot-dashboard" title="Permanent link">&para;</a></h2>
+<p>Spring Boot Dashboard의 <code>Apps</code> 영역에서는
+현재 Workspace에서 인식된 Spring Boot Application을 확인하고
+실행 상태에 따라 <code>Run</code>, <code>Debug</code>, <code>Stop</code> 등의 기능을 사용할 수 있다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Apps
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>└─ microserver
+</span></code></pre></div>
+<h3 id="application">Application이 실행되지 않은 상태<a class="headerlink" href="#application" title="Permanent link">&para;</a></h3>
+<p><code>microserver</code>가 아직 실행되지 않은 상태에서는
+Application 항목 오른쪽에 다음과 같은 실행 Action이 표시된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>microserver    Run    Debug
+</span></code></pre></div>
+<p>역할:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Run
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>→ Application 일반 실행
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>Debug
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>→ Application Debug 실행
+</span></code></pre></div>
+<p>VS Code에서는 아이콘으로 표시되므로
+실제 화면에서는 <code>Run</code> / <code>Debug</code> 글자 대신 실행 아이콘과 Debug 아이콘으로 보일 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>실행 전
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>Apps
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>└─ microserver    ▶ Run    Debug
+</span></code></pre></div>
+<h3 id="application_1">Application이 실행된 상태<a class="headerlink" href="#application_1" title="Permanent link">&para;</a></h3>
+<p><code>Run</code> 또는 <code>Debug</code>로 Application을 실행하면
+Dashboard가 Application의 실행 상태를 인식하고
+해당 Application 오른쪽의 Action이 변경된다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>실행 후
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>Apps
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>└─ microserver    [실행 상태용 Action]    ■ Stop
+</span></code></pre></div>
+<p>실행 중에는 더 이상 <code>Run</code> Action을 표시할 필요가 없으므로
+<code>Stop</code>과 현재 실행 중인 Application에 사용할 수 있는 Action이 표시된다.</p>
+<p>현재 화면에서는 <code>microserver</code> 항목 오른쪽에
+브라우저와 관련된 아이콘과 <code>Stop</code> 아이콘이 표시되는 것을 확인할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>실행 전
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>→ Run / Debug
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>실행 후
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>→ 실행 중 App Action / Stop
+</span></code></pre></div>
+<p>즉 <strong>Application 상태에 따라 같은 위치의 Action이 동적으로 바뀐다.</strong></p>
+<h3 id="apps-action"><code>Apps</code> 상위 영역의 Action<a class="headerlink" href="#apps-action" title="Permanent link">&para;</a></h3>
+<p><code>microserver</code> 개별 Application 행뿐 아니라
+그 위의 <code>Apps</code> 제목 영역에도 별도의 Action이 표시된다.</p>
+<p>개념적으로 다음과 같이 구분한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Spring Boot Dashboard
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>Apps                         ← Apps 전체 대상 Action
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>│
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>└─ microserver               ← 개별 Application 대상 Action
+</span></code></pre></div>
+<p><code>Apps</code> 상위 영역의 Action은
+여러 Spring Boot Application을 대상으로 실행 / 중지하거나
+Dashboard 상태를 Refresh하는 등의 공통 기능에 사용된다.</p>
+<p>반면 <code>microserver</code> 옆의 Action은
+<strong>해당 Application 하나의 현재 실행 상태에 따라 변경되는 기능</strong>이다.</p>
+<div class="admonition important">
+<p class="admonition-title">상위 Apps Action과 개별 Application Action 구분</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Apps 제목 영역
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>→ 여러 Application 대상 공통 Run / Stop / Refresh
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>microserver 항목
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>→ 해당 Application의 Run / Debug / Stop 등
+</span></code></pre></div>
+<p>따라서 <code>Stop</code> 아이콘이 상위 <code>Apps</code> 영역에도 보일 수 있고,
+실행 중인 <code>microserver</code> 항목에도 개별 <code>Stop</code> Action이 표시될 수 있다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Application 상태에 따라 Action이 달라짐</p>
+<p>Spring Boot Dashboard는 Application 상태에 따라
+표시되는 Action을 변경한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Application 미실행
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>→ Run / Debug
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>Application 실행 중
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>→ Stop / 실행 상태용 Action
+</span></code></pre></div>
+<p>Extension Version이나 현재 Application 상태에 따라
+실제 아이콘의 위치와 표시되는 부가 Action은 조금 달라질 수 있다.</p>
+</div>
+<p>Dashboard를 이용해 <code>microserver</code>를 실행하고,
+실행 후 Action이 <code>Stop</code> 중심으로 변경되는 것까지 확인하면
+Spring Boot Dashboard가 Application 상태를 정상적으로 인식하고 있는 것이다.</p>
+<div class="admonition tip">
+<p class="admonition-title">Dashboard가 Application을 인식하지 못하는 경우</p>
+<p>CLI의 <code>build</code>와 <code>bootRun</code>은 정상인데
+Spring Boot Dashboard에서 Application을 인식하지 못한다면
+Project 자체보다 VS Code / Spring Boot Extension 연계 문제일 가능성이 있다.</p>
+<p>자세한 확인 방법은 다음 문서를 참고한다.</p>
+<p>→ <a href="../project_initial_verification_summary/">초기 Project 검증 및 Troubleshooting</a></p>
+</div>
+<hr />
+<hr />
+<h2 id="11">11. 실행 방법 한눈에 비교<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>실행 방법</th>
+<th>목적</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>./gradlew bootRun</code></td>
+<td>개발 단계 실행</td>
+<td>Gradle + Spring Boot Plugin을 통해 실행</td>
+</tr>
+<tr>
+<td><code>java -jar ...jar</code></td>
+<td>Package 결과 검증 / 배포 형태 확인</td>
+<td>생성된 Executable JAR 직접 실행</td>
+</tr>
+<tr>
+<td>VS Code <code>Run</code></td>
+<td>IDE에서 빠른 실행</td>
+<td>Java Extension 기반 실행</td>
+</tr>
+<tr>
+<td>VS Code <code>Debug</code></td>
+<td>Breakpoint / Debugging</td>
+<td>Java Debugger 기반 실행</td>
+</tr>
+<tr>
+<td>Spring Boot Dashboard</td>
+<td>Spring Boot App 관리</td>
+<td>상태에 따라 Run / Debug / Stop 등의 Action 제공</td>
+</tr>
+</tbody>
+</table>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>개발 중 빠른 실행
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>→ bootRun / VS Code Run
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>실행 Artifact 검증
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>→ java -jar
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>문제 분석
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>→ VS Code Debug
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>IDE에서 Spring Boot App 관리
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>→ Spring Boot Dashboard
+</span></code></pre></div>
+<p>다음 문서에서는 오류 상황과 최종 Baseline을 확인한다.</p>
+<p>→ <a href="../project_initial_verification_summary/">초기 Project 검증 및 Troubleshooting</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

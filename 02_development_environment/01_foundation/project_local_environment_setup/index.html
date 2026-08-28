@@ -1,0 +1,3061 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../development_device/">
+      
+      
+        <link rel="next" href="../git_github_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>프로젝트 로컬 개발환경 구성 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              프로젝트 로컬 개발환경 구성
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../development_device/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-tabs__link">
+          
+  
+  
+  배포 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-tabs__link">
+          
+  
+  
+  운영 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발환경 기본 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발환경 기본 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../development_device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 장비 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 로컬 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 로컬 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 권장 디렉터리 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 하나의 루트 디렉터리로 관리하는 이유
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. JDK 배치 기준
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. JDK 배치 기준">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 시스템 전역 설정 최소화
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Gradle 관리 기준
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Gradle 관리 기준">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-gradle-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Gradle Wrapper는 프로젝트 생성 이후 적용
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Git 로컬 저장소 구성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Git 로컬 저장소 구성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 루트 디렉터리 전체를 Git 저장소로 만들지 않는다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 workspace의 의미
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-gitignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 .gitignore 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-vs-code-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. VS Code Workspace 배치 기준
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-powershell-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. PowerShell 환경 Script 관리
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. PowerShell 환경 Script 관리">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-setupps1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 setup.ps1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-start-vscodeps1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 start-vscode.ps1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-local-envexampleps1-local-envps1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 local-env.example.ps1과 local-env.ps1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-create-vscode-shortcutps1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 create-vscode-shortcut.ps1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Script 역할 정리
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 개발환경 전달 방식
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 개발환경 전달 방식">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 기본 전달 대상
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Gradle 캐시 포함 여부
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Git 저장소와 개발환경 패키지의 차이
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Git 저장소와 개발환경 패키지의 차이">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-git-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Git Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 개발환경 패키지
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 경로 구성 원칙
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 경로 구성 원칙">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 개발자 사용자 경로 사용 최소화
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 프로젝트 기준 경로와 상대경로
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 보안 및 전달 시 주의사항
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 개발환경 구성 진행 순서
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 최종 권장 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 관련 가이드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 정리
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../git_github_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git / GitHub 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02_jdk/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 설치 및 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../03_build_tool/gradle/gradle_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Tool 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04_vscode/vscode_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05_database_docker/docker_desktop_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle / Docker 로컬 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    배포 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    운영 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 권장 디렉터리 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 하나의 루트 디렉터리로 관리하는 이유
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. JDK 배치 기준
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. JDK 배치 기준">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 시스템 전역 설정 최소화
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Gradle 관리 기준
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Gradle 관리 기준">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-gradle-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Gradle Wrapper는 프로젝트 생성 이후 적용
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Git 로컬 저장소 구성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Git 로컬 저장소 구성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 루트 디렉터리 전체를 Git 저장소로 만들지 않는다
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 workspace의 의미
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-gitignore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 .gitignore 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-vs-code-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. VS Code Workspace 배치 기준
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-powershell-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. PowerShell 환경 Script 관리
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. PowerShell 환경 Script 관리">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-setupps1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 setup.ps1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-start-vscodeps1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 start-vscode.ps1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-local-envexampleps1-local-envps1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 local-env.example.ps1과 local-env.ps1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-create-vscode-shortcutps1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 create-vscode-shortcut.ps1
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Script 역할 정리
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 개발환경 전달 방식
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 개발환경 전달 방식">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 기본 전달 대상
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Gradle 캐시 포함 여부
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Git 저장소와 개발환경 패키지의 차이
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. Git 저장소와 개발환경 패키지의 차이">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#101-git-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Git Repository
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 개발환경 패키지
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 경로 구성 원칙
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 경로 구성 원칙">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#111" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 개발자 사용자 경로 사용 최소화
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#112" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 프로젝트 기준 경로와 상대경로
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 보안 및 전달 시 주의사항
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. 개발환경 구성 진행 순서
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 최종 권장 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 관련 가이드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 정리
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">프로젝트 로컬 개발환경 구성 가이드<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 개요<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>MicroServer 프로젝트의 개발환경은 개발자 PC의 전역 설정에 최대한 의존하지 않고, 프로젝트에서 사용하는 개발 도구와 소스코드, 워크스페이스를 <strong>하나의 기준 경로 아래에서 일관되게 관리</strong>하는 것을 목표로 한다.</p>
+<p>Windows 개발환경의 기준 루트 경로는 다음과 같이 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>C:\local-microserver
+</span></code></pre></div>
+<p>이 경로 아래에 JDK, Gradle 관련 데이터, VS Code Workspace, Git 로컬 저장소 등을 배치하여 프로젝트에 필요한 주요 개발환경을 한곳에서 관리한다.</p>
+<p>이 방식의 핵심 목적은 다음과 같다.</p>
+<ul>
+<li>개발자마다 서로 다른 개발도구 설치 위치를 사용하는 문제를 줄인다.</li>
+<li>Windows 시스템 전역 환경변수에 대한 의존성을 최소화한다.</li>
+<li>프로젝트 관련 파일과 개발 도구의 관리 위치를 표준화한다.</li>
+<li>신규 개발자가 동일한 디렉터리 구조로 빠르게 개발환경을 구성할 수 있도록 한다.</li>
+<li>개발환경 전달 시 경로 차이로 발생하는 설정 오류를 줄인다.</li>
+<li>필요할 경우 개발환경 폴더를 압축하여 동일한 구조로 전달할 수 있도록 한다.</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">이 문서의 범위</p>
+<p>이 문서는 JDK, Gradle, VS Code 각각의 상세 설치 방법을 설명하는 문서가 아니다.</p>
+<p>현재 단계에서는 <strong>MicroServer 프로젝트의 로컬 개발환경을 어떤 디렉터리 구조로 관리할 것인지</strong>,<br />
+그리고 각 개발도구와 Git Repository, Workspace를 <strong>어디에 배치할 것인지에 대한 기준을 정의</strong>한다.</p>
+<p>JDK 설치, Gradle 설치 및 설정, VS Code Extension / Workspace 구성 등 실제 설정 절차는 이후 각 전용 가이드에서 단계별로 진행한다.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">권장 방향</p>
+<p><code>C:\local-microserver</code> 자체를 하나의 Git 저장소로 만드는 것이 아니라,
+실제 프로젝트별 Git 로컬 저장소를 하위 <code>workspace</code> 디렉터리에서 각각 관리하는 방식을 권장한다.</p>
+</div>
+<hr />
+<h2 id="2">2. 권장 디렉터리 구조<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>MicroServer 프로젝트의 Windows 로컬 개발환경은 다음 구조를 기본으로 한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>C:\local-microserver                       ← Git Repository 아님
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├─ tools
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│  ├─ jdk
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  │  └─ &lt;project-jdk&gt;
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│  ├─ gradle
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│  │  └─ &lt;gradle-version&gt;
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│  └─ vscode
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│     ├─ Code.exe
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│     └─ data
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>├─ gradle-home
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>├─ workspace
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│  ├─ microserver.code-workspace
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│  ├─ microserver                         ← Git Repository
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>│  │  └─ .git
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>│  └─ microserver-docs                    ← 별도 Git Repository
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>│     └─ .git
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>│
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>├─ env
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>│  ├─ setup.ps1
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>│  ├─ start-vscode.ps1
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>│  ├─ create-vscode-shortcut.ps1
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>│  ├─ local-env.example.ps1
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>│  └─ local-env.ps1
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>│
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>├─ icons
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>│  └─ microserver.ico
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>│
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>├─ MicroServer VS Code.lnk
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>│
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>└─ README.md
+</span></code></pre></div>
+<p>각 디렉터리와 파일은 다음 역할을 담당한다.</p>
+<table>
+<thead>
+<tr>
+<th>경로</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tools</code></td>
+<td>프로젝트에서 사용하는 로컬 개발 도구 보관</td>
+</tr>
+<tr>
+<td><code>tools\jdk</code></td>
+<td>프로젝트 표준 JDK 배치</td>
+</tr>
+<tr>
+<td><code>tools\gradle</code></td>
+<td>프로젝트 환경에서 사용할 Gradle 배포본 배치</td>
+</tr>
+<tr>
+<td><code>tools\vscode</code></td>
+<td>Windows ZIP Portable VS Code 배치</td>
+</tr>
+<tr>
+<td><code>gradle-home</code></td>
+<td>Gradle 사용자 캐시와 관련 데이터 저장</td>
+</tr>
+<tr>
+<td><code>workspace</code></td>
+<td>VS Code Workspace 파일과 실제 Git Repository 보관</td>
+</tr>
+<tr>
+<td><code>env</code></td>
+<td>PowerShell 기반 개발환경 Script 보관</td>
+</tr>
+<tr>
+<td><code>icons</code></td>
+<td>개발환경 Shortcut 등에 사용할 공통 Icon 보관</td>
+</tr>
+<tr>
+<td><code>MicroServer VS Code.lnk</code></td>
+<td>개발환경이 적용된 Portable VS Code 실행 바로가기</td>
+</tr>
+<tr>
+<td><code>README.md</code></td>
+<td>개발환경 기본 사용 방법 및 전달 시 안내사항</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition important">
+<p class="admonition-title">PowerShell을 Windows 표준 Script로 사용</p>
+<p>환경 초기화와 VS Code 실행 Script는 <code>.ps1</code>을 기본으로 한다.</p>
+<p>기본 Package에서는 동일 기능의 <code>.cmd</code> Script를 별도로 제공하지 않는다.</p>
+</div>
+<div class="admonition important">
+<p class="admonition-title">MicroServer Root와 workspace Root는 Git Repository가 아님</p>
+<p><code>.git</code>은 다음과 같은 실제 프로젝트 Directory에만 존재한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>C:\local-microserver\workspace\microserver\.git
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>C:\local-microserver\workspace\microserver-docs\.git
+</span></code></pre></div>
+<p>따라서 <code>C:\local-microserver</code> 및 <code>C:\local-microserver\workspace</code> 자체에는
+프로젝트용 <code>.gitignore</code>를 둘 필요가 없다.</p>
+</div>
+<hr />
+<h2 id="3">3. 하나의 루트 디렉터리로 관리하는 이유<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>일반적인 Windows 개발환경에서는 개발도구와 소스코드가 다음과 같이 여러 위치에 분산되는 경우가 많다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>C:\Program Files\Java\...
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>C:\gradle\...
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>C:\Users\&lt;사용자&gt;\.gradle
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>C:\Users\&lt;사용자&gt;\source\repos\...
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>C:\Users\&lt;사용자&gt;\AppData\...
+</span></code></pre></div>
+<p>이렇게 구성하면 개발자마다 다음과 같은 차이가 발생할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>개발자 A
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a> ├─ JDK 설치 위치 A
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a> ├─ Gradle 설정 A
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a> └─ Source Repository 위치 A
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>개발자 B
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a> ├─ JDK 설치 위치 B
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a> ├─ Gradle 설정 B
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a> └─ Source Repository 위치 B
+</span></code></pre></div>
+<p>프로젝트 자체에는 문제가 없더라도 개발자 PC마다 경로와 버전이 달라지면서 다음과 같은 문제가 발생할 수 있다.</p>
+<ul>
+<li><code>JAVA_HOME</code> 차이</li>
+<li>Gradle 실행 버전 차이</li>
+<li>VS Code Workspace 절대경로 차이</li>
+<li>프로젝트 실행 Script 경로 차이</li>
+<li>신규 개발환경 구성 시 반복적인 수동 설정</li>
+<li>다른 개발자에게 환경을 전달할 때 재설정 필요</li>
+</ul>
+<p>MicroServer 프로젝트에서는 이러한 차이를 줄이기 위해 기준 루트 경로를 다음과 같이 통일한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>C:\local-microserver
+</span></code></pre></div>
+<p>즉 개발자의 개인 PC 환경을 기준으로 프로젝트를 맞추는 것이 아니라,</p>
+<p><strong>프로젝트가 요구하는 표준 개발환경 구조를 먼저 정의하고 개발자가 그 구조를 사용하도록 한다.</strong></p>
+<hr />
+<h2 id="4-jdk">4. JDK 배치 기준<a class="headerlink" href="#4-jdk" title="Permanent link">&para;</a></h2>
+<p>JDK는 다음 위치에서 관리하는 것을 기본 방향으로 한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>C:\local-microserver\tools\jdk\&lt;project-jdk&gt;
+</span></code></pre></div>
+<p>예를 들어 프로젝트 표준 JDK가 준비되면 다음과 같은 형태가 된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>C:\local-microserver
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>└─ tools
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>   └─ jdk
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>      └─ &lt;project-jdk&gt;
+</span></code></pre></div>
+<p>현재 문서에서는 <strong>JDK를 프로젝트 로컬 개발환경의 어느 위치에서 관리할 것인지</strong>만 정의한다.</p>
+<p>실제 JDK 배포판 선택, 다운로드, 설치 또는 압축 해제 방식, 버전 확인, 환경변수 적용 방법 등은 JDK 전용 가이드에서 진행한다.</p>
+<div class="admonition tip">
+<p class="admonition-title">JDK 상세 설정은 다음 가이드에서 진행</p>
+<p>JDK 설치 및 실제 개발환경 설정은 다음 문서에서 자세히 설명한다.</p>
+<p><strong><a href="../../02_jdk/jdk_setup/">JDK 설치 및 설정</a></strong></p>
+<p>해당 문서에서는 프로젝트 표준 JDK 준비, 설치 위치, 버전 확인 및 Java 실행환경 구성을 단계별로 진행한다.</p>
+</div>
+<h3 id="41">4.1 시스템 전역 설정 최소화<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p>MicroServer 프로젝트에서는 가능하면 개발자 PC 전체에 영향을 주는 전역 설정을 최소화한다.</p>
+<p>예를 들어 시스템 전체 <code>JAVA_HOME</code>을 프로젝트마다 변경하면 다른 Java 프로젝트에 영향을 줄 수 있다.</p>
+<p>따라서 프로젝트 로컬 JDK를 사용하고, 이후 필요에 따라 다음 방식으로 프로젝트에 연결한다.</p>
+<ul>
+<li>VS Code에서 프로젝트 JDK 지정</li>
+<li>프로젝트 실행 환경에서 JDK 경로 지정</li>
+<li>개발PowerShell 환경 Script에서 세션 단위 환경변수 적용</li>
+</ul>
+<p>현재 단계에서는 이러한 구성 방향만 이해하고, 실제 설정은 이후 전용 가이드에서 수행한다.</p>
+<hr />
+<h2 id="5-gradle">5. Gradle 관리 기준<a class="headerlink" href="#5-gradle" title="Permanent link">&para;</a></h2>
+<p>Gradle은 JDK와 동일하게 단순히 특정 폴더에 프로그램을 설치하는 개념보다는 <strong>프로젝트 Build Tool과 Wrapper를 어떻게 일관되게 관리할 것인지</strong>가 중요하다.</p>
+<p>MicroServer 프로젝트에서는 다음 두 영역을 구분한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>개발환경 단계
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a> └─ Gradle 기본 환경 이해 및 준비
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>프로젝트 생성 이후
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a> └─ Gradle Wrapper를 이용한 프로젝트 Gradle 버전 고정
+</span></code></pre></div>
+<p>현재 로컬 개발환경 구조에서는 Gradle 관련 사용자 데이터를 다음 위치에 모아서 관리할 수 있도록 한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>C:\local-microserver\gradle-home
+</span></code></pre></div>
+<p>이 디렉터리는 필요에 따라 Gradle Wrapper 다운로드 파일, 캐시 등 Gradle 사용자 데이터를 프로젝트 루트 하위에서 관리하기 위한 위치로 사용한다.</p>
+<div class="admonition tip">
+<p class="admonition-title">Gradle 설치 및 기본 환경은 다음 가이드에서 진행</p>
+<p>Gradle 자체의 설치 방식, 전역 Gradle과 프로젝트 Gradle의 차이,
+Gradle 실행 확인 및 기본 환경 구성은 다음 문서에서 자세히 설명한다.</p>
+<p><strong><a href="../../03_build_tool/gradle/gradle_setup/">Gradle 설치 및 기본 환경 구성</a></strong></p>
+<p>현재 문서에서는 Gradle 관련 데이터를 <code>C:\local-microserver</code> 내부에서 관리할 수 있도록
+디렉터리 구조만 정의한다.</p>
+</div>
+<h3 id="51-gradle-wrapper">5.1 Gradle Wrapper는 프로젝트 생성 이후 적용<a class="headerlink" href="#51-gradle-wrapper" title="Permanent link">&para;</a></h3>
+<p>실제 MicroServer 프로젝트를 생성한 이후에는 Gradle Wrapper를 프로젝트 Repository 내부에 포함한다.</p>
+<p>개념적인 구조는 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>workspace
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>└─ microserver
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>   ├─ gradlew
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>   ├─ gradlew.bat
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>   └─ gradle
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>      └─ wrapper
+</span></code></pre></div>
+<p>Wrapper를 사용하면 개발자 PC에 설치된 전역 Gradle보다 <strong>프로젝트에서 지정한 Gradle 버전을 기준으로 Build 환경을 통일</strong>할 수 있다.</p>
+<p>현재 단계에서는 Wrapper의 역할만 이해하고 실제 생성, 버전 고정, <code>build.gradle</code>, <code>settings.gradle</code> 구성 등은 프로젝트 생성 이후 별도 가이드에서 수행한다.</p>
+<div class="admonition tip">
+<p class="admonition-title">프로젝트 Gradle 설정은 프로젝트 생성 이후 진행</p>
+<p>Spring Boot 프로젝트 생성 이후의 Gradle Wrapper 설정은 다음 문서에서 진행한다.</p>
+<p><strong><a href="../../../03_project_creation_verification/02_project_environment/project_gradle_setup/">Gradle Wrapper 및 프로젝트 Gradle 설정</a></strong></p>
+<p>해당 단계에서는 Wrapper 버전 고정, 프로젝트 Gradle 실행, Build 설정 등을 실제 프로젝트를 대상으로 구성한다.</p>
+</div>
+<hr />
+<h2 id="6-git">6. Git 로컬 저장소 구성<a class="headerlink" href="#6-git" title="Permanent link">&para;</a></h2>
+<h3 id="61-git">6.1 루트 디렉터리 전체를 Git 저장소로 만들지 않는다<a class="headerlink" href="#61-git" title="Permanent link">&para;</a></h3>
+<p><code>C:\local-microserver</code> 전체를 하나의 Git Repository로 만들지 않는다.</p>
+<p>잘못된 구조:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>C:\local-microserver
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>├─ .git
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>├─ tools
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>├─ gradle-home
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>├─ workspace
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>├─ env
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>└─ icons
+</span></code></pre></div>
+<p>이렇게 구성하면 JDK, Gradle Cache, Portable VS Code, Local Secret 등
+Git으로 관리할 필요가 없는 개발환경 파일까지 하나의 Work Tree에 포함될 수 있다.</p>
+<p>실제 Git Repository는 <code>workspace</code> 아래 프로젝트별로 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>C:\local-microserver
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>└─ workspace
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>   ├─ microserver
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>   │  ├─ .git
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>   │  ├─ build.gradle
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>   │  ├─ settings.gradle
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>   │  ├─ gradlew
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>   │  ├─ gradlew.bat
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>   │  └─ src
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>   │
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>   └─ microserver-docs
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>      ├─ .git
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>      ├─ mkdocs.yml
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>      └─ docs
+</span></code></pre></div>
+<h3 id="62-workspace">6.2 <code>workspace</code>의 의미<a class="headerlink" href="#62-workspace" title="Permanent link">&para;</a></h3>
+<p><code>workspace</code>는 여러 Repository와 VS Code Workspace 파일을 함께 보관하는 상위 Directory이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>workspace
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>├─ microserver.code-workspace
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>├─ microserver
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>└─ microserver-docs
+</span></code></pre></div>
+<p><code>workspace</code> 자체를 GitHub에 Push하는 것이 아니다.</p>
+<p>각 프로젝트 Directory가 독립적인 Git Repository로 동작한다.</p>
+<h3 id="63-gitignore">6.3 <code>.gitignore</code> 위치<a class="headerlink" href="#63-gitignore" title="Permanent link">&para;</a></h3>
+<p><code>.gitignore</code>는 실제 Git Repository Root에서 관리한다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>C:\local-microserver\workspace\microserver\.gitignore
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>C:\local-microserver\workspace\microserver-docs\.gitignore
+</span></code></pre></div>
+<p>다음 위치에는 프로젝트용 <code>.gitignore</code>가 필요하지 않다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>C:\local-microserver
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>C:\local-microserver\workspace
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Git / GitHub 상세 구성</p>
+<p>Git 설치, GitHub 연결, Clone / Commit / Push, Repository별 <code>.gitignore</code> 정책은 다음 가이드에서 진행한다.</p>
+<p><strong><a href="../git_github_setup/">Git / GitHub 환경 구성</a></strong></p>
+</div>
+<hr />
+<h2 id="7-vs-code-workspace">7. VS Code Workspace 배치 기준<a class="headerlink" href="#7-vs-code-workspace" title="Permanent link">&para;</a></h2>
+<p>VS Code Workspace 파일은 다음 위치에서 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>C:\local-microserver\workspace\microserver.code-workspace
+</span></code></pre></div>
+<p>실제 Repository도 같은 <code>workspace</code> 아래에서 관리하므로
+Workspace 파일에서는 상대경로로 각 Repository를 연결할 수 있다.</p>
+<p>예:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="p">{</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span><span class="nt">&quot;folders&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver&quot;</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="w">      </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-docs&quot;</span>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>이 구조는 개발자 개인 사용자 경로에 대한 의존성을 줄이고
+<code>C:\local-microserver</code> 구조만 동일하게 유지하면 Workspace 관계도 일정하게 유지할 수 있다.</p>
+<div class="admonition tip">
+<p class="admonition-title">VS Code 실행은 공통 Shortcut 사용</p>
+<p>Windows에서는 다음 바로가기를 VS Code 개발의 기본 진입점으로 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>C:\local-microserver\MicroServer VS Code.lnk
+</span></code></pre></div>
+<p>필요하면 이 바로가기를 Windows 바탕화면으로 복사하여 사용한다.</p>
+<p>Shortcut은 다음 Icon을 계속 참조한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>C:\local-microserver\icons\microserver.ico
+</span></code></pre></div>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">VS Code 상세 구성은 다음 가이드에서 진행</p>
+<p><strong><a href="../../04_vscode/vscode_setup/">VS Code 개발환경 구성 개요</a></strong></p>
+<p><strong><a href="../../04_vscode/jdk_workspace_environment_setup/">JDK 연계 및 개발환경 운영</a></strong></p>
+</div>
+<hr />
+<h2 id="8-powershell-script">8. PowerShell 환경 Script 관리<a class="headerlink" href="#8-powershell-script" title="Permanent link">&para;</a></h2>
+<p>Windows 환경 Script는 다음 위치에서 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>C:\local-microserver\env
+</span></code></pre></div>
+<p>구성:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>env
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>├─ setup.ps1
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>├─ start-vscode.ps1
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>├─ create-vscode-shortcut.ps1
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>├─ local-env.example.ps1
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>└─ local-env.ps1
+</span></code></pre></div>
+<h3 id="81-setupps1">8.1 <code>setup.ps1</code><a class="headerlink" href="#81-setupps1" title="Permanent link">&para;</a></h3>
+<p>일반 PowerShell에서 직접 Build, Test, 개발도구 검증을 수행할 때
+현재 Session에 MicroServer 환경을 적용한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="p">.</span> <span class="n">C</span><span class="p">:\</span><span class="n">local-microserver</span><span class="p">\</span><span class="n">env</span><span class="p">\</span><span class="n">setup</span><span class="p">.</span><span class="n">ps1</span>
+</span></code></pre></div>
+<p>주요 환경:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>LOCAL_MICROSERVER
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>JAVA_HOME
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>GRADLE_HOME
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>GRADLE_USER_HOME
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>PATH
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>개발자별 Local 환경변수
+</span></code></pre></div>
+<h3 id="82-start-vscodeps1">8.2 <code>start-vscode.ps1</code><a class="headerlink" href="#82-start-vscodeps1" title="Permanent link">&para;</a></h3>
+<p>일상적인 VS Code 개발용 Launcher이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>start-vscode.ps1
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>        ↓
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>setup.ps1
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>        ↓
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>local-env.ps1
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>        ↓
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>Portable VS Code
+</span></code></pre></div>
+<p>개발자가 매번 <code>setup.ps1</code>을 직접 실행하지 않아도
+VS Code 실행 시 필요한 Process 환경을 먼저 구성한다.</p>
+<h3 id="83-local-envexampleps1-local-envps1">8.3 <code>local-env.example.ps1</code>과 <code>local-env.ps1</code><a class="headerlink" href="#83-local-envexampleps1-local-envps1" title="Permanent link">&para;</a></h3>
+<p>배포용 Sample:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>local-env.example.ps1
+</span></code></pre></div>
+<p>개발자 개인 파일:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>local-env.ps1
+</span></code></pre></div>
+<p>예:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nv">$env:ORACLE_PWD</span> <span class="p">=</span> <span class="s1">&#39;&lt;개발자-개인-로컬-비밀번호&gt;&#39;</span>
+</span></code></pre></div>
+<p><code>local-env.ps1</code>은 개발환경 Package를 다른 개발자에게 전달할 때 제외한다.</p>
+<h3 id="84-create-vscode-shortcutps1">8.4 <code>create-vscode-shortcut.ps1</code><a class="headerlink" href="#84-create-vscode-shortcutps1" title="Permanent link">&para;</a></h3>
+<p>한 번 실행하면 MicroServer Root에 Windows 바로가기를 생성한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">&amp;</span> <span class="n">C</span><span class="p">:\</span><span class="n">local-microserver</span><span class="p">\</span><span class="n">env</span><span class="p">\</span><span class="n">create-vscode-shortcut</span><span class="p">.</span><span class="n">ps1</span>
+</span></code></pre></div>
+<p>생성 결과:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>C:\local-microserver\MicroServer VS Code.lnk
+</span></code></pre></div>
+<p>사용 Icon:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>C:\local-microserver\icons\microserver.ico
+</span></code></pre></div>
+<p>개발자는 생성된 <code>.lnk</code> 파일을 Windows 바탕화면으로 복사하여 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>MicroServer Root의 기준 Shortcut
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>        ↓ 복사
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>Windows 바탕화면
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>        ↓ 더블클릭
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>MicroServer VS Code 실행
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">PowerShell Script 실행이 차단되는 경우</p>
+<p>회사 보안정책 또는 PowerShell 실행정책으로 인해 <code>.ps1</code> 실행이 제한될 수 있다.</p>
+<p>본 문서에서는 보안정책 변경이나 실행정책 우회 방법을 별도로 설명하지 않는다.</p>
+<p><strong>실행이 차단되거나 권한 관련 경고가 발생하면 개발환경을 배포하거나 운영하는 팀에 문의한다.</strong></p>
+</div>
+<h3 id="85-script">8.5 Script 역할 정리<a class="headerlink" href="#85-script" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    ROOT["C:\local-microserver"]
+    --&gt; SHORTCUT["MicroServer VS Code.lnk"]
+    SHORTCUT --&gt; START["start-vscode.ps1"]
+    START --&gt; SETUP["setup.ps1"]
+    SETUP --&gt; LOCAL["local-env.ps1"]
+    LOCAL --&gt; VS["Portable VS Code"]
+
+    ROOT --&gt; TERM["일반 PowerShell"]
+    TERM --&gt; DOT[". setup.ps1"]
+    DOT --&gt; BUILD["Build / Test / 환경검증"]</code></pre>
+<p>PowerShell Script는 Windows 시스템 환경변수를 영구 변경하는 용도가 아니다.</p>
+<p>현재 Process와 그 하위 Process에 프로젝트 개발환경을 제공하는 방식으로 사용한다.</p>
+<hr />
+<h2 id="9">9. 개발환경 전달 방식<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<p>MicroServer 프로젝트의 로컬 개발환경을 하나의 기준 디렉터리 아래에서 관리하는 가장 큰 이유 중 하나는
+신규 개발자에게 동일한 디렉터리 구조를 쉽게 전달하기 위해서다.</p>
+<p>기본적인 전달 흐름은 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>개발환경 기준 구조 준비
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>        ↓
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>C:\local-microserver 구성
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>        ↓
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>필요 파일 및 설정 정리
+</span><span id="__span-32-6"><a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a>        ↓
+</span><span id="__span-32-7"><a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a>개발환경 패키지 압축
+</span><span id="__span-32-8"><a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a>        ↓
+</span><span id="__span-32-9"><a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>신규 개발자에게 전달
+</span><span id="__span-32-10"><a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a>        ↓
+</span><span id="__span-32-11"><a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a>동일한 기준 경로에 압축 해제
+</span><span id="__span-32-12"><a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a>        ↓
+</span><span id="__span-32-13"><a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a>개발환경 확인
+</span><span id="__span-32-14"><a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>        ↓
+</span><span id="__span-32-15"><a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a>VS Code Workspace 실행
+</span><span id="__span-32-16"><a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>        ↓
+</span><span id="__span-32-17"><a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a>프로젝트 Build / 실행
+</span></code></pre></div>
+<h3 id="91">9.1 기본 전달 대상<a class="headerlink" href="#91" title="Permanent link">&para;</a></h3>
+<p>개발환경 패키지에는 필요에 따라 다음 항목을 포함할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>tools
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>workspace
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>env
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>icons
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>MicroServer VS Code.lnk
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>README.md
+</span></code></pre></div>
+<p>실제 프로젝트 Source는 일반적으로 <code>workspace</code> 아래 각 Git Repository에서 Clone하여 구성한다.</p>
+<p>개발환경 Package에는 <code>local-env.example.ps1</code>은 포함하되 실제 개발자의 <code>local-env.ps1</code>은 제외한다.</p>
+<h3 id="92-gradle">9.2 Gradle 캐시 포함 여부<a class="headerlink" href="#92-gradle" title="Permanent link">&para;</a></h3>
+<p><code>gradle-home</code>은 개발환경 전달 시 선택적으로 포함한다.</p>
+<p>Gradle 캐시까지 포함하면 초기 Build에서 일부 다운로드 시간을 줄일 수 있지만 다음과 같은 단점이 있다.</p>
+<ul>
+<li>압축 파일 크기가 매우 커질 수 있다.</li>
+<li>오래된 캐시가 함께 전달될 수 있다.</li>
+<li>불필요한 Build Cache가 포함될 수 있다.</li>
+<li>개발자별 환경 차이가 캐시에 남을 수 있다.</li>
+</ul>
+<p>따라서 일반적인 개발환경 패키지에서는 <code>gradle-home</code>을 제외하는 것을 우선 고려한다.</p>
+<p>반대로 다음과 같은 환경에서는 포함 여부를 검토할 수 있다.</p>
+<ul>
+<li>외부 인터넷 연결이 제한된 사내망</li>
+<li>폐쇄망 개발환경</li>
+<li>Gradle Distribution 또는 Dependency 다운로드가 제한되는 환경</li>
+</ul>
+<hr />
+<h2 id="10-git">10. Git 저장소와 개발환경 패키지의 차이<a class="headerlink" href="#10-git" title="Permanent link">&para;</a></h2>
+<p>Git Repository와 개발환경 패키지는 목적이 다르다.</p>
+<h3 id="101-git-repository">10.1 Git Repository<a class="headerlink" href="#101-git-repository" title="Permanent link">&para;</a></h3>
+<p>Git으로 관리해야 하는 대표적인 항목은 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>소스코드
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>build.gradle
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>settings.gradle
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>gradlew
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>gradlew.bat
+</span><span id="__span-34-6"><a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>gradle/wrapper
+</span><span id="__span-34-7"><a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>공유가 필요한 VS Code 프로젝트 설정
+</span><span id="__span-34-8"><a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>프로젝트 문서
+</span></code></pre></div>
+<p>Git으로 관리하지 않는 대표적인 항목은 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>JDK Binary
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>Gradle Cache
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>IDE 임시파일
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>Build 결과물
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>Log
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>개발자 개인 설정
+</span></code></pre></div>
+<h3 id="102">10.2 개발환경 패키지<a class="headerlink" href="#102" title="Permanent link">&para;</a></h3>
+<p>개발환경 패키지는 <strong>개발환경 표준화와 전달</strong>이 목적이므로 필요에 따라 Git에서 관리하지 않는 항목도 포함할 수 있다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>JDK
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>PowerShell 환경 Script
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>VS Code Workspace
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>MicroServer VS Code Shortcut / Icon
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>프로젝트 기본 디렉터리 구조
+</span></code></pre></div>
+<p>필요한 경우 다음 항목도 선택적으로 포함할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>프로젝트 Source
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>Gradle Cache
+</span></code></pre></div>
+<p>따라서 두 개념은 다음과 같이 구분한다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>목적</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Git Repository</td>
+<td>소스코드와 프로젝트 설정의 형상관리</td>
+</tr>
+<tr>
+<td>개발환경 패키지</td>
+<td>동일한 로컬 개발환경 구조의 구성 및 전달</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="11">11. 경로 구성 원칙<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<h3 id="111">11.1 개발자 사용자 경로 사용 최소화<a class="headerlink" href="#111" title="Permanent link">&para;</a></h3>
+<p>설정 파일이나 Script에 다음과 같은 개발자 개인 경로를 직접 작성하지 않는 것을 권장한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>C:\Users\kim\...
+</span></code></pre></div>
+<p>대신 다음 기준을 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>C:\local-microserver
+</span></code></pre></div>
+<p>또는 환경변수:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>%LOCAL_MICROSERVER%
+</span></code></pre></div>
+<p>VS Code Workspace에서는 가능하면 상대경로를 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>microserver
+</span></code></pre></div>
+<p>이렇게 하면 개발자 계정명이 변경되어도 프로젝트 경로 구조를 유지할 수 있다.</p>
+<h3 id="112">11.2 프로젝트 기준 경로와 상대경로<a class="headerlink" href="#112" title="Permanent link">&para;</a></h3>
+<p>프로젝트 환경을 다른 개발자에게 전달할 수 있도록 만들려면 가능한 한 다음과 같은 관계를 유지하는 것이 중요하다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>local-microserver
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>├─ workspace
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>│  ├─ microserver.code-workspace
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>│  └─ microserver
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>├─ tools
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6" href="#__codelineno-42-6"></a>├─ env
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7" href="#__codelineno-42-7"></a>└─ icons
+</span></code></pre></div>
+<p>즉 특정 개발자의 사용자 홈 디렉터리에 의존하기보다
+<code>local-microserver</code> 내부의 상대적인 디렉터리 관계를 기준으로 환경을 구성한다.</p>
+<hr />
+<h2 id="12">12. 보안 및 전달 시 주의사항<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>개발환경 디렉터리를 압축하여 전달하는 경우 개인 계정 또는 보안 정보가 포함되지 않도록 반드시 확인해야 한다.</p>
+<p>다음 정보는 개발환경 패키지에 포함하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>GitHub Access Token
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>DB 계정 비밀번호
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>API Key
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>인증서 개인키
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>사내 시스템 계정정보
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>개인 SSH Private Key
+</span><span id="__span-43-7"><a id="__codelineno-43-7" name="__codelineno-43-7" href="#__codelineno-43-7"></a>local-env.ps1
+</span></code></pre></div>
+<p>이러한 값은 별도의 보안 기준에 따라 관리한다.</p>
+<p>또한 Git Repository에서 다음과 같은 Build 및 Cache 디렉터리는 일반적으로 형상관리 대상에서 제외한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>.gradle/
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>build/
+</span></code></pre></div>
+<p>단, Gradle Wrapper에 필요한 파일은 프로젝트 형상관리 대상에 포함한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>gradlew
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>gradlew.bat
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>gradle/wrapper/gradle-wrapper.jar
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>gradle/wrapper/gradle-wrapper.properties
+</span></code></pre></div>
+<p>Wrapper 관련 상세 내용은 프로젝트 Gradle 설정 가이드에서 다시 설명한다.</p>
+<hr />
+<h2 id="13">13. 개발환경 구성 진행 순서<a class="headerlink" href="#13" title="Permanent link">&para;</a></h2>
+<p>이 문서가 정의하는 디렉터리 구조를 기준으로 실제 개발환경 구성은 다음 순서로 진행한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    A[C:\local-microserver 생성]
+    --&gt; B[기본 디렉터리 구조 생성]
+    --&gt; C[Git / GitHub 환경 구성]
+    --&gt; D[JDK 환경 구성]
+    --&gt; E[Gradle 환경 구성]
+    --&gt; F[VS Code 환경 구성]
+    --&gt; G[Spring Boot 프로젝트 생성]
+    --&gt; H[프로젝트 Gradle / Workspace 설정]</code></pre>
+<p>현재 문서는 다음 영역을 담당한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>[ C:\local-microserver 기본 구조 정의 ]   ← 현재 문서
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>                ↓
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>Git / GitHub 환경 구성
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>                ↓
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>JDK 설치 및 설정
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a>                ↓
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a>Gradle 설치 및 기본 환경 구성
+</span><span id="__span-46-8"><a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a>                ↓
+</span><span id="__span-46-9"><a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a>VS Code 개발환경 구성
+</span><span id="__span-46-10"><a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a>                ↓
+</span><span id="__span-46-11"><a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a>Spring Boot 프로젝트 생성
+</span><span id="__span-46-12"><a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a>                ↓
+</span><span id="__span-46-13"><a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a>프로젝트 Gradle / Workspace 설정
+</span></code></pre></div>
+<p>즉 이 문서에서 모든 개발도구를 실제로 설치하는 것이 아니다.</p>
+<p>먼저 <strong>개발환경이 들어갈 그릇과 관리 기준을 정의한 후</strong>, 이후 문서에서 각 개발도구를 순서대로 구성한다.</p>
+<hr />
+<h2 id="14">14. 최종 권장 구조<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<p>MicroServer Windows 로컬 개발환경은 다음 구성을 기본으로 한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>C:\local-microserver
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>│
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>├─ tools
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>│  ├─ jdk
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>│  │  └─ &lt;project-jdk&gt;
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>│  ├─ gradle
+</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>│  │  └─ &lt;gradle-version&gt;
+</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>│  └─ vscode
+</span><span id="__span-47-9"><a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>│     ├─ Code.exe
+</span><span id="__span-47-10"><a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a>│     └─ data
+</span><span id="__span-47-11"><a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>│
+</span><span id="__span-47-12"><a id="__codelineno-47-12" name="__codelineno-47-12" href="#__codelineno-47-12"></a>├─ gradle-home
+</span><span id="__span-47-13"><a id="__codelineno-47-13" name="__codelineno-47-13" href="#__codelineno-47-13"></a>│
+</span><span id="__span-47-14"><a id="__codelineno-47-14" name="__codelineno-47-14" href="#__codelineno-47-14"></a>├─ workspace
+</span><span id="__span-47-15"><a id="__codelineno-47-15" name="__codelineno-47-15" href="#__codelineno-47-15"></a>│  ├─ microserver.code-workspace
+</span><span id="__span-47-16"><a id="__codelineno-47-16" name="__codelineno-47-16" href="#__codelineno-47-16"></a>│  ├─ microserver
+</span><span id="__span-47-17"><a id="__codelineno-47-17" name="__codelineno-47-17" href="#__codelineno-47-17"></a>│  │  ├─ .git
+</span><span id="__span-47-18"><a id="__codelineno-47-18" name="__codelineno-47-18" href="#__codelineno-47-18"></a>│  │  ├─ gradlew
+</span><span id="__span-47-19"><a id="__codelineno-47-19" name="__codelineno-47-19" href="#__codelineno-47-19"></a>│  │  ├─ gradlew.bat
+</span><span id="__span-47-20"><a id="__codelineno-47-20" name="__codelineno-47-20" href="#__codelineno-47-20"></a>│  │  ├─ gradle
+</span><span id="__span-47-21"><a id="__codelineno-47-21" name="__codelineno-47-21" href="#__codelineno-47-21"></a>│  │  ├─ settings.gradle
+</span><span id="__span-47-22"><a id="__codelineno-47-22" name="__codelineno-47-22" href="#__codelineno-47-22"></a>│  │  ├─ build.gradle
+</span><span id="__span-47-23"><a id="__codelineno-47-23" name="__codelineno-47-23" href="#__codelineno-47-23"></a>│  │  └─ src
+</span><span id="__span-47-24"><a id="__codelineno-47-24" name="__codelineno-47-24" href="#__codelineno-47-24"></a>│  └─ microserver-docs
+</span><span id="__span-47-25"><a id="__codelineno-47-25" name="__codelineno-47-25" href="#__codelineno-47-25"></a>│     └─ .git
+</span><span id="__span-47-26"><a id="__codelineno-47-26" name="__codelineno-47-26" href="#__codelineno-47-26"></a>│
+</span><span id="__span-47-27"><a id="__codelineno-47-27" name="__codelineno-47-27" href="#__codelineno-47-27"></a>├─ env
+</span><span id="__span-47-28"><a id="__codelineno-47-28" name="__codelineno-47-28" href="#__codelineno-47-28"></a>│  ├─ setup.ps1
+</span><span id="__span-47-29"><a id="__codelineno-47-29" name="__codelineno-47-29" href="#__codelineno-47-29"></a>│  ├─ start-vscode.ps1
+</span><span id="__span-47-30"><a id="__codelineno-47-30" name="__codelineno-47-30" href="#__codelineno-47-30"></a>│  ├─ create-vscode-shortcut.ps1
+</span><span id="__span-47-31"><a id="__codelineno-47-31" name="__codelineno-47-31" href="#__codelineno-47-31"></a>│  ├─ local-env.example.ps1
+</span><span id="__span-47-32"><a id="__codelineno-47-32" name="__codelineno-47-32" href="#__codelineno-47-32"></a>│  └─ local-env.ps1
+</span><span id="__span-47-33"><a id="__codelineno-47-33" name="__codelineno-47-33" href="#__codelineno-47-33"></a>│
+</span><span id="__span-47-34"><a id="__codelineno-47-34" name="__codelineno-47-34" href="#__codelineno-47-34"></a>├─ icons
+</span><span id="__span-47-35"><a id="__codelineno-47-35" name="__codelineno-47-35" href="#__codelineno-47-35"></a>│  └─ microserver.ico
+</span><span id="__span-47-36"><a id="__codelineno-47-36" name="__codelineno-47-36" href="#__codelineno-47-36"></a>│
+</span><span id="__span-47-37"><a id="__codelineno-47-37" name="__codelineno-47-37" href="#__codelineno-47-37"></a>├─ MicroServer VS Code.lnk
+</span><span id="__span-47-38"><a id="__codelineno-47-38" name="__codelineno-47-38" href="#__codelineno-47-38"></a>│
+</span><span id="__span-47-39"><a id="__codelineno-47-39" name="__codelineno-47-39" href="#__codelineno-47-39"></a>└─ README.md
+</span></code></pre></div>
+<p>개발환경 관리 기준:</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>기본 원칙</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>개발환경 기준 경로</td>
+<td><code>C:\local-microserver</code></td>
+</tr>
+<tr>
+<td>JDK</td>
+<td><code>tools\jdk</code> 하위에서 프로젝트 전용으로 관리</td>
+</tr>
+<tr>
+<td>Gradle</td>
+<td><code>tools\gradle</code> + 프로젝트 Gradle Wrapper 기준</td>
+</tr>
+<tr>
+<td>Gradle 사용자 데이터</td>
+<td><code>gradle-home</code>으로 통합 가능</td>
+</tr>
+<tr>
+<td>Git Repository</td>
+<td><code>workspace</code> 하위 프로젝트별 관리</td>
+</tr>
+<tr>
+<td>VS Code Workspace</td>
+<td><code>workspace\microserver.code-workspace</code></td>
+</tr>
+<tr>
+<td>Windows 환경 Script</td>
+<td>PowerShell(<code>.ps1</code>) 사용</td>
+</tr>
+<tr>
+<td>Local Secret</td>
+<td><code>env\local-env.ps1</code>, 배포 Package에서 제외</td>
+</tr>
+<tr>
+<td>실행 진입점</td>
+<td><code>MicroServer VS Code.lnk</code></td>
+</tr>
+<tr>
+<td>Shortcut Icon</td>
+<td><code>icons\microserver.ico</code></td>
+</tr>
+<tr>
+<td>바탕화면 사용</td>
+<td>Root의 Shortcut을 바탕화면으로 복사</td>
+</tr>
+<tr>
+<td>프로젝트 전달</td>
+<td>동일한 Directory 구조를 기준으로 Package 구성</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">권한 문제 처리 원칙</p>
+<p>PowerShell Script 실행이 회사 정책에 의해 제한되는 경우
+개발자가 임의로 정책을 변경하거나 우회하는 방식으로 해결하지 않는다.</p>
+<p><strong>개발환경을 배포하거나 운영하는 팀에 문의한다.</strong></p>
+</div>
+<hr />
+<h2 id="15">15. 관련 가이드<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<p>현재 문서 이후에는 다음 순서로 개발환경을 구성한다.</p>
+<ol>
+<li><strong><a href="../git_github_setup/">Git / GitHub 환경 구성</a></strong></li>
+<li><strong><a href="../../02_jdk/jdk_setup/">JDK 설치 및 설정</a></strong></li>
+<li><strong><a href="../../03_build_tool/gradle/gradle_setup/">Gradle 설치 및 기본 환경 구성</a></strong></li>
+<li><strong><a href="../../04_vscode/vscode_setup/">VS Code 개발환경 구성 개요</a></strong></li>
+<li><strong><a href="../../04_vscode/jdk_workspace_environment_setup/">JDK 연계 및 개발환경 운영</a></strong></li>
+<li><strong><a href="../../../03_project_creation_verification/02_project_environment/project_gradle_setup/">Gradle Wrapper 및 프로젝트 Gradle 설정</a></strong></li>
+</ol>
+<p>각 가이드에서는 현재 문서에서 정의한 <code>C:\local-microserver</code> 디렉터리 구조를 기준으로 실제 설치와 설정을 진행한다.</p>
+<hr />
+<h2 id="16">16. 정리<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<p>MicroServer 프로젝트의 로컬 개발환경은 다음과 같은 기준으로 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a>C:\local-microserver
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>        │
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>        ├─ 개발 Tool
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a>        ├─ Gradle 사용자 환경
+</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>        ├─ VS Code Workspace
+</span><span id="__span-48-6"><a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a>        ├─ Git Repository
+</span><span id="__span-48-7"><a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>        └─ PowerShell 환경 Script
+</span></code></pre></div>
+<p>현재 문서의 핵심은 특정 JDK나 Gradle의 설치 방법을 설명하는 것이 아니다.</p>
+<p><strong>프로젝트와 관련된 개발환경을 하나의 기준 경로 아래에서 관리하고,
+개발자마다 동일한 디렉터리 구조를 사용할 수 있도록 표준을 정의하는 것</strong>이 목적이다.</p>
+<p>JDK, Gradle, VS Code와 같은 개발도구의 실제 설치 및 설정은 이후 각 전용 가이드에서 자세히 진행한다.</p>
+<p>또한 개발환경 사용 방식은 다음 원칙으로 구분한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>일상적인 VS Code 개발
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>→ MicroServer VS Code.lnk 더블클릭
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a>→ start-vscode.ps1
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a>→ setup.ps1
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>→ Portable VS Code
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a>
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a>일반 PowerShell 사용
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>→ . setup.ps1
+</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a>→ 현재 Session에 동일한 개발환경 적용
+</span></code></pre></div>
+<p><strong>Windows 환경 Script는 PowerShell로 통일하고,
+일상적인 VS Code 실행은 바탕화면 Shortcut을 통해 단순화한다.</strong></p>
+<p>이 구조를 기준으로 개발환경을 구성하면 신규 개발자가 프로젝트에 참여하거나
+다른 PC로 개발환경을 이전할 때 경로 차이와 개발자별 설정 차이로 발생하는 문제를 줄일 수 있다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

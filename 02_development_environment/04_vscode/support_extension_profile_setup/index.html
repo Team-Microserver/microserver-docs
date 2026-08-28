@@ -1,0 +1,2973 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../spring_boot_extension_setup/">
+      
+      
+        <link rel="next" href="../jdk_workspace_environment_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>개발 지원 Extension 및 Profile 구성 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#extension-profile" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              개발 지원 Extension 및 Profile 구성
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../01_foundation/development_device/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-tabs__link">
+          
+  
+  
+  배포 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-tabs__link">
+          
+  
+  
+  운영 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01_foundation/development_device/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발환경 기본 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02_jdk/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 설치 및 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../03_build_tool/gradle/gradle_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Tool 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    VS Code 개발환경
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설정 원칙
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_basic_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 기본 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_user_settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code User Settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../java_extension_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 개발 Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spring_boot_extension_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 지원 Extension 및 Profile 구성
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 지원 Extension 및 Profile 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Extension 분류 기준
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Extension 분류 기준">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-portable-vs-code-extension-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Portable VS Code에서는 Extension Set 자체를 함께 전달할 수 있음
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-yaml-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. YAML Extension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-xml-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. XML Extension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-container-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Container Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 프로젝트 권장 Extension 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cli-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. CLI를 이용한 기본 Extension 일괄 설치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. GUI에서 설치 상태 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. GUI에서 설치 상태 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spring-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spring Boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        지원 도구
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-vs-code-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. VS Code Profile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Profile 생성
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-java-spring-profile-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Java Spring Profile Template
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-profile-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Profile과 Workspace의 차이
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Profile과 Workspace의 차이">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workspace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Extension 자동 업데이트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Extension 운영 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-portable-vs-code-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Portable VS Code 배포 Package 구성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Portable VS Code 배포 Package 구성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 권장 Directory 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Package에 포함하기 좋은 항목
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 개인 개발환경을 그대로 Package로 만들지 않음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-portable-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 배포용 Portable VS Code에서 피할 항목
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#155-extension-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.5 Extension Update와 재현성
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#156-vs-code-version-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.6 VS Code Version Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#157-portable-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.7 Portable Mode와 외부 의존성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-vscodeextensionsjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 향후 .vscode/extensions.json
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        참고
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jdk_workspace_environment_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 연계 및 개발환경 운영
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_install_basic_setup_legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    설치 및 기본 설정 통합 문서 (기존)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05_database_docker/docker_desktop_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle / Docker 로컬 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    배포 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    운영 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Extension 분류 기준
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Extension 분류 기준">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-portable-vs-code-extension-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Portable VS Code에서는 Extension Set 자체를 함께 전달할 수 있음
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-yaml-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. YAML Extension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-xml-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. XML Extension
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-container-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Container Tools
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 프로젝트 권장 Extension 요약
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-cli-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. CLI를 이용한 기본 Extension 일괄 설치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-gui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. GUI에서 설치 상태 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. GUI에서 설치 상태 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spring-boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spring Boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        지원 도구
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-vs-code-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. VS Code Profile
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Profile 생성
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-java-spring-profile-template" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Java Spring Profile Template
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-profile-workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Profile과 Workspace의 차이
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Profile과 Workspace의 차이">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workspace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Workspace
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Extension 자동 업데이트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Extension 운영 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-portable-vs-code-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Portable VS Code 배포 Package 구성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Portable VS Code 배포 Package 구성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 권장 Directory 구조
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Package에 포함하기 좋은 항목
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 개인 개발환경을 그대로 Package로 만들지 않음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-portable-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 배포용 Portable VS Code에서 피할 항목
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#155-extension-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.5 Extension Update와 재현성
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#156-vs-code-version-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.6 VS Code Version Update
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#157-portable-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.7 Portable Mode와 외부 의존성
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-vscodeextensionsjson" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 향후 .vscode/extensions.json
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        참고
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="extension-profile">개발 지원 Extension 및 Profile 구성 가이드<a class="headerlink" href="#extension-profile" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 Java / Spring Boot 핵심 Extension 이외에 MicroServer 개발 과정에서 사용할 <strong>YAML, XML, Container Tools</strong> 등의 지원 Extension과 VS Code Profile 운영 방법을 설명한다.</p>
+<p>핵심 Java / Spring Boot 기능과 보조 개발 기능을 분리하여 관리하는 것이 목적이다.</p>
+<hr />
+<h2 id="2-extension">2. Extension 분류 기준<a class="headerlink" href="#2-extension" title="Permanent link">&para;</a></h2>
+<p>MicroServer의 VS Code Extension은 다음 세 수준으로 구분한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>필수
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a> ├─ Extension Pack for Java
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a> └─ Spring Boot Extension Pack
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>권장
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a> ├─ YAML
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a> ├─ XML
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a> └─ Container Tools
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>선택
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a> ├─ Git 보조 Extension
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a> ├─ Markdown 보조 Extension
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a> └─ 개인 생산성 Extension
+</span></code></pre></div>
+<p>핵심 원칙:</p>
+<ol>
+<li>Java 기본 기능은 Java Extension Pack으로 통일한다.</li>
+<li>Spring Boot 기능은 Spring Boot Extension Pack으로 통일한다.</li>
+<li>프로젝트에서 자주 사용하는 파일 형식은 공식 또는 신뢰 가능한 Extension을 사용한다.</li>
+<li>비슷한 기능을 제공하는 Extension을 불필요하게 중복 설치하지 않는다.</li>
+<li>개인 편의 Extension과 프로젝트 권장 Extension을 구분한다.</li>
+</ol>
+<hr />
+<h3 id="21-portable-vs-code-extension-set">2.1 Portable VS Code에서는 Extension Set 자체를 함께 전달할 수 있음<a class="headerlink" href="#21-portable-vs-code-extension-set" title="Permanent link">&para;</a></h3>
+<p>Windows Portable Mode에서는 설치한 Extension이 다음 Directory에서 관리된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>C:\local-microserver\tools\vscode\data\extensions
+</span></code></pre></div>
+<p>따라서 필수 / 권장 Extension을 미리 설치한 배포용 Portable VS Code를 만들면
+개발자마다 동일한 Extension을 처음부터 다시 설치하는 작업을 줄일 수 있다.</p>
+<p>다만 <strong>개발자가 개인적으로 사용하던 <code>data</code> Directory를 그대로 배포하지 않는다.</strong></p>
+<p>배포용 Portable Instance는 프로젝트 표준 Extension과 Settings만 포함하도록 별도로 구성한다.</p>
+<h2 id="3-yaml-extension">3. YAML Extension<a class="headerlink" href="#3-yaml-extension" title="Permanent link">&para;</a></h2>
+<p>Extension:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>YAML
+</span></code></pre></div>
+<p>Publisher:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Red Hat
+</span></code></pre></div>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>redhat.vscode-yaml
+</span></code></pre></div>
+<p>설치:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-yaml
+</span></code></pre></div>
+<p>주요 역할:</p>
+<ul>
+<li>YAML Syntax Highlighting</li>
+<li>YAML 문법 오류 확인</li>
+<li>자동완성</li>
+<li>Schema 기반 Validation</li>
+<li>YAML 구조 탐색</li>
+</ul>
+<p>향후 다음 파일에서 사용할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>application.yml
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>docker-compose.yml
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>mkdocs.yml
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>GitHub Actions Workflow
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>기타 YAML 설정 파일
+</span></code></pre></div>
+<p>Spring Boot Tools도 <code>application.yml</code>에 Spring Boot 전용 기능을 제공하지만 YAML Extension은 일반 YAML 파일 전체를 지원한다.</p>
+<p>따라서 두 Extension의 역할은 다음과 같이 구분할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>YAML Extension
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>→ YAML 파일 형식 자체 지원
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Spring Boot Tools
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>→ application.yml 안의 Spring Boot Property 지원
+</span></code></pre></div>
+<hr />
+<h2 id="4-xml-extension">4. XML Extension<a class="headerlink" href="#4-xml-extension" title="Permanent link">&para;</a></h2>
+<p>Extension:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>XML
+</span></code></pre></div>
+<p>Publisher:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Red Hat
+</span></code></pre></div>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>redhat.vscode-xml
+</span></code></pre></div>
+<p>설치:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>redhat.vscode-xml
+</span></code></pre></div>
+<p>주요 역할:</p>
+<ul>
+<li>XML Syntax Highlighting</li>
+<li>XML 자동완성</li>
+<li>XML Validation</li>
+<li>XML Formatting</li>
+<li>XML 구조 탐색</li>
+<li>XSD 기반 지원</li>
+</ul>
+<p>MicroServer의 주 Build Script는 Gradle이므로 <code>build.gradle</code>에는 XML Extension이 필요하지 않다. 다만 Maven 비교 예제, XML 설정 파일, 기타 Java 생태계 XML 편집에 활용한다.</p>
+<blockquote>
+<p>현재 단계에서는 실제 프로젝트의 <code>build.gradle</code> / <code>settings.gradle</code>을 생성하거나 수정하지 않는다.</p>
+</blockquote>
+<hr />
+<h2 id="5-container-tools">5. Container Tools<a class="headerlink" href="#5-container-tools" title="Permanent link">&para;</a></h2>
+<p>Extension:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>Container Tools
+</span></code></pre></div>
+<p>Publisher:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Microsoft
+</span></code></pre></div>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ms-azuretools.vscode-containers
+</span></code></pre></div>
+<p>설치:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>ms-azuretools.vscode-containers
+</span></code></pre></div>
+<p>주요 역할:</p>
+<ul>
+<li>Docker / Podman Container 확인</li>
+<li>Container Image 확인</li>
+<li>Container 관리</li>
+<li>Container Registry 관련 작업</li>
+<li>Container 기반 개발 지원</li>
+</ul>
+<p>MicroServer 프로젝트에서는 이후 Oracle Local Database와 개발용 Container 환경을 사용할 수 있으므로 권장한다.</p>
+<p>예전 VS Code 자료에서는 <code>Docker</code> Extension을 기준으로 설명하는 경우가 있지만 신규 환경에서는 현재 Microsoft의 Container 개발 도구 구성을 확인하여 적용한다.</p>
+<hr />
+<h2 id="6-extension">6. 프로젝트 권장 Extension 요약<a class="headerlink" href="#6-extension" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>Extension</th>
+<th>ID</th>
+<th>기준</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java</td>
+<td>Extension Pack for Java</td>
+<td><code>vscjava.vscode-java-pack</code></td>
+<td>필수</td>
+<td>Java 개발환경</td>
+</tr>
+<tr>
+<td>Spring</td>
+<td>Spring Boot Extension Pack</td>
+<td><code>vmware.vscode-boot-dev-pack</code></td>
+<td>필수</td>
+<td>Spring Boot 개발환경</td>
+</tr>
+<tr>
+<td>YAML</td>
+<td>YAML</td>
+<td><code>redhat.vscode-yaml</code></td>
+<td>권장</td>
+<td>YAML 편집 / Validation</td>
+</tr>
+<tr>
+<td>XML</td>
+<td>XML</td>
+<td><code>redhat.vscode-xml</code></td>
+<td>권장</td>
+<td>XML 편집 / Validation</td>
+</tr>
+<tr>
+<td>Container</td>
+<td>Container Tools</td>
+<td><code>ms-azuretools.vscode-containers</code></td>
+<td>권장</td>
+<td>Container 관리</td>
+</tr>
+</tbody>
+</table>
+<p>Extension Pack 내부 Extension은 별도로 다시 설치할 필요가 없다.</p>
+<hr />
+<h2 id="7-cli-extension">7. CLI를 이용한 기본 Extension 일괄 설치<a class="headerlink" href="#7-cli-extension" title="Permanent link">&para;</a></h2>
+<p><code>code</code> 명령을 사용할 수 있다면 다음과 같이 설치할 수 있다.</p>
+<p>Windows Portable VS Code의 CLI를 명시적으로 사용한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">$code</span> <span class="p">=</span> <span class="s2">&quot;C:\local-microserver\tools\vscode\bin\code.cmd&quot;</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="p">&amp;</span> <span class="nv">$code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">vscjava</span><span class="p">.</span><span class="n">vscode-java-pack</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">&amp;</span> <span class="nv">$code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">vmware</span><span class="p">.</span><span class="n">vscode-boot-dev-pack</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="p">&amp;</span> <span class="nv">$code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">redhat</span><span class="p">.</span><span class="n">vscode-yaml</span>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="p">&amp;</span> <span class="nv">$code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">redhat</span><span class="p">.</span><span class="n">vscode-xml</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="p">&amp;</span> <span class="nv">$code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">ms-azuretools</span><span class="p">.</span><span class="n">vscode-containers</span>
+</span></code></pre></div>
+<p><code>start-vscode.cmd</code> 또는 환경 초기화 Script로 Portable VS Code의 <code>bin</code>이 PATH에 포함된 경우에는 다음처럼 실행할 수 있다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">code</span> <span class="p">-</span><span class="n">-install-extension</span> <span class="n">redhat</span><span class="p">.</span><span class="n">vscode-yaml</span>
+</span></code></pre></div>
+<p>설치된 Extension 목록:</p>
+<p>Windows Portable 환경:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\local-microserver\tools\vscode\bin\code.cmd&quot;</span> <span class="p">-</span><span class="n">-list-extensions</span>
+</span></code></pre></div>
+<p>Portable Extension Directory:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>C:\local-microserver\tools\vscode\data\extensions
+</span></code></pre></div>
+<p>주요 Extension ID 확인:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>vscjava.vscode-java-pack
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>vmware.vscode-boot-dev-pack
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>redhat.vscode-yaml
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>redhat.vscode-xml
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>ms-azuretools.vscode-containers
+</span></code></pre></div>
+<p>Pack 설치 시 포함된 개별 Extension도 목록에 함께 표시될 수 있다.</p>
+<hr />
+<h2 id="8-gui">8. GUI에서 설치 상태 확인<a class="headerlink" href="#8-gui" title="Permanent link">&para;</a></h2>
+<p>Extensions 화면:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>@installed
+</span></code></pre></div>
+<p>확인 대상:</p>
+<h3 id="java">Java<a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>Extension Pack for Java
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>Language Support for Java by Red Hat
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>Debugger for Java
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>Test Runner for Java
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>Gradle for Java
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>Project Manager for Java
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>Visual Studio IntelliCode
+</span></code></pre></div>
+<h3 id="spring-boot">Spring Boot<a class="headerlink" href="#spring-boot" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>Spring Boot Extension Pack
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>Spring Boot Tools
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>Spring Initializr Java Support
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>Spring Boot Dashboard
+</span></code></pre></div>
+<h3 id="_1">지원 도구<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>YAML
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>XML
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>Container Tools
+</span></code></pre></div>
+<hr />
+<h2 id="9-vs-code-profile">9. VS Code Profile<a class="headerlink" href="#9-vs-code-profile" title="Permanent link">&para;</a></h2>
+<p>VS Code의 Profile 기능을 사용하면 개발 목적별로 Extension과 Settings 구성을 분리할 수 있다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Default
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>Python
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>AI Development
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>MicroServer Java
+</span></code></pre></div>
+<p>Profile은 다음과 같은 경우 유용하다.</p>
+<p>Portable Mode를 사용할 때 Profile의 의미를 다음처럼 구분한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>Portable Mode
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>→ VS Code User Data / Extension 전체의 저장 위치를 독립화
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>Profile
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>→ 하나의 VS Code 안에서 개발 목적별 Settings / Extension 구성을 논리적으로 구분
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a>Workspace
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a>→ 특정 프로젝트의 설정을 관리
+</span></code></pre></div>
+<p>즉 Portable Mode와 Profile은 서로 대체 관계가 아니다.</p>
+<p>MicroServer 전용 Portable VS Code 하나만 사용하는 경우에는
+Portable Instance 자체가 이미 독립된 개발환경이므로 Profile을 반드시 만들 필요는 없다.</p>
+<p>반대로 하나의 Portable VS Code 안에서 Java / Python / AI 개발환경을 다시 분리하고 싶다면
+Profile을 추가로 사용할 수 있다.</p>
+<p>Portable Mode의 Profile 관련 User Data는 VS Code가 <code>data\user-data</code> 영역에서 관리한다.</p>
+<ul>
+<li>Python / Java 개발환경을 분리하고 싶은 경우</li>
+<li>프로젝트와 무관한 Extension을 Java 개발환경에서 제외하고 싶은 경우</li>
+<li>Java 개발용 Extension Set을 별도로 유지하고 싶은 경우</li>
+</ul>
+<hr />
+<h2 id="10-profile">10. Profile 생성<a class="headerlink" href="#10-profile" title="Permanent link">&para;</a></h2>
+<p>VS Code 메뉴:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>File
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>→ Preferences
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>→ Profiles
+</span></code></pre></div>
+<p>Command Palette:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Profiles: Create Profile
+</span></code></pre></div>
+<p>예를 들어 다음 이름으로 생성할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>MicroServer Java
+</span></code></pre></div>
+<p>Profile 사용은 필수가 아니다.</p>
+<p>개발자가 이미 다른 VS Code 개발환경을 많이 사용하고 있다면 MicroServer 전용 Profile을 만들어 Extension 구성을 분리하는 것을 권장할 수 있다.</p>
+<hr />
+<h2 id="11-java-spring-profile-template">11. Java Spring Profile Template<a class="headerlink" href="#11-java-spring-profile-template" title="Permanent link">&para;</a></h2>
+<p>VS Code는 Java와 Spring 개발에 사용할 수 있는 Profile Template을 제공한다.</p>
+<p>대표적으로 다음 Profile Template이 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Java General
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Java Spring
+</span></code></pre></div>
+<p>Java Spring Profile은 Java 개발 Extension과 Spring Boot 관련 Extension을 포함하는 초기 구성을 빠르게 준비할 때 사용할 수 있다.</p>
+<p>다만 MicroServer 프로젝트에서는 Extension의 역할을 이해하고 표준 구성을 명확히 하기 위해 본 가이드에서 각 Extension을 직접 확인한 후 Profile에 포함시키는 방식을 권장한다.</p>
+<hr />
+<h2 id="12-profile-workspace">12. Profile과 Workspace의 차이<a class="headerlink" href="#12-profile-workspace" title="Permanent link">&para;</a></h2>
+<p>Profile과 Workspace는 목적이 다르다.</p>
+<pre class="mermaid"><code>flowchart LR
+    PROFILE[VS Code Profile] --&gt; ENV[개발 도구 환경]
+    WORKSPACE[Workspace] --&gt; PROJECT[특정 프로젝트 설정]</code></pre>
+<h3 id="profile">Profile<a class="headerlink" href="#profile" title="Permanent link">&para;</a></h3>
+<p>개발 도구 환경을 구분한다.</p>
+<p>예:</p>
+<ul>
+<li>Extension 목록</li>
+<li>Theme</li>
+<li>User Settings</li>
+<li>개발 목적별 VS Code 구성</li>
+</ul>
+<h3 id="workspace">Workspace<a class="headerlink" href="#workspace" title="Permanent link">&para;</a></h3>
+<p>특정 프로젝트 설정을 관리한다.</p>
+<p>예:</p>
+<ul>
+<li>프로젝트 JDK</li>
+<li>Formatter</li>
+<li>Workspace Extension 추천</li>
+<li>프로젝트별 Java 설정</li>
+</ul>
+<p>따라서 Profile은 <strong>개발자의 VS Code 환경</strong>, Workspace는 <strong>프로젝트 환경</strong>이라고 구분하면 이해하기 쉽다.</p>
+<hr />
+<h2 id="13-extension">13. Extension 자동 업데이트<a class="headerlink" href="#13-extension" title="Permanent link">&para;</a></h2>
+<p>VS Code Extension은 지속적으로 업데이트된다.</p>
+<p>Extensions 화면에서 다음 상태를 확인할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>Installed
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>Enabled
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>Update
+</span></code></pre></div>
+<p>기본적으로 최신 Extension을 사용하는 것을 권장하지만 프로젝트 진행 중 특정 버전에서 문제가 발생하는 경우 팀에서 버전을 통일할 수 있다.</p>
+<p>특히 다음 Extension은 Java / Spring 개발환경의 핵심이므로 Update 이후 문제가 발생했을 때 우선 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>Language Support for Java
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>Debugger for Java
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>Gradle for Java
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a>Spring Boot Tools
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>Spring Boot Dashboard
+</span></code></pre></div>
+<hr />
+<h2 id="14-extension">14. Extension 운영 원칙<a class="headerlink" href="#14-extension" title="Permanent link">&para;</a></h2>
+<p>프로젝트에서는 Extension을 무조건 많이 설치하지 않는다.</p>
+<p>권장 원칙:</p>
+<ul>
+<li>프로젝트에 필요한 기능인지 확인한다.</li>
+<li>Publisher를 확인한다.</li>
+<li>유사 기능 중복 설치를 피한다.</li>
+<li>필수 / 권장 / 개인용 Extension을 구분한다.</li>
+<li>프로젝트 진행 중 문제가 있는 Extension은 팀에서 공유한다.</li>
+<li>개인 인증정보를 Extension 설정에 저장소 형태로 공유하지 않는다.</li>
+</ul>
+<hr />
+<h2 id="15-portable-vs-code-package">15. Portable VS Code 배포 Package 구성<a class="headerlink" href="#15-portable-vs-code-package" title="Permanent link">&para;</a></h2>
+<p>MicroServer Windows 개발환경의 목표는
+VS Code를 포함한 주요 개발도구를 <code>C:\local-microserver</code> 아래에 모아
+다른 개발자에게 전달하기 쉬운 형태로 만드는 것이다.</p>
+<h3 id="151-directory">15.1 권장 Directory 구조<a class="headerlink" href="#151-directory" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>C:\local-microserver
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>│
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>├─ tools
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>│  ├─ jdk
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>│  │  └─ temurin-25
+</span><span id="__span-33-6"><a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a>│  │
+</span><span id="__span-33-7"><a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>│  ├─ gradle
+</span><span id="__span-33-8"><a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a>│  │  └─ gradle-9.7.1
+</span><span id="__span-33-9"><a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a>│  │
+</span><span id="__span-33-10"><a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a>│  └─ vscode
+</span><span id="__span-33-11"><a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>│     ├─ Code.exe
+</span><span id="__span-33-12"><a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a>│     ├─ bin
+</span><span id="__span-33-13"><a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a>│     ├─ resources
+</span><span id="__span-33-14"><a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a>│     └─ data
+</span><span id="__span-33-15"><a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a>│        ├─ user-data
+</span><span id="__span-33-16"><a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a>│        └─ extensions
+</span><span id="__span-33-17"><a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a>│
+</span><span id="__span-33-18"><a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a>├─ gradle-home
+</span><span id="__span-33-19"><a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a>├─ workspace
+</span><span id="__span-33-20"><a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a>├─ repos
+</span><span id="__span-33-21"><a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a>└─ env
+</span><span id="__span-33-22"><a id="__codelineno-33-22" name="__codelineno-33-22" href="#__codelineno-33-22"></a>   ├─ setup.cmd
+</span><span id="__span-33-23"><a id="__codelineno-33-23" name="__codelineno-33-23" href="#__codelineno-33-23"></a>   ├─ setup.ps1
+</span><span id="__span-33-24"><a id="__codelineno-33-24" name="__codelineno-33-24" href="#__codelineno-33-24"></a>   └─ start-vscode.cmd
+</span></code></pre></div>
+<h3 id="152-package">15.2 Package에 포함하기 좋은 항목<a class="headerlink" href="#152-package" title="Permanent link">&para;</a></h3>
+<p>배포용 Package에는 다음과 같은 프로젝트 공통 환경을 포함할 수 있다.</p>
+<ul>
+<li>Eclipse Temurin JDK 25 LTS</li>
+<li>Gradle 9.7.1</li>
+<li>Windows ZIP Portable VS Code</li>
+<li>Java Extension Pack</li>
+<li>Spring Boot Extension Pack</li>
+<li>YAML / XML / Container Tools</li>
+<li>공통 VS Code User Settings</li>
+<li>필요하면 MicroServer 전용 Profile</li>
+<li>환경 초기화 / 실행 Script</li>
+<li>개발환경 Version을 기록한 README</li>
+</ul>
+<h3 id="153-package">15.3 개인 개발환경을 그대로 Package로 만들지 않음<a class="headerlink" href="#153-package" title="Permanent link">&para;</a></h3>
+<p>Portable Mode의 <code>data</code>는 단순히 Extension만 저장하는 Directory가 아니다.</p>
+<p>Settings, Profile, UI 상태와 VS Code가 관리하는 여러 User Data가 함께 존재할 수 있다.</p>
+<p>따라서 다음 방식은 피한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>개발자가 몇 달간 사용한 Portable VS Code
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>        ↓
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>data 폴더 그대로 ZIP
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>        ↓
+</span><span id="__span-34-5"><a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>다른 개발자에게 전달
+</span></code></pre></div>
+<p>대신 배포용 Portable Instance를 처음부터 별도로 만든다.</p>
+<pre class="mermaid"><code>flowchart TD
+    A["새 VS Code ZIP"]
+    --&gt; B["빈 data 생성"]
+    --&gt; C["표준 Extension 설치"]
+    --&gt; D["공통 Settings 적용"]
+    --&gt; E["필요 시 공통 Profile 구성"]
+    --&gt; F["계정 로그인 / Sync 사용하지 않음"]
+    --&gt; G["개인 Workspace 열지 않음"]
+    --&gt; H["VS Code 완전 종료"]
+    --&gt; I["개발환경 Package 생성"]</code></pre>
+<h3 id="154-portable-vs-code">15.4 배포용 Portable VS Code에서 피할 항목<a class="headerlink" href="#154-portable-vs-code" title="Permanent link">&para;</a></h3>
+<p>다음 정보는 배포 Package에 포함하지 않는 것을 원칙으로 한다.</p>
+<ul>
+<li>Microsoft / GitHub 개인 계정 로그인 상태</li>
+<li>Settings Sync를 통해 내려온 개인 설정</li>
+<li>개인 인증정보 / Token / Secret</li>
+<li>개인 Repository의 최근 작업 상태</li>
+<li>개인 프로젝트 전용 Settings</li>
+<li>프로젝트와 무관한 개인 Extension</li>
+<li>OS Credential Store에 의존하는 인증정보</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Settings Sync</p>
+<p>배포용 Portable VS Code는 Settings Sync를 사용하지 않는 것을 권장한다.</p>
+<p>Sync를 활성화하면 프로젝트가 준비한 기준 Settings / Extension 위에
+개인 계정의 설정이 다시 적용될 수 있어 개발자별 환경 차이가 생길 수 있다.</p>
+</div>
+<h3 id="155-extension-update">15.5 Extension Update와 재현성<a class="headerlink" href="#155-extension-update" title="Permanent link">&para;</a></h3>
+<p>Portable Package를 처음 전달하는 시점에는 동일한 Extension Set을 제공할 수 있지만,
+개발자가 사용하면서 Extension이 자동 Update되면 시간이 지나며 Version이 달라질 수 있다.</p>
+<p>따라서 장기 프로젝트에서는 다음 중 하나를 운영 정책으로 정할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>최신 Extension 사용
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>        또는
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>검증된 Extension Version 유지
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>        또는
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>문제 발생 Extension만 Version 통일
+</span></code></pre></div>
+<p>프로젝트 초기에는 지나치게 모든 Extension Version을 고정하기보다,
+문제가 발생한 핵심 Extension의 Version을 팀에서 공유하고
+필요할 때 배포 Package의 기준 Version을 갱신하는 방식이 현실적이다.</p>
+<h3 id="156-vs-code-version-update">15.6 VS Code Version Update<a class="headerlink" href="#156-vs-code-version-update" title="Permanent link">&para;</a></h3>
+<p>Windows Portable ZIP은 자동 Update를 사용하지 않는다.</p>
+<p>새 Version 적용 시에는 새 ZIP을 별도 Directory에 압축 해제하고,
+기존 <code>data</code> Directory를 새 Version으로 옮겨 검증한 뒤 교체하는 방식이 안전하다.</p>
+<p>배포용 Package Version을 변경했다면 README 등에 다음 기준을 기록하는 것이 좋다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>VS Code       : &lt;version&gt;
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>JDK           : Temurin 25 LTS
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>Gradle        : 9.7.1
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>Java Pack     : &lt;version&gt;
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>Spring Pack   : &lt;version&gt;
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>Package Date  : YYYY-MM-DD
+</span></code></pre></div>
+<h3 id="157-portable-mode">15.7 Portable Mode와 외부 의존성<a class="headerlink" href="#157-portable-mode" title="Permanent link">&para;</a></h3>
+<p>Portable VS Code만 복사한다고 다음 도구까지 자동으로 준비되는 것은 아니다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>Docker Desktop
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>Git
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>Database Server
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>사내 인증서
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>Proxy / Network 정책
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>보안 Agent
+</span></code></pre></div>
+<p>이러한 요소는 각 도구의 환경구성 가이드에서 별도로 관리한다.</p>
+<h2 id="16-vscodeextensionsjson">16. 향후 <code>.vscode/extensions.json</code><a class="headerlink" href="#16-vscodeextensionsjson" title="Permanent link">&para;</a></h2>
+<p>프로젝트 생성 이후에는 권장 Extension을 Workspace 차원에서 제안할 수 있다.</p>
+<p>예상 구조:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>microserver/
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a> └─ .vscode/
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>     └─ extensions.json
+</span></code></pre></div>
+<p>이 파일을 사용하면 프로젝트를 연 개발자에게 권장 Extension을 안내할 수 있다.</p>
+<blockquote>
+<p>아직 프로젝트 생성 전이므로 현재 단계에서는 실제 <code>extensions.json</code> 파일을 생성하지 않는다.</p>
+</blockquote>
+<hr />
+<h2 id="17">17. 체크리스트<a class="headerlink" href="#17" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> YAML Extension이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> XML Extension이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Container Tools가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 필수 Extension과 권장 Extension의 차이를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Portable <code>code.cmd --list-extensions</code>로 설치 상태를 확인할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Windows Portable Extension이 <code>data\extensions</code> 아래에 저장되는 구조를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code Profile의 역할을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Java Spring Profile Template이 있다는 것을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Portable Mode, Profile, Workspace의 차이를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 배포용 Portable VS Code는 개인 사용 Instance와 분리해서 구성해야 함을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 프로젝트용 <code>.vscode/extensions.json</code>을 만들지 않았다.</li>
+</ul>
+<hr />
+<h2 id="18">18. 다음 단계<a class="headerlink" href="#18" title="Permanent link">&para;</a></h2>
+<p>다음 문서에서는 앞 단계에서 준비한 Eclipse Temurin JDK와
+현재 구성한 VS Code Java Extension의 관계를 확인하고,
+향후 프로젝트별 JDK를 어떤 시점에 연결할지 운영 방향을 정리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>JDK 준비
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>   ↓
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>Gradle 준비
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>   ↓
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>VS Code / Java / Spring Extension
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>   ↓
+</span><span id="__span-39-7"><a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>지원 Extension / Profile       ← 현재 완료
+</span><span id="__span-39-8"><a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>   ↓
+</span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>JDK 연계 및 VS Code 환경 운영 확인
+</span><span id="__span-39-10"><a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a>   ↓
+</span><span id="__span-39-11"><a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a>Spring Boot 프로젝트 생성
+</span></code></pre></div>
+<p>Gradle 기본 환경은 이미 VS Code 구성 전에 준비되어 있으므로
+VS Code 환경 구성이 완료되면 별도의 Build Tool 설치 단계로 되돌아가지 않는다.</p>
+<h2 id="_2">참고<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><a href="https://code.visualstudio.com/docs/setup/portable">VS Code Portable Mode</a></p>
+</li>
+<li>
+<p>VS Code Profiles<br />
+<a href="https://code.visualstudio.com/docs/configure/profiles">https://code.visualstudio.com/docs/configure/profiles</a></p>
+</li>
+<li>
+<p>YAML<br />
+<a href="https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml">https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml</a></p>
+</li>
+<li>
+<p>XML<br />
+<a href="https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml">https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml</a></p>
+</li>
+<li>
+<p>Container Tools<br />
+<a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-containers">https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-containers</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,2121 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../jdk_setup/">
+      
+      
+        <link rel="next" href="../macos_jdk_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Windows 설치 및 검증 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#windows-jdk" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Windows 설치 및 검증
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../01_foundation/development_device/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-tabs__link">
+          
+  
+  
+  배포 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-tabs__link">
+          
+  
+  
+  운영 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01_foundation/development_device/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발환경 기본 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 설치 및 설정
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    JDK 설치 및 설정
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jdk_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    구성 및 운영 기준
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows 설치 및 검증
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows 설치 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-windows-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Windows 개발 장비 Architecture 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-eclipse-temurin-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Eclipse Temurin JDK 다운로드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. JDK 디렉터리 준비
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-jdk-zip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. JDK ZIP 압축 해제
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-jdk-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. JDK Home 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. JDK 정상 동작 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. JDK 정상 동작 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-java-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Java Runtime 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-java-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Java Compiler 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 필수 파일 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-java_home-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. JAVA_HOME과 PATH는 아직 영구 설정하지 않음
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 설치 완료 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../macos_jdk_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS 설치 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jdk_management_troubleshooting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 운영 및 문제 해결
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../03_build_tool/gradle/gradle_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Tool 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04_vscode/vscode_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05_database_docker/docker_desktop_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle / Docker 로컬 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    배포 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    운영 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-windows-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Windows 개발 장비 Architecture 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-eclipse-temurin-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Eclipse Temurin JDK 다운로드
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. JDK 디렉터리 준비
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-jdk-zip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. JDK ZIP 압축 해제
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-jdk-home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. JDK Home 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-jdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. JDK 정상 동작 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. JDK 정상 동작 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-java-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Java Runtime 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-java-compiler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Java Compiler 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 필수 파일 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-java_home-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. JAVA_HOME과 PATH는 아직 영구 설정하지 않음
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 설치 완료 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="windows-jdk">Windows JDK 설치 및 검증<a class="headerlink" href="#windows-jdk" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 Windows 개발 PC에 <strong>Eclipse Temurin JDK 25 LTS</strong>을 준비하고,
+MicroServer 프로젝트에서 정한 로컬 개발환경 경로에 배치한 뒤 정상 동작을 검증하는 방법을 설명한다.</p>
+<p>Windows 개발환경의 기준 Root는 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>C:\local-microserver
+</span></code></pre></div>
+<p>JDK 설치 위치는 다음을 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>C:\local-microserver\tools\jdk\temurin-25
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">전체 JDK 운영 원칙</p>
+<p>JDK Vendor, Version, 시스템 전역 <code>JAVA_HOME</code>을 사용하지 않는 이유 등은 다음 문서에서 설명한다.</p>
+<p><strong><a href="../jdk_setup/">JDK 개발환경 구성 및 운영 기준</a></strong></p>
+</div>
+<hr />
+<h2 id="2-windows-architecture">2. Windows 개발 장비 Architecture 확인<a class="headerlink" href="#2-windows-architecture" title="Permanent link">&para;</a></h2>
+<p>Temurin을 다운로드하기 전에 개발 PC의 CPU Architecture를 확인한다.</p>
+<p>PowerShell:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nv">$env:PROCESSOR_ARCHITECTURE</span>
+</span></code></pre></div>
+<p>일반적인 x64 Windows PC에서는 다음과 같이 표시된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>AMD64
+</span></code></pre></div>
+<p>이 경우 Temurin 다운로드 기준은 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Operating System : Windows
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Architecture     : x64
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Package Type     : JDK
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>JVM              : HotSpot
+</span></code></pre></div>
+<p>현재 MicroServer Windows 표준 개발환경은 <strong>Windows x64</strong>를 기준으로 한다.</p>
+<div class="admonition warning">
+<p class="admonition-title">Windows ARM64 환경</p>
+<p>Eclipse Adoptium의 2026년 8월 Temurin 배포 기준으로
+<strong>JDK 25의 Windows AArch64(ARM64) Binary는 현재 제공되지 않는다.</strong></p>
+<p>따라서 Windows ARM64 장비에서 동일한 Temurin 25 개발환경이 필요한 경우
+Adoptium의 최신 지원 현황을 다시 확인한 후 대안을 검토해야 한다.</p>
+<p><strong><a href="https://adoptium.net/news/">Eclipse Temurin 최신 Release 정보</a></strong></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">PowerShell의 <code>$env:</code></p>
+<p>PowerShell에서 <code>$env:</code>는 Windows 환경변수를 읽거나 설정할 때 사용하는 문법이다.</p>
+<p>다음 명령은 현재 <code>PROCESSOR_ARCHITECTURE</code> 환경변수 값을 확인한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nv">$env:PROCESSOR_ARCHITECTURE</span>
+</span></code></pre></div>
+<p>현재 단계에서는 이 값을 변경하는 것이 아니라 CPU Architecture를 확인하기 위해 읽기만 한다.</p>
+</div>
+<hr />
+<h2 id="3-eclipse-temurin-jdk">3. Eclipse Temurin JDK 다운로드<a class="headerlink" href="#3-eclipse-temurin-jdk" title="Permanent link">&para;</a></h2>
+<p>Eclipse Adoptium 공식 사이트에서 Temurin JDK를 다운로드한다.</p>
+<ul>
+<li>Eclipse Adoptium: <a href="https://adoptium.net/">https://adoptium.net/</a></li>
+<li>Temurin Releases: <a href="https://adoptium.net/temurin/releases/">https://adoptium.net/temurin/releases/</a></li>
+</ul>
+<p>다운로드 기준:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>Version      : 25 (LTS)
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Operating OS : Windows
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Architecture : x64
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Package Type : JDK
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>JVM          : HotSpot
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>Archive      : ZIP
+</span></code></pre></div>
+<div class="admonition info">
+<p class="admonition-title">Java 25 LTS</p>
+<p>MicroServer 프로젝트는 장기적인 개발환경 안정성을 위해
+Feature Release인 Java 26 대신 <strong>Java 25 LTS</strong>를 표준으로 사용한다.</p>
+<p>Temurin 25의 세부 Patch Version은 보안 Update에 따라 변경될 수 있으므로
+다운로드 시점의 최신 Java 25 LTS Release를 사용한다.</p>
+</div>
+<p>MicroServer 프로젝트에서는 MSI Installer보다 <strong>ZIP 압축 배포본</strong>을 사용한다.</p>
+<div class="admonition warning">
+<p class="admonition-title">JRE가 아니라 JDK 선택</p>
+<p>다운로드 시 반드시 다음 항목을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Package Type : JDK
+</span></code></pre></div>
+<p><code>javac.exe</code> 등의 개발 도구가 필요하므로 JRE Package를 선택하지 않는다.</p>
+</div>
+<hr />
+<h2 id="4-jdk">4. JDK 디렉터리 준비<a class="headerlink" href="#4-jdk" title="Permanent link">&para;</a></h2>
+<p>JDK는 다음 위치에 보관한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>C:\local-microserver\tools\jdk
+</span></code></pre></div>
+<p>PowerShell에서 디렉터리를 생성한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">New-Item</span> <span class="n">-ItemType</span> <span class="n">Directory</span> <span class="n">-Force</span> <span class="n">C</span><span class="p">:\</span><span class="n">local-microserver</span><span class="p">\</span><span class="n">tools</span><span class="p">\</span><span class="n">jdk</span>
+</span></code></pre></div>
+<p>여러 JDK Version을 함께 보관하면 다음과 같은 구조가 된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>C:\local-microserver
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>└─ tools
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>   └─ jdk
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>      ├─ temurin-17
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>      ├─ temurin-21
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>      └─ temurin-25
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Git Repository와 분리</p>
+<p>실제 프로젝트 Source는 다음과 같이 별도의 <code>repos</code> 영역에서 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>C:\local-microserver
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>├─ tools
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>│  └─ jdk
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>│      └─ temurin-25
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>│
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>└─ repos
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>   └─ microserver
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>      └─ .git
+</span></code></pre></div>
+<p>JDK Binary 자체는 Git Repository에 포함하지 않는다.</p>
+</div>
+<hr />
+<h2 id="5-jdk-zip">5. JDK ZIP 압축 해제<a class="headerlink" href="#5-jdk-zip" title="Permanent link">&para;</a></h2>
+<p>다운로드한 Temurin ZIP 파일을 다음 경로 아래에 압축 해제한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>C:\local-microserver\tools\jdk
+</span></code></pre></div>
+<p>Release에 따라 압축 해제 후 디렉터리 이름이 다음처럼 생성될 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>jdk-25.0.4+7
+</span></code></pre></div>
+<p>관리 편의를 위해 최종 Directory를 다음과 같이 정리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>C:\local-microserver\tools\jdk\temurin-25
+</span></code></pre></div>
+<p>정상적인 구조 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>C:\local-microserver\tools\jdk\temurin-25
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>├─ bin\
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>├─ conf\
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>├─ include\
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>├─ legal\
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>├─ lib\
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>└─ release
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">JDK 25의 <code>jmods</code> Directory</p>
+<p>Temurin JDK 25부터는 배포 구성에 따라 <code>jmods</code> Directory가 기본 Archive에 포함되지 않을 수 있다.</p>
+<p>따라서 <code>jmods</code> Directory가 없다는 이유만으로 JDK 설치가 잘못된 것으로 판단하지 않는다.</p>
+<p>현재 가이드에서 필수적으로 확인하는 항목은 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>bin\java.exe
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>bin\javac.exe
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>release
+</span></code></pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">중첩 Directory 확인</p>
+<p>압축을 해제할 때 다음처럼 Directory가 한 단계 더 중첩되지 않았는지 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>X  C:\local-microserver\tools\jdk\temurin-25\jdk-25.0.4+7\bin
+</span></code></pre></div>
+<p>최종적으로 <code>temurin-25</code> 바로 아래에 <code>bin</code>, <code>lib</code>, <code>release</code> 등이 위치하도록 정리한다.</p>
+</div>
+<hr />
+<h2 id="6-jdk-home">6. JDK Home 확인<a class="headerlink" href="#6-jdk-home" title="Permanent link">&para;</a></h2>
+<p>JDK Home은 JDK의 최상위 Directory를 의미한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>C:\local-microserver\tools\jdk\temurin-25
+</span></code></pre></div>
+<p>다음 경로와 혼동하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>O  C:\local-microserver\tools\jdk\temurin-25
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>X  C:\local-microserver\tools\jdk\temurin-25\bin
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>X  C:\local-microserver\tools\jdk\temurin-25\bin\java.exe
+</span></code></pre></div>
+<p>이 JDK Home 경로는 이후 Gradle과 VS Code 환경을 구성할 때 다시 사용한다.</p>
+<hr />
+<h2 id="7-jdk">7. JDK 정상 동작 확인<a class="headerlink" href="#7-jdk" title="Permanent link">&para;</a></h2>
+<p>현재 단계에서는 시스템 <code>JAVA_HOME</code>과 시스템 PATH를 영구 설정하지 않는다.</p>
+<p>따라서 새 PowerShell에서 다음 명령이 바로 실행되지 않아도 설치 오류는 아니다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">java</span> <span class="n">-version</span>
+</span></code></pre></div>
+<p>JDK 자체가 정상적으로 준비되었는지는 실행파일을 절대경로로 호출하여 확인한다.</p>
+<h3 id="71-java-runtime">7.1 Java Runtime 확인<a class="headerlink" href="#71-java-runtime" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\local-microserver\tools\jdk\temurin-25\bin\java.exe&quot;</span> <span class="n">-version</span>
+</span></code></pre></div>
+<p>정상적인 경우 Java 25 계열 정보가 표시된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>openjdk version &quot;25...&quot;
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>OpenJDK Runtime Environment Temurin-25...
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>OpenJDK 64-Bit Server VM Temurin-25...
+</span></code></pre></div>
+<h3 id="72-java-compiler">7.2 Java Compiler 확인<a class="headerlink" href="#72-java-compiler" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\local-microserver\tools\jdk\temurin-25\bin\javac.exe&quot;</span> <span class="n">-version</span>
+</span></code></pre></div>
+<p>정상적인 경우:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>javac 25...
+</span></code></pre></div>
+<hr />
+<h2 id="8">8. 필수 파일 확인<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>다음 파일이 존재하는지 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>C:\local-microserver\tools\jdk\temurin-25
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>│
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>├─ bin\java.exe
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>├─ bin\javac.exe
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>└─ release
+</span></code></pre></div>
+<p>특히 <code>javac.exe</code>가 없다면 JDK가 아닌 JRE 또는 다른 Runtime Package를 내려받지 않았는지 확인한다.</p>
+<hr />
+<h2 id="9-java_home-path">9. JAVA_HOME과 PATH는 아직 영구 설정하지 않음<a class="headerlink" href="#9-java_home-path" title="Permanent link">&para;</a></h2>
+<p>MicroServer 프로젝트에서는 Windows 시스템 환경변수에 프로젝트 JDK를 영구 등록하는 방식을 기본으로 사용하지 않는다.</p>
+<p>현재 단계에서는 다음 작업을 수행하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>시스템 JAVA_HOME 영구 등록
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>시스템 PATH에 JDK\bin 영구 추가
+</span></code></pre></div>
+<p>향후 실제 개발 시에는 용도에 따라 다음과 같이 연결한다.</p>
+<pre class="mermaid"><code>flowchart TD
+    A["C:\local-microserver\tools\jdk\temurin-25"]
+
+    A --&gt; B["VS Code Java Runtime"]
+    A --&gt; C["Gradle 실행 JVM"]
+    A --&gt; D["setup.ps1 / setup.cmd"]
+    A --&gt; E["Spring Boot Run / Debug"]</code></pre>
+<div class="admonition tip">
+<p class="admonition-title">왜 지금 JAVA_HOME을 설정하지 않는가?</p>
+<p>한 개발 PC에서 서로 다른 JDK가 필요한 프로젝트를 동시에 운영할 수 있기 때문이다.</p>
+<p>MicroServer JDK를 Windows 시스템 전체 기본 Java로 고정하기보다
+이후 프로젝트 / 도구 단위로 필요한 JDK를 연결한다.</p>
+</div>
+<hr />
+<h2 id="10">10. 설치 완료 확인<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>JDK Home:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>C:\local-microserver\tools\jdk\temurin-25
+</span></code></pre></div>
+<p>최종 확인:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\local-microserver\tools\jdk\temurin-25\bin\java.exe&quot;</span> <span class="n">-version</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="p">&amp;</span> <span class="s2">&quot;C:\local-microserver\tools\jdk\temurin-25\bin\javac.exe&quot;</span> <span class="n">-version</span>
+</span></code></pre></div>
+<p>두 명령이 모두 Java 25 계열로 정상 실행되면 Windows JDK 준비가 완료된 것이다.</p>
+<hr />
+<h2 id="11">11. 체크리스트<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Windows 개발 장비 Architecture를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Eclipse Temurin JDK 25 LTS을 선택했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JRE가 아닌 JDK Package를 선택했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Windows용 ZIP 배포본을 사용했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JDK를 <code>C:\local-microserver\tools\jdk\temurin-25</code>에 배치했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>bin\java.exe</code>가 존재한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>bin\javac.exe</code>가 존재한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>java.exe -version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>javac.exe -version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 시스템 전역 <code>JAVA_HOME</code>을 프로젝트용으로 영구 설정하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 시스템 전역 PATH에 프로젝트 JDK <code>bin</code>을 추가하지 않았다.</li>
+</ul>
+<hr />
+<h2 id="12">12. 다음 단계<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>JDK 준비가 완료되면 Gradle 기본 환경 구성으로 진행한다.</p>
+<p>현재 단계에서는 아직 다음 설정을 하지 않는다.</p>
+<ul>
+<li>VS Code Java Runtime</li>
+<li><code>.vscode/settings.json</code></li>
+<li><code>java.configuration.runtimes</code></li>
+<li>Spring Boot 프로젝트 JDK</li>
+<li>Gradle Wrapper</li>
+<li>애플리케이션 Run / Debug</li>
+</ul>
+<p>이 설정들은 이후 각 전용 가이드에서 단계별로 진행한다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,4448 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../project_jdk_vscode_verify/">
+      
+      
+        <link rel="next" href="../project_maven_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Gradle Wrapper 확인 및 Build 기준 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gradle-wrapper-build" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Gradle Wrapper 확인 및 Build 기준
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../02_development_environment/01_foundation/development_device/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-tabs__link">
+          
+  
+  
+  배포 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-tabs__link">
+          
+  
+  
+  운영 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../01_microserver_introduction/01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../02_development_environment/01_foundation/development_device/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 생성 및 검증
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 개발환경 설정
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 개발환경 설정
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_jdk_vscode_concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code Java 개발환경 개념
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_jdk_vscode_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 JDK / VS Code Workspace 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_workspace_settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code Workspace Settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_jdk_vscode_verify/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java / Gradle / Spring Boot 인식 확인
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradle Wrapper 확인 및 Build 기준
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradle Wrapper 확인 및 Build 기준
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 현재 단계의 위치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-pc-gradle-gradle-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 개발 PC Gradle과 Gradle Wrapper
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 개발 PC Gradle과 Gradle Wrapper">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pc-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개발 PC Gradle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프로젝트 Gradle Wrapper
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 프로젝트 기준 버전
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-spring-initializr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Spring Initializr 생성 파일 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Maven 프로젝트와 파일 구조 비교
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Maven 프로젝트와 파일 구조 비교">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maven 대응
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-wrapper-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Wrapper Version 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Wrapper Version 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-wrapper-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Wrapper Properties 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-wrapper-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Wrapper Version을 변경해야 하는 경우
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Wrapper Version을 변경해야 하는 경우">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실행 후 변경되는 핵심 설정
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-settingsgradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. settings.gradle 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. settings.gradle 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maven 대응
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-buildgradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. build.gradle 기본 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. plugins {} 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. plugins {} 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        java
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orgspringframeworkboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        org.springframework.boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iospringdependency-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        io.spring.dependency-management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-maven-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Maven Plugin 설정과 비교
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-java-toolchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Java Toolchain 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Java Toolchain 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maven 대응
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Repository 설정
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Repository 설정">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-build-tool-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Build Tool과 Repository는 서로 다른 개념
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Dependency가 다운로드되는 흐름
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-maven-central" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 Maven Central이란
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-maven-project-maven-central" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 Maven Project도 Maven Central을 사용할 수 있음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#155-maven-central-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.5 Maven Central 외 Repository도 사용할 수 있음
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-dependency-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Dependency Configuration 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. Dependency Configuration 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        api
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compileonly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compileOnly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtimeonly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        runtimeOnly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testimplementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        testImplementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testruntimeonly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        testRuntimeOnly
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-dependency-coordinate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Dependency 선언과 Coordinate 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17. Dependency 선언과 Coordinate 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spring-boot-dependency-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spring Boot Dependency에서 Version이 없는 이유
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-project-coordinate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Project Coordinate 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18. Project Coordinate 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1618" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16~18장 핵심 정리
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-gradle-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. Gradle Task 목록 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19. Gradle Task 목록 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20-maven-lifecycle-gradle-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. Maven Lifecycle과 Gradle Task 비교
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-gradle-wrapper-macos-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. Gradle Wrapper 실행 권한 - macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-gradle_home-gradle_user_home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. GRADLE_HOME과 GRADLE_USER_HOME 구분
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="22. GRADLE_HOME과 GRADLE_USER_HOME 구분">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-gradle_home-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.1 GRADLE_HOME - Gradle 프로그램 설치 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-gradle_user_home-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.2 GRADLE_USER_HOME - Gradle 실행 데이터 저장 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.3 절대경로와 상대경로 표현
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#224" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.4 두 경로를 한 번에 비교
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#225-gradle-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.5 Gradle Wrapper 실행 시 어떤 경로를 사용하는가
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#226-project-gradlewrapper-gradle_user_homewrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.6 Project의 gradle\wrapper와 GRADLE_USER_HOME\wrapper 구분
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#227-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.7 VS Code 실행환경과 연결
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#228-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.8 개인 Gradle 설정
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        핵심 정리
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-project-build-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. Project Build에 전역 Gradle을 사용하지 않는 이유
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-build-script-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        24. Build Script 변경 후 VS Code 반영
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25. 현재 단계에서 하지 않는 작업
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26. 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        28. 공식 참고 자료
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_maven_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maven Wrapper 및 프로젝트 설정 (비교 / 참고)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../application_yaml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    application.yml 기본 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../03_initial_verification/project_initial_build_verification/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 초기 실행 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    배포 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    운영 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 현재 단계의 위치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-pc-gradle-gradle-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 개발 PC Gradle과 Gradle Wrapper
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 개발 PC Gradle과 Gradle Wrapper">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pc-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개발 PC Gradle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gradle-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프로젝트 Gradle Wrapper
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 프로젝트 기준 버전
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-spring-initializr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Spring Initializr 생성 파일 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Maven 프로젝트와 파일 구조 비교
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Maven 프로젝트와 파일 구조 비교">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gradle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maven 대응
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-wrapper-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Wrapper Version 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Wrapper Version 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-wrapper-properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Wrapper Properties 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-wrapper-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Wrapper Version을 변경해야 하는 경우
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Wrapper Version을 변경해야 하는 경우">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        실행 후 변경되는 핵심 설정
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-settingsgradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. settings.gradle 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. settings.gradle 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maven 대응
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-buildgradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. build.gradle 기본 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-plugins" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. plugins {} 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. plugins {} 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        java
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#orgspringframeworkboot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        org.springframework.boot
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iospringdependency-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        io.spring.dependency-management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-maven-plugin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Maven Plugin 설정과 비교
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-java-toolchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. Java Toolchain 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. Java Toolchain 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#maven_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Maven 대응
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Repository 설정
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="15. Repository 설정">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-build-tool-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Build Tool과 Repository는 서로 다른 개념
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-dependency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 Dependency가 다운로드되는 흐름
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#153-maven-central" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 Maven Central이란
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-maven-project-maven-central" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 Maven Project도 Maven Central을 사용할 수 있음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#155-maven-central-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.5 Maven Central 외 Repository도 사용할 수 있음
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-dependency-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Dependency Configuration 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. Dependency Configuration 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        api
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compileonly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compileOnly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runtimeonly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        runtimeOnly
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testimplementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        testImplementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testruntimeonly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        testRuntimeOnly
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-dependency-coordinate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Dependency 선언과 Coordinate 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="17. Dependency 선언과 Coordinate 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#spring-boot-dependency-version" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Spring Boot Dependency에서 Version이 없는 이유
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-project-coordinate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Project Coordinate 이해
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18. Project Coordinate 이해">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1618" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16~18장 핵심 정리
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-gradle-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. Gradle Task 목록 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19. Gradle Task 목록 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos-linux_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20-maven-lifecycle-gradle-task" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. Maven Lifecycle과 Gradle Task 비교
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21-gradle-wrapper-macos-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. Gradle Wrapper 실행 권한 - macOS / Linux
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-gradle_home-gradle_user_home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. GRADLE_HOME과 GRADLE_USER_HOME 구분
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="22. GRADLE_HOME과 GRADLE_USER_HOME 구분">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#221-gradle_home-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.1 GRADLE_HOME - Gradle 프로그램 설치 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#222-gradle_user_home-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.2 GRADLE_USER_HOME - Gradle 실행 데이터 저장 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#223" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.3 절대경로와 상대경로 표현
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#224" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.4 두 경로를 한 번에 비교
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#225-gradle-wrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.5 Gradle Wrapper 실행 시 어떤 경로를 사용하는가
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#226-project-gradlewrapper-gradle_user_homewrapper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.6 Project의 gradle\wrapper와 GRADLE_USER_HOME\wrapper 구분
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#227-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.7 VS Code 실행환경과 연결
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#228-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22.8 개인 Gradle 설정
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        핵심 정리
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-project-build-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. Project Build에 전역 Gradle을 사용하지 않는 이유
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-build-script-vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        24. Build Script 변경 후 VS Code 반영
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25. 현재 단계에서 하지 않는 작업
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26. 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        28. 공식 참고 자료
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="gradle-wrapper-build">Gradle Wrapper 확인 및 프로젝트 Build 기준 가이드<a class="headerlink" href="#gradle-wrapper-build" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 생성된 MicroServer Spring Boot 프로젝트의 Build 기준을
+<strong>Gradle Wrapper 중심으로 확정</strong>하고, <code>build.gradle</code>과 <code>settings.gradle</code>의 기본 구조를 이해하는 방법을 설명한다.</p>
+<p>MicroServer의 기본 Build Tool은 <strong>Gradle + Groovy DSL</strong>이다.</p>
+<p>이번 단계의 핵심은 개발 PC에 설치한 <code>gradle</code> 명령을 사용하는 것이 아니라
+프로젝트에 포함된 Wrapper를 통해 <strong>모든 개발자와 CI/CD가 동일한 Gradle 버전으로 Build하도록 만드는 것</strong>이다.</p>
+<p>주요 목표:</p>
+<ul>
+<li>Spring Initializr가 생성한 Gradle Wrapper 확인</li>
+<li>Wrapper 구성 파일 이해</li>
+<li>Gradle 9.7.1 기준 확인 / 고정</li>
+<li><code>settings.gradle</code> 역할 이해</li>
+<li><code>build.gradle</code> 역할 이해</li>
+<li>Java Toolchain 26 확인</li>
+<li>Spring Boot Gradle Plugin 확인</li>
+<li>Dependency Configuration 이해</li>
+<li>Windows / macOS Wrapper 실행 확인</li>
+<li>이후 모든 Project Build를 Wrapper 중심으로 실행</li>
+<li>같은 설정을 Maven에서는 어떻게 표현하는지 비교</li>
+</ul>
+<hr />
+<h2 id="2">2. 현재 단계의 위치<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Spring Boot Project 생성
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>JDK / VS Code Workspace 설정
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>[ Gradle Wrapper 확인 / 프로젝트 Build 기준 ]      ← 현재
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Spring Boot 초기 실행 및 Build 검증
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Gradle Multi-Project 구성
+</span></code></pre></div>
+<hr />
+<h2 id="3-pc-gradle-gradle-wrapper">3. 개발 PC Gradle과 Gradle Wrapper<a class="headerlink" href="#3-pc-gradle-gradle-wrapper" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TB
+    DEV[Developer PC]
+    DEV --&gt; GLOBAL[Installed Gradle - optional]
+
+    PROJECT[MicroServer Project]
+    PROJECT --&gt; WRAPPER[Gradle Wrapper]
+    WRAPPER --&gt; VERSION[Gradle 9.7.1]
+
+    WRAPPER --&gt; BUILD[build.gradle]
+    WRAPPER --&gt; SETTINGS[settings.gradle]</code></pre>
+<h3 id="pc-gradle">개발 PC Gradle<a class="headerlink" href="#pc-gradle" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>gradle
+</span></code></pre></div>
+<p>역할:</p>
+<ul>
+<li>Gradle 자체 학습</li>
+<li>Wrapper가 없는 프로젝트의 Wrapper 생성</li>
+<li>Wrapper 복구 / 업그레이드 보조</li>
+</ul>
+<h3 id="gradle-wrapper">프로젝트 Gradle Wrapper<a class="headerlink" href="#gradle-wrapper" title="Permanent link">&para;</a></h3>
+<p>Windows:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>gradlew.bat
+</span></code></pre></div>
+<p>macOS / Linux:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>./gradlew
+</span></code></pre></div>
+<p>역할:</p>
+<ul>
+<li>Project Gradle Version 고정</li>
+<li>개발자별 Gradle Version 차이 감소</li>
+<li>CI/CD와 Local Build 기준 일치</li>
+<li>필요한 Gradle Distribution 자동 Download</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">프로젝트 Build 표준</p>
+<p>MicroServer 프로젝트 Build 명령은 특별한 이유가 없으면 <code>gradle</code>이 아니라
+<strong><code>gradlew</code> / <code>gradlew.bat</code> 기준으로 작성한다.</strong></p>
+</div>
+<hr />
+<h2 id="4">4. 프로젝트 기준 버전<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>현재 MicroServer 기준:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Spring Boot : 4.1.0
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>Java        : 26
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Gradle      : 9.7.1
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>DSL         : Groovy
+</span></code></pre></div>
+<p>Spring Boot 4.1.0은 Gradle 8.14 이상 8.x와 Gradle 9.x를 지원한다.</p>
+<p>Gradle 9.7.1은 Java 26에서 실행할 수 있으므로 현재 프로젝트 기준과 호환된다.</p>
+<hr />
+<h2 id="5-spring-initializr">5. Spring Initializr 생성 파일 확인<a class="headerlink" href="#5-spring-initializr" title="Permanent link">&para;</a></h2>
+<p>Project Root에서 다음 파일을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>microserver/
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>├─ gradle/
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>│  └─ wrapper/
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>│     ├─ gradle-wrapper.jar
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>│     └─ gradle-wrapper.properties
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>├─ gradlew
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>├─ gradlew.bat
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>├─ build.gradle
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>├─ settings.gradle
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>└─ src/
+</span></code></pre></div>
+<p>각 파일의 역할:</p>
+<table>
+<thead>
+<tr>
+<th>파일</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>gradlew</code></td>
+<td>macOS / Linux Wrapper Script</td>
+</tr>
+<tr>
+<td><code>gradlew.bat</code></td>
+<td>Windows Wrapper Script</td>
+</tr>
+<tr>
+<td><code>gradle-wrapper.jar</code></td>
+<td>Wrapper 실행 코드</td>
+</tr>
+<tr>
+<td><code>gradle-wrapper.properties</code></td>
+<td>Gradle Distribution Version / URL</td>
+</tr>
+<tr>
+<td><code>settings.gradle</code></td>
+<td>Root Project 이름과 Subproject 구성</td>
+</tr>
+<tr>
+<td><code>build.gradle</code></td>
+<td>Plugin, Dependency, Java, Build 설정</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="6-maven">6. Maven 프로젝트와 파일 구조 비교<a class="headerlink" href="#6-maven" title="Permanent link">&para;</a></h2>
+<h3 id="gradle">Gradle<a class="headerlink" href="#gradle" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>microserver/
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>├─ gradle/
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>│  └─ wrapper/
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>├─ gradlew
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>├─ gradlew.bat
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>├─ settings.gradle
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>└─ build.gradle
+</span></code></pre></div>
+<h3 id="maven">Maven 대응<a class="headerlink" href="#maven" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>microserver/
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>├─ .mvn/
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>│  └─ wrapper/
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>├─ mvnw
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>├─ mvnw.cmd
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>└─ pom.xml
+</span></code></pre></div>
+<p>핵심 차이는 Maven이 많은 프로젝트 정보를 <code>pom.xml</code>에 집중하는 반면,
+Gradle은 <strong>프로젝트 구조와 Build Logic을 <code>settings.gradle</code>과 <code>build.gradle</code>로 분리</strong>한다는 점이다.</p>
+<hr />
+<h2 id="7-wrapper-version">7. Wrapper Version 확인<a class="headerlink" href="#7-wrapper-version" title="Permanent link">&para;</a></h2>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
+<h3 id="macos-linux">macOS / Linux<a class="headerlink" href="#macos-linux" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>./gradlew<span class="w"> </span>--version
+</span></code></pre></div>
+<p>확인 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Gradle 9.7.1
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>JVM: 26
+</span></code></pre></div>
+<p>Gradle 버전뿐 아니라 실제로 어떤 JVM으로 Gradle이 실행되는지도 확인한다.</p>
+<hr />
+<h2 id="8-wrapper-properties">8. Wrapper Properties 확인<a class="headerlink" href="#8-wrapper-properties" title="Permanent link">&para;</a></h2>
+<p>파일:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>gradle/wrapper/gradle-wrapper.properties
+</span></code></pre></div>
+<p>핵심 항목:</p>
+<div class="language-properties highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="na">distributionUrl</span><span class="o">=</span><span class="s">https</span><span class="se">\:</span><span class="s">//services.gradle.org/distributions/gradle-9.7.1-bin.zip</span>
+</span></code></pre></div>
+<p><code>distributionUrl</code>에 선언된 버전이 프로젝트가 사용할 Gradle 버전이다.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>개발 PC의 <code>gradle --version</code>이 9.7.1이 아니더라도
+<code>./gradlew --version</code>이 9.7.1이면 프로젝트 Build는 9.7.1 기준으로 실행된다.</p>
+</div>
+<hr />
+<h2 id="9-wrapper-version">9. Wrapper Version을 변경해야 하는 경우<a class="headerlink" href="#9-wrapper-version" title="Permanent link">&para;</a></h2>
+<p>다음 경우 Gradle Wrapper가 사용할 Gradle Version을 변경하거나 갱신한다.</p>
+<ul>
+<li>Spring Initializr가 생성한 Gradle Version과 프로젝트 표준 Version이 다른 경우</li>
+<li>Gradle Patch Version 업데이트가 필요한 경우</li>
+<li>Wrapper 설정을 특정 Gradle Version으로 맞춰야 하는 경우</li>
+<li>Wrapper 파일을 복구하거나 다시 생성해야 하는 경우</li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Gradle Wrapper Version 변경 명령</p>
+<p>아래 명령은 <strong>Gradle Wrapper가 사용할 Gradle Version을 변경하는 명령</strong>이다.</p>
+<p>예를 들어 <code>9.7.1</code>을 지정하면
+이 Project의 Gradle Wrapper가 <strong>Gradle 9.7.1을 사용하도록 Wrapper 설정을 갱신</strong>한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Gradle Wrapper Version 변경
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>        ↓
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>wrapper Task 실행
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>        ↓
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>--gradle-version 9.7.1 지정
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>        ↓
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>Gradle Wrapper가 사용할 Version을 9.7.1로 변경
+</span></code></pre></div>
+</div>
+<h3 id="windows_1">Windows<a class="headerlink" href="#windows_1" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">wrapper</span> <span class="p">-</span><span class="n">-gradle-version</span> <span class="n">9</span><span class="p">.</span><span class="n">7</span><span class="p">.</span><span class="n">1</span>
+</span></code></pre></div>
+<p>의미:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>.\gradlew.bat
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>→ 현재 Project의 Gradle Wrapper를 사용하여 Gradle 실행
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>wrapper
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>→ Gradle Wrapper 관련 파일과 설정을 생성 / 갱신하는 Task
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>--gradle-version 9.7.1
+</span><span id="__span-15-8"><a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>→ Gradle Wrapper가 사용할 Gradle Version을 9.7.1로 변경
+</span></code></pre></div>
+<h3 id="macos-linux_1">macOS / Linux<a class="headerlink" href="#macos-linux_1" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>./gradlew<span class="w"> </span>wrapper<span class="w"> </span>--gradle-version<span class="w"> </span><span class="m">9</span>.7.1
+</span></code></pre></div>
+<p>동일하게 현재 Project의 Gradle Wrapper가 사용할 Gradle Version을
+<strong>9.7.1로 변경</strong>한다.</p>
+<h3 id="_1">실행 후 변경되는 핵심 설정<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>명령 실행 후 다음 파일의 Wrapper 설정이 갱신된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>gradle/wrapper/gradle-wrapper.properties
+</span></code></pre></div>
+<p>대표적으로 <code>distributionUrl</code>이 지정한 Gradle Version을 가리키게 된다.</p>
+<div class="language-properties highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="na">distributionUrl</span><span class="o">=</span><span class="s">https</span><span class="se">\:</span><span class="s">//services.gradle.org/distributions/gradle-9.7.1-bin.zip</span>
+</span></code></pre></div>
+<p>즉 다음과 같이 이해하면 된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>.\gradlew.bat wrapper --gradle-version 9.7.1
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>        ↓
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Gradle Wrapper Version을 9.7.1로 변경
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>        ↓
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>gradle-wrapper.properties 갱신
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>        ↓
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>이후 gradlew / gradlew.bat 실행 시 Gradle 9.7.1 사용
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>wrapper</code>와 <code>:wrapper</code></p>
+<p>Root Project의 <code>wrapper</code> Task는 다음 두 형태로 표현할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>wrapper
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>:wrapper
+</span></code></pre></div>
+<p><code>:wrapper</code>는 Root Project의 Task Path를 명시한 표현이다.</p>
+<p>현재 MicroServer처럼 단일 Root Project에서 실행하는 일반적인 예제에서는
+보다 간단하게 다음 형식을 사용한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">wrapper</span> <span class="p">-</span><span class="n">-gradle-version</span> <span class="n">9</span><span class="p">.</span><span class="n">7</span><span class="p">.</span><span class="n">1</span>
+</span></code></pre></div>
+</div>
+<p>Gradle Wrapper Version 변경은 <code>gradle-wrapper.properties</code>의 Version 문자열을
+직접 수정하는 방식보다 <strong>Wrapper Task를 통해 갱신하는 방식을 기본으로 사용</strong>한다.</p>
+<hr />
+<h2 id="10-settingsgradle">10. <code>settings.gradle</code> 이해<a class="headerlink" href="#10-settingsgradle" title="Permanent link">&para;</a></h2>
+<p>단일 Project 초기 상태에서는 다음과 같이 단순할 수 있다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">rootProject</span><span class="o">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;microserver&#39;</span>
+</span></code></pre></div>
+<p><code>settings.gradle</code>은 Gradle Build의 <strong>프로젝트 구조 진입점</strong>이다.</p>
+<p>향후 Multi-Project로 전환하면 다음과 같이 Subproject를 선언한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">rootProject</span><span class="o">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;microserver&#39;</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">include</span><span class="w"> </span><span class="s1">&#39;module-common&#39;</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="n">include</span><span class="w"> </span><span class="s1">&#39;runtime&#39;</span>
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="n">include</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span>
+</span></code></pre></div>
+<h3 id="maven_1">Maven 대응<a class="headerlink" href="#maven_1" title="Permanent link">&para;</a></h3>
+<p>Maven에서는 Parent <code>pom.xml</code>에 다음과 같이 Module을 선언한다.</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nt">&lt;modules&gt;</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>module-common<span class="nt">&lt;/module&gt;</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>runtime<span class="nt">&lt;/module&gt;</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="w">    </span><span class="nt">&lt;module&gt;</span>admin<span class="nt">&lt;/module&gt;</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="nt">&lt;/modules&gt;</span>
+</span></code></pre></div>
+<p>즉 다음과 같이 이해한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Gradle settings.gradle include
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>        ↕
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>Maven pom.xml &lt;modules&gt;
+</span></code></pre></div>
+<hr />
+<h2 id="11-buildgradle">11. <code>build.gradle</code> 기본 구조<a class="headerlink" href="#11-buildgradle" title="Permanent link">&para;</a></h2>
+<p>Spring Boot 4.1.0 / Java 26 기준 기본 형태는 다음과 같다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">plugins</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;java&#39;</span>
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;4.1.0&#39;</span>
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;io.spring.dependency-management&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;1.1.7&#39;</span>
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="o">}</span>
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;io.github.teammicroserver&#39;</span>
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0.0.1-SNAPSHOT&#39;</span>
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="n">java</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a><span class="w">    </span><span class="n">toolchain</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="w">        </span><span class="n">languageVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JavaLanguageVersion</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">26</span><span class="o">)</span>
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13" href="#__codelineno-26-13"></a><span class="w">    </span><span class="o">}</span>
+</span><span id="__span-26-14"><a id="__codelineno-26-14" name="__codelineno-26-14" href="#__codelineno-26-14"></a><span class="o">}</span>
+</span><span id="__span-26-15"><a id="__codelineno-26-15" name="__codelineno-26-15" href="#__codelineno-26-15"></a>
+</span><span id="__span-26-16"><a id="__codelineno-26-16" name="__codelineno-26-16" href="#__codelineno-26-16"></a><span class="n">repositories</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-26-17"><a id="__codelineno-26-17" name="__codelineno-26-17" href="#__codelineno-26-17"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="o">()</span>
+</span><span id="__span-26-18"><a id="__codelineno-26-18" name="__codelineno-26-18" href="#__codelineno-26-18"></a><span class="o">}</span>
+</span><span id="__span-26-19"><a id="__codelineno-26-19" name="__codelineno-26-19" href="#__codelineno-26-19"></a>
+</span><span id="__span-26-20"><a id="__codelineno-26-20" name="__codelineno-26-20" href="#__codelineno-26-20"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-26-21"><a id="__codelineno-26-21" name="__codelineno-26-21" href="#__codelineno-26-21"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc&#39;</span>
+</span><span id="__span-26-22"><a id="__codelineno-26-22" name="__codelineno-26-22" href="#__codelineno-26-22"></a><span class="w">    </span><span class="n">testImplementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc-test&#39;</span>
+</span><span id="__span-26-23"><a id="__codelineno-26-23" name="__codelineno-26-23" href="#__codelineno-26-23"></a><span class="w">    </span><span class="n">testRuntimeOnly</span><span class="w"> </span><span class="s1">&#39;org.junit.platform:junit-platform-launcher&#39;</span>
+</span><span id="__span-26-24"><a id="__codelineno-26-24" name="__codelineno-26-24" href="#__codelineno-26-24"></a><span class="o">}</span>
+</span><span id="__span-26-25"><a id="__codelineno-26-25" name="__codelineno-26-25" href="#__codelineno-26-25"></a>
+</span><span id="__span-26-26"><a id="__codelineno-26-26" name="__codelineno-26-26" href="#__codelineno-26-26"></a><span class="n">tasks</span><span class="o">.</span><span class="na">named</span><span class="o">(</span><span class="s1">&#39;test&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-26-27"><a id="__codelineno-26-27" name="__codelineno-26-27" href="#__codelineno-26-27"></a><span class="w">    </span><span class="n">useJUnitPlatform</span><span class="o">()</span>
+</span><span id="__span-26-28"><a id="__codelineno-26-28" name="__codelineno-26-28" href="#__codelineno-26-28"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>Spring Initializr 생성 결과는 시점이나 선택 Dependency에 따라 일부 항목이 달라질 수 있다.</p>
+<hr />
+<h2 id="12-plugins">12. <code>plugins {}</code> 이해<a class="headerlink" href="#12-plugins" title="Permanent link">&para;</a></h2>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">plugins</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;java&#39;</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;4.1.0&#39;</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;io.spring.dependency-management&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;1.1.7&#39;</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>역할:</p>
+<h3 id="java"><code>java</code><a class="headerlink" href="#java" title="Permanent link">&para;</a></h3>
+<p>Java Compile, Test, JAR 등의 기본 Task와 Source Set을 제공한다.</p>
+<h3 id="orgspringframeworkboot"><code>org.springframework.boot</code><a class="headerlink" href="#orgspringframeworkboot" title="Permanent link">&para;</a></h3>
+<p>Spring Boot 실행 및 Packaging 기능을 제공한다.</p>
+<p>대표 Task:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>bootRun
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>bootJar
+</span></code></pre></div>
+<h3 id="iospringdependency-management"><code>io.spring.dependency-management</code><a class="headerlink" href="#iospringdependency-management" title="Permanent link">&para;</a></h3>
+<p>Spring Boot가 관리하는 Dependency Version을 사용하기 쉽게 한다.</p>
+<hr />
+<h2 id="13-maven-plugin">13. Maven Plugin 설정과 비교<a class="headerlink" href="#13-maven-plugin" title="Permanent link">&para;</a></h2>
+<p>Maven에서는 Plugin이 대체로 다음 영역에 위치한다.</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nt">&lt;build&gt;</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="nt">&lt;plugins&gt;</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">        </span><span class="nt">&lt;plugin&gt;</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">            </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">            </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">        </span><span class="nt">&lt;/plugin&gt;</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">    </span><span class="nt">&lt;/plugins&gt;</span>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="nt">&lt;/build&gt;</span>
+</span></code></pre></div>
+<p>Gradle에서는:</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">plugins</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;4.1.0&#39;</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>처럼 선언한다.</p>
+<p>Gradle의 Plugin은 Task와 DSL, Configuration을 Build에 추가하는 핵심 확장 단위이다.</p>
+<hr />
+<h2 id="14-java-toolchain">14. Java Toolchain 확인<a class="headerlink" href="#14-java-toolchain" title="Permanent link">&para;</a></h2>
+<p>Gradle에서는 Java Version을 다음과 같이 명시한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">java</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">    </span><span class="n">toolchain</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">        </span><span class="n">languageVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JavaLanguageVersion</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">26</span><span class="o">)</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">    </span><span class="o">}</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>의미:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>MicroServer Source Build Java 기준
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>→ Java 26
+</span></code></pre></div>
+<h3 id="maven_2">Maven 대응<a class="headerlink" href="#maven_2" title="Permanent link">&para;</a></h3>
+<p>Spring Boot Parent POM을 사용하는 Maven에서는 다음과 같이 표현할 수 있다.</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nt">&lt;properties&gt;</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">    </span><span class="nt">&lt;java.version&gt;</span>26<span class="nt">&lt;/java.version&gt;</span>
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="nt">&lt;/properties&gt;</span>
+</span></code></pre></div>
+<p>Gradle Toolchain은 단순한 Source Compatibility 값보다
+Build Task가 사용할 Java Toolchain을 명시적으로 모델링할 수 있다는 장점이 있다.</p>
+<hr />
+<h2 id="15-repository">15. Repository 설정<a class="headerlink" href="#15-repository" title="Permanent link">&para;</a></h2>
+<p><code>build.gradle</code>의 <code>repositories {}</code>는
+<strong>Project에서 사용하는 Dependency를 어디에서 검색하고 다운로드할지 지정하는 영역</strong>이다.</p>
+<p>현재 MicroServer Project에서는 다음 설정을 사용한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="n">repositories</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="o">()</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p><code>mavenCentral()</code>은 Gradle에게 다음과 같이 알려주는 설정이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>&quot;이 Project에서 필요한 Library / Dependency를
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>Maven Central Repository에서 검색하고 다운로드한다.&quot;
+</span></code></pre></div>
+<h3 id="151-build-tool-repository">15.1 Build Tool과 Repository는 서로 다른 개념<a class="headerlink" href="#151-build-tool-repository" title="Permanent link">&para;</a></h3>
+<p>여기서 <code>mavenCentral()</code>이라는 이름 때문에
+현재 Project의 Build Tool이 Maven이라고 생각하면 안 된다.</p>
+<p><strong>Gradle / Maven은 Build Tool이고, Maven Central은 Artifact Repository이다.</strong></p>
+<p>역할을 구분하면 다음과 같다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>예</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Build Tool</td>
+<td>Gradle, Maven</td>
+<td>Compile / Test / Packaging / Dependency 관리 등 Build 수행</td>
+</tr>
+<tr>
+<td>Artifact Repository</td>
+<td>Maven Central</td>
+<td>Library / Plugin 등의 Artifact를 저장하고 제공</td>
+</tr>
+</tbody>
+</table>
+<p>현재 MicroServer Project는 다음 조합이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>Build Tool
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>→ Gradle
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>Artifact Repository
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>→ Maven Central
+</span></code></pre></div>
+<p>즉:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>Gradle
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>→ Project Build를 수행
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>Maven Central
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>→ Build에 필요한 외부 Library를 제공
+</span></code></pre></div>
+<p>서로 담당하는 역할이 다르므로
+<strong>Gradle Project가 Maven Central을 사용하는 것은 일반적인 구성</strong>이다.</p>
+<h3 id="152-dependency">15.2 Dependency가 다운로드되는 흐름<a class="headerlink" href="#152-dependency" title="Permanent link">&para;</a></h3>
+<p>예를 들어 <code>build.gradle</code>에 다음 Dependency가 있다고 가정한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc&#39;</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>Gradle은 Dependency 선언만 보고 Library 파일을 직접 가지고 있는 것이 아니다.</p>
+<p><code>repositories {}</code>에 설정된 Repository를 이용해 필요한 Artifact를 찾는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>build.gradle
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>dependencies {
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>    implementation &#39;org.springframework.boot:spring-boot-starter-webmvc&#39;
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>}
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>        ↓
+</span><span id="__span-39-7"><a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a>Gradle이 Dependency 확인
+</span><span id="__span-39-8"><a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a>        ↓
+</span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>repositories {
+</span><span id="__span-39-10"><a id="__codelineno-39-10" name="__codelineno-39-10" href="#__codelineno-39-10"></a>    mavenCentral()
+</span><span id="__span-39-11"><a id="__codelineno-39-11" name="__codelineno-39-11" href="#__codelineno-39-11"></a>}
+</span><span id="__span-39-12"><a id="__codelineno-39-12" name="__codelineno-39-12" href="#__codelineno-39-12"></a>        ↓
+</span><span id="__span-39-13"><a id="__codelineno-39-13" name="__codelineno-39-13" href="#__codelineno-39-13"></a>Maven Central Repository 조회
+</span><span id="__span-39-14"><a id="__codelineno-39-14" name="__codelineno-39-14" href="#__codelineno-39-14"></a>        ↓
+</span><span id="__span-39-15"><a id="__codelineno-39-15" name="__codelineno-39-15" href="#__codelineno-39-15"></a>필요한 Artifact / Metadata 다운로드
+</span><span id="__span-39-16"><a id="__codelineno-39-16" name="__codelineno-39-16" href="#__codelineno-39-16"></a>        ↓
+</span><span id="__span-39-17"><a id="__codelineno-39-17" name="__codelineno-39-17" href="#__codelineno-39-17"></a>Gradle Cache 저장
+</span><span id="__span-39-18"><a id="__codelineno-39-18" name="__codelineno-39-18" href="#__codelineno-39-18"></a>        ↓
+</span><span id="__span-39-19"><a id="__codelineno-39-19" name="__codelineno-39-19" href="#__codelineno-39-19"></a>Compile / Test / Runtime 등에 사용
+</span></code></pre></div>
+<p>따라서 <code>dependencies {}</code>와 <code>repositories {}</code>는 서로 연관되어 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>dependencies
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>→ 무엇을 사용할 것인가?
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>repositories
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>→ 그것을 어디에서 가져올 것인가?
+</span></code></pre></div>
+<h3 id="153-maven-central">15.3 Maven Central이란<a class="headerlink" href="#153-maven-central" title="Permanent link">&para;</a></h3>
+<p>Maven Central은 Java / JVM 생태계에서 널리 사용하는
+대표적인 Public Artifact Repository이다.</p>
+<p>Spring, JUnit, Jackson, Logback 등
+많은 Open Source Library가 Maven Central을 통해 배포된다.</p>
+<p>Gradle은 Maven Repository 형식을 지원하므로
+Maven Build Tool을 사용하지 않더라도 Maven Central의 Artifact를 사용할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>Maven Central
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>        ↓
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>Artifact Repository
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>        ↓
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>Spring / JUnit / Jackson / 기타 Library 제공
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>        ↓
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>Gradle 또는 Maven에서 사용 가능
+</span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title"><code>Maven</code>이라는 이름이 두 곳에서 등장하지만 역할이 다름</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>Maven
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>→ Build Tool
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>Maven Central
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5" href="#__codelineno-42-5"></a>→ Artifact Repository
+</span></code></pre></div>
+<p>이름은 관련되어 있지만 동일한 개념이 아니다.</p>
+</div>
+<h3 id="154-maven-project-maven-central">15.4 Maven Project도 Maven Central을 사용할 수 있음<a class="headerlink" href="#154-maven-project-maven-central" title="Permanent link">&para;</a></h3>
+<p>Maven Project 역시 기본적으로 Maven Central의 Artifact를 사용할 수 있다.</p>
+<p>즉 Gradle과 Maven 모두 같은 Repository에서 Dependency를 받을 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>                 Maven Central
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>                      │
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>              ┌───────┴───────┐
+</span><span id="__span-43-4"><a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>              ↓               ↓
+</span><span id="__span-43-5"><a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>           Gradle            Maven
+</span><span id="__span-43-6"><a id="__codelineno-43-6" name="__codelineno-43-6" href="#__codelineno-43-6"></a>         Build Tool        Build Tool
+</span></code></pre></div>
+<p>차이는 <strong>어느 Repository를 사용하는가</strong>가 아니라
+<strong>Build를 어떤 Tool과 설정 방식으로 수행하는가</strong>에 있다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>Gradle
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>→ build.gradle
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>→ repositories { mavenCentral() }
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a>→ dependencies { ... }
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a>
+</span><span id="__span-44-6"><a id="__codelineno-44-6" name="__codelineno-44-6" href="#__codelineno-44-6"></a>Maven
+</span><span id="__span-44-7"><a id="__codelineno-44-7" name="__codelineno-44-7" href="#__codelineno-44-7"></a>→ pom.xml
+</span><span id="__span-44-8"><a id="__codelineno-44-8" name="__codelineno-44-8" href="#__codelineno-44-8"></a>→ repositories / 기본 Central 설정
+</span><span id="__span-44-9"><a id="__codelineno-44-9" name="__codelineno-44-9" href="#__codelineno-44-9"></a>→ dependencies
+</span></code></pre></div>
+<p>따라서 다음 구성은 정상적이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Build Tool = Gradle
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>Repository = Maven Central
+</span></code></pre></div>
+<h3 id="155-maven-central-repository">15.5 Maven Central 외 Repository도 사용할 수 있음<a class="headerlink" href="#155-maven-central-repository" title="Permanent link">&para;</a></h3>
+<p>Gradle은 Maven Central만 사용할 수 있는 것이 아니다.</p>
+<p>필요에 따라 여러 Artifact Repository를 구성할 수 있다.</p>
+<p>예:</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="n">repositories</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="o">()</span>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="w">    </span><span class="c1">// 필요 시 사내 Maven Repository 등을 추가할 수 있다.</span>
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="w">    </span><span class="c1">// maven {</span>
+</span><span id="__span-46-6"><a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="w">    </span><span class="c1">//     url = uri(&#39;https://repository.example.com/maven&#39;)</span>
+</span><span id="__span-46-7"><a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a><span class="w">    </span><span class="c1">// }</span>
+</span><span id="__span-46-8"><a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>실제 금융 / Enterprise 프로젝트에서는
+외부 인터넷의 Maven Central에 직접 접근하지 않고
+Nexus 또는 Artifactory 같은 <strong>사내 Artifact Repository</strong>를 경유하도록 구성하는 경우도 많다.</p>
+<p>개념적으로:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>개발자 / CI
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>     ↓
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>   Gradle
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>     ↓
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>사내 Artifact Repository
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>(Nexus / Artifactory 등)
+</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>     ↓
+</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>Maven Central 등 외부 Repository
+</span></code></pre></div>
+<p>이 경우에도 Build Tool은 계속 Gradle이며,
+<strong>Dependency를 가져오는 Repository 위치만 달라지는 것</strong>이다.</p>
+<div class="admonition note">
+<p class="admonition-title">MicroServer 현재 단계</p>
+<p>현재 MicroServer Project에서는 우선 Spring Initializr가 생성한 기본 설정인</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="n">repositories</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="o">()</span>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>을 그대로 사용한다.</p>
+<p>사내 Repository, Nexus / Artifactory, 인증 정보 등의 구성은
+실제 운영 환경 또는 사내 개발환경 연계 단계에서 별도로 다룬다.</p>
+</div>
+<hr />
+<h2 id="16-dependency-configuration">16. Dependency Configuration 이해<a class="headerlink" href="#16-dependency-configuration" title="Permanent link">&para;</a></h2>
+<p>Gradle은 Dependency마다 <strong>어느 범위에서 사용할지</strong>를 Configuration으로 구분한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc&#39;</span>
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="w">    </span><span class="n">compileOnly</span><span class="w"> </span><span class="s1">&#39;org.projectlombok:lombok:&lt;version&gt;&#39;</span>
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="w">    </span><span class="n">runtimeOnly</span><span class="w"> </span><span class="s1">&#39;org.postgresql:postgresql:&lt;version&gt;&#39;</span>
+</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>
+</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a><span class="w">    </span><span class="n">testImplementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc-test&#39;</span>
+</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a><span class="w">    </span><span class="n">testRuntimeOnly</span><span class="w"> </span><span class="s1">&#39;org.junit.platform:junit-platform-launcher&#39;</span>
+</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>대표 Configuration:</p>
+<table>
+<thead>
+<tr>
+<th>Gradle</th>
+<th>주요 의미</th>
+<th>Maven과 대략 대응</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>implementation</code></td>
+<td>Compile / Runtime에서 사용하는 일반 Dependency</td>
+<td><code>compile</code>과 유사</td>
+</tr>
+<tr>
+<td><code>api</code></td>
+<td>Library의 공개 API를 통해 Consumer에도 노출해야 하는 Dependency</td>
+<td><code>compile</code>과 유사</td>
+</tr>
+<tr>
+<td><code>compileOnly</code></td>
+<td>Compile할 때만 필요</td>
+<td><code>provided</code>와 일부 유사</td>
+</tr>
+<tr>
+<td><code>runtimeOnly</code></td>
+<td>Runtime에만 필요</td>
+<td><code>runtime</code></td>
+</tr>
+<tr>
+<td><code>testImplementation</code></td>
+<td>Test Compile / Runtime</td>
+<td><code>test</code></td>
+</tr>
+<tr>
+<td><code>testRuntimeOnly</code></td>
+<td>Test Runtime에만 필요</td>
+<td>정확한 1:1 Scope 없음</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Gradle과 Maven Scope는 완전히 1:1이 아님</p>
+<p>역할이 비슷한 항목을 비교한 것이며
+Dependency 전달 방식과 Classpath 구성에는 차이가 있다.</p>
+</div>
+<h3 id="implementation"><code>implementation</code><a class="headerlink" href="#implementation" title="Permanent link">&para;</a></h3>
+<p>현재 Spring Boot Application에서 가장 기본적으로 사용하는 Configuration이다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc&#39;</span>
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>의미:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>현재 Module의 Compile / Runtime에 사용
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a>→ 다른 Module에 공개할 목적은 아님
+</span></code></pre></div>
+<p>Maven에서는 일반 <code>compile</code> Dependency와 가장 비슷하다.</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="nt">&lt;dependency&gt;</span>
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></div>
+<h3 id="api"><code>api</code><a class="headerlink" href="#api" title="Permanent link">&para;</a></h3>
+<p><code>api</code>는 <strong>공통 Library Module의 공개 API에 특정 Dependency Type이 노출될 때</strong> 사용한다.</p>
+<p>예를 들어 <code>module-common</code>이 Jackson의 <code>ObjectMapper</code>를 직접 반환한다고 가정한다.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="kd">public</span><span class="w"> </span><span class="n">ObjectMapper</span><span class="w"> </span><span class="nf">createMapper</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ObjectMapper</span><span class="p">();</span>
+</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>이 경우 <code>module-common</code>을 사용하는 다른 Module도
+<code>ObjectMapper</code> Type을 알아야 하므로:</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="n">plugins</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;java-library&#39;</span>
+</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="o">}</span>
+</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>
+</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-54-6"><a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a><span class="w">    </span><span class="n">api</span><span class="w"> </span><span class="s1">&#39;com.fasterxml.jackson.core:jackson-databind:&lt;version&gt;&#39;</span>
+</span><span id="__span-54-7"><a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>처럼 선언할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>runtime / admin
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>      ↓
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>module-common
+</span><span id="__span-55-4"><a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a>      ↓ api
+</span><span id="__span-55-5"><a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a>jackson-databind
+</span></code></pre></div>
+<p><code>module-common</code>을 사용하는 Module은
+Jackson Dependency를 별도로 선언하지 않아도 Compile Classpath에서 사용할 수 있다.</p>
+<p>다만 Java Source에서 <code>ObjectMapper</code>를 직접 사용한다면
+Java <code>import</code> 문은 여전히 필요하다.</p>
+<div class="admonition important">
+<p class="admonition-title"><code>api</code>를 공통 Dependency 창고처럼 사용하지 않음</p>
+<p><code>module-common</code>에 모든 공통 Library를 <code>api</code>로 몰아넣으면
+다른 Module이 직접 사용하는 Dependency가 숨겨질 수 있다.</p>
+<p>기준은 다음과 같이 잡는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>module-common의 공개 API에 Library Type이 노출됨
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>→ module-common의 api
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a>module-common 내부에서만 사용
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>→ module-common의 implementation
+</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>
+</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>runtime이 직접 사용하는 Library
+</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a>→ runtime의 implementation
+</span><span id="__span-56-9"><a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a>
+</span><span id="__span-56-10"><a id="__codelineno-56-10" name="__codelineno-56-10" href="#__codelineno-56-10"></a>admin이 직접 사용하는 Library
+</span><span id="__span-56-11"><a id="__codelineno-56-11" name="__codelineno-56-11" href="#__codelineno-56-11"></a>→ admin의 implementation
+</span></code></pre></div>
+<p>즉 <strong>편의를 위해 모든 공통 Dependency를 <code>api</code>로 전달하지 않는다.</strong></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">현재 MicroServer에서는</p>
+<p>현재 단계는 Spring Boot Application이므로
+대부분 <code>implementation</code>을 사용한다.</p>
+<p><code>api</code>는 향후 <code>module-common</code> 같은 Library Module에
+<code>java-library</code> Plugin을 적용할 때 주로 사용한다.</p>
+</div>
+<h3 id="compileonly"><code>compileOnly</code><a class="headerlink" href="#compileonly" title="Permanent link">&para;</a></h3>
+<p>Compile 시에는 필요하지만 Runtime에는 포함하지 않는다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a><span class="w">    </span><span class="n">compileOnly</span><span class="w"> </span><span class="s1">&#39;org.projectlombok:lombok:&lt;version&gt;&#39;</span>
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>Maven의 <code>provided</code>와 일부 유사하다.</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a><span class="nt">&lt;dependency&gt;</span>
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.projectlombok<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>lombok<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>...<span class="nt">&lt;/version&gt;</span>
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a><span class="w">    </span><span class="nt">&lt;scope&gt;</span>provided<span class="nt">&lt;/scope&gt;</span>
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></div>
+<h3 id="runtimeonly"><code>runtimeOnly</code><a class="headerlink" href="#runtimeonly" title="Permanent link">&para;</a></h3>
+<p>Compile에는 직접 필요하지 않고 실행 시에만 필요하다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a><span class="w">    </span><span class="n">runtimeOnly</span><span class="w"> </span><span class="s1">&#39;org.postgresql:postgresql:&lt;version&gt;&#39;</span>
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>JDBC Driver가 대표적인 예다.</p>
+<p>Maven:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a><span class="nt">&lt;dependency&gt;</span>
+</span><span id="__span-60-2"><a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.postgresql<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-60-3"><a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>postgresql<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-60-4"><a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>...<span class="nt">&lt;/version&gt;</span>
+</span><span id="__span-60-5"><a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a><span class="w">    </span><span class="nt">&lt;scope&gt;</span>runtime<span class="nt">&lt;/scope&gt;</span>
+</span><span id="__span-60-6"><a id="__codelineno-60-6" name="__codelineno-60-6" href="#__codelineno-60-6"></a><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></div>
+<h3 id="testimplementation"><code>testImplementation</code><a class="headerlink" href="#testimplementation" title="Permanent link">&para;</a></h3>
+<p>Test Source Compile과 Test 실행에 사용한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a><span class="w">    </span><span class="n">testImplementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc-test&#39;</span>
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>Maven의 <code>test</code> Scope와 유사하다.</p>
+<h3 id="testruntimeonly"><code>testRuntimeOnly</code><a class="headerlink" href="#testruntimeonly" title="Permanent link">&para;</a></h3>
+<p>Test Compile에는 필요하지 않고 Test 실행 시에만 사용한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a><span class="w">    </span><span class="n">testRuntimeOnly</span><span class="w"> </span><span class="s1">&#39;org.junit.platform:junit-platform-launcher&#39;</span>
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>Maven에는 <code>testRuntimeOnly</code>와 정확히 같은 표준 Scope는 없다.</p>
+<hr />
+<h2 id="17-dependency-coordinate">17. Dependency 선언과 Coordinate 이해<a class="headerlink" href="#17-dependency-coordinate" title="Permanent link">&para;</a></h2>
+<p>Gradle Dependency 선언은 다음 두 정보를 함께 표현한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>Configuration
+</span><span id="__span-63-2"><a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a>→ 언제 사용할 것인가?
+</span><span id="__span-63-3"><a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a>
+</span><span id="__span-63-4"><a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a>Coordinate
+</span><span id="__span-63-5"><a id="__codelineno-63-5" name="__codelineno-63-5" href="#__codelineno-63-5"></a>→ 어떤 Library를 사용할 것인가?
+</span></code></pre></div>
+<p>예:</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.mybatis:mybatis:3.x.x&#39;</span>
+</span></code></pre></div>
+<p>구조:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a>implementation &#39;org.mybatis:mybatis:3.x.x&#39;
+</span><span id="__span-65-2"><a id="__codelineno-65-2" name="__codelineno-65-2" href="#__codelineno-65-2"></a>      │              │       │      │
+</span><span id="__span-65-3"><a id="__codelineno-65-3" name="__codelineno-65-3" href="#__codelineno-65-3"></a>      │              │       │      └─ version
+</span><span id="__span-65-4"><a id="__codelineno-65-4" name="__codelineno-65-4" href="#__codelineno-65-4"></a>      │              │       └──────── name
+</span><span id="__span-65-5"><a id="__codelineno-65-5" name="__codelineno-65-5" href="#__codelineno-65-5"></a>      │              └──────────────── group
+</span><span id="__span-65-6"><a id="__codelineno-65-6" name="__codelineno-65-6" href="#__codelineno-65-6"></a>      └─────────────────────────────── Configuration
+</span></code></pre></div>
+<p>즉:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a>implementation
+</span><span id="__span-66-2"><a id="__codelineno-66-2" name="__codelineno-66-2" href="#__codelineno-66-2"></a>→ Compile / Runtime에서 사용
+</span><span id="__span-66-3"><a id="__codelineno-66-3" name="__codelineno-66-3" href="#__codelineno-66-3"></a>
+</span><span id="__span-66-4"><a id="__codelineno-66-4" name="__codelineno-66-4" href="#__codelineno-66-4"></a>org.mybatis
+</span><span id="__span-66-5"><a id="__codelineno-66-5" name="__codelineno-66-5" href="#__codelineno-66-5"></a>→ Group
+</span><span id="__span-66-6"><a id="__codelineno-66-6" name="__codelineno-66-6" href="#__codelineno-66-6"></a>
+</span><span id="__span-66-7"><a id="__codelineno-66-7" name="__codelineno-66-7" href="#__codelineno-66-7"></a>mybatis
+</span><span id="__span-66-8"><a id="__codelineno-66-8" name="__codelineno-66-8" href="#__codelineno-66-8"></a>→ Artifact 이름
+</span><span id="__span-66-9"><a id="__codelineno-66-9" name="__codelineno-66-9" href="#__codelineno-66-9"></a>
+</span><span id="__span-66-10"><a id="__codelineno-66-10" name="__codelineno-66-10" href="#__codelineno-66-10"></a>3.x.x
+</span><span id="__span-66-11"><a id="__codelineno-66-11" name="__codelineno-66-11" href="#__codelineno-66-11"></a>→ Version
+</span></code></pre></div>
+<p>Maven에서는 같은 정보를 XML로 표현한다.</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="nt">&lt;dependency&gt;</span>
+</span><span id="__span-67-2"><a id="__codelineno-67-2" name="__codelineno-67-2" href="#__codelineno-67-2"></a><span class="w">    </span><span class="nt">&lt;groupId&gt;</span>org.mybatis<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-67-3"><a id="__codelineno-67-3" name="__codelineno-67-3" href="#__codelineno-67-3"></a><span class="w">    </span><span class="nt">&lt;artifactId&gt;</span>mybatis<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-67-4"><a id="__codelineno-67-4" name="__codelineno-67-4" href="#__codelineno-67-4"></a><span class="w">    </span><span class="nt">&lt;version&gt;</span>3.x.x<span class="nt">&lt;/version&gt;</span>
+</span><span id="__span-67-5"><a id="__codelineno-67-5" name="__codelineno-67-5" href="#__codelineno-67-5"></a><span class="w">    </span><span class="nt">&lt;scope&gt;</span>compile<span class="nt">&lt;/scope&gt;</span>
+</span><span id="__span-67-6"><a id="__codelineno-67-6" name="__codelineno-67-6" href="#__codelineno-67-6"></a><span class="nt">&lt;/dependency&gt;</span>
+</span></code></pre></div>
+<h3 id="spring-boot-dependency-version">Spring Boot Dependency에서 Version이 없는 이유<a class="headerlink" href="#spring-boot-dependency-version" title="Permanent link">&para;</a></h3>
+<p>현재 Project 예:</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-68-2"><a id="__codelineno-68-2" name="__codelineno-68-2" href="#__codelineno-68-2"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc&#39;</span>
+</span><span id="__span-68-3"><a id="__codelineno-68-3" name="__codelineno-68-3" href="#__codelineno-68-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>일반적인 형식은 <code>group:name:version</code>이지만
+Spring Boot가 관리하는 Dependency는 Version을 생략할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>Spring Boot Dependency Management
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>        ↓
+</span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>관리 대상 Dependency Version 제공
+</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a>        ↓
+</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>개별 Dependency Version 생략 가능
+</span></code></pre></div>
+<p>관리 대상이 아닌 Dependency는 Version을 직접 지정해야 할 수 있다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.mybatis:mybatis:3.x.x&#39;</span>
+</span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">Version 생략 여부</p>
+<p>Version을 생략할 수 있는지는
+해당 Dependency가 Spring Boot BOM / Dependency Management의
+관리 대상인지 확인해야 한다.</p>
+</div>
+<hr />
+<h2 id="18-project-coordinate">18. Project Coordinate 이해<a class="headerlink" href="#18-project-coordinate" title="Permanent link">&para;</a></h2>
+<p>Dependency가 <code>group:name:version</code>으로 식별되듯
+<strong>우리 Project도 Artifact가 되면 Coordinate를 가진다.</strong></p>
+<p>현재 MicroServer 기준:</p>
+<p><code>build.gradle</code>:</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-71-1"><a id="__codelineno-71-1" name="__codelineno-71-1" href="#__codelineno-71-1"></a><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab&#39;</span>
+</span><span id="__span-71-2"><a id="__codelineno-71-2" name="__codelineno-71-2" href="#__codelineno-71-2"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0.0.1-SNAPSHOT&#39;</span>
+</span></code></pre></div>
+<p><code>settings.gradle</code>:</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-72-1"><a id="__codelineno-72-1" name="__codelineno-72-1" href="#__codelineno-72-1"></a><span class="n">rootProject</span><span class="o">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;microserver&#39;</span>
+</span></code></pre></div>
+<p>개념적인 Project Coordinate:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-73-1"><a id="__codelineno-73-1" name="__codelineno-73-1" href="#__codelineno-73-1"></a>io.github.microserverlab:microserver:0.0.1-SNAPSHOT
+</span></code></pre></div>
+<p>대응 관계:</p>
+<table>
+<thead>
+<tr>
+<th>Gradle</th>
+<th>Maven</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>group</code></td>
+<td><code>groupId</code></td>
+</tr>
+<tr>
+<td><code>rootProject.name</code></td>
+<td><code>artifactId</code>에 대응하는 이름으로 이해</td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td><code>version</code></td>
+</tr>
+</tbody>
+</table>
+<p>Maven:</p>
+<div class="language-xml highlight"><pre><span></span><code><span id="__span-74-1"><a id="__codelineno-74-1" name="__codelineno-74-1" href="#__codelineno-74-1"></a><span class="nt">&lt;groupId&gt;</span>io.github.microserverlab<span class="nt">&lt;/groupId&gt;</span>
+</span><span id="__span-74-2"><a id="__codelineno-74-2" name="__codelineno-74-2" href="#__codelineno-74-2"></a><span class="nt">&lt;artifactId&gt;</span>microserver<span class="nt">&lt;/artifactId&gt;</span>
+</span><span id="__span-74-3"><a id="__codelineno-74-3" name="__codelineno-74-3" href="#__codelineno-74-3"></a><span class="nt">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+</span></code></pre></div>
+<p>향후 이 Project 또는 Library Module을 Repository에 Publish하면
+다른 Project에서 Dependency로 사용할 수 있다.</p>
+<p>예:</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-75-1"><a id="__codelineno-75-1" name="__codelineno-75-1" href="#__codelineno-75-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-75-2"><a id="__codelineno-75-2" name="__codelineno-75-2" href="#__codelineno-75-2"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab:microserver:0.0.1-SNAPSHOT&#39;</span>
+</span><span id="__span-75-3"><a id="__codelineno-75-3" name="__codelineno-75-3" href="#__codelineno-75-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>rootProject.name</code>과 artifactId</p>
+<p>현재 단순 Project에서는 <code>rootProject.name</code>을
+Maven의 <code>artifactId</code>와 대응해서 이해하면 편리하다.</p>
+<p>실제 Publish Artifact 이름은 별도 Publishing / Archive 설정에 따라 달라질 수 있다.</p>
+</div>
+<h3 id="1618">16~18장 핵심 정리<a class="headerlink" href="#1618" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-76-1"><a id="__codelineno-76-1" name="__codelineno-76-1" href="#__codelineno-76-1"></a>Repository
+</span><span id="__span-76-2"><a id="__codelineno-76-2" name="__codelineno-76-2" href="#__codelineno-76-2"></a>→ 어디에서 가져오는가?
+</span><span id="__span-76-3"><a id="__codelineno-76-3" name="__codelineno-76-3" href="#__codelineno-76-3"></a>
+</span><span id="__span-76-4"><a id="__codelineno-76-4" name="__codelineno-76-4" href="#__codelineno-76-4"></a>Dependency Coordinate
+</span><span id="__span-76-5"><a id="__codelineno-76-5" name="__codelineno-76-5" href="#__codelineno-76-5"></a>→ 무엇을 가져오는가?
+</span><span id="__span-76-6"><a id="__codelineno-76-6" name="__codelineno-76-6" href="#__codelineno-76-6"></a>
+</span><span id="__span-76-7"><a id="__codelineno-76-7" name="__codelineno-76-7" href="#__codelineno-76-7"></a>Configuration
+</span><span id="__span-76-8"><a id="__codelineno-76-8" name="__codelineno-76-8" href="#__codelineno-76-8"></a>→ 언제 사용하는가?
+</span><span id="__span-76-9"><a id="__codelineno-76-9" name="__codelineno-76-9" href="#__codelineno-76-9"></a>
+</span><span id="__span-76-10"><a id="__codelineno-76-10" name="__codelineno-76-10" href="#__codelineno-76-10"></a>Project Coordinate
+</span><span id="__span-76-11"><a id="__codelineno-76-11" name="__codelineno-76-11" href="#__codelineno-76-11"></a>→ 우리 Project는 어떤 Artifact인가?
+</span></code></pre></div>
+<p>그리고 Multi-Project에서는 다음 원칙을 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-77-1"><a id="__codelineno-77-1" name="__codelineno-77-1" href="#__codelineno-77-1"></a>module-common의 공개 API에 필요한 Dependency
+</span><span id="__span-77-2"><a id="__codelineno-77-2" name="__codelineno-77-2" href="#__codelineno-77-2"></a>→ api
+</span><span id="__span-77-3"><a id="__codelineno-77-3" name="__codelineno-77-3" href="#__codelineno-77-3"></a>
+</span><span id="__span-77-4"><a id="__codelineno-77-4" name="__codelineno-77-4" href="#__codelineno-77-4"></a>module-common 내부 구현용 Dependency
+</span><span id="__span-77-5"><a id="__codelineno-77-5" name="__codelineno-77-5" href="#__codelineno-77-5"></a>→ implementation
+</span><span id="__span-77-6"><a id="__codelineno-77-6" name="__codelineno-77-6" href="#__codelineno-77-6"></a>
+</span><span id="__span-77-7"><a id="__codelineno-77-7" name="__codelineno-77-7" href="#__codelineno-77-7"></a>runtime / admin이 직접 사용하는 Dependency
+</span><span id="__span-77-8"><a id="__codelineno-77-8" name="__codelineno-77-8" href="#__codelineno-77-8"></a>→ 각 Module에서 implementation
+</span><span id="__span-77-9"><a id="__codelineno-77-9" name="__codelineno-77-9" href="#__codelineno-77-9"></a>
+</span><span id="__span-77-10"><a id="__codelineno-77-10" name="__codelineno-77-10" href="#__codelineno-77-10"></a>전체 Module의 Dependency Version 통일
+</span><span id="__span-77-11"><a id="__codelineno-77-11" name="__codelineno-77-11" href="#__codelineno-77-11"></a>→ BOM / Version Catalog / Platform 등으로 관리
+</span></code></pre></div>
+<p>즉 <code>module-common</code>의 <code>api</code>는
+<strong>공통 Dependency를 한곳에 모아 편하게 전달하기 위한 용도라기보다
+공개 API에 필요한 Dependency를 Consumer에게 전달하기 위한 용도</strong>로 이해한다.</p>
+<hr />
+<h2 id="19-gradle-task">19. Gradle Task 목록 확인<a class="headerlink" href="#19-gradle-task" title="Permanent link">&para;</a></h2>
+<h3 id="windows_2">Windows<a class="headerlink" href="#windows_2" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-78-1"><a id="__codelineno-78-1" name="__codelineno-78-1" href="#__codelineno-78-1"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">tasks</span>
+</span></code></pre></div>
+<h3 id="macos-linux_2">macOS / Linux<a class="headerlink" href="#macos-linux_2" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-79-1"><a id="__codelineno-79-1" name="__codelineno-79-1" href="#__codelineno-79-1"></a>./gradlew<span class="w"> </span>tasks
+</span></code></pre></div>
+<p>주요 Task:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-80-1"><a id="__codelineno-80-1" name="__codelineno-80-1" href="#__codelineno-80-1"></a>build
+</span><span id="__span-80-2"><a id="__codelineno-80-2" name="__codelineno-80-2" href="#__codelineno-80-2"></a>clean
+</span><span id="__span-80-3"><a id="__codelineno-80-3" name="__codelineno-80-3" href="#__codelineno-80-3"></a>test
+</span><span id="__span-80-4"><a id="__codelineno-80-4" name="__codelineno-80-4" href="#__codelineno-80-4"></a>classes
+</span><span id="__span-80-5"><a id="__codelineno-80-5" name="__codelineno-80-5" href="#__codelineno-80-5"></a>jar
+</span><span id="__span-80-6"><a id="__codelineno-80-6" name="__codelineno-80-6" href="#__codelineno-80-6"></a>bootJar
+</span><span id="__span-80-7"><a id="__codelineno-80-7" name="__codelineno-80-7" href="#__codelineno-80-7"></a>bootRun
+</span></code></pre></div>
+<p>Gradle에서는 Build 기능을 <strong>Task 단위</strong>로 이해하는 것이 중요하다.</p>
+<hr />
+<h2 id="20-maven-lifecycle-gradle-task">20. Maven Lifecycle과 Gradle Task 비교<a class="headerlink" href="#20-maven-lifecycle-gradle-task" title="Permanent link">&para;</a></h2>
+<p>Maven은 Lifecycle Phase를 중심으로 실행한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-81-1"><a id="__codelineno-81-1" name="__codelineno-81-1" href="#__codelineno-81-1"></a>validate
+</span><span id="__span-81-2"><a id="__codelineno-81-2" name="__codelineno-81-2" href="#__codelineno-81-2"></a>compile
+</span><span id="__span-81-3"><a id="__codelineno-81-3" name="__codelineno-81-3" href="#__codelineno-81-3"></a>test
+</span><span id="__span-81-4"><a id="__codelineno-81-4" name="__codelineno-81-4" href="#__codelineno-81-4"></a>package
+</span><span id="__span-81-5"><a id="__codelineno-81-5" name="__codelineno-81-5" href="#__codelineno-81-5"></a>verify
+</span><span id="__span-81-6"><a id="__codelineno-81-6" name="__codelineno-81-6" href="#__codelineno-81-6"></a>install
+</span><span id="__span-81-7"><a id="__codelineno-81-7" name="__codelineno-81-7" href="#__codelineno-81-7"></a>deploy
+</span></code></pre></div>
+<p>Gradle은 Task Dependency Graph를 통해 필요한 Task를 연결한다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-82-1"><a id="__codelineno-82-1" name="__codelineno-82-1" href="#__codelineno-82-1"></a>build
+</span><span id="__span-82-2"><a id="__codelineno-82-2" name="__codelineno-82-2" href="#__codelineno-82-2"></a> ├─ check
+</span><span id="__span-82-3"><a id="__codelineno-82-3" name="__codelineno-82-3" href="#__codelineno-82-3"></a> │   └─ test
+</span><span id="__span-82-4"><a id="__codelineno-82-4" name="__codelineno-82-4" href="#__codelineno-82-4"></a> └─ assemble
+</span><span id="__span-82-5"><a id="__codelineno-82-5" name="__codelineno-82-5" href="#__codelineno-82-5"></a>     └─ jar / bootJar
+</span></code></pre></div>
+<p>따라서 다음 명령이 비슷한 목적을 가지더라도 내부 실행 모델은 다르다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-83-1"><a id="__codelineno-83-1" name="__codelineno-83-1" href="#__codelineno-83-1"></a>Maven  : ./mvnw package
+</span><span id="__span-83-2"><a id="__codelineno-83-2" name="__codelineno-83-2" href="#__codelineno-83-2"></a>Gradle : ./gradlew build
+</span></code></pre></div>
+<hr />
+<h2 id="21-gradle-wrapper-macos-linux">21. Gradle Wrapper 실행 권한 - macOS / Linux<a class="headerlink" href="#21-gradle-wrapper-macos-linux" title="Permanent link">&para;</a></h2>
+<p>확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-84-1"><a id="__codelineno-84-1" name="__codelineno-84-1" href="#__codelineno-84-1"></a>ls<span class="w"> </span>-l<span class="w"> </span>gradlew
+</span></code></pre></div>
+<p>실행 권한이 없다면:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-85-1"><a id="__codelineno-85-1" name="__codelineno-85-1" href="#__codelineno-85-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>gradlew
+</span></code></pre></div>
+<p>Git에서도 실행 권한을 유지한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-86-1"><a id="__codelineno-86-1" name="__codelineno-86-1" href="#__codelineno-86-1"></a>git<span class="w"> </span>update-index<span class="w"> </span>--chmod<span class="o">=</span>+x<span class="w"> </span>gradlew
+</span></code></pre></div>
+<p>확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-87-1"><a id="__codelineno-87-1" name="__codelineno-87-1" href="#__codelineno-87-1"></a>git<span class="w"> </span>diff<span class="w"> </span>--summary
+</span></code></pre></div>
+<hr />
+<h2 id="22-gradle_home-gradle_user_home">22. <code>GRADLE_HOME</code>과 <code>GRADLE_USER_HOME</code> 구분<a class="headerlink" href="#22-gradle_home-gradle_user_home" title="Permanent link">&para;</a></h2>
+<p>MicroServer Portable 환경에서는 Gradle 관련 경로를
+<code>C:\local-microserver</code> 하위에서 관리한다.</p>
+<p>가장 먼저 구분해야 할 점은
+<strong><code>GRADLE_HOME</code>과 <code>GRADLE_USER_HOME</code>은 서로 다른 목적의 경로</strong>라는 것이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-88-1"><a id="__codelineno-88-1" name="__codelineno-88-1" href="#__codelineno-88-1"></a>GRADLE_HOME
+</span><span id="__span-88-2"><a id="__codelineno-88-2" name="__codelineno-88-2" href="#__codelineno-88-2"></a>→ C:\local-microserver\tools\gradle\gradle-9.7.1\
+</span><span id="__span-88-3"><a id="__codelineno-88-3" name="__codelineno-88-3" href="#__codelineno-88-3"></a>→ Gradle 프로그램 설치 위치
+</span><span id="__span-88-4"><a id="__codelineno-88-4" name="__codelineno-88-4" href="#__codelineno-88-4"></a>
+</span><span id="__span-88-5"><a id="__codelineno-88-5" name="__codelineno-88-5" href="#__codelineno-88-5"></a>GRADLE_USER_HOME
+</span><span id="__span-88-6"><a id="__codelineno-88-6" name="__codelineno-88-6" href="#__codelineno-88-6"></a>→ C:\local-microserver\gradle-home\
+</span><span id="__span-88-7"><a id="__codelineno-88-7" name="__codelineno-88-7" href="#__codelineno-88-7"></a>→ Gradle 실행 데이터 저장 위치
+</span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title"><code>gradle-home</code>은 폴더 이름</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-89-1"><a id="__codelineno-89-1" name="__codelineno-89-1" href="#__codelineno-89-1"></a>C:\local-microserver\gradle-home\
+</span></code></pre></div>
+<p>위 경로의 <code>gradle-home</code>은 단순한 <strong>실제 디렉터리 이름</strong>이다.</p>
+<p>이 디렉터리는 <code>GRADLE_HOME</code>이 아니라
+<code>GRADLE_USER_HOME</code> 환경변수가 가리키는 위치이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-90-1"><a id="__codelineno-90-1" name="__codelineno-90-1" href="#__codelineno-90-1"></a>GRADLE_HOME
+</span><span id="__span-90-2"><a id="__codelineno-90-2" name="__codelineno-90-2" href="#__codelineno-90-2"></a>→ C:\local-microserver\tools\gradle\gradle-9.7.1\
+</span><span id="__span-90-3"><a id="__codelineno-90-3" name="__codelineno-90-3" href="#__codelineno-90-3"></a>
+</span><span id="__span-90-4"><a id="__codelineno-90-4" name="__codelineno-90-4" href="#__codelineno-90-4"></a>GRADLE_USER_HOME
+</span><span id="__span-90-5"><a id="__codelineno-90-5" name="__codelineno-90-5" href="#__codelineno-90-5"></a>→ C:\local-microserver\gradle-home\
+</span></code></pre></div>
+</div>
+<h3 id="221-gradle_home-gradle">22.1 <code>GRADLE_HOME</code> - Gradle 프로그램 설치 위치<a class="headerlink" href="#221-gradle_home-gradle" title="Permanent link">&para;</a></h3>
+<p>MicroServer에서 Gradle 프로그램 자체는 다음 실제 디렉터리에 설치되어 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-91-1"><a id="__codelineno-91-1" name="__codelineno-91-1" href="#__codelineno-91-1"></a>C:\local-microserver\tools\gradle\gradle-9.7.1\
+</span></code></pre></div>
+<p>구조 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-92-1"><a id="__codelineno-92-1" name="__codelineno-92-1" href="#__codelineno-92-1"></a>C:\local-microserver\tools\gradle\gradle-9.7.1\
+</span><span id="__span-92-2"><a id="__codelineno-92-2" name="__codelineno-92-2" href="#__codelineno-92-2"></a>├─ bin\
+</span><span id="__span-92-3"><a id="__codelineno-92-3" name="__codelineno-92-3" href="#__codelineno-92-3"></a>├─ lib\
+</span><span id="__span-92-4"><a id="__codelineno-92-4" name="__codelineno-92-4" href="#__codelineno-92-4"></a>├─ init.d\
+</span><span id="__span-92-5"><a id="__codelineno-92-5" name="__codelineno-92-5" href="#__codelineno-92-5"></a>└─ ...
+</span></code></pre></div>
+<p>즉:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-93-1"><a id="__codelineno-93-1" name="__codelineno-93-1" href="#__codelineno-93-1"></a>GRADLE_HOME
+</span><span id="__span-93-2"><a id="__codelineno-93-2" name="__codelineno-93-2" href="#__codelineno-93-2"></a>→ Gradle 프로그램 설치 디렉터리
+</span></code></pre></div>
+<h3 id="222-gradle_user_home-gradle">22.2 <code>GRADLE_USER_HOME</code> - Gradle 실행 데이터 저장 위치<a class="headerlink" href="#222-gradle_user_home-gradle" title="Permanent link">&para;</a></h3>
+<p>Gradle은 실행되면서 Dependency Cache, Daemon, Wrapper Distribution 등
+여러 실행 데이터를 저장한다.</p>
+<p>Windows의 일반적인 기본 위치는:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-94-1"><a id="__codelineno-94-1" name="__codelineno-94-1" href="#__codelineno-94-1"></a>C:\Users\&lt;사용자&gt;\.gradle\
+</span></code></pre></div>
+<p>이지만 MicroServer Portable 환경에서는 다음 실제 디렉터리를 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-95-1"><a id="__codelineno-95-1" name="__codelineno-95-1" href="#__codelineno-95-1"></a>C:\local-microserver\gradle-home\
+</span></code></pre></div>
+<p>이 경로를 <code>GRADLE_USER_HOME</code>으로 지정한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-96-1"><a id="__codelineno-96-1" name="__codelineno-96-1" href="#__codelineno-96-1"></a>GRADLE_USER_HOME
+</span><span id="__span-96-2"><a id="__codelineno-96-2" name="__codelineno-96-2" href="#__codelineno-96-2"></a>→ C:\local-microserver\gradle-home\
+</span></code></pre></div>
+<p>Gradle 또는 Gradle Wrapper가 실행되면
+이 디렉터리 아래에 필요한 하위 디렉터리와 데이터가 생성된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-97-1"><a id="__codelineno-97-1" name="__codelineno-97-1" href="#__codelineno-97-1"></a>C:\local-microserver\gradle-home\
+</span><span id="__span-97-2"><a id="__codelineno-97-2" name="__codelineno-97-2" href="#__codelineno-97-2"></a>├─ .tmp\
+</span><span id="__span-97-3"><a id="__codelineno-97-3" name="__codelineno-97-3" href="#__codelineno-97-3"></a>├─ caches\
+</span><span id="__span-97-4"><a id="__codelineno-97-4" name="__codelineno-97-4" href="#__codelineno-97-4"></a>├─ daemon\
+</span><span id="__span-97-5"><a id="__codelineno-97-5" name="__codelineno-97-5" href="#__codelineno-97-5"></a>├─ native\
+</span><span id="__span-97-6"><a id="__codelineno-97-6" name="__codelineno-97-6" href="#__codelineno-97-6"></a>├─ notifications\
+</span><span id="__span-97-7"><a id="__codelineno-97-7" name="__codelineno-97-7" href="#__codelineno-97-7"></a>├─ workers\
+</span><span id="__span-97-8"><a id="__codelineno-97-8" name="__codelineno-97-8" href="#__codelineno-97-8"></a>└─ wrapper\
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>실제 디렉터리</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>C:\local-microserver\gradle-home\caches\</code></td>
+<td>Dependency / Plugin 등 Gradle Cache</td>
+</tr>
+<tr>
+<td><code>C:\local-microserver\gradle-home\daemon\</code></td>
+<td>Gradle Daemon 관련 데이터 / 로그</td>
+</tr>
+<tr>
+<td><code>C:\local-microserver\gradle-home\wrapper\</code></td>
+<td>Wrapper가 다운로드한 Gradle Distribution</td>
+</tr>
+<tr>
+<td><code>C:\local-microserver\gradle-home\workers\</code></td>
+<td>Gradle Worker 관련 데이터</td>
+</tr>
+<tr>
+<td><code>C:\local-microserver\gradle-home\.tmp\</code></td>
+<td>Gradle 실행 중 임시 데이터</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title"><code>GRADLE_USER_HOME</code> 디렉터리와 하위 데이터 생성</p>
+<p>MicroServer에서는 다음 실제 디렉터리를
+<code>GRADLE_USER_HOME</code>으로 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-98-1"><a id="__codelineno-98-1" name="__codelineno-98-1" href="#__codelineno-98-1"></a>C:\local-microserver\gradle-home\
+</span></code></pre></div>
+<p>Gradle 또는 Gradle Wrapper가 실행되면
+<code>caches</code>, <code>daemon</code>, <code>wrapper</code> 등의 하위 디렉터리와 데이터가
+필요에 따라 자동으로 생성된다.</p>
+<p>즉:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-99-1"><a id="__codelineno-99-1" name="__codelineno-99-1" href="#__codelineno-99-1"></a>C:\local-microserver\gradle-home\
+</span><span id="__span-99-2"><a id="__codelineno-99-2" name="__codelineno-99-2" href="#__codelineno-99-2"></a>→ GRADLE_USER_HOME이 가리키는 실제 디렉터리
+</span><span id="__span-99-3"><a id="__codelineno-99-3" name="__codelineno-99-3" href="#__codelineno-99-3"></a>→ Gradle 실행 데이터 저장 영역
+</span><span id="__span-99-4"><a id="__codelineno-99-4" name="__codelineno-99-4" href="#__codelineno-99-4"></a>
+</span><span id="__span-99-5"><a id="__codelineno-99-5" name="__codelineno-99-5" href="#__codelineno-99-5"></a>C:\local-microserver\tools\gradle\gradle-9.7.1\
+</span><span id="__span-99-6"><a id="__codelineno-99-6" name="__codelineno-99-6" href="#__codelineno-99-6"></a>→ GRADLE_HOME
+</span><span id="__span-99-7"><a id="__codelineno-99-7" name="__codelineno-99-7" href="#__codelineno-99-7"></a>→ Gradle 프로그램 설치 디렉터리
+</span></code></pre></div>
+</div>
+<h3 id="223">22.3 절대경로와 상대경로 표현<a class="headerlink" href="#223" title="Permanent link">&para;</a></h3>
+<p>현재 PowerShell 위치가 다음과 같다면:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-100-1"><a id="__codelineno-100-1" name="__codelineno-100-1" href="#__codelineno-100-1"></a>C:\local-microserver
+</span></code></pre></div>
+<p><code>GRADLE_USER_HOME</code> 디렉터리를 상대경로로 다음처럼 표현할 수도 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-101-1"><a id="__codelineno-101-1" name="__codelineno-101-1" href="#__codelineno-101-1"></a>.\gradle-home\
+</span></code></pre></div>
+<p>즉:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-102-1"><a id="__codelineno-102-1" name="__codelineno-102-1" href="#__codelineno-102-1"></a>.\gradle-home\
+</span><span id="__span-102-2"><a id="__codelineno-102-2" name="__codelineno-102-2" href="#__codelineno-102-2"></a>= C:\local-microserver\gradle-home\
+</span></code></pre></div>
+<p>다만 <code>.\gradle-home\</code>은 <strong>현재 작업 디렉터리가 <code>C:\local-microserver</code>일 때만</strong>
+같은 위치를 의미한다.</p>
+<p>따라서 가이드에서는 혼동을 줄이기 위해
+가능하면 절대경로를 기준으로 설명한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-103-1"><a id="__codelineno-103-1" name="__codelineno-103-1" href="#__codelineno-103-1"></a>C:\local-microserver\gradle-home\
+</span></code></pre></div>
+<h3 id="224">22.4 두 경로를 한 번에 비교<a class="headerlink" href="#224" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-104-1"><a id="__codelineno-104-1" name="__codelineno-104-1" href="#__codelineno-104-1"></a>C:\local-microserver\
+</span><span id="__span-104-2"><a id="__codelineno-104-2" name="__codelineno-104-2" href="#__codelineno-104-2"></a>│
+</span><span id="__span-104-3"><a id="__codelineno-104-3" name="__codelineno-104-3" href="#__codelineno-104-3"></a>├─ tools\
+</span><span id="__span-104-4"><a id="__codelineno-104-4" name="__codelineno-104-4" href="#__codelineno-104-4"></a>│  └─ gradle\
+</span><span id="__span-104-5"><a id="__codelineno-104-5" name="__codelineno-104-5" href="#__codelineno-104-5"></a>│     └─ gradle-9.7.1\
+</span><span id="__span-104-6"><a id="__codelineno-104-6" name="__codelineno-104-6" href="#__codelineno-104-6"></a>│        └─ Gradle 프로그램
+</span><span id="__span-104-7"><a id="__codelineno-104-7" name="__codelineno-104-7" href="#__codelineno-104-7"></a>│
+</span><span id="__span-104-8"><a id="__codelineno-104-8" name="__codelineno-104-8" href="#__codelineno-104-8"></a>│        ↑
+</span><span id="__span-104-9"><a id="__codelineno-104-9" name="__codelineno-104-9" href="#__codelineno-104-9"></a>│     GRADLE_HOME
+</span><span id="__span-104-10"><a id="__codelineno-104-10" name="__codelineno-104-10" href="#__codelineno-104-10"></a>│
+</span><span id="__span-104-11"><a id="__codelineno-104-11" name="__codelineno-104-11" href="#__codelineno-104-11"></a>└─ gradle-home\
+</span><span id="__span-104-12"><a id="__codelineno-104-12" name="__codelineno-104-12" href="#__codelineno-104-12"></a>   ├─ caches\
+</span><span id="__span-104-13"><a id="__codelineno-104-13" name="__codelineno-104-13" href="#__codelineno-104-13"></a>   ├─ daemon\
+</span><span id="__span-104-14"><a id="__codelineno-104-14" name="__codelineno-104-14" href="#__codelineno-104-14"></a>   ├─ wrapper\
+</span><span id="__span-104-15"><a id="__codelineno-104-15" name="__codelineno-104-15" href="#__codelineno-104-15"></a>   └─ ...
+</span><span id="__span-104-16"><a id="__codelineno-104-16" name="__codelineno-104-16" href="#__codelineno-104-16"></a>        ↑
+</span><span id="__span-104-17"><a id="__codelineno-104-17" name="__codelineno-104-17" href="#__codelineno-104-17"></a>   GRADLE_USER_HOME
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>환경변수</th>
+<th>실제 디렉터리</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>GRADLE_HOME</code></td>
+<td><code>C:\local-microserver\tools\gradle\gradle-9.7.1\</code></td>
+<td>Gradle 프로그램 설치 위치</td>
+</tr>
+<tr>
+<td><code>GRADLE_USER_HOME</code></td>
+<td><code>C:\local-microserver\gradle-home\</code></td>
+<td>Cache / Wrapper / Daemon 등 실행 데이터 저장 위치</td>
+</tr>
+</tbody>
+</table>
+<h3 id="225-gradle-wrapper">22.5 Gradle Wrapper 실행 시 어떤 경로를 사용하는가<a class="headerlink" href="#225-gradle-wrapper" title="Permanent link">&para;</a></h3>
+<p>Project에서 다음 명령을 실행한다고 가정한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-105-1"><a id="__codelineno-105-1" name="__codelineno-105-1" href="#__codelineno-105-1"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="p">-</span><span class="n">-version</span>
+</span></code></pre></div>
+<p>Gradle Wrapper는 Project의 다음 설정 파일을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-106-1"><a id="__codelineno-106-1" name="__codelineno-106-1" href="#__codelineno-106-1"></a>C:\local-microserver\workspace\microserver\gradle\wrapper\gradle-wrapper.properties
+</span></code></pre></div>
+<p>여기에 선언된 Gradle Version을 확인한 뒤
+필요한 Gradle Distribution을 <code>GRADLE_USER_HOME</code> 아래에서 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-107-1"><a id="__codelineno-107-1" name="__codelineno-107-1" href="#__codelineno-107-1"></a>C:\local-microserver\workspace\microserver\gradlew.bat
+</span><span id="__span-107-2"><a id="__codelineno-107-2" name="__codelineno-107-2" href="#__codelineno-107-2"></a>        ↓
+</span><span id="__span-107-3"><a id="__codelineno-107-3" name="__codelineno-107-3" href="#__codelineno-107-3"></a>gradle-wrapper.properties 확인
+</span><span id="__span-107-4"><a id="__codelineno-107-4" name="__codelineno-107-4" href="#__codelineno-107-4"></a>        ↓
+</span><span id="__span-107-5"><a id="__codelineno-107-5" name="__codelineno-107-5" href="#__codelineno-107-5"></a>Gradle 9.7.1 필요
+</span><span id="__span-107-6"><a id="__codelineno-107-6" name="__codelineno-107-6" href="#__codelineno-107-6"></a>        ↓
+</span><span id="__span-107-7"><a id="__codelineno-107-7" name="__codelineno-107-7" href="#__codelineno-107-7"></a>GRADLE_USER_HOME 확인
+</span><span id="__span-107-8"><a id="__codelineno-107-8" name="__codelineno-107-8" href="#__codelineno-107-8"></a>        ↓
+</span><span id="__span-107-9"><a id="__codelineno-107-9" name="__codelineno-107-9" href="#__codelineno-107-9"></a>C:\local-microserver\gradle-home\
+</span><span id="__span-107-10"><a id="__codelineno-107-10" name="__codelineno-107-10" href="#__codelineno-107-10"></a>        ↓
+</span><span id="__span-107-11"><a id="__codelineno-107-11" name="__codelineno-107-11" href="#__codelineno-107-11"></a>wrapper\dists\ 등에 Distribution 저장 / 사용
+</span></code></pre></div>
+<p>즉 다음 두 위치는 역할이 다르다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-108-1"><a id="__codelineno-108-1" name="__codelineno-108-1" href="#__codelineno-108-1"></a>C:\local-microserver\tools\gradle\gradle-9.7.1\
+</span><span id="__span-108-2"><a id="__codelineno-108-2" name="__codelineno-108-2" href="#__codelineno-108-2"></a>→ 개발환경에 직접 설치한 Gradle
+</span><span id="__span-108-3"><a id="__codelineno-108-3" name="__codelineno-108-3" href="#__codelineno-108-3"></a>
+</span><span id="__span-108-4"><a id="__codelineno-108-4" name="__codelineno-108-4" href="#__codelineno-108-4"></a>C:\local-microserver\gradle-home\wrapper\
+</span><span id="__span-108-5"><a id="__codelineno-108-5" name="__codelineno-108-5" href="#__codelineno-108-5"></a>→ Project Wrapper가 다운로드한 Gradle Distribution 저장 영역
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">MicroServer Project Build 표준</p>
+<p>MicroServer Project의 일반 Build는
+직접 설치된 <code>gradle</code> 명령보다 Project Wrapper를 기준으로 한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-109-1"><a id="__codelineno-109-1" name="__codelineno-109-1" href="#__codelineno-109-1"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="p">...</span>
+</span></code></pre></div>
+</div>
+<h3 id="226-project-gradlewrapper-gradle_user_homewrapper">22.6 Project의 <code>gradle\wrapper</code>와 <code>GRADLE_USER_HOME\wrapper</code> 구분<a class="headerlink" href="#226-project-gradlewrapper-gradle_user_homewrapper" title="Permanent link">&para;</a></h3>
+<p>이름은 비슷하지만 역할이 다르다.</p>
+<h4 id="project-wrapper">Project 내부 Wrapper 설정<a class="headerlink" href="#project-wrapper" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-110-1"><a id="__codelineno-110-1" name="__codelineno-110-1" href="#__codelineno-110-1"></a>C:\local-microserver\workspace\microserver\gradle\wrapper\
+</span></code></pre></div>
+<p>주요 파일:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-111-1"><a id="__codelineno-111-1" name="__codelineno-111-1" href="#__codelineno-111-1"></a>gradle-wrapper.jar
+</span><span id="__span-111-2"><a id="__codelineno-111-2" name="__codelineno-111-2" href="#__codelineno-111-2"></a>gradle-wrapper.properties
+</span></code></pre></div>
+<p>역할:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-112-1"><a id="__codelineno-112-1" name="__codelineno-112-1" href="#__codelineno-112-1"></a>Project가 사용할 Gradle Version / Distribution 설정
+</span></code></pre></div>
+<h4 id="gradle_user_home-wrapper"><code>GRADLE_USER_HOME</code> 내부 Wrapper 데이터<a class="headerlink" href="#gradle_user_home-wrapper" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-113-1"><a id="__codelineno-113-1" name="__codelineno-113-1" href="#__codelineno-113-1"></a>C:\local-microserver\gradle-home\wrapper\
+</span></code></pre></div>
+<p>역할:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-114-1"><a id="__codelineno-114-1" name="__codelineno-114-1" href="#__codelineno-114-1"></a>Wrapper가 다운로드한 Gradle Distribution 저장
+</span></code></pre></div>
+<p>즉:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-115-1"><a id="__codelineno-115-1" name="__codelineno-115-1" href="#__codelineno-115-1"></a>C:\local-microserver\workspace\microserver\gradle\wrapper\
+</span><span id="__span-115-2"><a id="__codelineno-115-2" name="__codelineno-115-2" href="#__codelineno-115-2"></a>→ Project Wrapper 설정
+</span><span id="__span-115-3"><a id="__codelineno-115-3" name="__codelineno-115-3" href="#__codelineno-115-3"></a>
+</span><span id="__span-115-4"><a id="__codelineno-115-4" name="__codelineno-115-4" href="#__codelineno-115-4"></a>C:\local-microserver\gradle-home\wrapper\
+</span><span id="__span-115-5"><a id="__codelineno-115-5" name="__codelineno-115-5" href="#__codelineno-115-5"></a>→ Wrapper 실행 데이터 / 다운로드 영역
+</span></code></pre></div>
+<h3 id="227-vs-code">22.7 VS Code 실행환경과 연결<a class="headerlink" href="#227-vs-code" title="Permanent link">&para;</a></h3>
+<p>MicroServer Portable 환경에서는 VS Code를 실행할 때
+개발환경용 환경변수를 전달하여 Gradle 관련 경로도
+<code>C:\local-microserver</code> 하위로 통일한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-116-1"><a id="__codelineno-116-1" name="__codelineno-116-1" href="#__codelineno-116-1"></a>GRADLE_HOME
+</span><span id="__span-116-2"><a id="__codelineno-116-2" name="__codelineno-116-2" href="#__codelineno-116-2"></a>→ C:\local-microserver\tools\gradle\gradle-9.7.1\
+</span><span id="__span-116-3"><a id="__codelineno-116-3" name="__codelineno-116-3" href="#__codelineno-116-3"></a>
+</span><span id="__span-116-4"><a id="__codelineno-116-4" name="__codelineno-116-4" href="#__codelineno-116-4"></a>GRADLE_USER_HOME
+</span><span id="__span-116-5"><a id="__codelineno-116-5" name="__codelineno-116-5" href="#__codelineno-116-5"></a>→ C:\local-microserver\gradle-home\
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Server / CI 환경</p>
+<p><code>C:\local-microserver\gradle-home\</code>은 <strong>MicroServer 로컬 개발환경의 표준 경로</strong>이다.</p>
+<p>Server / CI 환경에서는 해당 환경에 설정된 <code>GRADLE_USER_HOME</code>을 사용하며,
+별도로 지정하지 않았다면 Gradle 기본 User Home을 사용한다.</p>
+</div>
+<h3 id="228-gradle">22.8 개인 Gradle 설정<a class="headerlink" href="#228-gradle" title="Permanent link">&para;</a></h3>
+<p>사용자 단위 Gradle 설정이 필요한 경우
+<code>GRADLE_USER_HOME</code> 아래의 <code>gradle.properties</code>를 사용할 수 있다.</p>
+<p>MicroServer 기준 실제 파일 경로:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-117-1"><a id="__codelineno-117-1" name="__codelineno-117-1" href="#__codelineno-117-1"></a>C:\local-microserver\gradle-home\gradle.properties
+</span></code></pre></div>
+<p>예를 들어 사내 Repository 접속, Proxy, JVM 옵션 등
+개인 환경에 필요한 값을 관리할 수 있다.</p>
+<div class="admonition tip">
+<p class="admonition-title"><code>GRADLE_USER_HOME\gradle.properties</code> 우선순위</p>
+<p><code>GRADLE_USER_HOME</code>의 <code>gradle.properties</code>는 개발자별 Gradle 설정에 사용한다.</p>
+<p>동일한 Gradle Property가 Project의 <code>gradle.properties</code>에도 선언되어 있다면
+일반적으로 <code>GRADLE_USER_HOME</code>의 설정이 우선 적용된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-118-1"><a id="__codelineno-118-1" name="__codelineno-118-1" href="#__codelineno-118-1"></a>C:\local-microserver\gradle-home\gradle.properties
+</span><span id="__span-118-2"><a id="__codelineno-118-2" name="__codelineno-118-2" href="#__codelineno-118-2"></a>→ 개발자별 설정 / Override
+</span><span id="__span-118-3"><a id="__codelineno-118-3" name="__codelineno-118-3" href="#__codelineno-118-3"></a>
+</span><span id="__span-118-4"><a id="__codelineno-118-4" name="__codelineno-118-4" href="#__codelineno-118-4"></a>Project\gradle.properties
+</span><span id="__span-118-5"><a id="__codelineno-118-5" name="__codelineno-118-5" href="#__codelineno-118-5"></a>→ Project 공통 설정
+</span></code></pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Credential</p>
+<p>Repository ID / Password / Token 같은 민감정보를
+<code>build.gradle</code>에 직접 작성하여 Git에 Commit하지 않는다.</p>
+</div>
+<h3 id="_2">핵심 정리<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-119-1"><a id="__codelineno-119-1" name="__codelineno-119-1" href="#__codelineno-119-1"></a>GRADLE_HOME
+</span><span id="__span-119-2"><a id="__codelineno-119-2" name="__codelineno-119-2" href="#__codelineno-119-2"></a>→ C:\local-microserver\tools\gradle\gradle-9.7.1\
+</span><span id="__span-119-3"><a id="__codelineno-119-3" name="__codelineno-119-3" href="#__codelineno-119-3"></a>→ Gradle 프로그램 설치 디렉터리
+</span><span id="__span-119-4"><a id="__codelineno-119-4" name="__codelineno-119-4" href="#__codelineno-119-4"></a>
+</span><span id="__span-119-5"><a id="__codelineno-119-5" name="__codelineno-119-5" href="#__codelineno-119-5"></a>
+</span><span id="__span-119-6"><a id="__codelineno-119-6" name="__codelineno-119-6" href="#__codelineno-119-6"></a>GRADLE_USER_HOME
+</span><span id="__span-119-7"><a id="__codelineno-119-7" name="__codelineno-119-7" href="#__codelineno-119-7"></a>→ C:\local-microserver\gradle-home\
+</span><span id="__span-119-8"><a id="__codelineno-119-8" name="__codelineno-119-8" href="#__codelineno-119-8"></a>→ Gradle 실행 데이터 저장 디렉터리
+</span><span id="__span-119-9"><a id="__codelineno-119-9" name="__codelineno-119-9" href="#__codelineno-119-9"></a>
+</span><span id="__span-119-10"><a id="__codelineno-119-10" name="__codelineno-119-10" href="#__codelineno-119-10"></a>
+</span><span id="__span-119-11"><a id="__codelineno-119-11" name="__codelineno-119-11" href="#__codelineno-119-11"></a>.\gradle-home\
+</span><span id="__span-119-12"><a id="__codelineno-119-12" name="__codelineno-119-12" href="#__codelineno-119-12"></a>→ C:\local-microserver에서 볼 때의 상대경로 표현
+</span><span id="__span-119-13"><a id="__codelineno-119-13" name="__codelineno-119-13" href="#__codelineno-119-13"></a>→ 가이드에서는 혼동 방지를 위해 절대경로 사용 권장
+</span></code></pre></div>
+<hr />
+<h2 id="23-project-build-gradle">23. Project Build에 전역 Gradle을 사용하지 않는 이유<a class="headerlink" href="#23-project-build-gradle" title="Permanent link">&para;</a></h2>
+<p>개발자 A:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-120-1"><a id="__codelineno-120-1" name="__codelineno-120-1" href="#__codelineno-120-1"></a>Gradle 9.7.1
+</span></code></pre></div>
+<p>개발자 B:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-121-1"><a id="__codelineno-121-1" name="__codelineno-121-1" href="#__codelineno-121-1"></a>Gradle 9.5.0
+</span></code></pre></div>
+<p>CI Server:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-122-1"><a id="__codelineno-122-1" name="__codelineno-122-1" href="#__codelineno-122-1"></a>Gradle 9.6.1
+</span></code></pre></div>
+<p>이런 환경에서 직접 <code>gradle build</code>를 사용하면 Build Tool Version 차이가 생긴다.</p>
+<p>Wrapper를 사용하면:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-123-1"><a id="__codelineno-123-1" name="__codelineno-123-1" href="#__codelineno-123-1"></a>Developer A ─┐
+</span><span id="__span-123-2"><a id="__codelineno-123-2" name="__codelineno-123-2" href="#__codelineno-123-2"></a>Developer B ─┼─→ gradlew → Gradle 9.7.1
+</span><span id="__span-123-3"><a id="__codelineno-123-3" name="__codelineno-123-3" href="#__codelineno-123-3"></a>CI Server   ─┘
+</span></code></pre></div>
+<p>으로 통일할 수 있다.</p>
+<hr />
+<h2 id="24-build-script-vs-code">24. Build Script 변경 후 VS Code 반영<a class="headerlink" href="#24-build-script-vs-code" title="Permanent link">&para;</a></h2>
+<p><code>build.gradle</code> 또는 <code>settings.gradle</code>을 변경하면 VS Code Java / Gradle Extension이 Project Model을 다시 Import해야 할 수 있다.</p>
+<p>기본적으로 자동 갱신되도록 구성하되 문제가 있는 경우 다음을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-124-1"><a id="__codelineno-124-1" name="__codelineno-124-1" href="#__codelineno-124-1"></a>Gradle Projects View
+</span><span id="__span-124-2"><a id="__codelineno-124-2" name="__codelineno-124-2" href="#__codelineno-124-2"></a>Java Projects View
+</span><span id="__span-124-3"><a id="__codelineno-124-3" name="__codelineno-124-3" href="#__codelineno-124-3"></a>Output → Build Server for Gradle
+</span><span id="__span-124-4"><a id="__codelineno-124-4" name="__codelineno-124-4" href="#__codelineno-124-4"></a>Output → Language Support for Java
+</span></code></pre></div>
+<p>필요하면 Java Project Import 또는 VS Code Reload를 수행한다.</p>
+<hr />
+<h2 id="25">25. 현재 단계에서 하지 않는 작업<a class="headerlink" href="#25" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-125-1"><a id="__codelineno-125-1" name="__codelineno-125-1" href="#__codelineno-125-1"></a>Gradle Multi-Project 전환
+</span><span id="__span-125-2"><a id="__codelineno-125-2" name="__codelineno-125-2" href="#__codelineno-125-2"></a>module-common 생성
+</span><span id="__span-125-3"><a id="__codelineno-125-3" name="__codelineno-125-3" href="#__codelineno-125-3"></a>runtime 생성
+</span><span id="__span-125-4"><a id="__codelineno-125-4" name="__codelineno-125-4" href="#__codelineno-125-4"></a>admin 생성
+</span><span id="__span-125-5"><a id="__codelineno-125-5" name="__codelineno-125-5" href="#__codelineno-125-5"></a>Oracle Driver 추가
+</span><span id="__span-125-6"><a id="__codelineno-125-6" name="__codelineno-125-6" href="#__codelineno-125-6"></a>Datasource 구성
+</span><span id="__span-125-7"><a id="__codelineno-125-7" name="__codelineno-125-7" href="#__codelineno-125-7"></a>Security 구성
+</span><span id="__span-125-8"><a id="__codelineno-125-8" name="__codelineno-125-8" href="#__codelineno-125-8"></a>공통 Framework 구현
+</span></code></pre></div>
+<p>현재 목표는 <strong>단일 Spring Boot Project의 Build 기준을 Gradle Wrapper로 확정</strong>하는 것이다.</p>
+<hr />
+<h2 id="26">26. 체크리스트<a class="headerlink" href="#26" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>gradlew</code> / <code>gradlew.bat</code>이 존재한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>gradle/wrapper/gradle-wrapper.properties</code>가 존재한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Wrapper Gradle Version이 9.7.1이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>./gradlew --version</code> 또는 <code>gradlew.bat --version</code>이 정상 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Gradle이 Java 26 JVM을 사용하는지 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>settings.gradle</code>의 역할을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>build.gradle</code>의 역할을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Spring Boot Gradle Plugin을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Java Toolchain 26 설정을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>implementation</code>, <code>testImplementation</code>의 의미를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>GRADLE_USER_HOME</code>이 <code>C:\local-microserver\gradle-home</code>을 사용하는지 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>tools\gradle</code>과 <code>gradle-home</code>의 역할 차이를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Project Build는 Wrapper를 사용한다는 원칙을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Maven의 <code>pom.xml</code>, Lifecycle, Wrapper와 대응 관계를 이해했다.</li>
+</ul>
+<hr />
+<h2 id="27">27. 다음 단계<a class="headerlink" href="#27" title="Permanent link">&para;</a></h2>
+<p>다음 단계에서는 현재 단일 Module 프로젝트가 정상적으로 Build / Test / Run 되는지 검증한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-126-1"><a id="__codelineno-126-1" name="__codelineno-126-1" href="#__codelineno-126-1"></a>Spring Boot Project 생성
+</span><span id="__span-126-2"><a id="__codelineno-126-2" name="__codelineno-126-2" href="#__codelineno-126-2"></a>        ↓
+</span><span id="__span-126-3"><a id="__codelineno-126-3" name="__codelineno-126-3" href="#__codelineno-126-3"></a>JDK / VS Code Workspace 설정
+</span><span id="__span-126-4"><a id="__codelineno-126-4" name="__codelineno-126-4" href="#__codelineno-126-4"></a>        ↓
+</span><span id="__span-126-5"><a id="__codelineno-126-5" name="__codelineno-126-5" href="#__codelineno-126-5"></a>Gradle Wrapper 확인 / 프로젝트 Build 기준       ← 현재 완료
+</span><span id="__span-126-6"><a id="__codelineno-126-6" name="__codelineno-126-6" href="#__codelineno-126-6"></a>        ↓
+</span><span id="__span-126-7"><a id="__codelineno-126-7" name="__codelineno-126-7" href="#__codelineno-126-7"></a>초기 Build / Test / Run 검증
+</span><span id="__span-126-8"><a id="__codelineno-126-8" name="__codelineno-126-8" href="#__codelineno-126-8"></a>        ↓
+</span><span id="__span-126-9"><a id="__codelineno-126-9" name="__codelineno-126-9" href="#__codelineno-126-9"></a>Gradle Multi-Project 구성
+</span></code></pre></div>
+<hr />
+<h2 id="28">28. 공식 참고 자료<a class="headerlink" href="#28" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Gradle Wrapper<br />
+<a href="https://docs.gradle.org/current/userguide/gradle_wrapper.html">https://docs.gradle.org/current/userguide/gradle_wrapper.html</a></p>
+</li>
+<li>
+<p>Gradle Build Lifecycle<br />
+<a href="https://docs.gradle.org/current/userguide/build_lifecycle.html">https://docs.gradle.org/current/userguide/build_lifecycle.html</a></p>
+</li>
+<li>
+<p>Gradle Dependency Management<br />
+<a href="https://docs.gradle.org/current/userguide/dependency_management_basics.html">https://docs.gradle.org/current/userguide/dependency_management_basics.html</a></p>
+</li>
+<li>
+<p>Spring Boot Gradle Plugin<br />
+<a href="https://docs.spring.io/spring-boot/gradle-plugin/">https://docs.spring.io/spring-boot/gradle-plugin/</a></p>
+</li>
+<li>
+<p>Spring Boot System Requirements<br />
+<a href="https://docs.spring.io/spring-boot/system-requirements.html">https://docs.spring.io/spring-boot/system-requirements.html</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

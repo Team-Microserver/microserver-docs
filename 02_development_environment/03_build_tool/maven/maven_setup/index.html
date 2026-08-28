@@ -1,0 +1,2440 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../../gradle/gradle_usage/">
+      
+      
+        <link rel="next" href="../../../04_vscode/vscode_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Maven 설치 및 기본 환경 구성 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#maven-" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Maven 설치 및 기본 환경 구성
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01_microserver_introduction/01_overview/project_introduction/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../01_foundation/development_device/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06_server_environment/01_overview/server_environment_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-tabs__link">
+          
+  
+  
+  배포 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../08_operation_environment/01_overview/operation_overview/" class="md-tabs__link">
+          
+  
+  
+  운영 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../01_microserver_introduction/01_overview/project_introduction/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../01_foundation/development_device/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발환경 기본 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../02_jdk/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 설치 및 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Build Tool 개발환경
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Build Tool 개발환경
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../gradle/gradle_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradle
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maven (비교 / 참고)
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Maven (비교 / 참고)
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maven 설치 및 기본 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Maven 설치 및 기본 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 개발환경 구성에서 Maven의 위치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Maven의 역할
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-pc-maven-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 개발 PC Maven 환경과 프로젝트 Maven 환경 구분
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 개발 PC Maven 환경과 프로젝트 Maven 환경 구분">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        현재 단계
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프로젝트 생성 이후
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Maven 버전 기준
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 사전 준비
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 사전 준비">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../04_vscode/vscode_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../05_database_docker/docker_desktop_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle / Docker 로컬 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../06_server_environment/01_overview/server_environment_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    배포 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../08_operation_environment/01_overview/operation_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    운영 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 개발환경 구성에서 Maven의 위치
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Maven의 역할
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-pc-maven-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 개발 PC Maven 환경과 프로젝트 Maven 환경 구분
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 개발 PC Maven 환경과 프로젝트 Maven 환경 구분">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        현재 단계
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        프로젝트 생성 이후
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Maven 버전 기준
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 사전 준비
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 사전 준비">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="maven-">Maven 설치 및 기본 환경 구성 가이드 - 비교 / 참고<a class="headerlink" href="#maven-" title="Permanent link">&para;</a></h1>
+<div class="admonition info">
+<p class="admonition-title">MicroServer Build Tool 기준</p>
+<p>현재 Team-Microserver의 <strong>주 Build Tool은 Gradle + Groovy DSL</strong>이다.</p>
+<p>이 문서는 Maven 프로젝트의 설정 방식을 비교하고 기존 Maven 기반 프로젝트를 이해하기 위한 참고 자료로 유지한다.
+실제 MicroServer 구축 절차는 <a href="../../gradle/gradle_setup/">Gradle 설치 및 기본 환경 구성</a>을 우선한다.</p>
+<p>이후 가이드에서는 Gradle 설정을 먼저 제시하고 필요한 경우 Maven 대응 설정을 함께 설명한다.</p>
+</div>
+<hr />
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 MicroServer 프로젝트 개발에 사용할 <strong>Apache Maven</strong>을 개발 PC에 준비하고,
+Maven 명령을 사용할 수 있는 기본 환경을 구성하는 방법을 설명한다.</p>
+<p>현재 단계에서는 아직 Spring Boot 프로젝트를 생성하지 않는다.</p>
+<p>따라서 본 문서에서는 <strong>Maven 자체의 설치와 개발 PC 수준의 기본 환경 구성</strong>만 진행한다.</p>
+<p>현재 단계에서 다루는 범위는 다음과 같다.</p>
+<ul>
+<li>Apache Maven 역할 이해</li>
+<li>Maven 버전 기준 확인</li>
+<li>Windows / macOS Maven Binary 설치</li>
+<li>Maven 실행 경로 구성</li>
+<li>앞 단계에서 준비한 Eclipse Temurin JDK를 이용한 Maven 실행 확인</li>
+<li><code>.m2</code> 및 Local Repository 이해</li>
+<li>사용자별 <code>settings.xml</code> 역할 이해</li>
+<li>Maven Wrapper의 목적과 적용 시점 이해</li>
+<li>Maven 설치 관련 기본 문제 해결</li>
+</ul>
+<p>다음과 같은 <strong>프로젝트 종속 설정은 아직 진행하지 않는다.</strong></p>
+<ul>
+<li><code>pom.xml</code> 작성 및 수정</li>
+<li>Spring Boot Parent / BOM 설정</li>
+<li>Maven Wrapper 생성 및 프로젝트 포함</li>
+<li>프로젝트 Maven 버전 고정</li>
+<li>멀티모듈 Maven 프로젝트 구성</li>
+<li>부모 POM 구성</li>
+<li>공통 모듈 JAR 구성</li>
+<li>Dependency Management</li>
+<li>Plugin Management</li>
+<li>Maven Compiler 설정</li>
+<li>실제 프로젝트 Build</li>
+<li>특정 Module Build</li>
+<li>Dependency Tree 분석</li>
+<li>Effective POM 분석</li>
+</ul>
+<p>위 내용은 Spring Boot 프로젝트를 생성한 이후
+<strong>프로젝트 Maven / Build 환경 설정 단계</strong>에서 순차적으로 구성한다.</p>
+<hr />
+<h2 id="2-maven">2. 개발환경 구성에서 Maven의 위치<a class="headerlink" href="#2-maven" title="Permanent link">&para;</a></h2>
+<p>MicroServer 프로젝트의 개발도구 환경은 다음 순서로 구성한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Git / GitHub 환경 구성] --&gt; B[Eclipse Temurin JDK]
+    B --&gt; C[Apache Maven]
+    C --&gt; D[VS Code]
+    D --&gt; E[Spring Boot 프로젝트 생성]
+    E --&gt; F[프로젝트 JDK / Maven / VS Code 설정]</code></pre>
+<p>현재 문서는 다음 단계에 해당한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Git / GitHub 환경 구성
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Eclipse Temurin JDK 준비
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>[ Apache Maven 설치 ]       ← 현재
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>VS Code 개발환경 구성
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Spring Boot 프로젝트 생성
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        ↓
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>프로젝트별 JDK / Maven / VS Code 설정
+</span></code></pre></div>
+<p>JDK가 Java 실행환경을 제공한다면 Maven은 Java 프로젝트의 Build 및 Dependency 관리 도구 역할을 담당한다.</p>
+<p>현재는 Maven을 <strong>개발 PC에 사용할 수 있는 상태로 준비</strong>하고,
+실제 MicroServer 프로젝트와 Maven을 연결하는 작업은 프로젝트 생성 이후 진행한다.</p>
+<hr />
+<h2 id="3-maven">3. Maven의 역할<a class="headerlink" href="#3-maven" title="Permanent link">&para;</a></h2>
+<p>Maven은 Java 프로젝트의 <strong>Build 및 Dependency 관리 도구</strong>이다.</p>
+<p>향후 MicroServer 프로젝트가 생성되면 Maven은 다음 역할을 담당한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    SRC[Java Source] --&gt; MVN[Maven]
+    DEP[Dependency Repository] --&gt; MVN
+
+    MVN --&gt; COMPILE[Compile]
+    MVN --&gt; TEST[Test]
+    MVN --&gt; PACKAGE[Packaging]
+    MVN --&gt; PLUGIN[Plugin]
+    MVN --&gt; MODULE[Multi Module Build]</code></pre>
+<p>대표적인 역할:</p>
+<ul>
+<li>Java Source Compile</li>
+<li>Unit Test 실행</li>
+<li>Dependency 관리</li>
+<li>JAR / WAR Packaging</li>
+<li>Plugin 실행</li>
+<li>Build Lifecycle 관리</li>
+<li>Multi Module Build</li>
+<li>Repository 연계</li>
+</ul>
+<p>현재는 Maven이 관리할 실제 프로젝트가 존재하지 않으므로 위 기능을 실행하지 않는다.</p>
+<p>현재 단계의 목표는 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Apache Maven Binary 준비
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>        ↓
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Maven 실행 경로 구성
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        ↓
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>Temurin JDK로 Maven 실행 확인
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>        ↓
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>개발 PC Maven 기본환경 준비 완료
+</span></code></pre></div>
+<hr />
+<h2 id="4-pc-maven-maven">4. 개발 PC Maven 환경과 프로젝트 Maven 환경 구분<a class="headerlink" href="#4-pc-maven-maven" title="Permanent link">&para;</a></h2>
+<p>Maven 환경은 크게 <strong>개발 PC Maven 환경</strong>과 <strong>프로젝트 Maven 환경</strong>으로 구분한다.</p>
+<pre class="mermaid"><code>flowchart TB
+    MAVEN[Maven 환경]
+
+    MAVEN --&gt; LOCAL[개발 PC Maven 환경]
+    MAVEN --&gt; PROJECT[프로젝트 Maven 환경]
+
+    LOCAL --&gt; INSTALL[Maven 설치]
+    LOCAL --&gt; PATH[Maven PATH]
+    LOCAL --&gt; M2[.m2 / Local Repository]
+    LOCAL --&gt; SETTINGS[settings.xml]
+
+    PROJECT --&gt; WRAPPER[Maven Wrapper]
+    PROJECT --&gt; POM[pom.xml]
+    PROJECT --&gt; MODULE[Multi Module]
+    PROJECT --&gt; DEP[Dependency / Plugin 정책]</code></pre>
+<h3 id="_1">현재 단계<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>현재는 다음 영역만 구성한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>개발 PC Maven 환경
+</span></code></pre></div>
+<h3 id="_2">프로젝트 생성 이후<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>Spring Boot 프로젝트를 생성한 이후 다음 영역을 구성한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>프로젝트 Maven 환경
+</span></code></pre></div>
+<p>이 두 영역을 분리하면 아직 프로젝트가 존재하지 않는 상태에서
+<code>pom.xml</code>, Wrapper, Multi Module 설정 등이 먼저 등장하는 문제를 방지할 수 있다.</p>
+<hr />
+<h2 id="5-maven">5. Maven 버전 기준<a class="headerlink" href="#5-maven" title="Permanent link">&para;</a></h2>
+<p>MicroServer 프로젝트에서는 Apache Maven의 <strong>현재 안정 버전(Stable Release)</strong> 을 기준으로 설치한다.</p>
+<p>본 문서 작성 시점의 Apache Maven 공식 Stable Release는 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>Apache Maven 3.9.16
+</span></code></pre></div>
+<p>실제 설치 시점에는 Apache Maven 공식 다운로드 페이지에서 최신 Stable Release를 다시 확인한다.</p>
+<blockquote>
+<p>프로젝트가 생성된 이후에는 Maven Wrapper를 이용하여
+해당 프로젝트가 사용할 Maven 버전을 명확하게 고정할 예정이다.</p>
+<p>현재 단계에서는 프로젝트가 존재하지 않으므로 Wrapper를 생성하지 않는다.</p>
+</blockquote>
+<hr />
+<h2 id="6">6. 사전 준비<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p>Maven은 Java로 실행되는 도구이므로 JDK가 필요하다.</p>
+<p>앞 단계에서 다음 환경이 준비되어 있어야 한다.</p>
+<ul>
+<li>Eclipse Temurin JDK 다운로드 완료</li>
+<li>JDK 압축 해제 완료</li>
+<li>JDK Home 경로 확인</li>
+<li><code>java</code> / <code>javac</code> 직접 실행 확인 완료</li>
+</ul>
+<p>JDK Home 예:</p>
+<h3 id="windows">Windows<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>C:\dev\jdks\temurin-26
+</span></code></pre></div>
+<h3 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">macOS JDK Home</p>
+<p>macOS의 <code>.jdk</code> 디렉터리 자체가 아니라 실제 Java Home인
+<code>Contents/Home</code>까지 포함한 경로를 사용한다.</p>
+</div>
+<p>MicroServer에서는 시스템 전체에 <code>JAVA_HOME</code>을 영구 설정하는 방식을 기본 절차로 사용하지 않는다.</p>
+<p>따라서 Maven 설치 검증 시에는 <strong>현재 Terminal Session에서만 Temurin JDK를 임시 연결</strong>한다.</p>
+<hr />
+<h1 id="windows_1">Windows 환경<a class="headerlink" href="#windows_1" title="Permanent link">&para;</a></h1>
+<h2 id="7-windows-maven">7. Windows Maven 다운로드<a class="headerlink" href="#7-windows-maven" title="Permanent link">&para;</a></h2>
+<p>Apache Maven 공식 사이트에서 <strong>Binary ZIP Archive</strong>를 다운로드한다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>apache-maven-3.9.16-bin.zip
+</span></code></pre></div>
+<p>다음 파일과 혼동하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>O  Binary ZIP Archive
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>X  Source Archive
+</span></code></pre></div>
+<p>Source Archive는 Maven 자체 Source Code이므로 일반 개발환경 설치용으로 사용하지 않는다.</p>
+<hr />
+<h2 id="8-maven-binary">8. Maven Binary 무결성 확인<a class="headerlink" href="#8-maven-binary" title="Permanent link">&para;</a></h2>
+<p>Apache Maven 공식 다운로드 페이지에서는 Binary 배포본과 함께
+Checksum 및 Signature 검증 정보를 제공한다.</p>
+<p>보안 정책이나 개발환경 정책상 다운로드 파일 검증이 필요한 경우
+공식 사이트에서 제공하는 <strong>SHA-512 Checksum</strong>을 이용하여 다운로드한 파일이 변조되지 않았는지 확인할 수 있다.</p>
+<p>Windows PowerShell 예:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">Get-FileHash</span> <span class="p">.\</span><span class="n">apache-maven</span><span class="p">-</span><span class="n">3</span><span class="p">.</span><span class="n">9</span><span class="p">.</span><span class="n">16-bin</span><span class="p">.</span><span class="n">zip</span> <span class="n">-Algorithm</span> <span class="n">SHA512</span>
+</span></code></pre></div>
+<p>출력된 Hash 값을 Apache Maven 공식 다운로드 페이지에서 제공하는 SHA-512 값과 비교한다.</p>
+<p>개인 학습환경에서는 선택적으로 수행할 수 있지만,
+기업 또는 보안 요구사항이 있는 개발환경에서는 검증을 권장한다.</p>
+<hr />
+<h2 id="9-windows-maven">9. Windows Maven 압축 해제<a class="headerlink" href="#9-windows-maven" title="Permanent link">&para;</a></h2>
+<p>다운로드한 ZIP 파일을 개발도구 디렉터리에 압축 해제한다.</p>
+<p>권장 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>C:\dev\tools\apache-maven-3.9.16
+</span></code></pre></div>
+<p>개발도구 구조 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>C:\dev\
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a> ├─ jdks\
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a> │   └─ temurin-26\
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a> │
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a> └─ tools\
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>     └─ apache-maven-3.9.16\
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>         ├─ bin\
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>         ├─ boot\
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>         ├─ conf\
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>         └─ lib\
+</span></code></pre></div>
+<p>JDK와 Maven을 서로 다른 역할의 개발도구로 구분하여 보관한다.</p>
+<hr />
+<h2 id="10-windows-maven-bin-path">10. Windows Maven <code>bin</code> PATH 등록<a class="headerlink" href="#10-windows-maven-bin-path" title="Permanent link">&para;</a></h2>
+<p>Maven 명령을 어느 디렉터리에서나 사용할 수 있도록
+Maven의 <code>bin</code> 디렉터리를 Windows 사용자 <code>Path</code>에 추가한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>C:\dev\tools\apache-maven-3.9.16\bin
+</span></code></pre></div>
+<p>Windows:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>시스템 환경 변수 편집
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>→ 환경 변수
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>→ 사용자 변수
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>→ Path
+</span></code></pre></div>
+<p>Maven <code>bin</code> 경로를 추가한다.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Maven <code>bin</code> 경로를 PATH에 추가하는 것과
+JDK <code>bin</code> 경로를 시스템 PATH에 추가하는 것은 서로 다른 설정이다.</p>
+</div>
+<p>본 프로젝트에서는 JDK <code>bin</code>을 시스템 PATH에 영구 등록하지 않는다.</p>
+<hr />
+<h2 id="11-windows-maven">11. Windows Maven 실행파일 확인<a class="headerlink" href="#11-windows-maven" title="Permanent link">&para;</a></h2>
+<p>환경변수 변경 후 새로운 PowerShell을 실행한다.</p>
+<p>Maven 실행파일 위치를 확인한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">mvn</span>
+</span></code></pre></div>
+<p>정상 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>C:\dev\tools\apache-maven-3.9.16\bin\mvn.cmd
+</span></code></pre></div>
+<p>이 단계에서 Maven 실행파일은 확인되지만,
+Java가 시스템 PATH에 없거나 <code>JAVA_HOME</code>이 설정되어 있지 않다면
+아직 <code>mvn -version</code> 실행은 실패할 수 있다.</p>
+<p>현재 JDK 운영 방식에서는 정상적인 상태이다.</p>
+<hr />
+<h2 id="12-windows-temurin-jdk">12. Windows에서 Temurin JDK를 임시 연결<a class="headerlink" href="#12-windows-temurin-jdk" title="Permanent link">&para;</a></h2>
+<p>Maven 실행 검증을 위해 현재 PowerShell Session에서만 Temurin JDK를 연결한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nv">$env:JAVA_HOME</span><span class="p">=</span><span class="s2">&quot;C:\dev\jdks\temurin-26&quot;</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nv">$env:Path</span><span class="p">=</span><span class="s2">&quot;$env:JAVA_HOME\bin;$env:Path&quot;</span>
+</span></code></pre></div>
+<p>확인:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">java</span> <span class="n">-version</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">javac</span> <span class="n">-version</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">mvn</span> <span class="n">-version</span>
+</span></code></pre></div>
+<p>Maven 출력에서 다음 항목을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Apache Maven 3.9.16
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>Java version: ...
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>Java home: ...
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>OS name: ...
+</span></code></pre></div>
+<p><code>Java home</code>이 앞 단계에서 준비한 Eclipse Temurin JDK Home을 가리키는지 확인한다.</p>
+<p>PowerShell을 종료하면 이 Session에서 설정한 <code>JAVA_HOME</code>과 JDK PATH는 사라진다.</p>
+<p>즉, 시스템 전역 <code>JAVA_HOME</code>은 변경하지 않는다.</p>
+<hr />
+<h2 id="13-windows">13. Windows 검증 목적<a class="headerlink" href="#13-windows" title="Permanent link">&para;</a></h2>
+<p>현재 검증의 목적은 다음 두 가지이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>1. Maven Binary가 정상 설치되었는가?
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>2. Maven이 준비된 Temurin JDK에서 정상 실행되는가?
+</span></code></pre></div>
+<p>현재 단계에서는 다음 환경을 만들지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>System JAVA_HOME = Temurin JDK
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>System PATH      = Temurin JDK/bin
+</span></code></pre></div>
+<p>향후 프로젝트가 생성되면 프로젝트 JDK와 Build 환경을 별도로 구성한다.</p>
+<hr />
+<h1 id="macos_1">macOS 환경<a class="headerlink" href="#macos_1" title="Permanent link">&para;</a></h1>
+<h2 id="14-macos-maven">14. macOS Maven 설치 방식<a class="headerlink" href="#14-macos-maven" title="Permanent link">&para;</a></h2>
+<p>MicroServer 프로젝트에서는 Windows와 macOS의 Maven 버전을 가능한 한 동일하게 관리하기 위해
+Apache Maven <strong>Binary Distribution을 직접 설치하는 방식</strong>을 기준으로 설명한다.</p>
+<p>Homebrew를 이용한 설치도 가능하지만,
+설치 시점과 Package Manager 상태에 따라 버전이 달라질 수 있으므로
+프로젝트 표준 가이드에서는 Binary Distribution 방식을 우선한다.</p>
+<hr />
+<h2 id="15-macos-maven">15. macOS Maven 다운로드<a class="headerlink" href="#15-macos-maven" title="Permanent link">&para;</a></h2>
+<p>Apache Maven 공식 다운로드 페이지에서 Binary TAR.GZ Archive를 다운로드한다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>apache-maven-3.9.16-bin.tar.gz
+</span></code></pre></div>
+<p>Source Archive가 아닌 Binary Archive를 사용한다.</p>
+<hr />
+<h2 id="16-macos-maven-binary">16. macOS Maven Binary 무결성 확인<a class="headerlink" href="#16-macos-maven-binary" title="Permanent link">&para;</a></h2>
+<p>필요한 경우 다운로드한 TAR.GZ 파일의 SHA-512 Hash를 확인한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>shasum<span class="w"> </span>-a<span class="w"> </span><span class="m">512</span><span class="w"> </span>apache-maven-3.9.16-bin.tar.gz
+</span></code></pre></div>
+<p>출력된 값과 Apache Maven 공식 다운로드 페이지에서 제공하는 SHA-512 값을 비교한다.</p>
+<hr />
+<h2 id="17-macos-maven">17. macOS Maven 압축 해제<a class="headerlink" href="#17-macos-maven" title="Permanent link">&para;</a></h2>
+<p>개발도구 디렉터리를 준비한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/dev/tools
+</span></code></pre></div>
+<p>Maven 압축을 해제한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>apache-maven-3.9.16-bin.tar.gz<span class="w"> </span>-C<span class="w"> </span>~/dev/tools
+</span></code></pre></div>
+<p>결과 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>~/dev/
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a> ├─ jdks/
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a> │   └─ temurin-26.jdk/
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a> │
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a> └─ tools/
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>     └─ apache-maven-3.9.16/
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>         ├─ bin/
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>         ├─ boot/
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>         ├─ conf/
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>         └─ lib/
+</span></code></pre></div>
+<hr />
+<h2 id="18-macos-maven-path">18. macOS Maven PATH 등록<a class="headerlink" href="#18-macos-maven-path" title="Permanent link">&para;</a></h2>
+<p>Maven 명령을 어디서나 실행할 수 있도록 Maven <code>bin</code> 경로를 PATH에 등록한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>nano<span class="w"> </span>~/.zshrc
+</span></code></pre></div>
+<p>다음 내용을 추가한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/dev/tools/apache-maven-3.9.16/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p>적용:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nb">source</span><span class="w"> </span>~/.zshrc
+</span></code></pre></div>
+<p>Maven 실행파일 확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>which<span class="w"> </span>mvn
+</span></code></pre></div>
+<p>정상 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>/Users/&lt;USER&gt;/dev/tools/apache-maven-3.9.16/bin/mvn
+</span></code></pre></div>
+<p>여기서 등록하는 PATH는 <strong>Maven 실행파일 경로</strong>이다.</p>
+<p>JDK Home이나 JDK <code>bin</code> 경로를 영구 등록하는 것은 아니다.</p>
+<hr />
+<h2 id="19-macos-temurin-jdk">19. macOS에서 Temurin JDK를 임시 연결<a class="headerlink" href="#19-macos-temurin-jdk" title="Permanent link">&para;</a></h2>
+<p>현재 Terminal Session에서만 JDK를 연결한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/dev/jdks/temurin-26.jdk/Contents/Home&quot;</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p>확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>java<span class="w"> </span>-version
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>javac<span class="w"> </span>-version
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>mvn<span class="w"> </span>-version
+</span></code></pre></div>
+<p>Maven 출력에서 다음 항목을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>Apache Maven 3.9.16
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>Java version: ...
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>Java home: ...
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>OS name: ...
+</span></code></pre></div>
+<p><code>Java home</code>이 다음 경로를 가리키는지 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>~/dev/jdks/temurin-26.jdk/Contents/Home
+</span></code></pre></div>
+<p>Terminal을 종료하면 현재 Session에 설정한 JDK 환경은 사라진다.</p>
+<p>따라서 macOS에서도 시스템 전체 Java 버전을 프로젝트 때문에 고정하지 않는다.</p>
+<hr />
+<h2 id="20-maven-jdk">20. Maven과 JDK의 관계<a class="headerlink" href="#20-maven-jdk" title="Permanent link">&para;</a></h2>
+<p>현재 개발환경의 관계는 다음과 같다.</p>
+<pre class="mermaid"><code>flowchart LR
+    JDK[Eclipse Temurin JDK] --&gt; MAVEN[Apache Maven]
+    MAVEN --&gt; FUTURE[향후 Maven Project]</code></pre>
+<p>Maven 자체를 실행하기 위해 Java Runtime이 필요하다.</p>
+<p>현재 문서에서는 Maven이 <strong>어떤 JDK로 실행되는지 확인하는 것까지만</strong> 진행한다.</p>
+<p>역할을 구분하면 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>JDK 설치 가이드
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>→ Eclipse Temurin JDK 준비
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>Maven 설치 가이드
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>→ Apache Maven 준비
+</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>→ 준비한 JDK에서 Maven 실행 확인
+</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>
+</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>VS Code 가이드
+</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>→ IDE / Java / Spring Boot Extension 준비
+</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a>
+</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a>프로젝트 생성 이후
+</span><span id="__span-35-12"><a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a>→ 실제 프로젝트 JDK / Maven / Build 설정 구성
+</span></code></pre></div>
+<hr />
+<h2 id="21-m2-local-repository">21. <code>.m2</code>와 Local Repository<a class="headerlink" href="#21-m2-local-repository" title="Permanent link">&para;</a></h2>
+<p>Maven은 Dependency와 Plugin 등을 Local Repository에 Cache한다.</p>
+<p>기본 위치:</p>
+<h3 id="windows_2">Windows<a class="headerlink" href="#windows_2" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>C:\Users\&lt;USER&gt;\.m2\repository
+</span></code></pre></div>
+<h3 id="macos_2">macOS<a class="headerlink" href="#macos_2" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>~/.m2/repository
+</span></code></pre></div>
+<p>Maven 사용자 Home 영역은 일반적으로 다음과 같이 구성된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>.m2/
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a> ├─ repository/
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a> └─ settings.xml       ← 필요한 경우 사용
+</span></code></pre></div>
+<p>역할:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>repository/
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>→ Maven Artifact Local Cache
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a>
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>settings.xml
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>→ 사용자별 Maven 환경 설정
+</span></code></pre></div>
+<p>현재는 프로젝트 Build를 수행하지 않으므로 Local Repository에 많은 파일이 없어도 정상이다.</p>
+<p><code>.m2</code>는 프로젝트 Source Directory와 별개이며
+MicroServer Git Repository에 포함하지 않는다.</p>
+<hr />
+<h2 id="22-settingsxml">22. <code>settings.xml</code><a class="headerlink" href="#22-settingsxml" title="Permanent link">&para;</a></h2>
+<p>Maven 사용자별 설정 파일은 다음 위치를 사용한다.</p>
+<h3 id="windows_3">Windows<a class="headerlink" href="#windows_3" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>C:\Users\&lt;USER&gt;\.m2\settings.xml
+</span></code></pre></div>
+<h3 id="macos_3">macOS<a class="headerlink" href="#macos_3" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>~/.m2/settings.xml
+</span></code></pre></div>
+<p>향후 다음과 같은 환경에서 사용할 수 있다.</p>
+<ul>
+<li>사내 Nexus</li>
+<li>Artifactory</li>
+<li>Maven Mirror</li>
+<li>Proxy</li>
+<li>Repository 인증</li>
+</ul>
+<p><code>settings.xml</code>에는 개인 계정이나 인증정보가 포함될 수 있으므로
+개인 <code>settings.xml</code>을 프로젝트 Git Repository에 Commit하지 않는다.</p>
+<p>현재 별도 Repository 정책이 확정되지 않았다면
+<code>settings.xml</code>을 미리 생성할 필요는 없다.</p>
+<hr />
+<h2 id="23-maven_home">23. <code>MAVEN_HOME</code>은 필수인가<a class="headerlink" href="#23-maven_home" title="Permanent link">&para;</a></h2>
+<p>Apache Maven을 실행하기 위해 반드시 <code>MAVEN_HOME</code> 환경변수를 정의해야 하는 것은 아니다.</p>
+<p>Maven의 <code>bin</code> 디렉터리를 PATH에서 찾을 수 있으면 Maven 명령을 실행할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>&lt;MAVEN_INSTALL_DIR&gt;/bin
+</span></code></pre></div>
+<p>따라서 본 가이드에서는 불필요한 환경변수를 늘리지 않고 다음 구성을 기본으로 한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>Maven 설치 디렉터리
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>        +
+</span><span id="__span-43-3"><a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>Maven bin PATH
+</span></code></pre></div>
+<p>특정 운영환경이나 도구가 <code>MAVEN_HOME</code>을 요구하는 경우에만 별도로 구성한다.</p>
+<hr />
+<h2 id="24-maven-wrapper">24. Maven Wrapper 운영 원칙<a class="headerlink" href="#24-maven-wrapper" title="Permanent link">&para;</a></h2>
+<p>Maven Wrapper는 <strong>특정 프로젝트가 사용할 Maven 버전을 프로젝트 차원에서 관리하기 위한 구성</strong>이다.</p>
+<p>향후 Spring Boot 프로젝트가 생성되면 다음과 같은 파일이 프로젝트에 존재할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>microserver/
+</span><span id="__span-44-2"><a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a> ├─ .mvn/
+</span><span id="__span-44-3"><a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a> ├─ mvnw
+</span><span id="__span-44-4"><a id="__codelineno-44-4" name="__codelineno-44-4" href="#__codelineno-44-4"></a> ├─ mvnw.cmd
+</span><span id="__span-44-5"><a id="__codelineno-44-5" name="__codelineno-44-5" href="#__codelineno-44-5"></a> └─ pom.xml
+</span></code></pre></div>
+<p>Wrapper를 사용하면 개발자 PC에 설치된 Maven 버전 차이를 줄이고
+프로젝트가 요구하는 Maven 버전을 기준으로 Build할 수 있다.</p>
+<p>현재 Maven 설치와 프로젝트 Maven Wrapper의 역할은 다음처럼 구분한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>개발 PC Maven
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>→ Maven 도구 자체를 준비
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>→ 초기 Maven 명령 사용 가능
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>Maven Wrapper
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>→ 특정 프로젝트의 Maven 버전 관리
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>→ 프로젝트 Build 표준
+</span></code></pre></div>
+<p>현재는 아직 프로젝트가 생성되지 않았으므로 Wrapper를 생성하지 않는다.</p>
+<p>따라서 이 단계에서는 다음 명령을 실행하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>mvn wrapper:wrapper
+</span></code></pre></div>
+<p>Wrapper 구성은 Spring Boot 프로젝트 생성 이후
+<strong>프로젝트 Maven 설정 단계</strong>에서 진행한다.</p>
+<hr />
+<h2 id="25-maven">25. 프로젝트 생성 이후 진행할 Maven 설정<a class="headerlink" href="#25-maven" title="Permanent link">&para;</a></h2>
+<p>현재 문서에서는 아래 작업을 실제로 수행하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>pom.xml 작성 / 수정
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>Spring Boot Parent 설정
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>Spring Boot BOM 설정
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>Maven Wrapper 생성
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>Maven Wrapper 버전 고정
+</span><span id="__span-47-6"><a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a>부모 POM 구성
+</span><span id="__span-47-7"><a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>멀티모듈 Maven 구성
+</span><span id="__span-47-8"><a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>공통 Module JAR Packaging
+</span><span id="__span-47-9"><a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a>Dependency Management
+</span><span id="__span-47-10"><a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a>Plugin Management
+</span><span id="__span-47-11"><a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a>Maven Compiler 설정
+</span><span id="__span-47-12"><a id="__codelineno-47-12" name="__codelineno-47-12" href="#__codelineno-47-12"></a>Project Java Version 설정
+</span><span id="__span-47-13"><a id="__codelineno-47-13" name="__codelineno-47-13" href="#__codelineno-47-13"></a>clean / test / package / verify
+</span><span id="__span-47-14"><a id="__codelineno-47-14" name="__codelineno-47-14" href="#__codelineno-47-14"></a>특정 Module Build
+</span><span id="__span-47-15"><a id="__codelineno-47-15" name="__codelineno-47-15" href="#__codelineno-47-15"></a>dependency:tree
+</span><span id="__span-47-16"><a id="__codelineno-47-16" name="__codelineno-47-16" href="#__codelineno-47-16"></a>help:effective-pom
+</span></code></pre></div>
+<p>위 내용은 실제 Spring Boot 프로젝트가 존재하는 시점부터 다음 순서로 진행하는 것을 권장한다.</p>
+<pre class="mermaid"><code>flowchart TD
+    A[Spring Boot 프로젝트 생성]
+    A --&gt; B[프로젝트 JDK 설정]
+    B --&gt; C[Maven Wrapper / 프로젝트 Maven 설정]
+    C --&gt; D[pom.xml 기본 설정]
+    D --&gt; E[Multi Module 구성]
+    E --&gt; F[공통 Module JAR 구성]
+    F --&gt; G[Dependency / Plugin 관리]
+    G --&gt; H[프로젝트 Build 검증]</code></pre>
+<p>즉, Maven 관련 내용을 제거하는 것이 아니라
+<strong>실제 Maven Project Model이 존재하는 단계로 이동</strong>하는 것이다.</p>
+<hr />
+<h2 id="26">26. 문제 해결<a class="headerlink" href="#26" title="Permanent link">&para;</a></h2>
+<h3 id="261-mvn">26.1 <code>mvn</code> 명령을 찾을 수 없음<a class="headerlink" href="#261-mvn" title="Permanent link">&para;</a></h3>
+<h4 id="windows_4">Windows<a class="headerlink" href="#windows_4" title="Permanent link">&para;</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">mvn</span>
+</span></code></pre></div>
+<p>Maven <code>bin</code>이 Windows PATH에 포함되어 있는지 확인한다.</p>
+<h4 id="macos_4">macOS<a class="headerlink" href="#macos_4" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>which<span class="w"> </span>mvn
+</span></code></pre></div>
+<p><code>~/.zshrc</code>에 Maven <code>bin</code> PATH가 포함되어 있는지 확인한다.</p>
+<hr />
+<h3 id="262-java_home">26.2 <code>JAVA_HOME</code> 관련 오류<a class="headerlink" href="#262-java_home" title="Permanent link">&para;</a></h3>
+<p>Maven은 Java Runtime이 필요하다.</p>
+<p>현재 프로젝트에서는 시스템 <code>JAVA_HOME</code>을 영구 설정하지 않으므로
+검증 시 현재 Terminal Session에 Temurin JDK를 임시 연결한다.</p>
+<h4 id="windows_5">Windows<a class="headerlink" href="#windows_5" title="Permanent link">&para;</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="nv">$env:JAVA_HOME</span><span class="p">=</span><span class="s2">&quot;C:\dev\jdks\temurin-26&quot;</span>
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="nv">$env:Path</span><span class="p">=</span><span class="s2">&quot;$env:JAVA_HOME\bin;$env:Path&quot;</span>
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a>
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a><span class="n">mvn</span> <span class="n">-version</span>
+</span></code></pre></div>
+<h4 id="macos_5">macOS<a class="headerlink" href="#macos_5" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/dev/jdks/temurin-26.jdk/Contents/Home&quot;</span>
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a>
+</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a>mvn<span class="w"> </span>-version
+</span></code></pre></div>
+<hr />
+<h3 id="263-maven-java">26.3 Maven이 다른 Java를 사용하는 경우<a class="headerlink" href="#263-maven-java" title="Permanent link">&para;</a></h3>
+<p>확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>mvn<span class="w"> </span>-version
+</span></code></pre></div>
+<p>다음 항목을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>Java version
+</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a>Java home
+</span></code></pre></div>
+<p>현재 Session에서 지정한 Eclipse Temurin JDK가 아닌 다른 JDK가 표시된다면
+현재 Terminal의 <code>JAVA_HOME</code>과 PATH 우선순위를 확인한다.</p>
+<hr />
+<h3 id="264-maven">26.4 Maven 버전이 예상과 다른 경우<a class="headerlink" href="#264-maven" title="Permanent link">&para;</a></h3>
+<p>Maven 실행파일 위치를 확인한다.</p>
+<h4 id="windows_6">Windows<a class="headerlink" href="#windows_6" title="Permanent link">&para;</a></h4>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="n">where</span><span class="p">.</span><span class="n">exe</span> <span class="n">mvn</span>
+</span></code></pre></div>
+<h4 id="macos_6">macOS<a class="headerlink" href="#macos_6" title="Permanent link">&para;</a></h4>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>which<span class="w"> </span>mvn
+</span></code></pre></div>
+<p>기존 Maven 설치가 PATH 앞쪽에 존재하면 예상과 다른 Maven 버전이 실행될 수 있다.</p>
+<p>Maven PATH의 우선순위를 확인한다.</p>
+<hr />
+<h2 id="27-maven">27. Maven 설치 완료 체크리스트<a class="headerlink" href="#27-maven" title="Permanent link">&para;</a></h2>
+<h3 id="jdk">JDK 연계<a class="headerlink" href="#jdk" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Eclipse Temurin JDK가 앞 단계에서 준비되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Windows JDK Home 경로를 알고 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> macOS JDK Home이 <code>.jdk/Contents/Home</code>까지 포함된 경로임을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 검증 시 Temurin JDK를 현재 Terminal Session에만 연결했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 시스템 전역 <code>JAVA_HOME</code>을 프로젝트 때문에 고정하지 않았다.</li>
+</ul>
+<h3 id="maven">Maven<a class="headerlink" href="#maven" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Apache Maven Binary Distribution을 다운로드했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Source Archive가 아닌 Binary Archive를 사용했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 필요한 경우 SHA-512로 배포본 무결성을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Maven을 개발도구 디렉터리에 압축 해제했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Maven <code>bin</code> 디렉터리가 PATH에 등록되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mvn</code> 실행파일 위치를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>mvn -version</code>이 정상적으로 실행된다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Maven이 검증용 Temurin JDK를 사용하고 있음을 확인했다.</li>
+</ul>
+<h3 id="maven_1">Maven 사용자 환경<a class="headerlink" href="#maven_1" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>.m2</code>와 Local Repository의 역할을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 개인 <code>settings.xml</code>을 Git에 Commit하지 않는다는 원칙을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>MAVEN_HOME</code>은 기본 구성에서 필수가 아님을 이해했다.</li>
+</ul>
+<h3 id="_3">단계 확인<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Maven Wrapper는 프로젝트 생성 이후 구성한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 <code>pom.xml</code>을 작성하거나 수정하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 Maven Build를 수행하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 Multi Module을 구성하지 않았다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 Dependency / Plugin 정책을 구성하지 않았다.</li>
+</ul>
+<hr />
+<h2 id="28">28. 다음 단계<a class="headerlink" href="#28" title="Permanent link">&para;</a></h2>
+<p>Maven 개발도구 준비가 완료되면 VS Code 개발환경을 구성한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>Eclipse Temurin JDK
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>        ↓
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>Apache Maven                    ← 현재 완료
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a>        ↓
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>VS Code 개발환경 구성
+</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>        ↓
+</span><span id="__span-56-7"><a id="__codelineno-56-7" name="__codelineno-56-7" href="#__codelineno-56-7"></a>Spring Boot 프로젝트 생성
+</span><span id="__span-56-8"><a id="__codelineno-56-8" name="__codelineno-56-8" href="#__codelineno-56-8"></a>        ↓
+</span><span id="__span-56-9"><a id="__codelineno-56-9" name="__codelineno-56-9" href="#__codelineno-56-9"></a>프로젝트 JDK / Maven / VS Code 설정
+</span></code></pre></div>
+<p>VS Code 환경 구성에서는 Java / Spring Boot Extension을 설치하고,
+앞 단계에서 준비한 JDK와 Maven을 이후 프로젝트 개발환경에서 사용할 수 있도록 IDE 환경을 준비한다.</p>
+<p>실제 Project Build와 관련된 Maven 설정은 Spring Boot 프로젝트 생성 이후 진행한다.</p>
+<hr />
+<h2 id="29">29. 공식 참고 자료<a class="headerlink" href="#29" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Apache Maven Download<br />
+<a href="https://maven.apache.org/download.cgi">https://maven.apache.org/download.cgi</a></p>
+</li>
+<li>
+<p>Apache Maven Installation<br />
+<a href="https://maven.apache.org/install.html">https://maven.apache.org/install.html</a></p>
+</li>
+<li>
+<p>Apache Maven Wrapper<br />
+<a href="https://maven.apache.org/tools/mavenwrapper.html">https://maven.apache.org/tools/mavenwrapper.html</a></p>
+</li>
+<li>
+<p>Configuring Apache Maven<br />
+<a href="https://maven.apache.org/configure.html">https://maven.apache.org/configure.html</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

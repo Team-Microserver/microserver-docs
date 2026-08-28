@@ -1,0 +1,2264 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../build_objectives/">
+      
+      
+        <link rel="next" href="../project_goal_legacy/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>프로젝트 로드맵 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#team-microserver" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              프로젝트 로드맵
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../project_introduction/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../02_development_environment/01_foundation/development_device/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-tabs__link">
+          
+  
+  
+  배포 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-tabs__link">
+          
+  
+  
+  운영 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MicroServer 소개
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 개요
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    프로젝트 개요
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../build_objectives/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    구축 목표
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 로드맵
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 로드맵
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 전체 로드맵
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_goal_legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기존 구축 목표 문서
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02_architecture/architecture_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    아키텍처 방향
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../02_development_environment/01_foundation/development_device/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../06_server_environment/01_overview/server_environment_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../07_deployment_environment/01_overview/deployment_strategy/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    배포 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../08_operation_environment/01_overview/operation_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    운영 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 개요
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 전체 로드맵
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="team-microserver">Team-Microserver 프로젝트 로드맵<a class="headerlink" href="#team-microserver" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 개요<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 <strong>Team-Microserver 프로젝트의 전체 구축 순서와 단계별 진행 방향을 정의</strong>한다.</p>
+<p>프로젝트 로드맵은 실제 기술문서의 목차와 동일한 흐름으로 구성한다.<br />
+따라서 로드맵의 각 단계는 MkDocs 문서 사이트의 메뉴와 직접 연결되며, 프로젝트를 처음 접하는 개발자도 <strong>현재 어떤 단계에 있으며 다음에 무엇을 구축해야 하는지</strong> 쉽게 확인할 수 있도록 한다.</p>
+<p>Team-Microserver의 전체 구축 과정은 다음 네 단계로 진행한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>1. 프로젝트 시작
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>      ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>2. 공통 기능 개발
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>      ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>3. 업무 및 금융 연계
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>      ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>4. 확장 아키텍처
+</span></code></pre></div>
+<p><code>참고자료</code> 영역은 별도의 구축 단계가 아니라 프로젝트 전 과정에서 공통으로 사용하는 개발 및 문서 관리 기준으로 운영한다.</p>
+<hr />
+<h2 id="2">2. 전체 로드맵<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TD
+    A["1. 프로젝트 시작"] --&gt; B["2. 공통 기능 개발"]
+    B --&gt; C["3. 업무 및 금융 연계"]
+    C --&gt; D["4. 확장 아키텍처"]
+
+    A --&gt; A1["프로젝트 이해"]
+    A --&gt; A2["프로젝트 환경 구성"]
+    A --&gt; A3["프로젝트 생성"]
+
+    B --&gt; B1["프로젝트 공통 구조"]
+    B --&gt; B2["공통 Framework"]
+    B --&gt; B3["Database"]
+    B --&gt; B4["Security"]
+    B --&gt; B5["API 개발 표준"]
+
+    C --&gt; C1["업무 공통"]
+    C --&gt; C2["금융 시스템 연계"]
+
+    D --&gt; D1["WebClient"]
+    D --&gt; D2["Spring Cloud Gateway"]
+    D --&gt; D3["Spring WebFlux"]
+    D --&gt; D4["Service Discovery / Eureka"]
+    D --&gt; D5["Kubernetes"]</code></pre>
+<p>전체 로드맵은 <strong>기반을 먼저 구축하고 그 위에 기능을 단계적으로 확장하는 방식</strong>으로 진행한다.</p>
+<table>
+<thead>
+<tr>
+<th>단계</th>
+<th>MkDocs 메뉴</th>
+<th>핵심 목표</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STEP 1</td>
+<td>프로젝트 시작</td>
+<td>프로젝트 방향 정의, 개발환경 구성, Spring Boot 프로젝트 생성</td>
+</tr>
+<tr>
+<td>STEP 2</td>
+<td>공통 기능 개발</td>
+<td>프레임워크 기본 구조와 공통 기술 기능 구축</td>
+</tr>
+<tr>
+<td>STEP 3</td>
+<td>업무 및 금융 연계</td>
+<td>공통 업무 기능과 금융 시스템 연계 기반 구축</td>
+</tr>
+<tr>
+<td>STEP 4</td>
+<td>확장 아키텍처</td>
+<td>분산·비동기·클라우드 환경으로 아키텍처 확장</td>
+</tr>
+<tr>
+<td>상시</td>
+<td>참고자료</td>
+<td>Commit, 문서 작성, 장애 해결 기준 관리</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="3-step-1">3. STEP 1. 프로젝트 시작<a class="headerlink" href="#3-step-1" title="Permanent link">&para;</a></h1>
+<h2 id="31">3.1 목표<a class="headerlink" href="#31" title="Permanent link">&para;</a></h2>
+<p>프로젝트의 목적과 아키텍처 방향을 이해하고, 개발에 필요한 환경을 구성한 후 <strong>실행 가능한 최초의 Spring Boot 프로젝트를 완성</strong>한다.</p>
+<p>이 단계가 완료되면 모든 개발자가 동일한 개발환경과 프로젝트 구조를 기준으로 이후 기능 개발을 시작할 수 있어야 한다.</p>
+<hr />
+<h2 id="32">3.2 프로젝트 이해<a class="headerlink" href="#32" title="Permanent link">&para;</a></h2>
+<h3 id="_1">목차 연계<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>프로젝트 시작
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>└─ 프로젝트 이해
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>   ├─ 프로젝트 소개
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>   ├─ 구축 목표
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>   ├─ 프로젝트 로드맵
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>   └─ 아키텍처 방향
+</span></code></pre></div>
+<h3 id="_2">주요 목표<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>프로젝트 구현에 앞서 Team-Microserver가 무엇을 구축하는 프로젝트인지 전체 방향을 이해한다.</p>
+<h3 id="_3">주요 내용<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>프로젝트의 목적과 배경 이해</li>
+<li>최종 구축 목표 정의</li>
+<li>전체 구축 단계 확인</li>
+<li>아키텍처 기본 방향 및 설계 원칙 정의</li>
+</ul>
+<h3 id="_4">완료 기준<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>프로젝트의 목적과 구축 범위를 설명할 수 있다.</li>
+<li>전체 개발 순서와 각 단계의 관계를 이해한다.</li>
+<li>공통 기능, 업무 기능, 금융 연계, 확장 아키텍처의 역할을 구분할 수 있다.</li>
+<li>이후 구현 과정에서 적용할 기본 아키텍처 원칙이 정의되어 있다.</li>
+</ul>
+<hr />
+<h2 id="33">3.3 프로젝트 환경 구성<a class="headerlink" href="#33" title="Permanent link">&para;</a></h2>
+<h3 id="_5">목차 연계<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>프로젝트 시작
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>└─ 프로젝트 환경 구성
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   ├─ 개발 장비 구성
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>   ├─ Git / GitHub 환경 구성
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>   ├─ Python / MkDocs
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>   │  ├─ Windows 환경 구성
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>   │  └─ macOS 환경 구성
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>   ├─ Java 개발환경
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>   │  ├─ JDK 설치 및 설정
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>   │  ├─ VS Code 개발환경 구성
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>   │  └─ Gradle 설치 및 설정
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>   └─ Database 개발환경
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>      └─ Oracle / Docker 로컬 환경
+</span></code></pre></div>
+<h3 id="_6">주요 목표<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>Team-Microserver를 개발하고 문서화하기 위한 <strong>표준 로컬 개발환경을 구성</strong>한다.</p>
+<h3 id="_7">주요 내용<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<h4 id="_8">개발 장비<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<ul>
+<li>개발 장비 구성 기준</li>
+<li>Windows / macOS 개발환경 고려</li>
+<li>프로젝트 실행에 필요한 기본 자원 확인</li>
+</ul>
+<h4 id="git-github">Git / GitHub<a class="headerlink" href="#git-github" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Git 설치 및 기본 설정</li>
+<li>GitHub Repository 연결</li>
+<li>Clone / Commit / Push 기본 흐름</li>
+<li>소스코드와 문서 형상관리 기반 구성</li>
+</ul>
+<h4 id="python-mkdocs">Python / MkDocs<a class="headerlink" href="#python-mkdocs" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Python 설치</li>
+<li>가상환경 구성</li>
+<li>MkDocs 설치</li>
+<li>Material for MkDocs 구성</li>
+<li>로컬 문서 사이트 실행</li>
+<li>Windows / macOS 환경별 설정</li>
+</ul>
+<h4 id="java">Java 개발환경<a class="headerlink" href="#java" title="Permanent link">&para;</a></h4>
+<ul>
+<li>JDK 설치 및 환경변수 설정</li>
+<li>Visual Studio Code 설치</li>
+<li>Java / Spring 개발 Extension 구성</li>
+<li>Gradle 설치 및 설정</li>
+<li>Build 및 실행환경 확인</li>
+<li>주요 Gradle 설정마다 Maven 대응 설정을 함께 비교</li>
+</ul>
+<h4 id="database">Database 개발환경<a class="headerlink" href="#database" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Docker 기반 Oracle 로컬 환경 구성</li>
+<li>Database 접속 확인</li>
+<li>이후 DataSource 및 MyBatis 개발을 위한 준비</li>
+</ul>
+<h3 id="_9">완료 기준<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>다음 명령과 작업을 개발 PC에서 정상적으로 수행할 수 있어야 한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Git Clone / Commit / Push
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>MkDocs Serve
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Java 실행
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Gradle Build
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>VS Code Debug
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Oracle 접속
+</span></code></pre></div>
+<hr />
+<h2 id="34">3.4 프로젝트 생성<a class="headerlink" href="#34" title="Permanent link">&para;</a></h2>
+<h3 id="_10">목차 연계<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>프로젝트 시작
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>└─ 프로젝트 생성
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>   ├─ Spring Boot 프로젝트 생성
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>   ├─ Gradle 기본 구조
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>   ├─ Package 구조 설계
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>   ├─ application.yml 기본 설정
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>   └─ 프로젝트 최초 실행
+</span></code></pre></div>
+<h3 id="_11">주요 목표<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>Team-Microserver의 출발점이 되는 <strong>최소 실행 가능한 Spring Boot 프로젝트를 직접 생성</strong>한다.</p>
+<h3 id="_12">구축 순서<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<h4 id="1-spring-boot">1. Spring Boot 프로젝트 생성<a class="headerlink" href="#1-spring-boot" title="Permanent link">&para;</a></h4>
+<ul>
+<li>프로젝트 기본 정보 정의</li>
+<li>Java / Spring Boot 버전 설정</li>
+<li>필요한 최소 Dependency 구성</li>
+<li>기본 프로젝트 생성</li>
+</ul>
+<h4 id="2-gradle">2. Gradle 기본 구조 확인<a class="headerlink" href="#2-gradle" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>settings.gradle</code>과 Root Project 역할 이해</li>
+<li><code>build.gradle</code> 구조 이해</li>
+<li>Plugin / Repository / Dependency Configuration 이해</li>
+<li>Gradle Wrapper (<code>gradlew</code>) 이해</li>
+<li>Task / Build Lifecycle 확인</li>
+<li><code>build</code>, <code>test</code>, <code>bootRun</code>, <code>dependencies</code> 기본 Task 확인</li>
+<li>같은 설정을 Maven <code>pom.xml</code>, Lifecycle과 비교</li>
+</ul>
+<h4 id="3-package">3. Package 구조 설계<a class="headerlink" href="#3-package" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Base Package 정의</li>
+<li>계층별 Package 역할 정의</li>
+<li>공통 기능과 업무 기능의 확장을 고려한 구조 설계</li>
+</ul>
+<h4 id="4-applicationyml">4. application.yml 기본 설정<a class="headerlink" href="#4-applicationyml" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Spring Boot 기본 설정</li>
+<li>Profile 확장 고려</li>
+<li>서버 및 애플리케이션 기본 설정</li>
+<li>환경별 Configuration을 위한 기본 구조 구성</li>
+</ul>
+<h4 id="5">5. 프로젝트 최초 실행<a class="headerlink" href="#5" title="Permanent link">&para;</a></h4>
+<ul>
+<li>Gradle Build</li>
+<li>Spring Boot 실행</li>
+<li>기본 애플리케이션 시작 확인</li>
+<li>최초 실행 결과 검증</li>
+</ul>
+<h3 id="_13">완료 기준<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Spring Boot 프로젝트 생성
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>        ↓
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>Gradle Build 성공
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        ↓
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>애플리케이션 정상 실행
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        ↓
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>기본 Package / Configuration 구조 확보
+</span></code></pre></div>
+<p>이 단계가 완료되면 이후 프레임워크 기능을 추가할 수 있는 <strong>최초의 실행 가능한 프로젝트 기반</strong>이 확보된다.</p>
+<hr />
+<h1 id="4-step-2">4. STEP 2. 공통 기능 개발<a class="headerlink" href="#4-step-2" title="Permanent link">&para;</a></h1>
+<h2 id="41">4.1 목표<a class="headerlink" href="#41" title="Permanent link">&para;</a></h2>
+<p>프로젝트 시작 단계에서 생성한 Spring Boot 프로젝트를 기반으로 금융 SI 프로젝트에서 반복적으로 필요한 <strong>공통 프레임워크 기능을 구축</strong>한다.</p>
+<p>이 단계는 Team-Microserver의 핵심 개발 단계이며 다음 순서로 진행한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>프로젝트 공통 구조
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>      ↓
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>공통 Framework
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>      ↓
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Database
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>      ↓
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Security
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>      ↓
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>API 개발 표준
+</span></code></pre></div>
+<hr />
+<h2 id="42">4.2 프로젝트 공통 구조<a class="headerlink" href="#42" title="Permanent link">&para;</a></h2>
+<h3 id="_14">목차 연계<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>공통 기능 개발
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>└─ 프로젝트 공통 구조
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>   ├─ module-common 구성
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>   ├─ runtime 모듈 구성
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>   ├─ admin 모듈 구성
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>   └─ 멀티모듈 프로젝트 구조
+</span></code></pre></div>
+<h3 id="_15">주요 목표<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<p>단일 Spring Boot 프로젝트를 역할별 모듈로 분리하여 <strong>확장 가능한 Gradle Multi-Project 구조를 구축</strong>한다.</p>
+<h3 id="_16">주요 내용<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<h4 id="module-common">module-common<a class="headerlink" href="#module-common" title="Permanent link">&para;</a></h4>
+<p>여러 모듈에서 공통으로 사용하는 기능을 구성한다.</p>
+<ul>
+<li>공통 객체</li>
+<li>공통 상수</li>
+<li>공통 예외</li>
+<li>공통 Utility</li>
+<li>공통 기반 기능</li>
+</ul>
+<h4 id="runtime">runtime<a class="headerlink" href="#runtime" title="Permanent link">&para;</a></h4>
+<p>실제 애플리케이션 실행에 필요한 Runtime 영역을 구성한다.</p>
+<ul>
+<li>애플리케이션 실행</li>
+<li>업무 서비스 제공</li>
+<li>API 제공</li>
+<li>Runtime Configuration</li>
+</ul>
+<h4 id="admin">admin<a class="headerlink" href="#admin" title="Permanent link">&para;</a></h4>
+<p>운영 및 관리 기능을 제공할 Admin 영역의 기본 구조를 구성한다.</p>
+<h4 id="_17">멀티모듈 프로젝트<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
+<p>각 모듈을 하나의 Gradle Multi-Project 구조로 통합하고 모듈 간 의존성을 정의한다.</p>
+<h3 id="_18">완료 기준<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<ul>
+<li>각 모듈의 역할이 명확하다.</li>
+<li>모듈 간 의존 관계가 정의되어 있다.</li>
+<li>전체 프로젝트가 Gradle Wrapper로 정상 Build 된다.</li>
+<li>공통 기능을 여러 모듈에서 재사용할 수 있다.</li>
+</ul>
+<hr />
+<h2 id="43-framework">4.3 공통 Framework<a class="headerlink" href="#43-framework" title="Permanent link">&para;</a></h2>
+<h3 id="_19">목차 연계<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>공통 기능 개발
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>└─ 공통 Framework
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>   ├─ 공통 Response 구조
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>   ├─ 공통 예외 처리
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>   ├─ Logging 구성
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>   ├─ Filter 구성
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>   ├─ 공통 Utility 구성
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>   └─ Jasypt 설정
+</span></code></pre></div>
+<h3 id="_20">주요 목표<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<p>업무 개발 전반에서 반복적으로 사용되는 기술 기능을 공통화하고 일관된 처리 방식을 제공한다.</p>
+<h3 id="_21">구축 순서<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h3>
+<ol>
+<li>공통 Response 구조 정의</li>
+<li>공통 Exception 및 오류 처리 구성</li>
+<li>Logging 표준 구성</li>
+<li>Filter 기반 공통 요청 처리</li>
+<li>공통 Utility 구성</li>
+<li>Jasypt 기반 중요 설정값 암호화</li>
+</ol>
+<h3 id="_22">주요 결과<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<ul>
+<li>API 응답 형식 표준화</li>
+<li>오류 코드 및 예외 처리 일원화</li>
+<li>애플리케이션 로그 기준 확보</li>
+<li>요청 공통 처리 기반 확보</li>
+<li>반복 기능의 Utility화</li>
+<li>중요 환경설정 값 보호</li>
+</ul>
+<h3 id="_23">완료 기준<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
+<p>업무 개발자가 개별적으로 Response, Exception, Logging 등의 기반 기능을 다시 구현하지 않고 공통 프레임워크를 사용할 수 있어야 한다.</p>
+<hr />
+<h2 id="44-database">4.4 Database<a class="headerlink" href="#44-database" title="Permanent link">&para;</a></h2>
+<h3 id="_24">목차 연계<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>공통 기능 개발
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>└─ Database
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>   ├─ Oracle 연동
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>   ├─ DataSource 구성
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>   ├─ MyBatis 구성
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>   ├─ Transaction 관리
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>   └─ Multi DataSource 구성
+</span></code></pre></div>
+<h3 id="_25">주요 목표<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h3>
+<p>Oracle 기반 업무 데이터를 일관된 방식으로 처리할 수 있는 <strong>표준 Database 접근 기반</strong>을 구축한다.</p>
+<h3 id="_26">구축 순서<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Oracle 연결
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>   ↓
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>DataSource 구성
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>   ↓
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>MyBatis 구성
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>   ↓
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>Transaction 관리
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>   ↓
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>Multi DataSource 확장
+</span></code></pre></div>
+<h3 id="_27">주요 내용<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Oracle JDBC 연결</li>
+<li>Spring Boot DataSource 구성</li>
+<li>환경별 Database 설정</li>
+<li>MyBatis Mapper 구성</li>
+<li>SQL Mapping 기준</li>
+<li>Transaction 경계 및 처리 방식</li>
+<li>다중 Database 연동을 위한 Multi DataSource 구조</li>
+</ul>
+<h3 id="_28">완료 기준<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Oracle Database에 정상 접속할 수 있다.</li>
+<li>MyBatis 기반 CRUD가 정상 동작한다.</li>
+<li>Transaction Commit / Rollback이 정상 동작한다.</li>
+<li>필요 시 복수 DataSource를 추가할 수 있다.</li>
+</ul>
+<hr />
+<h2 id="45-security">4.5 Security<a class="headerlink" href="#45-security" title="Permanent link">&para;</a></h2>
+<h3 id="_29">목차 연계<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>공통 기능 개발
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>└─ Security
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>   ├─ Spring Security 기본 구성
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>   ├─ 사용자 관리
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>   ├─ Role / 권한 모델
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>   ├─ 사용자 인증
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>   └─ 인가 및 접근 제어
+</span></code></pre></div>
+<h3 id="_30">주요 목표<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h3>
+<p>금융 서비스에서 필요한 사용자 인증과 권한 제어를 <strong>Spring Security 기반 공통 보안 구조</strong>로 구축한다.</p>
+<h3 id="_31">구축 순서<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Spring Security 기본 구성</li>
+<li>사용자 정보 관리 구조</li>
+<li>Role / 권한 모델 설계</li>
+<li>사용자 인증 구현</li>
+<li>인가 및 접근 제어 구현</li>
+</ol>
+<h3 id="_32">주요 결과<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h3>
+<ul>
+<li>인증되지 않은 사용자의 접근 제어</li>
+<li>사용자 정보 기반 로그인 처리</li>
+<li>Role 및 권한 체계</li>
+<li>URL / 기능 단위 접근 통제</li>
+<li>보안 예외 공통 처리 기반</li>
+</ul>
+<h3 id="_33">완료 기준<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>사용자 요청
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>   ↓
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>사용자 인증
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>   ↓
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Role / 권한 확인
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>   ↓
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>접근 허용 또는 차단
+</span></code></pre></div>
+<p>인증과 인가가 업무 코드에 분산되지 않고 공통 Security 구조에서 일관되게 처리되어야 한다.</p>
+<hr />
+<h2 id="46-api">4.6 API 개발 표준<a class="headerlink" href="#46-api" title="Permanent link">&para;</a></h2>
+<h3 id="_34">목차 연계<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>공통 기능 개발
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>└─ API 개발 표준
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>   ├─ Controller 개발 표준
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>   ├─ Service 개발 표준
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>   ├─ Repository / Mapper 개발 표준
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>   ├─ Validation
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>   └─ OpenAPI / Swagger
+</span></code></pre></div>
+<h3 id="_35">주요 목표<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h3>
+<p>개발자마다 다른 방식으로 API를 구현하지 않도록 <strong>표준 개발 계층과 API 개발 규칙을 정의</strong>한다.</p>
+<h3 id="_36">기본 처리 흐름<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>Client
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  ↓
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>Controller
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>  ↓
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>Service
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>  ↓
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>Repository / Mapper
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>  ↓
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>Database
+</span></code></pre></div>
+<h3 id="_37">주요 내용<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Controller 역할과 작성 기준</li>
+<li>Service 역할과 Transaction 처리 기준</li>
+<li>Repository / Mapper 역할과 작성 기준</li>
+<li>Request Validation</li>
+<li>공통 Response 및 Exception 연계</li>
+<li>OpenAPI / Swagger 기반 API 문서화</li>
+</ul>
+<h3 id="_38">완료 기준<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h3>
+<p>새로운 업무 API를 개발할 때 동일한 계층 구조와 개발 규칙을 적용할 수 있어야 한다.</p>
+<hr />
+<h1 id="5-step-3">5. STEP 3. 업무 및 금융 연계<a class="headerlink" href="#5-step-3" title="Permanent link">&para;</a></h1>
+<h2 id="51">5.1 목표<a class="headerlink" href="#51" title="Permanent link">&para;</a></h2>
+<p>공통 프레임워크가 완성된 이후 실제 애플리케이션에서 사용할 수 있는 <strong>업무 공통 기능과 금융 시스템 연계 기능을 구현</strong>한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>업무 공통 기능
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>      ↓
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>금융 시스템 연계
+</span></code></pre></div>
+<p>이 단계부터 Team-Microserver는 단순 기술 프레임워크를 넘어 실제 금융 SI 프로젝트에서 활용 가능한 Reference 기능을 갖추게 된다.</p>
+<hr />
+<h2 id="52">5.2 업무 공통<a class="headerlink" href="#52" title="Permanent link">&para;</a></h2>
+<h3 id="_39">목차 연계<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>업무 및 금융 연계
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>└─ 업무 공통
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>   ├─ 공통코드
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>   ├─ 메뉴 관리
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>   ├─ 사용자 관리 기능
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>   ├─ 게시판 공통 기능
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>   └─ 관리자 기능
+</span></code></pre></div>
+<h3 id="_40">주요 목표<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h3>
+<p>다수의 업무 시스템에서 반복적으로 필요한 기능을 공통 업무 기능으로 제공한다.</p>
+<h3 id="_41">구축 대상<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h3>
+<h4 id="_42">공통코드<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h4>
+<ul>
+<li>시스템 공통코드 관리</li>
+<li>코드 그룹 및 상세 코드</li>
+<li>공통코드 조회 및 활용</li>
+</ul>
+<h4 id="_43">메뉴 관리<a class="headerlink" href="#_43" title="Permanent link">&para;</a></h4>
+<ul>
+<li>메뉴 구조 관리</li>
+<li>사용자 / Role과 메뉴 연계 기반</li>
+<li>화면 접근 제어 확장</li>
+</ul>
+<h4 id="_44">사용자 관리 기능<a class="headerlink" href="#_44" title="Permanent link">&para;</a></h4>
+<ul>
+<li>사용자 조회 및 관리</li>
+<li>사용자 상태 관리</li>
+<li>Security 사용자 모델과 업무 기능 연계</li>
+</ul>
+<h4 id="_45">게시판 공통 기능<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h4>
+<ul>
+<li>공지사항 등에서 재사용 가능한 기본 게시판 기능</li>
+<li>등록 / 조회 / 수정 / 삭제 기본 기능</li>
+</ul>
+<h4 id="_46">관리자 기능<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h4>
+<ul>
+<li>운영자 중심의 관리 기능</li>
+<li>공통코드, 사용자, 메뉴 등 관리 기능 통합</li>
+</ul>
+<h3 id="_47">완료 기준<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h3>
+<p>공통 업무 기능이 특정 프로젝트의 업무 규칙에 과도하게 종속되지 않고 다른 프로젝트에서도 재사용 가능한 형태로 구성되어야 한다.</p>
+<hr />
+<h2 id="53">5.3 금융 시스템 연계<a class="headerlink" href="#53" title="Permanent link">&para;</a></h2>
+<h3 id="_48">목차 연계<a class="headerlink" href="#_48" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>업무 및 금융 연계
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>└─ 금융 시스템 연계
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>   ├─ 전문 구조
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>   ├─ Message Builder
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>   ├─ Message Parser
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>   ├─ MCA 연계
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>   ├─ EAI 연계
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>   └─ FEP 연계
+</span></code></pre></div>
+<h3 id="_49">주요 목표<a class="headerlink" href="#_49" title="Permanent link">&para;</a></h3>
+<p>금융 SI 프로젝트에서 필요한 <strong>전문 기반 내부·외부 시스템 연계 구조를 표준화</strong>한다.</p>
+<h3 id="_50">구축 순서<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>전문 구조 정의
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>      ↓
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>Message Builder
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>      ↓
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>Message Parser
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>      ↓
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>MCA / EAI / FEP Adapter
+</span></code></pre></div>
+<h3 id="_51">전문 구조<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h3>
+<ul>
+<li>공통 Header</li>
+<li>업무 Header</li>
+<li>Message Body</li>
+<li>전문 길이 및 필드 정의</li>
+<li>송수신 전문 모델</li>
+</ul>
+<h3 id="message-builder">Message Builder<a class="headerlink" href="#message-builder" title="Permanent link">&para;</a></h3>
+<p>애플리케이션 객체를 송신 전문으로 변환하는 공통 구조를 구현한다.</p>
+<h3 id="message-parser">Message Parser<a class="headerlink" href="#message-parser" title="Permanent link">&para;</a></h3>
+<p>수신 전문을 애플리케이션에서 사용할 수 있는 데이터 구조로 변환한다.</p>
+<h3 id="mca-eai-fep">MCA / EAI / FEP<a class="headerlink" href="#mca-eai-fep" title="Permanent link">&para;</a></h3>
+<p>실제 금융 시스템 연계 방식별 Adapter 구조를 구현한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Business Service
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>      ↓
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Integration Interface
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>      ↓
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Message Builder / Parser
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>      ↓
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>MCA / EAI / FEP
+</span></code></pre></div>
+<h3 id="_52">완료 기준<a class="headerlink" href="#_52" title="Permanent link">&para;</a></h3>
+<ul>
+<li>업무 서비스가 연계 기술의 상세 구현에 직접 종속되지 않는다.</li>
+<li>전문 생성과 Parsing을 공통 기능으로 사용할 수 있다.</li>
+<li>MCA / EAI / FEP별 구현을 분리할 수 있다.</li>
+<li>연계 방식이 추가되어도 기존 업무 코드의 변경을 최소화할 수 있다.</li>
+</ul>
+<hr />
+<h1 id="6-step-4">6. STEP 4. 확장 아키텍처<a class="headerlink" href="#6-step-4" title="Permanent link">&para;</a></h1>
+<h2 id="61">6.1 목표<a class="headerlink" href="#61" title="Permanent link">&para;</a></h2>
+<p>핵심 프레임워크와 금융 업무 기반이 완성된 이후 현대적인 분산 시스템과 클라우드 환경에 대응할 수 있도록 아키텍처를 확장한다.</p>
+<h3 id="_53">목차 연계<a class="headerlink" href="#_53" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>확장 아키텍처
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>├─ WebClient
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>├─ Spring Cloud Gateway
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>├─ Spring WebFlux
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>├─ Service Discovery / Eureka
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>└─ Kubernetes
+</span></code></pre></div>
+<p>확장 아키텍처는 Team-Microserver의 기본 프레임워크를 완성하기 위한 필수 선행 단계라기보다, 프로젝트 특성에 따라 선택적으로 적용할 수 있는 확장 영역이다.</p>
+<hr />
+<h2 id="62-webclient">6.2 WebClient<a class="headerlink" href="#62-webclient" title="Permanent link">&para;</a></h2>
+<h3 id="_54">목표<a class="headerlink" href="#_54" title="Permanent link">&para;</a></h3>
+<p>외부 시스템 REST API를 호출할 수 있는 현대적인 HTTP Client 기반을 구축한다.</p>
+<h3 id="_55">주요 내용<a class="headerlink" href="#_55" title="Permanent link">&para;</a></h3>
+<ul>
+<li>WebClient 기본 구성</li>
+<li>공통 Header</li>
+<li>Timeout</li>
+<li>오류 처리</li>
+<li>요청 / 응답 Logging</li>
+<li>외부 시스템 Client 구조</li>
+</ul>
+<h3 id="_56">연계<a class="headerlink" href="#_56" title="Permanent link">&para;</a></h3>
+<p>기존 금융 시스템 연계 구조의 REST Adapter 구현에 활용할 수 있다.</p>
+<hr />
+<h2 id="63-spring-cloud-gateway">6.3 Spring Cloud Gateway<a class="headerlink" href="#63-spring-cloud-gateway" title="Permanent link">&para;</a></h2>
+<h3 id="_57">목표<a class="headerlink" href="#_57" title="Permanent link">&para;</a></h3>
+<p>다수의 서비스 앞단에서 요청을 통합적으로 처리할 수 있는 API Gateway 구조를 검토하고 구축한다.</p>
+<h3 id="_58">주요 내용<a class="headerlink" href="#_58" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Routing</li>
+<li>Filter</li>
+<li>인증 연계</li>
+<li>공통 Header</li>
+<li>Gateway Logging</li>
+<li>서비스별 Route 관리</li>
+</ul>
+<hr />
+<h2 id="64-spring-webflux">6.4 Spring WebFlux<a class="headerlink" href="#64-spring-webflux" title="Permanent link">&para;</a></h2>
+<h3 id="_59">목표<a class="headerlink" href="#_59" title="Permanent link">&para;</a></h3>
+<p>비동기 / Non-Blocking 처리 방식이 필요한 환경을 위한 Reactive 기반 개발 구조를 검토한다.</p>
+<h3 id="_60">주요 내용<a class="headerlink" href="#_60" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Reactive Programming 기본 구조</li>
+<li>Mono / Flux</li>
+<li>Non-Blocking I/O</li>
+<li>WebClient 연계</li>
+<li>기존 MVC 방식과 적용 기준 비교</li>
+</ul>
+<p>모든 업무를 Reactive 방식으로 전환하는 것이 아니라 실제 필요성이 있는 영역에 선택적으로 적용한다.</p>
+<hr />
+<h2 id="65-service-discovery-eureka">6.5 Service Discovery / Eureka<a class="headerlink" href="#65-service-discovery-eureka" title="Permanent link">&para;</a></h2>
+<h3 id="_61">목표<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h3>
+<p>서비스가 분산되는 환경에서 서비스 위치를 동적으로 검색할 수 있는 Service Discovery 구조를 구축한다.</p>
+<h3 id="_62">주요 내용<a class="headerlink" href="#_62" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Eureka Server</li>
+<li>Eureka Client</li>
+<li>서비스 등록</li>
+<li>서비스 탐색</li>
+<li>서비스 간 호출 구조</li>
+</ul>
+<hr />
+<h2 id="66-kubernetes">6.6 Kubernetes<a class="headerlink" href="#66-kubernetes" title="Permanent link">&para;</a></h2>
+<h3 id="_63">목표<a class="headerlink" href="#_63" title="Permanent link">&para;</a></h3>
+<p>Team-Microserver 기반 애플리케이션을 Container 및 Kubernetes 환경에서 실행할 수 있는 배포 아키텍처로 확장한다.</p>
+<h3 id="_64">주요 내용<a class="headerlink" href="#_64" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Container 실행 구조</li>
+<li>Kubernetes Deployment</li>
+<li>Service</li>
+<li>ConfigMap / Secret</li>
+<li>환경 설정 외부화</li>
+<li>Scale-out 구조</li>
+<li>Health Check 연계</li>
+</ul>
+<h3 id="_65">완료 기준<a class="headerlink" href="#_65" title="Permanent link">&para;</a></h3>
+<p>프로젝트 특성에 따라 필요한 확장 기술을 기존 프레임워크 구조를 크게 변경하지 않고 적용할 수 있어야 한다.</p>
+<hr />
+<h1 id="7">7. 참고자료 운영<a class="headerlink" href="#7" title="Permanent link">&para;</a></h1>
+<p><code>참고자료</code>는 하나의 개발 Phase가 아니라 <strong>프로젝트 전 단계에서 공통으로 적용하는 운영 기준</strong>으로 관리한다.</p>
+<h3 id="_66">목차 연계<a class="headerlink" href="#_66" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>참고자료
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>├─ Git Commit Convention
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>├─ 문서 작성 규칙
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>└─ Troubleshooting
+</span></code></pre></div>
+<h2 id="71-git-commit-convention">7.1 Git Commit Convention<a class="headerlink" href="#71-git-commit-convention" title="Permanent link">&para;</a></h2>
+<p>각 구축 단계에서 변경한 내용을 일관된 Commit 규칙으로 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>기능 구현
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>   ↓
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>테스트
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>   ↓
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>문서 작성
+</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>   ↓
+</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>Git Commit
+</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>   ↓
+</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>GitHub Push
+</span></code></pre></div>
+<h2 id="72">7.2 문서 작성 규칙<a class="headerlink" href="#72" title="Permanent link">&para;</a></h2>
+<p>각 기술 가이드는 동일한 작성 기준과 구조를 유지하여 문서 간 편차를 최소화한다.</p>
+<h2 id="73-troubleshooting">7.3 Troubleshooting<a class="headerlink" href="#73-troubleshooting" title="Permanent link">&para;</a></h2>
+<p>프로젝트 구축 과정에서 발생한 주요 오류와 해결 방법을 지속적으로 축적한다.</p>
+<p>단순 오류 메시지 기록이 아니라 다음 내용을 함께 관리한다.</p>
+<ul>
+<li>발생 현상</li>
+<li>발생 원인</li>
+<li>확인 방법</li>
+<li>해결 방법</li>
+<li>유사 문제 발생 시 참고 사항</li>
+</ul>
+<hr />
+<h1 id="8">8. 목차와 로드맵 매핑<a class="headerlink" href="#8" title="Permanent link">&para;</a></h1>
+<p>전체 MkDocs 목차와 프로젝트 진행 단계를 매핑하면 다음과 같다.</p>
+<table>
+<thead>
+<tr>
+<th>로드맵</th>
+<th>MkDocs 1차 메뉴</th>
+<th>MkDocs 2차 메뉴</th>
+<th>진행 목적</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STEP 1-1</td>
+<td>프로젝트 시작</td>
+<td>프로젝트 이해</td>
+<td>프로젝트 목표와 설계 방향 확립</td>
+</tr>
+<tr>
+<td>STEP 1-2</td>
+<td>프로젝트 시작</td>
+<td>프로젝트 환경 구성</td>
+<td>개발·문서·DB 환경 준비</td>
+</tr>
+<tr>
+<td>STEP 1-3</td>
+<td>프로젝트 시작</td>
+<td>프로젝트 생성</td>
+<td>최초 실행 가능한 Spring Boot 프로젝트 구축</td>
+</tr>
+<tr>
+<td>STEP 2-1</td>
+<td>공통 기능 개발</td>
+<td>프로젝트 공통 구조</td>
+<td>멀티모듈 기반 프레임워크 구조 구축</td>
+</tr>
+<tr>
+<td>STEP 2-2</td>
+<td>공통 기능 개발</td>
+<td>공통 Framework</td>
+<td>Response, Exception, Log 등 공통 기능 구현</td>
+</tr>
+<tr>
+<td>STEP 2-3</td>
+<td>공통 기능 개발</td>
+<td>Database</td>
+<td>표준 데이터 처리 기반 구축</td>
+</tr>
+<tr>
+<td>STEP 2-4</td>
+<td>공통 기능 개발</td>
+<td>Security</td>
+<td>인증·인가 및 접근통제 기반 구축</td>
+</tr>
+<tr>
+<td>STEP 2-5</td>
+<td>공통 기능 개발</td>
+<td>API 개발 표준</td>
+<td>표준 업무 API 개발 방식 정립</td>
+</tr>
+<tr>
+<td>STEP 3-1</td>
+<td>업무 및 금융 연계</td>
+<td>업무 공통</td>
+<td>재사용 가능한 공통 업무 기능 구현</td>
+</tr>
+<tr>
+<td>STEP 3-2</td>
+<td>업무 및 금융 연계</td>
+<td>금융 시스템 연계</td>
+<td>전문 및 MCA/EAI/FEP 연계 기반 구축</td>
+</tr>
+<tr>
+<td>STEP 4</td>
+<td>확장 아키텍처</td>
+<td>확장 기술</td>
+<td>분산·Reactive·Cloud 환경 확장</td>
+</tr>
+<tr>
+<td>상시</td>
+<td>참고자료</td>
+<td>개발/문서 운영 기준</td>
+<td>프로젝트 전체 품질 및 이력 관리</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="9">9. 단계별 완료 흐름<a class="headerlink" href="#9" title="Permanent link">&para;</a></h1>
+<p>각 세부 가이드는 다음 순서로 진행한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>1. 구축 목적 확인
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>       ↓
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>2. 구조 및 적용 방식 설계
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>       ↓
+</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>3. 프로젝트에 직접 구현
+</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>       ↓
+</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>4. Build / 실행
+</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>       ↓
+</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>5. 기능 테스트 및 결과 확인
+</span><span id="__span-23-10"><a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a>       ↓
+</span><span id="__span-23-11"><a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a>6. Markdown 기술문서 작성
+</span><span id="__span-23-12"><a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a>       ↓
+</span><span id="__span-23-13"><a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a>7. Git Commit
+</span><span id="__span-23-14"><a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>       ↓
+</span><span id="__span-23-15"><a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a>8. GitHub Push
+</span></code></pre></div>
+<p>하나의 기능이 정상적으로 완료되기 전에 다음 단계로 넘어가지 않는 것을 기본 원칙으로 한다.</p>
+<hr />
+<h1 id="10">10. 최종 도달 구조<a class="headerlink" href="#10" title="Permanent link">&para;</a></h1>
+<p>전체 로드맵이 완료되면 Team-Microserver는 다음 구조를 갖는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Team-Microserver
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>│
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>├─ 프로젝트 기반
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>│  ├─ 표준 개발환경
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>│  ├─ Spring Boot
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>│  ├─ Gradle
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>│  └─ Multi-Project
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>│
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>├─ 공통 Framework
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>│  ├─ Response
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>│  ├─ Exception
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>│  ├─ Logging
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>│  ├─ Filter
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>│  ├─ Utility
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>│  └─ Security
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>│
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>├─ Data / API
+</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a>│  ├─ Oracle
+</span><span id="__span-24-19"><a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a>│  ├─ MyBatis
+</span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a>│  ├─ Transaction
+</span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a>│  ├─ Controller
+</span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a>│  ├─ Service
+</span><span id="__span-24-23"><a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a>│  └─ Repository / Mapper
+</span><span id="__span-24-24"><a id="__codelineno-24-24" name="__codelineno-24-24" href="#__codelineno-24-24"></a>│
+</span><span id="__span-24-25"><a id="__codelineno-24-25" name="__codelineno-24-25" href="#__codelineno-24-25"></a>├─ 업무 공통
+</span><span id="__span-24-26"><a id="__codelineno-24-26" name="__codelineno-24-26" href="#__codelineno-24-26"></a>│  ├─ 공통코드
+</span><span id="__span-24-27"><a id="__codelineno-24-27" name="__codelineno-24-27" href="#__codelineno-24-27"></a>│  ├─ 메뉴
+</span><span id="__span-24-28"><a id="__codelineno-24-28" name="__codelineno-24-28" href="#__codelineno-24-28"></a>│  ├─ 사용자
+</span><span id="__span-24-29"><a id="__codelineno-24-29" name="__codelineno-24-29" href="#__codelineno-24-29"></a>│  ├─ 게시판
+</span><span id="__span-24-30"><a id="__codelineno-24-30" name="__codelineno-24-30" href="#__codelineno-24-30"></a>│  └─ 관리자
+</span><span id="__span-24-31"><a id="__codelineno-24-31" name="__codelineno-24-31" href="#__codelineno-24-31"></a>│
+</span><span id="__span-24-32"><a id="__codelineno-24-32" name="__codelineno-24-32" href="#__codelineno-24-32"></a>├─ 금융 시스템 연계
+</span><span id="__span-24-33"><a id="__codelineno-24-33" name="__codelineno-24-33" href="#__codelineno-24-33"></a>│  ├─ 전문
+</span><span id="__span-24-34"><a id="__codelineno-24-34" name="__codelineno-24-34" href="#__codelineno-24-34"></a>│  ├─ Message Builder
+</span><span id="__span-24-35"><a id="__codelineno-24-35" name="__codelineno-24-35" href="#__codelineno-24-35"></a>│  ├─ Message Parser
+</span><span id="__span-24-36"><a id="__codelineno-24-36" name="__codelineno-24-36" href="#__codelineno-24-36"></a>│  ├─ MCA
+</span><span id="__span-24-37"><a id="__codelineno-24-37" name="__codelineno-24-37" href="#__codelineno-24-37"></a>│  ├─ EAI
+</span><span id="__span-24-38"><a id="__codelineno-24-38" name="__codelineno-24-38" href="#__codelineno-24-38"></a>│  └─ FEP
+</span><span id="__span-24-39"><a id="__codelineno-24-39" name="__codelineno-24-39" href="#__codelineno-24-39"></a>│
+</span><span id="__span-24-40"><a id="__codelineno-24-40" name="__codelineno-24-40" href="#__codelineno-24-40"></a>└─ 확장 아키텍처
+</span><span id="__span-24-41"><a id="__codelineno-24-41" name="__codelineno-24-41" href="#__codelineno-24-41"></a>   ├─ WebClient
+</span><span id="__span-24-42"><a id="__codelineno-24-42" name="__codelineno-24-42" href="#__codelineno-24-42"></a>   ├─ Gateway
+</span><span id="__span-24-43"><a id="__codelineno-24-43" name="__codelineno-24-43" href="#__codelineno-24-43"></a>   ├─ WebFlux
+</span><span id="__span-24-44"><a id="__codelineno-24-44" name="__codelineno-24-44" href="#__codelineno-24-44"></a>   ├─ Service Discovery
+</span><span id="__span-24-45"><a id="__codelineno-24-45" name="__codelineno-24-45" href="#__codelineno-24-45"></a>   └─ Kubernetes
+</span></code></pre></div>
+<hr />
+<h1 id="11">11. 로드맵 운영 원칙<a class="headerlink" href="#11" title="Permanent link">&para;</a></h1>
+<p>Team-Microserver의 세부 기술과 구현 순서는 프로젝트 진행 과정에서 조정될 수 있다.</p>
+<p>다만 전체 로드맵은 현재 MkDocs 목차를 기준으로 다음 흐름을 유지한다.</p>
+<blockquote>
+<p><strong>프로젝트 시작 → 공통 기능 개발 → 업무 및 금융 연계 → 확장 아키텍처</strong></p>
+</blockquote>
+<p>각 상위 메뉴는 단순한 문서 분류가 아니라 실제 프로젝트의 구축 단계를 의미한다.</p>
+<p>따라서 새로운 기능을 추가할 때도 먼저 <strong>어느 구축 단계와 역할에 해당하는 기능인지 판단한 후 적절한 목차와 모듈에 배치</strong>한다.</p>
+<p>최종적으로 Team-Microserver는 프로젝트 생성부터 공통 프레임워크, 업무 공통 기능, 금융 시스템 연계 및 확장 아키텍처까지 단계적으로 구축하여 <strong>새로운 금융 SI 프로젝트에서 재사용 가능한 표준 개발 기반을 확보하는 것</strong>을 목표로 한다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>
