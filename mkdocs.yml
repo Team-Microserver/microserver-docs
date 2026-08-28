@@ -67,155 +67,249 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.mark
 
+
+
 nav:
-#  - Home: index.md
+  - Home: index.md
 
-  - Local 환경 구축:
+  - MicroServer 소개:
+      - 프로젝트 개요:
+          - MicroServer 소개: 01_microserver_introduction/01_overview/project_introduction.md
+          - 구축 목표: 01_microserver_introduction/01_overview/build_objectives.md
+          - 프로젝트 로드맵: 01_microserver_introduction/01_overview/project_roadmap.md
+          - 기존 구축 목표 문서: 01_microserver_introduction/01_overview/project_goal_legacy.md
 
-      - Microserver 개요:
-          - Microserver 소개: 01_project_start/01_overview/project_introduction.md
-          - 구축 목표: 01_project_start/01_overview/team_microserver_build_objectives_guide.md
-          - 구축 로드맵: 01_project_start/01_overview/project_roadmap.md
+      - 아키텍처 방향:
+          - 아키텍처 방향 개요: 01_microserver_introduction/02_architecture/architecture_overview.md
+          - MicroServer 핵심 설계 원칙: 01_microserver_introduction/02_architecture/core_design_principles.md
+          - Framework / 업무 Domain 분리 전략: 01_microserver_introduction/02_architecture/framework_domain_separation_strategy.md
+          - 구축 원칙 및 개발 방식: 01_microserver_introduction/02_architecture/development_principles.md
+          - 멀티모듈 및 프로젝트 구조: 01_microserver_introduction/02_architecture/multi_module_structure.md
+          - 애플리케이션 계층 구조: 01_microserver_introduction/02_architecture/layered_application_structure.md
+          - 공통 처리 구조: 01_microserver_introduction/02_architecture/common_processing_structure.md
+          - 데이터 및 보안 아키텍처: 01_microserver_introduction/02_architecture/data_security_architecture.md
+          - 공통 데이터 및 캐시 구조: 01_microserver_introduction/02_architecture/cache_common_data.md
+          - 금융 시스템 연계 아키텍처: 01_microserver_introduction/02_architecture/financial_integration_architecture.md
+          - 확장 및 운영 아키텍처: 01_microserver_introduction/02_architecture/extension_operation_architecture.md
+          - 아키텍처 방향 종합 문서 (기존): 01_microserver_introduction/02_architecture/architecture_direction_legacy.md
 
-          - 아키텍처 설계 방향:
-              - 아키텍처 개요: 01_project_start/01_overview/architecture/architecture_overview.md
-              - 구축 원칙 및 개발 방식: 01_project_start/01_overview/architecture/development_principles.md
-              - 멀티모듈 아키텍처 방향: 01_project_start/01_overview/architecture/multi_module_structure.md
-              - 애플리케이션 계층 구조: 01_project_start/01_overview/architecture/layered_application_structure.md
-              - 공통 처리 구조: 01_project_start/01_overview/architecture/common_processing_structure.md
-              - 데이터 및 보안 아키텍처: 01_project_start/01_overview/architecture/data_security_architecture.md
-              - 공통 데이터 및 캐시 구조: 01_project_start/01_overview/architecture/cache_common_data.md
-              - 금융 시스템 연계 아키텍처: 01_project_start/01_overview/architecture/financial_integration_architecture.md
-              - 확장 및 운영 아키텍처: 01_project_start/01_overview/architecture/extension_operation_architecture.md
+  - 개발 환경 구성:
+      - 개발환경 기본 구성:
+          - 개발 장비 구성: 02_development_environment/01_foundation/development_device.md
+          - 프로젝트 로컬 개발환경 구성: 02_development_environment/01_foundation/project_local_environment_setup.md
+          - Git / GitHub 환경 구성: 02_development_environment/01_foundation/git_github_setup.md
 
-      - Local 환경 구축:
-          - 개발 장비 구성: 01_project_start/02_environment/development_device.md
-          - Local 환경 구성: 01_project_start/02_environment/project_local_environment_setup_guide.md
-          - Git / GitHub 환경 구성: 01_project_start/02_environment/git_github_setup.md
-          - Git Commit Convention: 99_appendix/git_commit_convention.md
+      - JDK 설치 및 설정:
+          - 구성 및 운영 기준: 02_development_environment/02_jdk/jdk_setup.md
+          - Windows 설치 및 검증: 02_development_environment/02_jdk/windows_jdk_setup.md
+          - macOS 설치 및 검증: 02_development_environment/02_jdk/macos_jdk_setup.md
+          - JDK 운영 및 문제 해결: 02_development_environment/02_jdk/jdk_management_troubleshooting.md
 
-          - JDK 설치 및 설정:
-              - 구성 및 운영 기준: 01_project_start/02_environment/java/jdk_setup.md
-              - Windows 설치 및 검증: 01_project_start/02_environment/java/windows_jdk_setup.md
-              - macOS 설치 및 검증: 01_project_start/02_environment/java/macos_jdk_setup.md
-              - JDK 운영 및 문제 해결: 01_project_start/02_environment/java/jdk_management_troubleshooting.md
+      - Build Tool 개발환경:
+          - Gradle:
+              - Gradle 개요 및 프로젝트 기준: 02_development_environment/03_build_tool/gradle/gradle_setup.md
+              - Gradle 설치 및 기본 환경 구성: 02_development_environment/03_build_tool/gradle/gradle_installation.md
+              - Gradle Wrapper 개념 및 운영 원칙: 02_development_environment/03_build_tool/gradle/gradle_wrapper.md
+              - Gradle 명령어 / Cache / 문제 해결: 02_development_environment/03_build_tool/gradle/gradle_usage.md
 
-          - Gradle 개발환경:
-              - Gradle 개요 및 프로젝트 기준: 01_project_start/02_environment/gradle/gradle_setup.md
-              - Gradle 설치 및 기본 환경 구성: 01_project_start/02_environment/gradle/gradle_installation.md
-              - Gradle Wrapper 개념 및 운영 원칙: 01_project_start/02_environment/gradle/gradle_wrapper.md
-              - Gradle 명령어 / Cache / 문제 해결: 01_project_start/02_environment/gradle/gradle_usage.md
+          - Maven (비교 / 참고):
+              - Maven 설치 및 기본 환경 구성: 02_development_environment/03_build_tool/maven/maven_setup.md
 
-          - VS Code 개발환경:
-              - VS Code 설정 원칙: 01_project_start/02_environment/vscode/vscode_setup.md
-              - VS Code 설치: 01_project_start/02_environment/vscode/vscode_install.md
-              - VS Code 기본 설정: 01_project_start/02_environment/vscode/vscode_basic_setup.md
-              - Java 개발 Extension 구성: 01_project_start/02_environment/vscode/java_extension_setup.md
-              - Spring Boot Extension 구성: 01_project_start/02_environment/vscode/spring_boot_extension_setup.md
-              - 개발 지원 Extension 및 Profile 구성: 01_project_start/02_environment/vscode/support_extension_profile_setup.md
-              - JDK 연계 및 개발환경 운영: 01_project_start/02_environment/vscode/jdk_workspace_environment_setup.md
+      - VS Code 개발환경:
+          - VS Code 설정 원칙: 02_development_environment/04_vscode/vscode_setup.md
+          - VS Code 설치: 02_development_environment/04_vscode/vscode_install.md
+          - VS Code 기본 설정: 02_development_environment/04_vscode/vscode_basic_setup.md
+          - VS Code User Settings: 02_development_environment/04_vscode/vscode_user_settings.md
+          - Java 개발 Extension 구성: 02_development_environment/04_vscode/java_extension_setup.md
+          - Spring Boot Extension 구성: 02_development_environment/04_vscode/spring_boot_extension_setup.md
+          - 개발 지원 Extension 및 Profile 구성: 02_development_environment/04_vscode/support_extension_profile_setup.md
+          - JDK 연계 및 개발환경 운영: 02_development_environment/04_vscode/jdk_workspace_environment_setup.md
+          - 설치 및 기본 설정 통합 문서 (기존): 02_development_environment/04_vscode/vscode_install_basic_setup_legacy.md
 
-          - Oracle / Docker 로컬 환경:
-              - Docker Desktop 개요 및 공통 환경: 01_project_start/02_environment/database/docker_desktop_setup.md
-              - Windows Docker Desktop 설치: 01_project_start/02_environment/database/docker_desktop_windows_setup.md
-              - macOS Docker Desktop 설치: 01_project_start/02_environment/database/docker_desktop_macos_setup.md
-              - Apple Silicon Oracle Docker 지원 및 검증: 01_project_start/02_environment/database/oracle_docker_apple_silicon_support.md
-              - Oracle Database Free 설치 및 접속: 01_project_start/02_environment/database/oracle_database_free_setup.md
-              - Oracle Tablespace 및 프로젝트 사용자 구성: 01_project_start/02_environment/database/oracle_database_schema_setup.md
+      - Oracle / Docker 로컬 환경:
+          - Docker Desktop 개요 및 공통 환경: 02_development_environment/05_database_docker/docker_desktop_setup.md
+          - Windows Docker Desktop 설치: 02_development_environment/05_database_docker/docker_desktop_windows_setup.md
+          - macOS Docker Desktop 설치: 02_development_environment/05_database_docker/docker_desktop_macos_setup.md
+          - Apple Silicon Oracle Docker 지원 및 검증: 02_development_environment/05_database_docker/oracle_docker_apple_silicon_support.md
+          - Oracle Database Free 설치 및 접속: 02_development_environment/05_database_docker/oracle_database_free_setup.md
+          - Oracle Tablespace 및 프로젝트 사용자 구성: 02_development_environment/05_database_docker/oracle_database_schema_setup.md
 
+  - 프로젝트 생성 및 검증:
+      - 프로젝트 생성:
+          - Spring Boot 프로젝트 생성: 03_project_creation_verification/01_project_creation/spring_boot_project_create.md
+          - Git Repository 초기화 및 연결: 03_project_creation_verification/01_project_creation/spring_boot_git_init.md
+          - 생성 프로젝트 구조 확인 및 초기 정리: 03_project_creation_verification/01_project_creation/spring_boot_project_initial_review.md
+          - Package 구조 설계: 03_project_creation_verification/01_project_creation/package_structure.md
+          - Maven 기본 구조 (비교 / 참고): 03_project_creation_verification/01_project_creation/maven_project_structure_reference.md
 
-      - 프로젝트 생성 및 기본 구성:
-          - Spring Boot 프로젝트 생성: 01_project_start/03_project_creation/spring_boot_project_create.md
-          - Git Repository 초기화 및 연결 확인: 01_project_start/03_project_creation/spring_boot_git_init.md
-          - 생성 프로젝트 구조 확인 및 초기 정리: 01_project_start/03_project_creation/spring_boot_project_initial_review.md
+      - 프로젝트 개발환경 설정:
+          - VS Code Java 개발환경 개념: 03_project_creation_verification/02_project_environment/project_jdk_vscode_concepts.md
+          - 프로젝트 JDK / VS Code Workspace 설정: 03_project_creation_verification/02_project_environment/project_jdk_vscode_setup.md
+          - VS Code Workspace Settings: 03_project_creation_verification/02_project_environment/vscode_workspace_settings.md
+          - Java / Gradle / Spring Boot 인식 확인: 03_project_creation_verification/02_project_environment/project_jdk_vscode_verify.md
+          - Gradle Wrapper 확인 및 Build 기준: 03_project_creation_verification/02_project_environment/project_gradle_setup.md
+          - Maven Wrapper 및 프로젝트 설정 (비교 / 참고): 03_project_creation_verification/02_project_environment/project_maven_setup.md
+          - application.yml 기본 설정: 03_project_creation_verification/02_project_environment/application_yaml.md
 
-          - VS Code 상세 설정:
-            - VS Code User Settings: 01_project_start/03_project_creation/project_environment/vscode_user_settings.md
-            - VS Code Workspace Settings: 01_project_start/03_project_creation/project_environment/vscode_workspace_settings.md
-#            - Java / Gradle / Spring Boot 인식 확인: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_verify.md
-            - Gradle Wrapper 확인 및 Build 기준: 01_project_start/03_project_creation/project_environment/project_gradle_setup.md
-          - 초기 Build / Run 검증:
-            - 초기 Build 및 Test 검증: 01_project_start/03_project_creation/project_verification/project_initial_build_verification.md
-            - Spring Boot 실행 방법: 01_project_start/03_project_creation/project_verification/project_run_methods.md
-            - 초기 Project 검증 및 Troubleshooting: 01_project_start/03_project_creation/project_verification/project_initial_verification_summary.md
+      - 프로젝트 초기 실행 및 검증:
+          - 초기 Build 및 Test 검증: 03_project_creation_verification/03_initial_verification/project_initial_build_verification.md
+          - 초기 실행 검증: 03_project_creation_verification/03_initial_verification/project_initial_run_verification.md
+          - Spring Boot 실행 방법: 03_project_creation_verification/03_initial_verification/project_run_methods.md
+          - 최초 실행 문서 (기존): 03_project_creation_verification/03_initial_verification/first_run_legacy.md
+          - 초기 Project 검증 및 Troubleshooting: 03_project_creation_verification/03_initial_verification/project_initial_verification_summary.md
 
-          - 멀티프로젝트 전환:
-              - Gradle Multi-Project 전환: 01_project_start/03_project_creation/project_structure/gradle_multi_module_setup.md
+  - 멀티 프로젝트 전환:
+      - 전환 개요:
+          - 멀티 프로젝트 전환 개요: 04_multi_project_transition/01_overview/multi_project_transition_overview.md
+          - Repository / Release 경계: 04_multi_project_transition/01_overview/repository_release_boundary.md
 
+      - Build Tool 구성:
+          - Gradle Multi-Project 기본 구성: 04_multi_project_transition/02_build_tool/gradle_multi_project_setup.md
+          - Maven 멀티모듈 기본 구성 (비교 / 참고): 04_multi_project_transition/02_build_tool/maven_multi_module_setup.md
 
-      - 문서화 환경 (선택):
-          - Windows Python / MkDocs 구성: 01_project_start/04_etc/python_mkdocs/windows_python_venv_mkdocs.md
-          - macOS Python / MkDocs 구성: 01_project_start/04_etc/python_mkdocs/macos_python_venv_mkdocs.md
+      - Framework 모듈 구성:
+          - 멀티모듈 프로젝트 구조: 04_multi_project_transition/03_framework_modules/multi_module_structure.md
+          - module-common 구성: 04_multi_project_transition/03_framework_modules/module_common.md
+          - runtime 모듈 구성: 04_multi_project_transition/03_framework_modules/runtime_module.md
+          - admin 모듈 구성: 04_multi_project_transition/03_framework_modules/admin_module.md
 
+      - 의존성 및 Build 검증:
+          - 모듈 간 의존성 구성: 04_multi_project_transition/04_dependency_build/module_dependency_design.md
+          - 멀티 프로젝트 실행 및 Build 검증: 04_multi_project_transition/04_dependency_build/multi_project_build_verification.md
 
-  - 프레임워크 구축:
+  - 기능 개발:
+      - Framework 구성 및 설정:
+          - Framework 기능 개발 개요: 05_feature_development/01_framework_configuration/framework_feature_overview.md
+          - 리소스 / 설정 관리 원칙: 05_feature_development/01_framework_configuration/resource_configuration_architecture.md
+          - Spring Boot 설정 파일 표준: 05_feature_development/01_framework_configuration/spring_boot_configuration.md
+          - Profile / 외부 설정 구성: 05_feature_development/01_framework_configuration/profile_external_resources.md
 
-      - 모듈 및 설정 구조:
-          - 모듈 책임 및 의존성 설계: 02_framework/01_project_structure/multi_module_structure.md
-          - 리소스 / 설정 관리 원칙: 02_framework/01_project_structure/resource_configuration_architecture.md
-          - module-common 구성: 02_framework/01_project_structure/module_common.md
-          - runtime 모듈 구성: 02_framework/01_project_structure/runtime_module.md
-          - admin 모듈 구성: 02_framework/01_project_structure/admin_module.md
-          - Spring Boot 설정 파일 표준: 02_framework/01_project_structure/spring_boot_configuration.md
-          - Profile / 외부 설정 구성: 02_framework/01_project_structure/profile_external_resources.md
-
-      - 공통 기능:
-          - 공통 Response 구조: 02_framework/02_common_framework/common_response.md
-          - 공통 예외 처리: 02_framework/02_common_framework/exception_handling.md
-          - Logging 구성: 02_framework/02_common_framework/logging.md
-          - Filter 구성: 02_framework/02_common_framework/filter.md
-          - 공통 Utility 구성: 02_framework/02_common_framework/utility.md
-          - Jasypt 설정: 02_framework/02_common_framework/jasypt.md
+      - 공통 Framework:
+          - 공통 Response 구조: 05_feature_development/02_common_framework/common_response.md
+          - 공통 예외 처리: 05_feature_development/02_common_framework/exception_handling.md
+          - Logging 구성: 05_feature_development/02_common_framework/logging.md
+          - Filter 구성: 05_feature_development/02_common_framework/filter.md
+          - 공통 Utility 구성: 05_feature_development/02_common_framework/utility.md
+          - Jasypt 설정: 05_feature_development/02_common_framework/jasypt.md
 
       - 데이터베이스:
-          - Oracle JDBC 연동: 02_framework/03_database/oracle_connection.md
-          - DataSource 구성: 02_framework/03_database/datasource.md
-          - MyBatis 구성: 02_framework/03_database/mybatis.md
-          - 트랜잭션 관리: 02_framework/03_database/transaction.md
-          - 다중 DataSource 구성: 02_framework/03_database/multi_datasource.md
-
-      - API 개발 표준:
-          - Repository / Mapper 개발 표준: 02_framework/05_api/repository.md
-          - Service 개발 표준: 02_framework/05_api/service.md
-          - Validation: 02_framework/05_api/validation.md
-          - Controller 개발 표준: 02_framework/05_api/controller.md
-          - OpenAPI / Swagger: 02_framework/05_api/openapi_swagger.md
+          - Oracle JDBC 연동: 05_feature_development/03_database/oracle_connection.md
+          - DataSource 구성: 05_feature_development/03_database/datasource.md
+          - MyBatis 구성: 05_feature_development/03_database/mybatis.md
+          - JPA 공통 구성: 05_feature_development/03_database/jpa.md
+          - 트랜잭션 관리: 05_feature_development/03_database/transaction.md
+          - 다중 DataSource 구성: 05_feature_development/03_database/multi_datasource.md
 
       - 보안 / 인증·인가:
-          - Spring Security 기본 구성: 02_framework/04_security/spring_security.md
-          - 사용자 관리: 02_framework/04_security/user_management.md
-          - Role / 권한 모델: 02_framework/04_security/role_management.md
-          - 사용자 인증: 02_framework/04_security/authentication.md
-          - 인가 및 접근 제어: 02_framework/04_security/authorization.md
+          - Spring Security 기본 구성: 05_feature_development/04_security/spring_security.md
+          - 사용자 관리: 05_feature_development/04_security/user_management.md
+          - Role / 권한 모델: 05_feature_development/04_security/role_management.md
+          - 사용자 인증: 05_feature_development/04_security/authentication.md
+          - 인가 및 접근 제어: 05_feature_development/04_security/authorization.md
 
+      - 업무 Domain 개발:
+          - 업무 Domain 개발 가이드: 05_feature_development/06_business_domain/business_domain_overview.md
+          - Framework 사용 Sample: 05_feature_development/06_business_domain/sample_project.md
 
+          - API / 계층 개발 표준:
+              - Repository / Mapper 개발 표준: 05_feature_development/06_business_domain/02_api_standard/repository.md
+              - Service 개발 표준: 05_feature_development/06_business_domain/02_api_standard/service.md
+              - Validation: 05_feature_development/06_business_domain/02_api_standard/validation.md
+              - Controller 개발 표준: 05_feature_development/06_business_domain/02_api_standard/controller.md
+              - OpenAPI / Swagger: 05_feature_development/06_business_domain/02_api_standard/openapi_swagger.md
 
-
-
-  - 업무 및 금융 연계:
-      - 업무 공통:
-          - 공통코드: 03_business_financial/01_business_common/common_code.md
-          - 메뉴 관리: 03_business_financial/01_business_common/menu.md
-          - 사용자 관리 기능: 03_business_financial/01_business_common/user.md
-          - 게시판 공통 기능: 03_business_financial/01_business_common/board.md
-          - 관리자 기능: 03_business_financial/01_business_common/admin.md
+          - 업무 공통:
+              - 공통코드: 05_feature_development/06_business_domain/01_business_common/common_code.md
+              - 메뉴 관리: 05_feature_development/06_business_domain/01_business_common/menu.md
+              - 사용자 관리 기능: 05_feature_development/06_business_domain/01_business_common/user.md
+              - 게시판 공통 기능: 05_feature_development/06_business_domain/01_business_common/board.md
+              - 관리자 기능: 05_feature_development/06_business_domain/01_business_common/admin.md
 
       - 금융 시스템 연계:
-          - 전문 구조: 03_business_financial/02_financial_integration/message_structure.md
-          - Message Builder: 03_business_financial/02_financial_integration/message_builder.md
-          - Message Parser: 03_business_financial/02_financial_integration/message_parser.md
-          - MCA 연계: 03_business_financial/02_financial_integration/mca.md
-          - EAI 연계: 03_business_financial/02_financial_integration/eai.md
-          - FEP 연계: 03_business_financial/02_financial_integration/fep.md
+          - 전문 구조: 05_feature_development/07_financial_integration/message_structure.md
+          - Message Builder: 05_feature_development/07_financial_integration/message_builder.md
+          - Message Parser: 05_feature_development/07_financial_integration/message_parser.md
+          - MCA 연계: 05_feature_development/07_financial_integration/mca.md
+          - EAI 연계: 05_feature_development/07_financial_integration/eai.md
+          - FEP 연계: 05_feature_development/07_financial_integration/fep.md
 
-  - 확장 아키텍처:
-      - WebClient: 04_extended_architecture/webclient.md
-      - Spring Cloud Gateway: 04_extended_architecture/spring_cloud_gateway.md
-      - Spring WebFlux: 04_extended_architecture/webflux.md
-      - Service Discovery / Eureka: 04_extended_architecture/eureka.md
-      - Kubernetes: 04_extended_architecture/kubernetes.md
+      - 확장 아키텍처:
+          - WebClient: 05_feature_development/08_extended_architecture/webclient.md
+          - Spring Cloud Gateway: 05_feature_development/08_extended_architecture/spring_cloud_gateway.md
+          - Spring WebFlux: 05_feature_development/08_extended_architecture/webflux.md
+          - Service Discovery / Eureka: 05_feature_development/08_extended_architecture/eureka.md
+          - Kubernetes: 05_feature_development/08_extended_architecture/kubernetes.md
 
-  - 참고자료:
-      - Git Commit Convention: 99_appendix/git_commit_convention.md
-      - 문서 작성 규칙: 99_appendix/document_writing_rule.md
-      - Troubleshooting: 99_appendix/troubleshooting.md
+      - Cache / 공통 데이터:
+          - Cache / 공통 데이터 구현: 05_feature_development/09_cache_common_data/cache_common_data_implementation.md
+
+      - 파일 / Batch:
+          - 파일 처리: 05_feature_development/10_file_batch/file_processing.md
+          - Batch: 05_feature_development/10_file_batch/batch.md
+
+  - 서버 환경 구성:
+      - 서버 구성 개요: 06_server_environment/01_overview/server_environment_overview.md
+      - Linux 서버 기본 환경: 06_server_environment/02_linux/linux_server_baseline.md
+
+      - Runtime 환경:
+          - JDK Runtime 환경: 06_server_environment/03_runtime/jdk_runtime.md
+          - 애플리케이션 실행 환경: 06_server_environment/03_runtime/application_runtime.md
+
+      - Network / Port / Firewall: 06_server_environment/04_network/network_port_firewall.md
+      - Database 연결 환경: 06_server_environment/05_database/database_connection_environment.md
+      - Reverse Proxy: 06_server_environment/06_proxy/reverse_proxy.md
+
+      - 환경 설정:
+          - 환경변수 및 Secret: 06_server_environment/07_configuration/environment_secret.md
+          - Spring Profile 및 서버별 설정: 06_server_environment/07_configuration/server_profile.md
+
+  - 배포 환경 구성:
+      - 배포 아키텍처 및 전략: 07_deployment_environment/01_overview/deployment_strategy.md
+
+      - Build / Package:
+          - Build 및 배포 Package: 07_deployment_environment/02_package/build_deployment_package.md
+          - Spring Boot 서버 배포: 07_deployment_environment/02_package/spring_boot_deployment.md
+
+      - 환경별 배포: 07_deployment_environment/03_environment/environment_deployment.md
+
+      - 무중단 배포:
+          - 무중단 배포 개요: 07_deployment_environment/04_zero_downtime/zero_downtime_overview.md
+          - Blue-Green: 07_deployment_environment/04_zero_downtime/blue_green.md
+          - Rolling: 07_deployment_environment/04_zero_downtime/rolling.md
+          - Health Check: 07_deployment_environment/04_zero_downtime/health_check.md
+          - Traffic 전환: 07_deployment_environment/04_zero_downtime/traffic_switch.md
+          - Rollback: 07_deployment_environment/04_zero_downtime/rollback.md
+
+      - CI / CD:
+          - CI / CD 개요: 07_deployment_environment/05_cicd/cicd_overview.md
+          - GitHub Actions: 07_deployment_environment/05_cicd/github_actions.md
+          - Build / Test 자동화: 07_deployment_environment/05_cicd/build_test_automation.md
+          - 배포 자동화: 07_deployment_environment/05_cicd/deployment_automation.md
+
+  - 운영 환경 구성:
+      - 운영 환경 개요: 08_operation_environment/01_overview/operation_overview.md
+
+      - 관측 / 상태 확인:
+          - 운영 Logging: 08_operation_environment/02_observability/operation_logging.md
+          - Monitoring: 08_operation_environment/02_observability/monitoring.md
+          - Application Health Check: 08_operation_environment/02_observability/application_health_check.md
+
+      - 장애 대응:
+          - 장애 대응: 08_operation_environment/03_incident/incident_response.md
+          - 운영 및 장애 대응 가이드: 08_operation_environment/03_incident/operation_troubleshooting.md
+
+      - Backup / Recovery: 08_operation_environment/04_recovery/backup_recovery.md
+      - 운영 보안: 08_operation_environment/05_security/operation_security.md
+
+  - 부록 / 문서 환경:
+      - 가이드 관리:
+          - Git Commit Convention: 99_appendix/01_guide_management/git_commit_convention.md
+          - 문서 작성 규칙: 99_appendix/01_guide_management/document_writing_rule.md
+          - Troubleshooting: 99_appendix/01_guide_management/troubleshooting.md
+
+      - Python / MkDocs:
+          - Windows Python / MkDocs 구성: 99_appendix/02_document_environment/windows_python_venv_mkdocs.md
+          - macOS Python / MkDocs 구성: 99_appendix/02_document_environment/macos_python_venv_mkdocs.md
+
+      - 문서 설계 참고:
+          - NAV 구조 개편 방향: 99_appendix/03_document_design/nav_structure_plan.md
