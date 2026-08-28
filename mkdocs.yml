@@ -134,8 +134,10 @@ nav:
             - VS Code Workspace Settings: 01_project_start/03_project_creation/project_environment/vscode_workspace_settings.md
 #            - Java / Gradle / Spring Boot 인식 확인: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_verify.md
             - Gradle Wrapper 확인 및 Build 기준: 01_project_start/03_project_creation/project_environment/project_gradle_setup.md
-            - 초기 Build / Run 검증: 01_project_start/03_project_creation/project_verification/project_initial_run_verification.md
-
+          - 초기 Build / Run 검증:
+            - 초기 Build 및 Test 검증: 01_project_start/03_project_creation/project_verification/project_initial_build_verification.md
+            - Spring Boot 실행 방법: 01_project_start/03_project_creation/project_verification/project_run_methods.md
+            - 초기 Project 검증 및 Troubleshooting: 01_project_start/03_project_creation/project_verification/project_initial_verification_summary.md
 
           - 멀티프로젝트 전환:
               - Gradle Multi-Project 전환: 01_project_start/03_project_creation/project_structure/gradle_multi_module_setup.md
