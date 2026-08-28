@@ -129,15 +129,13 @@ nav:
           - Git Repository 초기화 및 연결 확인: 01_project_start/03_project_creation/spring_boot_git_init.md
           - 생성 프로젝트 구조 확인 및 초기 정리: 01_project_start/03_project_creation/spring_boot_project_initial_review.md
 
-          - 프로젝트별 개발환경 연계:
+          - VS Code 상세 설정:
             - VS Code User Settings: 01_project_start/03_project_creation/project_environment/vscode_user_settings.md
             - VS Code Workspace Settings: 01_project_start/03_project_creation/project_environment/vscode_workspace_settings.md
-            - Java / Gradle / Spring Boot 인식 확인: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_verify.md
-            - Gradle Wrapper 및 프로젝트 Gradle 설정: 01_project_start/03_project_creation/project_environment/project_gradle_setup.md
+#            - Java / Gradle / Spring Boot 인식 확인: 01_project_start/03_project_creation/project_environment/project_jdk_vscode_verify.md
+            - Gradle Wrapper 확인 및 Build 기준: 01_project_start/03_project_creation/project_environment/project_gradle_setup.md
+            - 초기 Build / Run 검증: 01_project_start/03_project_creation/project_verification/project_initial_run_verification.md
 
-
-          - 초기 Build / Run 검증:
-              - Spring Boot 초기 실행 및 Build 검증: 01_project_start/03_project_creation/project_verification/project_initial_run_verification.md
 
           - 멀티프로젝트 전환:
               - Gradle Multi-Project 전환: 01_project_start/03_project_creation/project_structure/gradle_multi_module_setup.md

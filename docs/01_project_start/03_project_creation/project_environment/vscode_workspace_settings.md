@@ -479,7 +479,12 @@ MicroServer에서는 필요한 `.vscode` 공통 설정만 Git으로 공유한다
     → Git 공유
     ```
 
-## 9. 설정 완료 확인
+## 9. 설정 및 Project 인식 완료 확인
+
+앞 단계의 User Settings와 현재 Workspace Settings까지 구성했으면
+VS Code에서 MicroServer Project가 정상적으로 인식되는지 함께 확인한다.
+
+### 9.1 Workspace 설정 확인
 
 Workspace 구성:
 
@@ -501,10 +506,133 @@ Workspace 구성:
 - [ ] `java.compile.nullAnalysis.mode`가 `automatic`이다.
 - [ ] `.vscode/settings.json`에 개발자 개인 JDK 절대경로가 없다.
 - [ ] `.vscode/extensions.json`에 Project 권장 Extension 목록이 있다.
-- [ ] `extensions.json`은 Extension 재설치가 아니라 Project 권장 목록임을 이해했다.
 - [ ] `NEWLY_CREATED_BY_SPRING_INITIALIZR`는 일회성 Marker이며 Git 공유 대상이 아님을 확인했다.
-- [ ] `JAVA PROJECTS`에 `microserver`가 표시된다.
 - [ ] `.vscode/settings.json`과 `.vscode/extensions.json`이 Git 공유 대상임을 확인했다.
 
-다음 단계에서는 Java / Gradle / Spring Boot 인식 상태를 상세 확인하거나
-Gradle Wrapper / Project Gradle 설정을 진행한다.
+### 9.2 Java Runtime 적용 확인
+
+User Settings에서 등록한 Java 25 Runtime이
+현재 VS Code Java 환경에 정상적으로 적용되었는지 확인한다.
+
+Command Palette:
+
+```text
+Ctrl + Shift + P
+→ Java: Configure Java Runtime
+```
+
+현재 MicroServer 기준으로 다음 내용을 확인한다.
+
+```text
+Java Version : 25
+JDK Home     : C:\local-microserver\tools\jdk\temurin-25
+Project      : microserver
+```
+
+UI의 이름이나 표시 방식은 Java Extension Version에 따라 일부 다를 수 있다.
+
+핵심은 **Java 25와 올바른 JDK Home이 인식되는지**이다.
+
+!!! note "설정 위치는 User Settings"
+
+    Runtime이 정상적으로 인식되지 않는다면
+    Project의 `.vscode/settings.json`에 JDK 경로를 추가하지 않는다.
+
+    [VS Code User Settings](vscode_user_settings.md)의
+    `java.configuration.runtimes` 설정을 다시 확인한다.
+
+### 9.3 Java Project 인식 확인
+
+`JAVA PROJECTS` View에 다음과 같이 표시되는지 확인한다.
+
+```text
+JAVA PROJECTS
+└─ microserver
+```
+
+`microserver`가 표시되면
+앞에서 설명한 Java Project 자동 Import가 정상적으로 완료된 상태이다.
+
+정상 상태에서는 다음 명령을 별도로 실행하지 않는다.
+
+```text
+Java: Import Java Projects in Workspace
+```
+
+### 9.4 Gradle Project 인식 확인
+
+Gradle View 또는 `GRADLE PROJECTS` View에서
+`microserver`가 표시되는지 확인한다.
+
+```text
+GRADLE PROJECTS
+└─ microserver
+```
+
+현재는 **Gradle Project가 인식되는지만 확인**한다.
+
+Gradle Wrapper와 실제 Project Gradle 설정은 다음 문서에서 확인한다.
+
+### 9.5 Spring Boot Application 인식 확인
+
+Spring Boot Dashboard에서
+MicroServer Spring Boot Application이 표시되는지 확인한다.
+
+```text
+Java Project 인식
+        ↓
+Gradle Project 인식
+        ↓
+Spring Boot Application 인식
+        ↓
+Spring Boot Dashboard 표시
+```
+
+!!! warning "현재 단계에서는 Build / Run하지 않음"
+
+    현재는 VS Code가 Java / Gradle / Spring Boot Project를
+    정상적으로 인식하는지만 확인한다.
+
+    ```text
+    Project 인식 성공
+            ≠
+    Gradle Build 성공
+            ≠
+    Spring Boot Run 성공
+    ```
+
+    실제 Build와 Application 실행 검증은 이후
+    **초기 Build / Run 검증** 단계에서 수행한다.
+
+### 9.6 최종 체크리스트
+
+- [ ] `Java: Configure Java Runtime`에서 Java 25 / JDK Home을 확인했다.
+- [ ] `JAVA PROJECTS`에 `microserver`가 표시된다.
+- [ ] Gradle View에 `microserver`가 표시된다.
+- [ ] Spring Boot Dashboard에 Application이 표시된다.
+- [ ] 정상 상태에서는 수동 Java Import를 실행하지 않았다.
+- [ ] 아직 Gradle Build 또는 Spring Boot Run은 수행하지 않았다.
+
+---
+
+## 10. 다음 단계
+
+VS Code User Settings와 Workspace Settings,
+그리고 Java / Gradle / Spring Boot Project 인식까지 확인했다.
+
+다음 단계에서는 Spring Initializr가 생성한 Gradle Wrapper를 확인하고
+MicroServer Project의 Gradle 실행 기준을 정리한다.
+
+→ [Gradle Wrapper 및 프로젝트 Gradle 설정](project_gradle_setup.md)
+
+```text
+VS Code User Settings
+        ↓
+VS Code Workspace Settings
+        ↓
+Java / Gradle / Spring Boot 인식 확인
+        ↓
+Gradle Wrapper / 프로젝트 Gradle 설정        ← 다음
+        ↓
+초기 Build / Run 검증
+```
