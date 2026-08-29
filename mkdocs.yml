@@ -38,7 +38,7 @@ plugins:
       lang: ko
   - redirects:
       redirect_maps:
-        index.md: 01_project_start/01_overview/project_introduction.md
+        index.md: 01_microserver_introduction/01_what_is_microserver.md
 
 markdown_extensions:
   - admonition
