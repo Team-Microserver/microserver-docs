@@ -70,28 +70,29 @@ markdown_extensions:
 
 
 nav:
-  - Home: index.md
+#  - Home: index.md
 
   - MicroServer 소개:
-      - 프로젝트 개요:
-          - MicroServer 소개: 01_microserver_introduction/01_overview/project_introduction.md
-          - 구축 목표: 01_microserver_introduction/01_overview/build_objectives.md
-          - 프로젝트 로드맵: 01_microserver_introduction/01_overview/project_roadmap.md
-          - 기존 구축 목표 문서: 01_microserver_introduction/01_overview/project_goal_legacy.md
+    - 마이크로서버란?: 01_microserver_introduction/01_what_is_microserver.md
 
-      - 아키텍처 방향:
-          - 아키텍처 방향 개요: 01_microserver_introduction/02_architecture/architecture_overview.md
-          - MicroServer 핵심 설계 원칙: 01_microserver_introduction/02_architecture/core_design_principles.md
-          - Framework / 업무 Domain 분리 전략: 01_microserver_introduction/02_architecture/framework_domain_separation_strategy.md
-          - 구축 원칙 및 개발 방식: 01_microserver_introduction/02_architecture/development_principles.md
-          - 멀티모듈 및 프로젝트 구조: 01_microserver_introduction/02_architecture/multi_module_structure.md
-          - 애플리케이션 계층 구조: 01_microserver_introduction/02_architecture/layered_application_structure.md
-          - 공통 처리 구조: 01_microserver_introduction/02_architecture/common_processing_structure.md
-          - 데이터 및 보안 아키텍처: 01_microserver_introduction/02_architecture/data_security_architecture.md
-          - 공통 데이터 및 캐시 구조: 01_microserver_introduction/02_architecture/cache_common_data.md
-          - 금융 시스템 연계 아키텍처: 01_microserver_introduction/02_architecture/financial_integration_architecture.md
-          - 확장 및 운영 아키텍처: 01_microserver_introduction/02_architecture/extension_operation_architecture.md
-          - 아키텍처 방향 종합 문서 (기존): 01_microserver_introduction/02_architecture/architecture_direction_legacy.md
+    - 마이크로서버 아키텍처 상세:
+        - 아키텍처 상세 개요: 01_microserver_introduction/02_architecture/01_architecture_overview.md
+        - 핵심 설계 원칙: 01_microserver_introduction/02_architecture/02_core_design_principles.md
+        - Framework와 업무 Domain 분리: 01_microserver_introduction/02_architecture/03_framework_domain_separation.md
+        - Framework 모듈 및 프로젝트 구조: 01_microserver_introduction/02_architecture/04_framework_module_structure.md
+        - 요청 처리 및 애플리케이션 계층 구조: 01_microserver_introduction/02_architecture/05_request_layer_architecture.md
+        - 공통 처리 구조: 01_microserver_introduction/02_architecture/06_common_processing.md
+        - 데이터 및 보안 아키텍처: 01_microserver_introduction/02_architecture/07_data_security.md
+        - 공통 데이터 및 캐시 구조: 01_microserver_introduction/02_architecture/08_cache_common_data.md
+        - 금융 시스템 연계 아키텍처: 01_microserver_introduction/02_architecture/09_financial_integration.md
+        - 확장 및 운영 아키텍처: 01_microserver_introduction/02_architecture/10_extension_operation.md
+
+    - 마이크로서버 구축 프로젝트:
+        - 프로젝트 목표: 01_microserver_introduction/03_project/01_project_goal.md
+        - 프로젝트 로드맵: 01_microserver_introduction/03_project/02_project_roadmap.md
+
+
+
 
   - 개발 환경 구성:
       - 개발환경 기본 구성:
@@ -247,59 +248,64 @@ nav:
           - 파일 처리: 05_feature_development/10_file_batch/file_processing.md
           - Batch: 05_feature_development/10_file_batch/batch.md
 
-  - 서버 환경 구성:
-      - 서버 구성 개요: 06_server_environment/01_overview/server_environment_overview.md
-      - Linux 서버 기본 환경: 06_server_environment/02_linux/linux_server_baseline.md
 
-      - Runtime 환경:
-          - JDK Runtime 환경: 06_server_environment/03_runtime/jdk_runtime.md
-          - 애플리케이션 실행 환경: 06_server_environment/03_runtime/application_runtime.md
 
-      - Network / Port / Firewall: 06_server_environment/04_network/network_port_firewall.md
-      - Database 연결 환경: 06_server_environment/05_database/database_connection_environment.md
-      - Reverse Proxy: 06_server_environment/06_proxy/reverse_proxy.md
 
-      - 환경 설정:
-          - 환경변수 및 Secret: 06_server_environment/07_configuration/environment_secret.md
-          - Spring Profile 및 서버별 설정: 06_server_environment/07_configuration/server_profile.md
+  - 서버 및 DevOps 환경:
+    - 서버 및 DevOps 환경 개요: 06_server_devops/01_overview/server_devops_overview.md
 
-  - 배포 환경 구성:
-      - 배포 아키텍처 및 전략: 07_deployment_environment/01_overview/deployment_strategy.md
+    - 서버 실행 환경:
+        - Linux 서버 기본 환경: 06_server_devops/02_server/01_linux/linux_server_baseline.md
 
-      - Build / Package:
-          - Build 및 배포 Package: 07_deployment_environment/02_package/build_deployment_package.md
-          - Spring Boot 서버 배포: 07_deployment_environment/02_package/spring_boot_deployment.md
+        - Runtime 환경:
+            - JDK Runtime 환경: 06_server_devops/02_server/02_runtime/jdk_runtime.md
+            - 애플리케이션 실행 환경: 06_server_devops/02_server/02_runtime/application_runtime.md
 
-      - 환경별 배포: 07_deployment_environment/03_environment/environment_deployment.md
+        - Network / Port / Firewall: 06_server_devops/02_server/03_network/network_port_firewall.md
+        - Database 연결 환경: 06_server_devops/02_server/04_database/database_connection_environment.md
+        - Reverse Proxy: 06_server_devops/02_server/05_proxy/reverse_proxy.md
 
-      - 무중단 배포:
-          - 무중단 배포 개요: 07_deployment_environment/04_zero_downtime/zero_downtime_overview.md
-          - Blue-Green: 07_deployment_environment/04_zero_downtime/blue_green.md
-          - Rolling: 07_deployment_environment/04_zero_downtime/rolling.md
-          - Health Check: 07_deployment_environment/04_zero_downtime/health_check.md
-          - Traffic 전환: 07_deployment_environment/04_zero_downtime/traffic_switch.md
-          - Rollback: 07_deployment_environment/04_zero_downtime/rollback.md
+        - 환경 설정:
+            - 환경변수 및 Secret: 06_server_devops/02_server/06_configuration/environment_secret.md
+            - Spring Profile 및 서버별 설정: 06_server_devops/02_server/06_configuration/server_profile.md
 
-      - CI / CD:
-          - CI / CD 개요: 07_deployment_environment/05_cicd/cicd_overview.md
-          - GitHub Actions: 07_deployment_environment/05_cicd/github_actions.md
-          - Build / Test 자동화: 07_deployment_environment/05_cicd/build_test_automation.md
-          - 배포 자동화: 07_deployment_environment/05_cicd/deployment_automation.md
+    - 배포 환경:
+        - 배포 아키텍처 및 전략: 06_server_devops/03_deployment/01_overview/deployment_strategy.md
 
-  - 운영 환경 구성:
-      - 운영 환경 개요: 08_operation_environment/01_overview/operation_overview.md
+        - Build / Package:
+            - Build 및 배포 Package: 06_server_devops/03_deployment/02_package/build_deployment_package.md
+            - Spring Boot 서버 배포: 06_server_devops/03_deployment/02_package/spring_boot_deployment.md
 
-      - 관측 / 상태 확인:
-          - 운영 Logging: 08_operation_environment/02_observability/operation_logging.md
-          - Monitoring: 08_operation_environment/02_observability/monitoring.md
-          - Application Health Check: 08_operation_environment/02_observability/application_health_check.md
+        - 환경별 배포: 06_server_devops/03_deployment/03_environment/environment_deployment.md
 
-      - 장애 대응:
-          - 장애 대응: 08_operation_environment/03_incident/incident_response.md
-          - 운영 및 장애 대응 가이드: 08_operation_environment/03_incident/operation_troubleshooting.md
+        - 무중단 배포:
+            - 무중단 배포 개요: 06_server_devops/03_deployment/04_zero_downtime/zero_downtime_overview.md
+            - Blue-Green: 06_server_devops/03_deployment/04_zero_downtime/blue_green.md
+            - Rolling: 06_server_devops/03_deployment/04_zero_downtime/rolling.md
+            - Health Check: 06_server_devops/03_deployment/04_zero_downtime/health_check.md
+            - Traffic 전환: 06_server_devops/03_deployment/04_zero_downtime/traffic_switch.md
+            - Rollback: 06_server_devops/03_deployment/04_zero_downtime/rollback.md
 
-      - Backup / Recovery: 08_operation_environment/04_recovery/backup_recovery.md
-      - 운영 보안: 08_operation_environment/05_security/operation_security.md
+    - CI / CD:
+        - CI / CD 개요: 06_server_devops/04_cicd/cicd_overview.md
+        - GitHub Actions: 06_server_devops/04_cicd/github_actions.md
+        - Build / Test 자동화: 06_server_devops/04_cicd/build_test_automation.md
+        - 배포 자동화: 06_server_devops/04_cicd/deployment_automation.md
+
+    - 운영 환경:
+        - 운영 환경 개요: 06_server_devops/05_operation/01_overview/operation_overview.md
+
+        - 관측 / 상태 확인:
+            - 운영 Logging: 06_server_devops/05_operation/02_observability/operation_logging.md
+            - Monitoring: 06_server_devops/05_operation/02_observability/monitoring.md
+            - Application Health Check: 06_server_devops/05_operation/02_observability/application_health_check.md
+
+        - 장애 대응:
+            - 장애 대응: 06_server_devops/05_operation/03_incident/incident_response.md
+            - 운영 및 장애 대응 가이드: 06_server_devops/05_operation/03_incident/operation_troubleshooting.md
+
+        - Backup / Recovery: 06_server_devops/05_operation/04_recovery/backup_recovery.md
+        - 운영 보안: 06_server_devops/05_operation/05_security/operation_security.md
 
   - 부록 / 문서 환경:
       - 가이드 관리:
