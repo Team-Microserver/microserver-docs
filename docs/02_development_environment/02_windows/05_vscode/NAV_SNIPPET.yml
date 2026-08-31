@@ -1,0 +1,12 @@
+- VS Code 개발환경 구성:
+    - VS Code 설치:
+        - 개발환경 구성 원칙: 02_development_environment/02_windows/05_vscode/vscode_setup.md
+        - VS Code 설치: 02_development_environment/02_windows/05_vscode/vscode_install.md
+        - VS Code Portable 설정: 02_development_environment/02_windows/05_vscode/vscode_portable_setup.md
+
+    - VS Code 개발환경 설정:
+        - VS Code User Settings: 02_development_environment/02_windows/05_vscode/vscode_user_settings.md
+        - Java 개발 Extension 구성: 02_development_environment/02_windows/05_vscode/java_extension_setup.md
+        - Spring Boot Extension 구성: 02_development_environment/02_windows/05_vscode/spring_boot_extension_setup.md
+        - 개발 지원 Extension 및 Profile 구성: 02_development_environment/02_windows/05_vscode/support_extension_profile_setup.md
+        - JDK 연계 및 개발환경 운영: 02_development_environment/02_windows/05_vscode/jdk_workspace_environment_setup.md

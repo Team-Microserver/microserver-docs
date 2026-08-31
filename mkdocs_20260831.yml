@@ -95,92 +95,45 @@ nav:
 
 
   - 개발 환경 구성:
-    - 개발환경 구성 핵심원칙: 02_development_environment/01_principles/development_environment_principles.md
+      - 개발환경 기본 구성:
+          - 개발 장비 구성: 02_development_environment/01_foundation/development_device.md
+          - 프로젝트 로컬 개발환경 구성: 02_development_environment/01_foundation/project_local_environment_setup.md
+          - Git / GitHub 환경 구성: 02_development_environment/01_foundation/git_github_setup.md
 
-    - Windows 개발환경 구성:
-        - 프로젝트 로컬 개발환경 구성: 02_development_environment/02_windows/01_local/project_local_environment_setup.md
-        - Git / GitHub 환경 구성: 02_development_environment/02_windows/02_git/git_github_setup.md
+      - JDK 설치 및 설정:
+          - 구성 및 운영 기준: 02_development_environment/02_jdk/jdk_setup.md
+          - Windows 설치 및 검증: 02_development_environment/02_jdk/windows_jdk_setup.md
+          - macOS 설치 및 검증: 02_development_environment/02_jdk/macos_jdk_setup.md
+          - JDK 운영 및 문제 해결: 02_development_environment/02_jdk/jdk_management_troubleshooting.md
 
-        - JDK 설치 및 설정:
-            - 구성 및 운영 기준: 02_development_environment/02_windows/03_jdk/jdk_setup.md
-            - Windows 설치 및 검증: 02_development_environment/02_windows/03_jdk/windows_jdk_setup.md
-            - JDK 운영 및 문제 해결: 02_development_environment/02_windows/03_jdk/jdk_management_troubleshooting.md
+      - Build Tool 개발환경:
+          - Gradle:
+              - Gradle 개요 및 프로젝트 기준: 02_development_environment/03_build_tool/gradle/gradle_setup.md
+              - Gradle 설치 및 기본 환경 구성: 02_development_environment/03_build_tool/gradle/gradle_installation.md
+              - Gradle Wrapper 개념 및 운영 원칙: 02_development_environment/03_build_tool/gradle/gradle_wrapper.md
+              - Gradle 명령어 / Cache / 문제 해결: 02_development_environment/03_build_tool/gradle/gradle_usage.md
 
-        - Gradle 빌드환경 설치:
-            - Gradle 개요 및 프로젝트 기준: 02_development_environment/02_windows/04_gradle/gradle_setup.md
-            - Gradle 설치 및 기본 환경 구성: 02_development_environment/02_windows/04_gradle/gradle_installation.md
-            - Gradle Wrapper 개념 및 운영 원칙: 02_development_environment/02_windows/04_gradle/gradle_wrapper.md
-            - Gradle 명령어 / Cache / 문제 해결: 02_development_environment/02_windows/04_gradle/gradle_usage.md
-            - Maven 설치 및 기본 환경 구성 (비교 / 참고): 02_development_environment/02_windows/04_gradle/maven_setup.md
+          - Maven (비교 / 참고):
+              - Maven 설치 및 기본 환경 구성: 02_development_environment/03_build_tool/maven/maven_setup.md
 
-        - VS Code 설치:
-          - 개발환경 구성 원칙: 02_development_environment/02_windows/05_vscode/vscode_setup.md
-          - VS Code 설치: 02_development_environment/02_windows/05_vscode/vscode_install.md
-          - VS Code Portable 설정: 02_development_environment/02_windows/05_vscode/vscode_portable_setup.md
-          - VS Code 기본 설정: 02_development_environment/02_windows/05_vscode/vscode_basic_settings.md
-        - VS Code 개발환경 설정:     
-          - VS Code User Settings: 02_development_environment/02_windows/05_vscode/vscode_user_settings.md
-          - Java 개발 Extension 구성: 02_development_environment/02_windows/05_vscode/java_extension_setup.md
-          - Spring Boot Extension 구성: 02_development_environment/02_windows/05_vscode/spring_boot_extension_setup.md
-          - 개발 지원 Extension 및 Profile 구성: 02_development_environment/02_windows/05_vscode/support_extension_profile_setup.md
-          - JDK 연계 및 개발환경 운영: 02_development_environment/02_windows/05_vscode/jdk_workspace_environment_setup.md
-#            - 설치 및 기본 설정 통합 문서 (기존): 02_development_environment/02_windows/05_vscode/vscode_install_basic_setup_legacy.md
+      - VS Code 개발환경:
+          - VS Code 설정 원칙: 02_development_environment/04_vscode/vscode_setup.md
+          - VS Code 설치: 02_development_environment/04_vscode/vscode_install.md
+          - VS Code 기본 설정: 02_development_environment/04_vscode/vscode_basic_setup.md
+          - VS Code User Settings: 02_development_environment/04_vscode/vscode_user_settings.md
+          - Java 개발 Extension 구성: 02_development_environment/04_vscode/java_extension_setup.md
+          - Spring Boot Extension 구성: 02_development_environment/04_vscode/spring_boot_extension_setup.md
+          - 개발 지원 Extension 및 Profile 구성: 02_development_environment/04_vscode/support_extension_profile_setup.md
+          - JDK 연계 및 개발환경 운영: 02_development_environment/04_vscode/jdk_workspace_environment_setup.md
+          - 설치 및 기본 설정 통합 문서 (기존): 02_development_environment/04_vscode/vscode_install_basic_setup_legacy.md
 
-
-
-
-
-
-        - Docker 개발환경 설치:
-            - Docker Desktop 개요 및 공통 환경: 02_development_environment/02_windows/06_docker/docker_desktop_setup.md
-            - Windows Docker Desktop 설치: 02_development_environment/02_windows/06_docker/docker_desktop_windows_setup.md
-
-        - Oracle 개발환경 설치:
-            - Oracle Database Free 설치 및 접속: 02_development_environment/02_windows/07_oracle/oracle_database_free_setup.md
-            - Oracle Tablespace 및 프로젝트 사용자 구성: 02_development_environment/02_windows/07_oracle/oracle_database_schema_setup.md
-
-    - macOS 개발환경 구성:
-        - 프로젝트 로컬 개발환경 구성: 02_development_environment/03_macos/01_local/project_local_environment_setup.md
-        - Git / GitHub 환경 구성: 02_development_environment/03_macos/02_git/git_github_setup.md
-
-        - JDK 설치 및 설정:
-            - 구성 및 운영 기준: 02_development_environment/03_macos/03_jdk/jdk_setup.md
-            - macOS 설치 및 검증: 02_development_environment/03_macos/03_jdk/macos_jdk_setup.md
-            - JDK 운영 및 문제 해결: 02_development_environment/03_macos/03_jdk/jdk_management_troubleshooting.md
-
-        - Gradle 빌드환경 설치:
-            - Gradle 개요 및 프로젝트 기준: 02_development_environment/03_macos/04_gradle/gradle_setup.md
-            - Gradle 설치 및 기본 환경 구성: 02_development_environment/03_macos/04_gradle/gradle_installation.md
-            - Gradle Wrapper 개념 및 운영 원칙: 02_development_environment/03_macos/04_gradle/gradle_wrapper.md
-            - Gradle 명령어 / Cache / 문제 해결: 02_development_environment/03_macos/04_gradle/gradle_usage.md
-            - Maven 설치 및 기본 환경 구성 (비교 / 참고): 02_development_environment/03_macos/04_gradle/maven_setup.md
-
-        - VS Code 개발환경 설치:
-            - VS Code 설정 원칙: 02_development_environment/03_macos/05_vscode/vscode_setup.md
-            - VS Code 설치: 02_development_environment/03_macos/05_vscode/vscode_install.md
-            - VS Code 기본 설정: 02_development_environment/03_macos/05_vscode/vscode_basic_setup.md
-            - VS Code User Settings: 02_development_environment/03_macos/05_vscode/vscode_user_settings.md
-            - Java 개발 Extension 구성: 02_development_environment/03_macos/05_vscode/java_extension_setup.md
-            - Spring Boot Extension 구성: 02_development_environment/03_macos/05_vscode/spring_boot_extension_setup.md
-            - 개발 지원 Extension 및 Profile 구성: 02_development_environment/03_macos/05_vscode/support_extension_profile_setup.md
-            - JDK 연계 및 개발환경 운영: 02_development_environment/03_macos/05_vscode/jdk_workspace_environment_setup.md
-            - 설치 및 기본 설정 통합 문서 (기존): 02_development_environment/03_macos/05_vscode/vscode_install_basic_setup_legacy.md
-
-        - Docker 개발환경 설치:
-            - Docker Desktop 개요 및 공통 환경: 02_development_environment/03_macos/06_docker/docker_desktop_setup.md
-            - macOS Docker Desktop 설치: 02_development_environment/03_macos/06_docker/docker_desktop_macos_setup.md
-
-        - Oracle 개발환경 설치:
-            - Apple Silicon Oracle Docker 지원 및 검증: 02_development_environment/03_macos/07_oracle/oracle_docker_apple_silicon_support.md
-            - Oracle Database Free 설치 및 접속: 02_development_environment/03_macos/07_oracle/oracle_database_free_setup.md
-            - Oracle Tablespace 및 프로젝트 사용자 구성: 02_development_environment/03_macos/07_oracle/oracle_database_schema_setup.md
-
-
-    - (참고)개발 장비 구성: 02_development_environment/99_reference/development_device.md
-
-
-
-
+      - Oracle / Docker 로컬 환경:
+          - Docker Desktop 개요 및 공통 환경: 02_development_environment/05_database_docker/docker_desktop_setup.md
+          - Windows Docker Desktop 설치: 02_development_environment/05_database_docker/docker_desktop_windows_setup.md
+          - macOS Docker Desktop 설치: 02_development_environment/05_database_docker/docker_desktop_macos_setup.md
+          - Apple Silicon Oracle Docker 지원 및 검증: 02_development_environment/05_database_docker/oracle_docker_apple_silicon_support.md
+          - Oracle Database Free 설치 및 접속: 02_development_environment/05_database_docker/oracle_database_free_setup.md
+          - Oracle Tablespace 및 프로젝트 사용자 구성: 02_development_environment/05_database_docker/oracle_database_schema_setup.md
 
   - 프로젝트 생성 및 검증:
       - 프로젝트 생성:
