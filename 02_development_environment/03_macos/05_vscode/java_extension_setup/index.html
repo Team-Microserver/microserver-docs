@@ -1,0 +1,2766 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../vscode_user_settings/">
+      
+      
+        <link rel="next" href="../spring_boot_extension_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Java 개발 Extension 구성 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#macos-java-extension" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Java 개발 Extension 구성
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01_microserver_introduction/01_what_is_microserver/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../01_principles/development_environment_principles/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06_server_devops/01_overview/server_devops_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 및 DevOps 환경
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../01_microserver_introduction/01_what_is_microserver/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_principles/development_environment_principles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발환경 구성 핵심원칙
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../02_windows/01_local/project_local_environment_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    macOS 개발환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_local/project_local_environment_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 로컬 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_git/git_github_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git / GitHub 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../03_jdk/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 설치 및 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04_gradle/gradle_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradle 빌드환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3_5" id="__nav_2_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경 설치
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    VS Code 개발환경 설치
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설정 원칙
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_basic_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 기본 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_user_settings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code User Settings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 개발 Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java 개발 Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-java-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Java Extension 구성 방식
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Java Extension 구성 방식">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-portable-mode-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Portable Mode에서 Extension이 저장되는 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-extension-pack-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Extension Pack for Java 설치
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Extension Pack for Java 설치">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-portable-vs-code-jdk-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Portable VS Code에 JDK Runtime 등록
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-extension-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Extension Pack을 사용하는 이유
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-language-support-for-java-by-red-hat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Language Support for Java by Red Hat
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-debugger-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Debugger for Java
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-test-runner-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Test Runner for Java
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-gradle-for-java-maven-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Gradle for Java와 Maven for Java
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Gradle for Java와 Maven for Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-gradle-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Gradle for Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-maven-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Maven for Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-project-manager-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Project Manager for Java
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-java-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Java Extension의 관계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 설치 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Java 명령 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Java 명령 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-java-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Java Extension 설치 후 주의사항
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#131-java-extension-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Java Extension과 개발환경 Package
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 현재 단계에서 하지 않는 작업
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        참고
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spring_boot_extension_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot Extension 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../support_extension_profile_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 지원 Extension 및 Profile 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../jdk_workspace_environment_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 연계 및 개발환경 운영
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_install_basic_setup_legacy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    설치 및 기본 설정 통합 문서 (기존)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06_docker/docker_desktop_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker 개발환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../07_oracle/oracle_docker_apple_silicon_support/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle 개발환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../99_reference/development_device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    (참고)개발 장비 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../06_server_devops/01_overview/server_devops_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 및 DevOps 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-java-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Java Extension 구성 방식
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Java Extension 구성 방식">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-portable-mode-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Portable Mode에서 Extension이 저장되는 위치
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-extension-pack-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Extension Pack for Java 설치
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Extension Pack for Java 설치">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-portable-vs-code-jdk-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Portable VS Code에 JDK Runtime 등록
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-extension-pack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Extension Pack을 사용하는 이유
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-language-support-for-java-by-red-hat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Language Support for Java by Red Hat
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-debugger-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Debugger for Java
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-test-runner-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Test Runner for Java
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-gradle-for-java-maven-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Gradle for Java와 Maven for Java
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Gradle for Java와 Maven for Java">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-gradle-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Gradle for Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-maven-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Maven for Java
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-project-manager-for-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Project Manager for Java
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-java-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Java Extension의 관계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 설치 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Java 명령 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Java 명령 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#macos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        macOS
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-java-extension" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Java Extension 설치 후 주의사항
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#131-java-extension-package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Java Extension과 개발환경 Package
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. 현재 단계에서 하지 않는 작업
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 체크리스트
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        참고
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="macos-java-extension">macOS Java 개발 Extension 구성<a class="headerlink" href="#macos-java-extension" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 VS Code를 Java 개발용 IDE로 사용할 수 있도록 <strong>Extension Pack for Java</strong>를 설치하고, 포함된 주요 Extension이 어떤 역할을 담당하는지 설명한다.</p>
+<p>현재 단계에서는 Java 프로젝트나 Spring Boot 프로젝트를 생성하지 않는다.</p>
+<p>목표는 다음과 같다.</p>
+<ul>
+<li>Java Extension Pack 설치</li>
+<li>Java 개발 기능의 구성요소 이해</li>
+<li>Extension별 역할 이해</li>
+<li>이후 MicroServer 프로젝트에서 사용할 기능을 미리 준비</li>
+<li>Java 관련 VS Code 명령이 정상적으로 등록되었는지 확인</li>
+</ul>
+<hr />
+<h2 id="2-java-extension">2. Java Extension 구성 방식<a class="headerlink" href="#2-java-extension" title="Permanent link">&para;</a></h2>
+<p>VS Code는 기본 상태에서 Java 전용 IDE가 아니다.</p>
+<p>Java Source를 분석하고 자동완성, Refactoring, Debug, Test 등의 기능을 사용하려면 Java Extension을 설치해야 한다.</p>
+<p>MicroServer에서는 개별 Extension을 하나씩 선택하기보다 <strong>Extension Pack for Java</strong>를 기준으로 설치한다.</p>
+<pre class="mermaid"><code>flowchart TB
+    VS[Visual Studio Code]
+    VS --&gt; PACK[Extension Pack for Java]
+
+    PACK --&gt; LANG[Language Support for Java]
+    PACK --&gt; DEBUG[Debugger for Java]
+    PACK --&gt; TEST[Test Runner for Java]
+    PACK --&gt; GRADLE[Gradle for Java]
+    PACK --&gt; MAVEN[Maven for Java]
+    PACK --&gt; PROJECT[Project Manager for Java]</code></pre>
+<p>Extension Pack을 사용하면 개발자별 필수 Extension 누락을 줄일 수 있다.</p>
+<blockquote>
+<p>Extension Pack의 실제 포함 구성은 VS Code/Marketplace 업데이트에 따라 변경될 수 있다.
+MicroServer 문서에서는 Java 개발에 필요한 주요 구성요소와 역할을 기준으로 관리한다.</p>
+</blockquote>
+<div class="admonition note">
+<p class="admonition-title">2026-08 현재 Extension Pack 구성 기준</p>
+<p>현재 Visual Studio Marketplace의 <strong>Extension Pack for Java</strong> 페이지에는 다음 6개 Extension이 포함 대상으로 안내된다.</p>
+<ul>
+<li>Language Support for Java™ by Red Hat</li>
+<li>Debugger for Java</li>
+<li>Test Runner for Java</li>
+<li>Maven for Java</li>
+<li>Gradle for Java</li>
+<li>Project Manager for Java</li>
+</ul>
+<p>일부 VS Code Java 문서에는 과거 구성인 <strong>Visual Studio IntelliCode</strong>가 아직 표시될 수 있지만,
+현재 Marketplace의 실제 Extension Pack 구성에는 포함되어 있지 않으므로
+MicroServer 표준 필수 Extension에서는 제외한다.</p>
+</div>
+<hr />
+<h3 id="21-portable-mode-extension">2.1 Portable Mode에서 Extension이 저장되는 위치<a class="headerlink" href="#21-portable-mode-extension" title="Permanent link">&para;</a></h3>
+<p>Windows 일반 설치에서는 Extension이 보통 사용자 Home의 다음 위치에 저장된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>~/.vscode/extensions
+</span></code></pre></div>
+<p>Portable <code>data</code> Directory 아래에서 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>~/local-microserver/tools/vscode/code-portable-data/extensions
+</span></code></pre></div>
+<p>즉 Java Extension Pack을 Portable VS Code에 설치하면
+Extension Binary도 <code>~/local-microserver</code> 개발환경 Package에 포함할 수 있다.</p>
+<pre class="mermaid"><code>flowchart LR
+    VS["Portable VS Code"]
+    --&gt; DATA["data"]
+    DATA --&gt; USER["user-data&lt;br/&gt;Settings / Profile"]
+    DATA --&gt; EXT["extensions"]
+    EXT --&gt; JAVA["Extension Pack for Java"]</code></pre>
+<div class="admonition important">
+<p class="admonition-title">Portable VS Code에서 Extension을 설치해야 함</p>
+<p>PC에 일반 설치된 다른 VS Code가 있다면
+그 VS Code에 설치한 Extension과 MicroServer Portable VS Code의 Extension은 별개일 수 있다.</p>
+<p>반드시 <strong>MicroServer Portable VS Code를 실행한 상태에서 Extension을 설치</strong>하거나,
+Portable VS Code의 <code>bin\code.cmd</code>를 명시적으로 사용한다.</p>
+</div>
+<h2 id="3-extension-pack-for-java">3. Extension Pack for Java 설치<a class="headerlink" href="#3-extension-pack-for-java" title="Permanent link">&para;</a></h2>
+<p>VS Code에서 Extensions 화면을 연다.</p>
+<h3 id="macos">macOS<a class="headerlink" href="#macos" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Command + Shift + X
+</span></code></pre></div>
+<p>검색:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Extension Pack for Java
+</span></code></pre></div>
+<p>Publisher가 Microsoft인지 확인한다.</p>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>vscjava.vscode-java-pack
+</span></code></pre></div>
+<p>설치 버튼을 선택한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">&amp;</span><span class="w"> </span><span class="s2">&quot;~/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code&quot;</span><span class="w"> </span>--install-extension<span class="w"> </span>vscjava.vscode-java-pack
+</span></code></pre></div>
+<p><code>setup.cmd</code> 또는 <code>start-vscode.command</code>를 통해 Portable VS Code의 <code>bin</code>이 현재 PATH에 포함되어 있다면 다음과 같이 실행할 수도 있다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>vscjava.vscode-java-pack
+</span></code></pre></div>
+<p>macOS에서 <code>code</code> 명령이 등록되어 있다면:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>code<span class="w"> </span>--install-extension<span class="w"> </span>vscjava.vscode-java-pack
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">어느 VS Code에 설치되는지 확인</p>
+<p>개발 PC에 일반 VS Code와 MicroServer Portable VS Code가 함께 존재한다면
+단순히 <code>code</code>만 실행했을 때 어느 VS Code CLI가 선택되는지 확인해야 한다.</p>
+<p>MicroServer 표준 Extension 설치 시에는 위와 같이 Portable <code>code.cmd</code>의 절대경로를 사용하면 명확하다.</p>
+</div>
+<h3 id="31-portable-vs-code-jdk-runtime">3.1 Portable VS Code에 JDK Runtime 등록<a class="headerlink" href="#31-portable-vs-code-jdk-runtime" title="Permanent link">&para;</a></h3>
+<p>Extension Pack for Java를 설치한 뒤에는 Java Extension이 사용할 JDK 위치를 VS Code에 등록한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+</span></code></pre></div>
+<p>JDK 설치 여부는 Terminal에서 다음과 같이 확인할 수 있다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home<span class="se">\b</span>in<span class="se">\j</span>ava.exe<span class="w"> </span>-version
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home<span class="se">\b</span>in<span class="se">\j</span>avac.exe<span class="w"> </span>-version
+</span></code></pre></div>
+<p>Portable VS Code의 User Settings는 다음 위치에서 관리된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>~/local-microserver/tools/vscode/code-portable-data/user-data/User/settings.json
+</span></code></pre></div>
+<p>이 설정은 Windows 전체의 전역 설정이 아니라
+<strong>해당 Portable VS Code 인스턴스에서 여는 모든 Workspace에 공통 적용되는 User Settings</strong>이다.</p>
+<p>Command Palette에서 다음 명령으로 설정 파일을 열 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>Preferences: Open User Settings (JSON)
+</span></code></pre></div>
+<p>JDK 25를 기본 Runtime으로 사용할 경우 다음과 같이 등록한다.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="nt">&quot;java.jdt.ls.java.home&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">&quot;java.configuration.runtimes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JavaSE-25&quot;</span><span class="p">,</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">            </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>java.configuration.runtimes</code>는 배열이므로 여러 JDK를 함께 등록할 수 있다.</p>
+<p>예를 들어 JDK 21과 JDK 25를 함께 관리한다면:</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">{</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="nt">&quot;java.jdt.ls.java.home&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nt">&quot;java.configuration.runtimes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JavaSE-21&quot;</span><span class="p">,</span>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">            </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-21&quot;</span>
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">        </span><span class="p">},</span>
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JavaSE-25&quot;</span><span class="p">,</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">            </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">    </span><span class="p">]</span>
+</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>각 설정의 역할은 다음과 같이 구분한다.</p>
+<table>
+<thead>
+<tr>
+<th>설정</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>java.jdt.ls.java.home</code></td>
+<td>Java Language Server 자체를 실행할 JDK</td>
+</tr>
+<tr>
+<td><code>java.configuration.runtimes</code></td>
+<td>VS Code에서 프로젝트용으로 선택 가능한 JDK 목록</td>
+</tr>
+<tr>
+<td>Gradle Toolchain</td>
+<td>실제 프로젝트가 Compile / Build에 사용할 Java Version</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition important">
+<p class="admonition-title">JDK 경로는 bin 폴더가 아닌 JDK Home을 지정</p>
+<p>다음과 같이 <code>bin</code>까지 지정하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home\bin   ← 잘못된 예
+</span></code></pre></div>
+<p>JDK Home을 지정한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home       ← 올바른 예
+</span></code></pre></div>
+</div>
+<p>설정 변경 후 다음 명령으로 VS Code를 Reload한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>Developer: Reload Window
+</span></code></pre></div>
+<p>현재 단계에서는 아직 Java / Spring Boot 프로젝트를 생성하지 않았으므로
+<code>Java: Configure Java Runtime</code>을 실행했을 때 다음과 같은 메시지가 나타날 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>There are no Java projects opened in the current workspace.
+</span></code></pre></div>
+<p>이 메시지는 JDK를 찾지 못했다는 의미가 아니라
+<strong>현재 Workspace에 Java 프로젝트가 아직 없다는 의미</strong>이므로 정상이다.</p>
+<hr />
+<h2 id="4-extension-pack">4. Extension Pack을 사용하는 이유<a class="headerlink" href="#4-extension-pack" title="Permanent link">&para;</a></h2>
+<p>필요한 Java Extension을 개별적으로 설치할 수도 있다.</p>
+<p>그러나 프로젝트 표준 환경에서는 다음 문제를 줄이기 위해 Extension Pack을 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>개발자 A
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a> ├─ Language Support 설치
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a> ├─ Debugger 설치
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a> └─ Test Runner 누락
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>개발자 B
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a> ├─ Language Support 설치
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a> ├─ Debugger 누락
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a> └─ Gradle Extension 설치
+</span></code></pre></div>
+<p>개발자마다 설치된 Extension이 다르면 IDE 기능과 가이드 화면이 달라진다.</p>
+<p>Extension Pack을 사용하면 공통 Java 개발환경을 보다 쉽게 맞출 수 있다.</p>
+<hr />
+<h2 id="5-language-support-for-java-by-red-hat">5. Language Support for Java by Red Hat<a class="headerlink" href="#5-language-support-for-java-by-red-hat" title="Permanent link">&para;</a></h2>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>redhat.java
+</span></code></pre></div>
+<p>Java 개발환경의 가장 핵심적인 Extension이다.</p>
+<p>이 Extension은 Java Language Server를 제공하여 VS Code가 Java Source의 의미와 구조를 이해하도록 한다.</p>
+<p>주요 역할:</p>
+<ul>
+<li>Java 문법 분석</li>
+<li>Java Source 오류 및 Warning 표시</li>
+<li>코드 자동완성</li>
+<li>IntelliSense</li>
+<li>Import 관리</li>
+<li>클래스 / 메서드 탐색</li>
+<li>Definition 이동</li>
+<li>Reference 검색</li>
+<li>Rename 등 Refactoring</li>
+<li>Java 코드 Formatting</li>
+<li>Javadoc 정보 표시</li>
+<li>Java 프로젝트 구조 인식</li>
+</ul>
+<p>구조를 단순화하면 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>VS Code
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>   ↓
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>Language Support for Java
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>   ↓
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>Java Language Server
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>   ↓
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>JDK / Java Source / Project Structure 분석
+</span></code></pre></div>
+<p>즉, VS Code를 Java IDE처럼 동작하도록 만드는 핵심 기반이다.</p>
+<p>MicroServer에서는 <strong>필수</strong>로 사용한다.</p>
+<hr />
+<h2 id="6-debugger-for-java">6. Debugger for Java<a class="headerlink" href="#6-debugger-for-java" title="Permanent link">&para;</a></h2>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>vscjava.vscode-java-debug
+</span></code></pre></div>
+<p>Java 애플리케이션 Debug 기능을 제공한다.</p>
+<p>주요 역할:</p>
+<ul>
+<li>Breakpoint</li>
+<li>Step Into</li>
+<li>Step Over</li>
+<li>Step Out</li>
+<li>변수 값 확인</li>
+<li>Call Stack 확인</li>
+<li>Expression 평가</li>
+<li>Java Process Debug 연결</li>
+</ul>
+<p>향후 MicroServer 프로젝트가 만들어진 뒤 요청 흐름이나 Business Logic을 분석할 때 사용할 수 있다.</p>
+<p>예를 들어 이후 단계에서는 Controller, Service, DAO 등의 실행 흐름을 Debugger를 통해 추적할 수 있다.</p>
+<p>현재 단계에서는 실제 Application Class가 없으므로 Debug 실행은 하지 않는다.</p>
+<p>MicroServer에서는 <strong>필수</strong>로 사용한다.</p>
+<hr />
+<h2 id="7-test-runner-for-java">7. Test Runner for Java<a class="headerlink" href="#7-test-runner-for-java" title="Permanent link">&para;</a></h2>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>vscjava.vscode-java-test
+</span></code></pre></div>
+<p>Java Test 실행을 지원하는 Extension이다.</p>
+<p>주요 역할:</p>
+<ul>
+<li>JUnit Test 탐색</li>
+<li>Test Explorer 제공</li>
+<li>Test Class 단위 실행</li>
+<li>Test Method 단위 실행</li>
+<li>Test Debug</li>
+<li>성공 / 실패 결과 확인</li>
+</ul>
+<p>MicroServer에서는 이후 공통 모듈 및 Business Logic의 단위 테스트와 통합 테스트에 사용할 예정이다.</p>
+<p>현재 단계에서는 Test Class나 Test Code를 작성하지 않는다.</p>
+<p>MicroServer에서는 <strong>필수</strong>로 사용한다.</p>
+<hr />
+<h2 id="8-gradle-for-java-maven-for-java">8. Gradle for Java와 Maven for Java<a class="headerlink" href="#8-gradle-for-java-maven-for-java" title="Permanent link">&para;</a></h2>
+<p>Extension Pack for Java에는 <strong>Gradle for Java</strong>와 <strong>Maven for Java</strong>가 함께 포함된다.</p>
+<p>MicroServer의 주 Build Tool은 Gradle이므로 Gradle for Java를 중심으로 사용하고, Maven for Java는 Maven 프로젝트를 열거나 두 Build Tool을 비교할 때 참고한다.</p>
+<h3 id="81-gradle-for-java">8.1 Gradle for Java<a class="headerlink" href="#81-gradle-for-java" title="Permanent link">&para;</a></h3>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>vscjava.vscode-gradle
+</span></code></pre></div>
+<p>주요 역할:</p>
+<ul>
+<li>Gradle Project Import</li>
+<li>Gradle Projects / Tasks View</li>
+<li>Gradle Task 실행</li>
+<li>Project Dependency 확인</li>
+<li>Gradle Build Server 연계</li>
+<li><code>build.gradle</code> 작성 지원</li>
+</ul>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Gradle for Java Extension
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>→ VS Code에서 Gradle Project를 탐색하고 Task를 실행하는 IDE 기능
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>Gradle Wrapper
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>→ 실제 프로젝트 Build 수행
+</span></code></pre></div>
+<p>프로젝트가 생성된 이후에는 다음 명령과 VS Code Task View를 함께 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>./gradlew tasks
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>./gradlew test
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>./gradlew build
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>./gradlew bootRun
+</span></code></pre></div>
+<h3 id="82-maven-for-java">8.2 Maven for Java<a class="headerlink" href="#82-maven-for-java" title="Permanent link">&para;</a></h3>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>vscjava.vscode-maven
+</span></code></pre></div>
+<p>Maven 프로젝트의 <code>pom.xml</code>, Lifecycle, Goal을 탐색하고 실행하는 기능을 제공한다.</p>
+<p>이번 MicroServer 프로젝트의 실제 Build에는 Maven을 사용하지 않지만, Maven 경험과 Gradle 구성을 비교하기 위해 Extension Pack에 포함된 상태를 유지한다.</p>
+<p>예를 들어 다음 대응 관계를 이해할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>Maven for Java             Gradle for Java
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>------------------------------------------------
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>Maven Projects             Gradle Projects
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>Lifecycle / Goal           Task
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>pom.xml                    build.gradle
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a>mvnw                       gradlew
+</span></code></pre></div>
+<p>현재 단계에서는 아직 실제 Gradle 프로젝트가 없으므로 Project Import와 Task 실행은 진행하지 않는다.</p>
+<hr />
+<h2 id="9-project-manager-for-java">9. Project Manager for Java<a class="headerlink" href="#9-project-manager-for-java" title="Permanent link">&para;</a></h2>
+<p>Extension ID:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>vscjava.vscode-java-dependency
+</span></code></pre></div>
+<p>Java 프로젝트의 구조와 Dependency를 VS Code에서 관리할 수 있도록 지원한다.</p>
+<p>주요 역할:</p>
+<ul>
+<li>Java Projects View</li>
+<li>Java Project 탐색</li>
+<li>Package 관리</li>
+<li>Java Dependency 확인</li>
+<li>Java Project 생성 기능</li>
+<li>Class / Package 생성 지원</li>
+</ul>
+<p>향후 MicroServer 프로젝트를 열면 Java Project 관점의 구조를 확인할 때 사용한다.</p>
+<p>현재는 아직 프로젝트가 생성되지 않았으므로 설치 및 기능 이해까지만 진행한다.</p>
+<hr />
+<h2 id="10-java-extension">10. Java Extension의 관계<a class="headerlink" href="#10-java-extension" title="Permanent link">&para;</a></h2>
+<p>각 Extension은 서로 역할이 다르다.</p>
+<pre class="mermaid"><code>flowchart LR
+    LANG[Java Language Support] --&gt; EDIT[작성 / 탐색 / Refactoring]
+    DEBUG[Debugger for Java] --&gt; RUN[Debug]
+    TEST[Test Runner] --&gt; T[Test]
+    GRADLE[Gradle for Java] --&gt; BUILD[Build Tool 연계]
+    MAVEN[Maven for Java] --&gt; COMPARE[Maven 비교 / 호환]
+    PM[Project Manager] --&gt; STRUCT[Project 구조]</code></pre>
+<p>단순히 Extension Pack을 설치했다고 끝내기보다 각 Extension이 어느 영역을 담당하는지 이해하는 것이 중요하다.</p>
+<hr />
+<h2 id="11">11. 설치 상태 확인<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
+<p>Extensions 화면에서 다음 검색 조건을 사용할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>@installed
+</span></code></pre></div>
+<p>Java 관련 주요 Extension이 설치되어 있는지 확인한다.
+현재 Marketplace의 Extension Pack 구성 기준으로 다음 항목을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>Extension Pack for Java
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>Language Support for Java by Red Hat
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>Debugger for Java
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>Test Runner for Java
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>Gradle for Java
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>Maven for Java
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>Project Manager for Java
+</span></code></pre></div>
+<p>현재 PATH가 Portable VS Code를 가리키는 경우:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>code<span class="w"> </span>--list-extensions
+</span></code></pre></div>
+<p>설치 Directory도 함께 확인할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>~/local-microserver/tools/vscode/code-portable-data/extensions
+</span></code></pre></div>
+<hr />
+<h2 id="12-java">12. Java 명령 확인<a class="headerlink" href="#12-java" title="Permanent link">&para;</a></h2>
+<p>Command Palette를 연다.</p>
+<h3 id="macos_1">macOS<a class="headerlink" href="#macos_1" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>Command + Shift + P
+</span></code></pre></div>
+<p>검색:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Java:
+</span></code></pre></div>
+<p>Java Extension이 정상적으로 활성화되었다면 여러 Java 관련 명령이 표시된다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>Java: Configure Java Runtime
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>Java: Clean Java Language Server Workspace
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>Java: ...
+</span></code></pre></div>
+<p>현재 단계에서는 명령의 존재 여부만 확인한다.</p>
+<div class="admonition note">
+<p class="admonition-title">아직 Java 프로젝트가 없는 경우</p>
+<p><code>Java: Configure Java Runtime</code> 명령 자체는 표시되더라도,
+설정 화면에는 <code>There are no Java projects opened in the current workspace.</code> 메시지가 나타날 수 있다.</p>
+<p>현재 단계에서는 Spring Boot / Java 프로젝트를 아직 생성하지 않았으므로 정상이다.</p>
+</div>
+<hr />
+<h2 id="13-java-extension">13. Java Extension 설치 후 주의사항<a class="headerlink" href="#13-java-extension" title="Permanent link">&para;</a></h2>
+<p>Extension 설치 직후 Java 관련 명령이 보이지 않는 경우 VS Code를 Reload한다.</p>
+<p>Command Palette:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>Developer: Reload Window
+</span></code></pre></div>
+<p>필요하면 Extensions 화면에서 해당 Extension이 Enabled 상태인지 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>Extensions
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>→ Installed
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a>→ Extension 선택
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a>→ Enabled
+</span></code></pre></div>
+<hr />
+<h2 id="131-java-extension-package">13.1 Java Extension과 개발환경 Package<a class="headerlink" href="#131-java-extension-package" title="Permanent link">&para;</a></h2>
+<p>Portable VS Code에 Java Extension Pack을 설치한 뒤 배포용 Package를 만들면
+다른 개발자가 Extension을 하나씩 다시 설치하는 작업을 줄일 수 있다.</p>
+<p>배포용 구조 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>~/local-microserver/tools/vscode
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>├─ Visual Studio Code.app
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>└─ data
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a>   ├─ user-data
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>   └─ extensions
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>      ├─ redhat.java-...
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a>      ├─ vscjava.vscode-java-debug-...
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a>      ├─ vscjava.vscode-java-test-...
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>      ├─ vscjava.vscode-gradle-...
+</span><span id="__span-38-10"><a id="__codelineno-38-10" name="__codelineno-38-10" href="#__codelineno-38-10"></a>      └─ ...
+</span></code></pre></div>
+<p>다만 Extension은 지속적으로 Update되므로
+<strong>배포 Package를 만들 때 어떤 VS Code / Extension Version을 기준으로 했는지 기록</strong>하는 것이 좋다.</p>
+<p>또한 Java Extension이 설치되어 있어도 JDK Binary 자체가 Extension 안에 포함되는 것은 아니다.</p>
+<p>MicroServer에서는 JDK를 별도로 다음 위치에서 관리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+</span></code></pre></div>
+<h2 id="14">14. 현재 단계에서 하지 않는 작업<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
+<p>Java Extension이 설치되었더라도 아직 다음 작업은 하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>Java Project 생성
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>Package 생성
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>Class 생성
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>build.gradle / settings.gradle 확인
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>Gradle Build
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>JUnit Test 작성
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>Debug 실행
+</span></code></pre></div>
+<p>현재 단계의 목표는 <strong>Java 개발 기능을 VS Code에 준비하는 것</strong>이다.</p>
+<hr />
+<h2 id="15">15. 체크리스트<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> MicroServer Portable VS Code에 Extension Pack for Java가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Language Support for Java by Red Hat이 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Debugger for Java가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Test Runner for Java가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Gradle for Java가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Maven for Java가 함께 설치되어 있음을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Project Manager for Java가 설치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Portable VS Code User Settings에 JDK 25 Runtime 경로가 등록되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>java.configuration.runtimes</code>가 여러 JDK를 등록할 수 있는 배열 설정임을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Command Palette에서 <code>Java:</code> 명령을 확인할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 Java / Spring Boot 프로젝트를 생성하지 않았다.</li>
+</ul>
+<hr />
+<h2 id="16">16. 다음 단계<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
+<p>Java 개발 Extension 구성이 끝나면 Spring Boot 개발 기능을 추가한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>JDK 준비
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a>   ↓
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>Gradle 준비
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>   ↓
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a>VS Code 설치
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a>   ↓
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a>Extension Pack for Java        ← 현재 완료
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a>   ↓
+</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a>Spring Boot Extension Pack
+</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a>   ↓
+</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>개발 지원 Extension
+</span></code></pre></div>
+<p>Gradle 기본 환경은 앞 단계에서 준비했으며, 실제 프로젝트 Build는 프로젝트 생성 이후 Gradle Wrapper로 수행한다.
+현재부터는 VS Code 안에서 Java / Spring Boot 개발 기능을 순차적으로 구성한다.</p>
+<h2 id="_1">참고<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p><a href="https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack">Visual Studio Marketplace - Extension Pack for Java</a></p>
+</li>
+<li>
+<p><a href="https://code.visualstudio.com/docs/setup/portable">VS Code Portable Mode</a></p>
+</li>
+<li>
+<p>VS Code Java Extensions<br />
+<a href="https://code.visualstudio.com/docs/java/extensions">https://code.visualstudio.com/docs/java/extensions</a></p>
+</li>
+<li>
+<p>Getting Started with Java in VS Code<br />
+<a href="https://code.visualstudio.com/docs/java/java-tutorial">https://code.visualstudio.com/docs/java/java-tutorial</a></p>
+</li>
+<li>
+<p>Managing Java Projects<br />
+<a href="https://code.visualstudio.com/docs/java/java-project">https://code.visualstudio.com/docs/java/java-project</a></p>
+</li>
+<li>
+<p>Java build tools in VS Code<br />
+<a href="https://code.visualstudio.com/docs/java/java-build">https://code.visualstudio.com/docs/java/java-build</a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

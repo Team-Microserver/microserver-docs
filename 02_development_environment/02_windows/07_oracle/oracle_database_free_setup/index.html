@@ -1,0 +1,3005 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../../06_docker/docker_desktop_windows_setup/">
+      
+      
+        <link rel="next" href="../oracle_database_schema_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Oracle Database Free 설치 및 접속 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#windows-oracle-database-free" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Oracle Database Free 설치 및 접속
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01_microserver_introduction/01_what_is_microserver/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../01_principles/development_environment_principles/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06_server_devops/01_overview/server_devops_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 및 DevOps 환경
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../01_microserver_introduction/01_what_is_microserver/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_principles/development_environment_principles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발환경 구성 핵심원칙
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Windows 개발환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_local/project_local_environment_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 로컬 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_git/git_github_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git / GitHub 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../03_jdk/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 설치 및 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04_gradle/gradle_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradle 빌드환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05_vscode/vscode_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05_vscode/vscode_user_settings/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06_docker/docker_desktop_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker 개발환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_8" id="__nav_2_2_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle 개발환경 설치
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Oracle 개발환경 설치
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle Database Free 설치 및 접속
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle Database Free 설치 및 접속
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 전체 구성 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Docker 사전 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-oracle-container-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Oracle Container Image 선정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-oracle-image-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Oracle Image Pull
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Oracle Image Pull">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-oracle-system-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Oracle SYSTEM Password 준비
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Oracle SYSTEM Password 준비">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-named-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Named Volume 생성
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-oracle-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Oracle Container 생성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Oracle Container 생성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 주요 옵션
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Container 생성 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-database-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Database Ready 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 기본 접속 정보
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-host-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Host Port 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Host Port 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-sqlplus-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. SQL*Plus로 SYSTEM 접속
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. SQL*Plus로 SYSTEM 접속">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-pdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 현재 PDB 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-container-database-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Container 운영과 Database Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. Container 운영과 Database Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.1 Container 중지
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2 Container 다시 시작
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#163-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.3 Container만 삭제
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#164-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.4 Database 완전 초기화
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-password-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Password 변경과 기존 Volume
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. 자주 발생하는 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18. 자주 발생하는 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#181-oracle-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.1 Oracle Container가 생성되지 않음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#182-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.2 Container가 바로 종료됨
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#183-1521-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.3 1521 Port 충돌
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#184-ora-12514" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.4 ORA-12514
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#185-system-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.5 SYSTEM Password가 맞지 않음
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-docker-desktop-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. Docker Desktop UI에서 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. 보안 주의사항
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. 완료 기준
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. 공식 참고 자료
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oracle_database_schema_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle Tablespace 및 프로젝트 사용자 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../03_macos/01_local/project_local_environment_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../99_reference/development_device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    (참고)개발 장비 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../06_server_devops/01_overview/server_devops_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 및 DevOps 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 전체 구성 구조
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Docker 사전 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-oracle-container-image" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Oracle Container Image 선정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-oracle-image-pull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Oracle Image Pull
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Oracle Image Pull">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-oracle-system-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. Oracle SYSTEM Password 준비
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Oracle SYSTEM Password 준비">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-named-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. Named Volume 생성
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-oracle-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Oracle Container 생성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. Oracle Container 생성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91-windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#93" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 주요 옵션
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Container 생성 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-database-ready" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Database Ready 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. 기본 접속 정보
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-host-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Host Port 확인
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Host Port 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-windows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13.1 Windows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-sqlplus-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. SQL*Plus로 SYSTEM 접속
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14. SQL*Plus로 SYSTEM 접속">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-windows-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Windows PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-pdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. 현재 PDB 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-container-database-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. Container 운영과 Database Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="16. Container 운영과 Database Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.1 Container 중지
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.2 Container 다시 시작
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#163-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.3 Container만 삭제
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#164-database" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16.4 Database 완전 초기화
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-password-volume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. Password 변경과 기존 Volume
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. 자주 발생하는 문제
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="18. 자주 발생하는 문제">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#181-oracle-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.1 Oracle Container가 생성되지 않음
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#182-container" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.2 Container가 바로 종료됨
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#183-1521-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.3 1521 Port 충돌
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#184-ora-12514" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.4 ORA-12514
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#185-system-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18.5 SYSTEM Password가 맞지 않음
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-docker-desktop-ui" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. Docker Desktop UI에서 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. 보안 주의사항
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. 완료 기준
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. 공식 참고 자료
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="windows-oracle-database-free">Windows Oracle Database Free 설치 및 접속<a class="headerlink" href="#windows-oracle-database-free" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 MicroServer 프로젝트의 로컬 Database 환경으로 사용할 <strong>Oracle AI Database Free</strong>를
+Docker Desktop 위에 구성하고, Oracle 관리자 계정인 <code>SYSTEM</code>으로 <code>FREEPDB1</code>에 정상 접속되는 상태까지 검증하는 절차를 설명한다.</p>
+<p>현재 문서는 다음 범위를 담당한다.</p>
+<ul>
+<li>Docker Desktop 사전 상태 확인</li>
+<li>Oracle 공식 Container Image 선정 및 Pull</li>
+<li>Oracle SYSTEM Password 준비</li>
+<li>Named Volume 생성</li>
+<li>Oracle Container 생성</li>
+<li>Database Ready 상태 확인</li>
+<li>Host Port 확인</li>
+<li><code>SYSTEM</code> 계정으로 <code>FREEPDB1</code> 접속</li>
+<li>현재 PDB 확인</li>
+<li>Container Stop / Start / 삭제 및 Data 보존 원칙</li>
+<li>Oracle Container 구성 단계의 기본 문제 해결</li>
+</ul>
+<p>다음 내용은 별도 문서에서 진행한다.</p>
+<ul>
+<li>프로젝트 전용 Tablespace 생성</li>
+<li><code>MICROSERVER</code> User / Schema 생성</li>
+<li>Tablespace Quota 설정</li>
+<li>Application용 System Privilege 부여</li>
+<li><code>MICROSERVER</code> 계정 접속 검증</li>
+</ul>
+<p>→ <a href="../oracle_database_schema_setup/">Oracle Tablespace 및 프로젝트 사용자 구성</a></p>
+<div class="admonition info">
+<p class="admonition-title">Docker Desktop 설치는 선행 단계</p>
+<p>본 문서는 Docker Desktop 자체의 설치 가이드가 아니다.</p>
+<p>먼저 다음 문서를 완료한다.</p>
+<ul>
+<li><a href="docker_desktop_setup.md">Docker Desktop 개요 및 공통 환경</a></li>
+<li><a href="docker_desktop_windows_setup.md">Windows Docker Desktop 설치</a></li>
+<li><a href="docker_desktop_macos_setup.md">macOS Docker Desktop 설치</a></li>
+</ul>
+</div>
+<hr />
+<h2 id="2">2. 전체 구성 구조<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>MicroServer 로컬 Oracle 환경의 기본 구조는 다음과 같다.</p>
+<pre class="mermaid"><code>flowchart LR
+    HOST["Developer PC"]
+    --&gt; DD["Docker Desktop"]
+    --&gt; IMG["Oracle AI Database Free Lite Image"]
+    --&gt; DB["microserver-oracle Container"]
+
+    DB --&gt; VOL["microserver-oracle-data"]
+    HOST --&gt;|"localhost:1521"| DB
+    DB --&gt; PDB["FREEPDB1"]</code></pre>
+<p>현재 기본 구성값:</p>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>값</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host</td>
+<td><code>localhost</code></td>
+</tr>
+<tr>
+<td>Host Port</td>
+<td><code>1521</code></td>
+</tr>
+<tr>
+<td>Container Port</td>
+<td><code>1521</code></td>
+</tr>
+<tr>
+<td>Service Name</td>
+<td><code>FREEPDB1</code></td>
+</tr>
+<tr>
+<td>Admin User</td>
+<td><code>SYSTEM</code></td>
+</tr>
+<tr>
+<td>Container Name</td>
+<td><code>microserver-oracle</code></td>
+</tr>
+<tr>
+<td>Volume Name</td>
+<td><code>microserver-oracle-data</code></td>
+</tr>
+<tr>
+<td>Oracle Data Path</td>
+<td><code>/opt/oracle/oradata</code></td>
+</tr>
+<tr>
+<td>Image</td>
+<td><code>container-registry.oracle.com/database/free:latest-lite</code></td>
+</tr>
+</tbody>
+</table>
+<p>전체 진행 흐름:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Docker Desktop 정상 확인
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>        ↓
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>Oracle Image Pull
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        ↓
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>ORACLE_PWD 준비
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        ↓
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>Named Volume 생성
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        ↓
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>Oracle Container 생성
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        ↓
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>DATABASE IS READY TO USE! 확인
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        ↓
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>localhost:1521 확인
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        ↓
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>SYSTEM → FREEPDB1 접속
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>        ↓
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>현재 PDB가 FREEPDB1인지 확인
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        ↓
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>Oracle 기본 설치 / 접속 검증 완료
+</span></code></pre></div>
+<hr />
+<h2 id="3-docker">3. Docker 사전 상태 확인<a class="headerlink" href="#3-docker" title="Permanent link">&para;</a></h2>
+<p>새 Terminal 또는 PowerShell에서 다음 명령을 확인한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">docker</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">docker</span> <span class="n">version</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">docker</span> <span class="n">info</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">docker</span> <span class="n">compose</span> <span class="n">version</span>
+</span></code></pre></div>
+<p>정상 상태에서는 최소한 다음 조건을 만족해야 한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Docker CLI      → 실행 가능
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Docker Engine   → Server 연결 가능
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>Docker Compose  → Version 확인 가능
+</span></code></pre></div>
+<p>특히 <code>docker version</code>에서는 <strong>Client와 Server가 모두 조회</strong>되어야 한다.</p>
+<div class="admonition warning">
+<p class="admonition-title">Docker Engine 연결 오류가 있으면 Oracle 구성을 진행하지 않음</p>
+<p><code>docker version</code> 또는 <code>docker info</code>에서 Docker Engine에 연결되지 않는다면
+Oracle Image Pull이나 Container 생성을 먼저 진행하지 않는다.</p>
+<p>운영체제별 Docker Desktop 가이드에서 Engine 상태를 먼저 확인한다.</p>
+</div>
+<hr />
+<h2 id="4-oracle-container-image">4. Oracle Container Image 선정<a class="headerlink" href="#4-oracle-container-image" title="Permanent link">&para;</a></h2>
+<p>MicroServer 로컬 Database는 Oracle이 직접 제공하는 Oracle Container Registry Image를 사용한다.</p>
+<p>기본 Image:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>container-registry.oracle.com/database/free:latest-lite
+</span></code></pre></div>
+<p>현재 로컬 개발환경에서는 다음과 같은 일반적인 개발 작업을 목표로 한다.</p>
+<ul>
+<li>DDL / DML</li>
+<li>Transaction</li>
+<li>PL/SQL</li>
+<li>JDBC</li>
+<li>DAO / Persistence</li>
+<li>일반적인 CRUD</li>
+<li>Spring Boot 연계</li>
+</ul>
+<p>따라서 현재 단계에서는 <strong>Lite Image</strong>를 기본으로 사용한다.</p>
+<div class="admonition note">
+<p class="admonition-title"><code>latest-lite</code>는 고정 Version이 아님</p>
+<p><code>latest-lite</code>는 시간이 지나면 실제 Image Digest와 Database Release가 달라질 수 있다.</p>
+<p>개발환경 탐색 단계에서는 편리하지만,
+프로젝트 표준 환경을 확정할 때는 실제 검증한 Version / Digest를 기록하는 것을 권장한다.</p>
+</div>
+<hr />
+<h2 id="6-oracle-image-pull">6. Oracle Image Pull<a class="headerlink" href="#6-oracle-image-pull" title="Permanent link">&para;</a></h2>
+<p>Oracle 공식 Container Registry에서 Image를 Pull한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">docker</span> <span class="n">pull</span> <span class="n">container-registry</span><span class="p">.</span><span class="n">oracle</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">database</span><span class="p">/</span><span class="n">free</span><span class="p">:</span><span class="n">latest-lite</span>
+</span></code></pre></div>
+<p>Image 확인:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">docker</span> <span class="n">image</span> <span class="nb">ls</span>
+</span></code></pre></div>
+<p>확인할 Repository:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>container-registry.oracle.com/database/free
+</span></code></pre></div>
+<p>Image 상세 확인:</p>
+<h3 id="61-windows-powershell">6.1 Windows PowerShell<a class="headerlink" href="#61-windows-powershell" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">docker</span> <span class="n">image</span> <span class="n">inspect</span> <span class="n">container-registry</span><span class="p">.</span><span class="n">oracle</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">database</span><span class="p">/</span><span class="n">free</span><span class="p">:</span><span class="n">latest-lite</span>
+</span></code></pre></div>
+<p>Digest 확인:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">docker</span> <span class="n">image</span> <span class="n">inspect</span> <span class="n">container-registry</span><span class="p">.</span><span class="n">oracle</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">database</span><span class="p">/</span><span class="n">free</span><span class="p">:</span><span class="n">latest-lite</span> <span class="p">-</span><span class="n">-format</span> <span class="s1">&#39;{{json .RepoDigests}}&#39;</span>
+</span></code></pre></div>
+<h2 id="7-oracle-system-password">7. Oracle SYSTEM Password 준비<a class="headerlink" href="#7-oracle-system-password" title="Permanent link">&para;</a></h2>
+<p>Oracle Container를 최초 생성할 때 <code>SYS</code> / <code>SYSTEM</code> 계정에 사용할 Password를
+<code>ORACLE_PWD</code> 환경변수로 전달한다.</p>
+<p>실제 Password를 Markdown 문서나 Git Repository에 직접 기록하지 않는다.</p>
+<h3 id="71-windows-powershell">7.1 Windows PowerShell<a class="headerlink" href="#71-windows-powershell" title="Permanent link">&para;</a></h3>
+<p>MicroServer Windows 환경은 PowerShell 기반 Local 환경 Script를 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>C:\local-microserver\env
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>├─ setup.ps1
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>├─ start-vscode.ps1
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>├─ local-env.example.ps1
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>└─ local-env.ps1
+</span></code></pre></div>
+<p>개발자별 Secret은 다음 파일에 둔다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>C:\local-microserver\env\local-env.ps1
+</span></code></pre></div>
+<p>예:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nv">$env:ORACLE_PWD</span> <span class="p">=</span> <span class="s1">&#39;&lt;개발자-개인-로컬-비밀번호&gt;&#39;</span>
+</span></code></pre></div>
+<p><code>MicroServer VS Code.lnk</code> 또는 <code>start-vscode.ps1</code>을 통해 VS Code를 실행하면
+<code>local-env.ps1</code>의 값을 포함한 Process 환경이 VS Code와 Integrated Terminal에 전달된다.</p>
+<p>설정 여부만 확인:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">if</span> <span class="p">(</span><span class="nv">$env:ORACLE_PWD</span><span class="p">)</span> <span class="p">{</span> <span class="s2">&quot;ORACLE_PWD is set&quot;</span> <span class="p">}</span> <span class="k">else</span> <span class="p">{</span> <span class="s2">&quot;ORACLE_PWD is not set&quot;</span> <span class="p">}</span>
+</span></code></pre></div>
+<p>정상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>ORACLE_PWD is set
+</span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Password 값을 직접 출력하지 않음</p>
+<p><code>$env:ORACLE_PWD</code> 값을 그대로 화면에 출력하지 않는다.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title"><code>local-env.ps1</code>은 개발환경 Package에서 제외</p>
+<p><code>local-env.ps1</code>은 프로젝트 Git Repository 밖에 있으므로 프로젝트 <code>.gitignore</code> 대상은 아니다.</p>
+<p>대신 실제 Secret이 들어간 <code>local-env.ps1</code>은
+<code>C:\local-microserver</code> 개발환경 ZIP / 배포 Package에서 제외한다.</p>
+</div>
+<h2 id="8-named-volume">8. Named Volume 생성<a class="headerlink" href="#8-named-volume" title="Permanent link">&para;</a></h2>
+<p>Database Data를 Container Life Cycle과 분리하기 위해 Named Volume을 생성한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">docker</span> <span class="n">volume</span> <span class="n">create</span> <span class="n">microserver-oracle-data</span>
+</span></code></pre></div>
+<p>확인:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">docker</span> <span class="n">volume</span> <span class="nb">ls</span>
+</span></code></pre></div>
+<p>Volume:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>microserver-oracle-data
+</span></code></pre></div>
+<p>Oracle Data Mount Path:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>/opt/oracle/oradata
+</span></code></pre></div>
+<p>구조:</p>
+<pre class="mermaid"><code>flowchart LR
+    C["microserver-oracle"]
+    --&gt; V["microserver-oracle-data"]
+    C --&gt; P["/opt/oracle/oradata"]</code></pre>
+<p>핵심은 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Container
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>→ Oracle 실행 Process
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>Named Volume
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>→ Oracle Database 실제 Data 보관
+</span></code></pre></div>
+<hr />
+<h2 id="9-oracle-container">9. Oracle Container 생성<a class="headerlink" href="#9-oracle-container" title="Permanent link">&para;</a></h2>
+<p>공통 설정:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Container Name : microserver-oracle
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>Host Port      : 1521
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Container Port : 1521
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>Volume         : microserver-oracle-data
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Data Path      : /opt/oracle/oradata
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>Image          : container-registry.oracle.com/database/free:latest-lite
+</span></code></pre></div>
+<h3 id="91-windows-powershell">9.1 Windows PowerShell<a class="headerlink" href="#91-windows-powershell" title="Permanent link">&para;</a></h3>
+<p>여러 줄:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">docker</span> <span class="n">run</span> <span class="n">-d</span> <span class="p">`</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>  <span class="p">-</span><span class="n">-name</span> <span class="n">microserver-oracle</span> <span class="p">`</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>  <span class="n">-p</span> <span class="n">1521</span><span class="p">:</span><span class="n">1521</span> <span class="p">`</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>  <span class="n">-e</span> <span class="n">ORACLE_PWD</span><span class="p">=</span><span class="nv">$env:ORACLE_PWD</span> <span class="p">`</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>  <span class="n">-v</span> <span class="n">microserver-oracle-data</span><span class="p">:/</span><span class="n">opt</span><span class="p">/</span><span class="n">oracle</span><span class="p">/</span><span class="n">oradata</span> <span class="p">`</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>  <span class="n">container-registry</span><span class="p">.</span><span class="n">oracle</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">database</span><span class="p">/</span><span class="n">free</span><span class="p">:</span><span class="n">latest-lite</span>
+</span></code></pre></div>
+<p>한 줄:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="n">docker</span> <span class="n">run</span> <span class="n">-d</span> <span class="p">-</span><span class="n">-name</span> <span class="n">microserver-oracle</span> <span class="n">-p</span> <span class="n">1521</span><span class="p">:</span><span class="n">1521</span> <span class="n">-e</span> <span class="n">ORACLE_PWD</span><span class="p">=</span><span class="nv">$env:ORACLE_PWD</span> <span class="n">-v</span> <span class="n">microserver-oracle-data</span><span class="p">:/</span><span class="n">opt</span><span class="p">/</span><span class="n">oracle</span><span class="p">/</span><span class="n">oradata</span> <span class="n">container-registry</span><span class="p">.</span><span class="n">oracle</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">database</span><span class="p">/</span><span class="n">free</span><span class="p">:</span><span class="n">latest-lite</span>
+</span></code></pre></div>
+<h3 id="93">9.3 주요 옵션<a class="headerlink" href="#93" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>옵션</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-d</code></td>
+<td>Background 실행</td>
+</tr>
+<tr>
+<td><code>--name microserver-oracle</code></td>
+<td>Container 이름</td>
+</tr>
+<tr>
+<td><code>-p 1521:1521</code></td>
+<td>Host와 Oracle Listener Port 연결</td>
+</tr>
+<tr>
+<td><code>-e ORACLE_PWD=...</code></td>
+<td>초기 Database Password 전달</td>
+</tr>
+<tr>
+<td><code>-v ...:/opt/oracle/oradata</code></td>
+<td>Database Data 영속화</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="10-container">10. Container 생성 상태 확인<a class="headerlink" href="#10-container" title="Permanent link">&para;</a></h2>
+<p>실행 중 Container:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="n">docker</span> <span class="nb">ps</span>
+</span></code></pre></div>
+<p>전체 Container:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="n">docker</span> <span class="nb">ps </span><span class="n">-a</span>
+</span></code></pre></div>
+<p>확인할 이름:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>microserver-oracle
+</span></code></pre></div>
+<p>Container가 바로 종료되었다면 로그를 확인한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">docker</span> <span class="n">logs</span> <span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<hr />
+<h2 id="11-database-ready">11. Database Ready 상태 확인<a class="headerlink" href="#11-database-ready" title="Permanent link">&para;</a></h2>
+<p>Oracle Database는 Container가 <code>Up</code> 상태라고 해서 즉시 접속 가능한 것은 아니다.</p>
+<p>로그 Follow:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">docker</span> <span class="n">logs</span> <span class="o">-f</span> <span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<p>Database 준비가 완료되면 다음 메시지를 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>DATABASE IS READY TO USE!
+</span></code></pre></div>
+<p>로그 Follow 종료:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>Ctrl + C
+</span></code></pre></div>
+<pre class="mermaid"><code>flowchart TD
+    A["Container Start"]
+    --&gt; B["Oracle Listener Start"]
+    --&gt; C["Database Instance Start"]
+    --&gt; D["FREEPDB1 Open"]
+    --&gt; E["DATABASE IS READY TO USE!"]</code></pre>
+<div class="admonition important">
+<p class="admonition-title">Container Running과 Database Ready는 다름</p>
+<p><code>docker ps</code>에서 Container가 <code>Up</code>이어도 Oracle 초기화가 끝나지 않았을 수 있다.</p>
+<p>SQL 접속은 <code>DATABASE IS READY TO USE!</code> 확인 후 진행한다.</p>
+</div>
+<hr />
+<h2 id="12">12. 기본 접속 정보<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>Host         : localhost
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>Port         : 1521
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>Service Name : FREEPDB1
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>Admin User   : SYSTEM
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>Password     : ORACLE_PWD로 지정한 값
+</span></code></pre></div>
+<p>향후 Spring Boot Datasource에서도 기본적으로 <code>FREEPDB1</code> Service를 사용한다.</p>
+<p>현재 단계에서는 아직 Spring Boot Datasource를 구성하지 않는다.</p>
+<hr />
+<h2 id="13-host-port">13. Host Port 확인<a class="headerlink" href="#13-host-port" title="Permanent link">&para;</a></h2>
+<h3 id="131-windows">13.1 Windows<a class="headerlink" href="#131-windows" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="nb">Test-NetConnection</span> <span class="n">localhost</span> <span class="n">-Port</span> <span class="n">1521</span>
+</span></code></pre></div>
+<p>정상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>TcpTestSucceeded : True
+</span></code></pre></div>
+<h2 id="14-sqlplus-system">14. SQL*Plus로 SYSTEM 접속<a class="headerlink" href="#14-sqlplus-system" title="Permanent link">&para;</a></h2>
+<p>Oracle Container 내부의 SQL*Plus를 이용해 <code>SYSTEM</code> 계정으로 <code>FREEPDB1</code> 접속을 확인한다.</p>
+<h3 id="141-windows-powershell">14.1 Windows PowerShell<a class="headerlink" href="#141-windows-powershell" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="n">docker</span> <span class="n">exec</span> <span class="n">-it</span> <span class="n">microserver-oracle</span> <span class="n">sqlplus</span> <span class="s2">&quot;system/</span><span class="p">$(</span><span class="nv">$env:ORACLE_PWD</span><span class="p">)</span><span class="s2">@FREEPDB1&quot;</span>
+</span></code></pre></div>
+<h2 id="15-pdb">15. 현재 PDB 확인<a class="headerlink" href="#15-pdb" title="Permanent link">&para;</a></h2>
+<p><code>SYSTEM</code>으로 접속한 SQL*Plus에서 현재 PDB를 확인한다.</p>
+<p>SQL<em>Plus 복사/붙여넣기 편의를 위해 본 문서의 실행 SQL은 가능한 한 </em><em>한 줄 SQL</em>*로 제공한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">sys_context</span><span class="p">(</span><span class="s1">&#39;USERENV&#39;</span><span class="p">,</span><span class="s1">&#39;CON_NAME&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">container_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span>
+</span></code></pre></div>
+<p>정상 결과:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>FREEPDB1
+</span></code></pre></div>
+<p>이 확인은 이후 프로젝트 User를 잘못된 <code>CDB$ROOT</code>에 만드는 실수를 방지하는 데 중요하다.</p>
+<p>현재 Session이 <code>FREEPDB1</code>이면 Oracle 설치와 기본 관리자 접속 검증은 완료된 것이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>SYSTEM
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>   ↓
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a>FREEPDB1 접속 성공
+</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>   ↓
+</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>Oracle Database Free 기본 구성 완료
+</span></code></pre></div>
+<p>다음 단계:</p>
+<p>→ <a href="../oracle_database_schema_setup/">Oracle Tablespace 및 프로젝트 사용자 구성</a></p>
+<hr />
+<h2 id="16-container-database-data">16. Container 운영과 Database Data<a class="headerlink" href="#16-container-database-data" title="Permanent link">&para;</a></h2>
+<h3 id="161-container">16.1 Container 중지<a class="headerlink" href="#161-container" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="n">docker</span> <span class="n">stop</span> <span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<h3 id="162-container">16.2 Container 다시 시작<a class="headerlink" href="#162-container" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="n">docker</span> <span class="nb">start </span><span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<p>로그:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="n">docker</span> <span class="n">logs</span> <span class="o">-f</span> <span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<p>Named Volume을 유지하므로 Stop / Start에서는 Database Data가 유지된다.</p>
+<h3 id="163-container">16.3 Container만 삭제<a class="headerlink" href="#163-container" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="n">docker</span> <span class="nb">rm </span><span class="o">-f</span> <span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<p>Volume 확인:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="n">docker</span> <span class="n">volume</span> <span class="nb">ls</span>
+</span></code></pre></div>
+<p>다음 Volume이 남아 있다면 Database Data는 별도로 보관된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>microserver-oracle-data
+</span></code></pre></div>
+<h3 id="164-database">16.4 Database 완전 초기화<a class="headerlink" href="#164-database" title="Permanent link">&para;</a></h3>
+<div class="admonition danger">
+<p class="admonition-title">Database Data 전체 삭제</p>
+<p>다음 절차는 현재 로컬 Oracle Database Data 전체를 삭제한다.</p>
+</div>
+<p>Container 제거:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="n">docker</span> <span class="nb">rm </span><span class="o">-f</span> <span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<p>Volume 제거:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="n">docker</span> <span class="n">volume</span> <span class="nb">rm </span><span class="n">microserver-oracle-data</span>
+</span></code></pre></div>
+<p>새 Volume:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="n">docker</span> <span class="n">volume</span> <span class="n">create</span> <span class="n">microserver-oracle-data</span>
+</span></code></pre></div>
+<p>핵심:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Container 삭제
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>≠
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>Database Data 삭제
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>
+</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a>Named Volume 삭제
+</span><span id="__span-45-6"><a id="__codelineno-45-6" name="__codelineno-45-6" href="#__codelineno-45-6"></a>=
+</span><span id="__span-45-7"><a id="__codelineno-45-7" name="__codelineno-45-7" href="#__codelineno-45-7"></a>Database Data 삭제
+</span></code></pre></div>
+<hr />
+<h2 id="17-password-volume">17. Password 변경과 기존 Volume<a class="headerlink" href="#17-password-volume" title="Permanent link">&para;</a></h2>
+<p>다음 상황을 주의한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a>기존 Database Volume 존재
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>        +
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>새 ORACLE_PWD 값
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a>        ↓
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>기존 DB Password가 자동 변경되는 것은 아님
+</span></code></pre></div>
+<p><code>ORACLE_PWD</code>는 Container 최초 Database 구성과 관련된 값이다.</p>
+<p>기존 Volume을 재사용하면서 Shell의 <code>ORACLE_PWD</code>만 변경하면
+실제 Database Password와 현재 환경변수 값이 달라질 수 있다.</p>
+<p>Password 문제가 발생하면 먼저 다음을 결정한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>기존 Database Data를 유지할 것인가?
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>또는
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>Named Volume까지 삭제하고 새 Database로 초기화할 것인가?
+</span></code></pre></div>
+<hr />
+<h2 id="18">18. 자주 발생하는 문제<a class="headerlink" href="#18" title="Permanent link">&para;</a></h2>
+<h3 id="181-oracle-container">18.1 Oracle Container가 생성되지 않음<a class="headerlink" href="#181-oracle-container" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="n">docker</span> <span class="nb">ps </span><span class="n">-a</span>
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="n">docker</span> <span class="n">image</span> <span class="nb">ls</span>
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="n">docker</span> <span class="n">info</span>
+</span></code></pre></div>
+<p>Docker Engine 자체가 정상인지 먼저 확인한다.</p>
+<h3 id="182-container">18.2 Container가 바로 종료됨<a class="headerlink" href="#182-container" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="n">docker</span> <span class="n">logs</span> <span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<p>확인 항목:</p>
+<ul>
+<li>Host Memory</li>
+<li>Disk 여유 공간</li>
+<li>Oracle Image 상태</li>
+<li>Password 설정</li>
+<li>Named Volume 상태</li>
+<li>1521 Port 충돌</li>
+</ul>
+<h3 id="183-1521-port">18.3 1521 Port 충돌<a class="headerlink" href="#183-1521-port" title="Permanent link">&para;</a></h3>
+<p>Windows:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="n">netstat</span> <span class="n">-ano</span> <span class="p">|</span> <span class="n">findstr</span> <span class="p">:</span><span class="n">1521</span>
+</span></code></pre></div>
+<p>macOS:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a>lsof<span class="w"> </span>-i<span class="w"> </span>:1521
+</span></code></pre></div>
+<p>필요하면 Host Port를 변경할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>-p 1522:1521
+</span></code></pre></div>
+<p>이 경우 향후 JDBC URL도 <code>1522</code>를 사용해야 한다.</p>
+<h3 id="184-ora-12514">18.4 <code>ORA-12514</code><a class="headerlink" href="#184-ora-12514" title="Permanent link">&para;</a></h3>
+<p>Service Name을 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a>FREEPDB1
+</span></code></pre></div>
+<p>그리고 Database Ready 상태를 다시 확인한다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="n">docker</span> <span class="n">logs</span> <span class="o">-f</span> <span class="n">microserver-oracle</span>
+</span></code></pre></div>
+<h3 id="185-system-password">18.5 SYSTEM Password가 맞지 않음<a class="headerlink" href="#185-system-password" title="Permanent link">&para;</a></h3>
+<p>기존 Named Volume과 새 <code>ORACLE_PWD</code>의 관계를 확인한다.</p>
+<p>환경변수만 바꾸었다고 기존 Database의 Password가 자동 변경되지는 않는다.</p>
+<hr />
+<h2 id="19-docker-desktop-ui">19. Docker Desktop UI에서 확인<a class="headerlink" href="#19-docker-desktop-ui" title="Permanent link">&para;</a></h2>
+<p>Docker Desktop UI에서도 Oracle Container 상태를 확인할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>Docker Desktop
+</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a>→ Containers
+</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a>→ microserver-oracle
+</span></code></pre></div>
+<p>확인 항목:</p>
+<ul>
+<li>Running / Stopped</li>
+<li>Logs</li>
+<li>Port Mapping</li>
+<li>Container 상세정보</li>
+<li>Resource 사용 상태</li>
+</ul>
+<p>CLI를 기본 기준으로 하고 Docker Desktop UI는 보조 확인 수단으로 사용한다.</p>
+<hr />
+<h2 id="20">20. 보안 주의사항<a class="headerlink" href="#20" title="Permanent link">&para;</a></h2>
+<p>다음 정보는 Git Repository와 공유용 개발환경 Package에 포함하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>SYSTEM Password
+</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>MICROSERVER Password
+</span><span id="__span-56-3"><a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a>Production DB URL
+</span><span id="__span-56-4"><a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a>Production DB User
+</span><span id="__span-56-5"><a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>Production DB Password
+</span><span id="__span-56-6"><a id="__codelineno-56-6" name="__codelineno-56-6" href="#__codelineno-56-6"></a>API Key / Token
+</span></code></pre></div>
+<p>Windows에서는 개발자별 Local Secret을 다음 파일에 분리한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>C:\local-microserver\env\local-env.ps1
+</span></code></pre></div>
+<p>실제 <code>local-env.ps1</code>은 개발환경 배포 Package에서 제외한다.</p>
+<p>Production Credential을 Local Database에 재사용하지 않는다.</p>
+<hr />
+<h2 id="21">21. 완료 기준<a class="headerlink" href="#21" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>flowchart TB
+    DD["Docker Desktop"]
+    --&gt; C["microserver-oracle"]
+    C --&gt; V["microserver-oracle-data"]
+    C --&gt; PDB["FREEPDB1"]
+    HOST["localhost:1521"] --&gt; PDB
+    SYSTEM["SYSTEM"] --&gt; PDB</code></pre>
+<p>완료 기준:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Docker Engine이 정상이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Oracle 공식 Image를 Pull했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Named Volume <code>microserver-oracle-data</code>를 생성했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>microserver-oracle</code> Container가 실행 중이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>DATABASE IS READY TO USE!</code>를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>localhost:1521</code> 접근이 가능하다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>SYSTEM</code>으로 <code>FREEPDB1</code>에 접속할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 현재 <code>CON_NAME</code>이 <code>FREEPDB1</code>이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 프로젝트 Tablespace / User는 별도 문서에서 구성한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 Spring Boot Datasource는 구성하지 않았다.</li>
+</ul>
+<hr />
+<h2 id="22">22. 다음 단계<a class="headerlink" href="#22" title="Permanent link">&para;</a></h2>
+<p>Oracle 기본 설치 및 SYSTEM 접속 검증이 완료되면
+프로젝트 Application Schema를 준비한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>Oracle Database Free 설치
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>        ↓
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>SYSTEM → FREEPDB1 접속 검증          ← 현재 완료
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>        ↓
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>프로젝트 Tablespace 생성
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>        ↓
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>MICROSERVER User 생성
+</span><span id="__span-58-8"><a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a>        ↓
+</span><span id="__span-58-9"><a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a>권한 / Quota 설정
+</span><span id="__span-58-10"><a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a>        ↓
+</span><span id="__span-58-11"><a id="__codelineno-58-11" name="__codelineno-58-11" href="#__codelineno-58-11"></a>MICROSERVER 접속 검증
+</span></code></pre></div>
+<p>다음 문서:</p>
+<p><strong><a href="../oracle_database_schema_setup/">Oracle Tablespace 및 프로젝트 사용자 구성</a></strong></p>
+<hr />
+<h2 id="23">23. 공식 참고 자료<a class="headerlink" href="#23" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.oracle.com/database/free/get-started/">Oracle AI Database Free - Get Started</a></li>
+<li><a href="https://container-registry.oracle.com/">Oracle Container Registry</a></li>
+<li><a href="docker_desktop_setup.md">Docker Desktop 개요 및 공통 환경</a></li>
+<li><a href="oracle_docker_apple_silicon_support.md">Apple Silicon Oracle Docker 지원 및 검증</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

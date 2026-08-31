@@ -1,0 +1,2821 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../oracle_database_free_setup/">
+      
+      
+        <link rel="next" href="../../../03_macos/01_local/project_local_environment_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Oracle Tablespace 및 프로젝트 사용자 구성 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#windows-oracle-tablespace" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Oracle Tablespace 및 프로젝트 사용자 구성
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01_microserver_introduction/01_what_is_microserver/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../01_principles/development_environment_principles/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06_server_devops/01_overview/server_devops_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 및 DevOps 환경
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../01_microserver_introduction/01_what_is_microserver/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발 환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_principles/development_environment_principles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발환경 구성 핵심원칙
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Windows 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Windows 개발환경 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_local/project_local_environment_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 로컬 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_git/git_github_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Git / GitHub 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../03_jdk/jdk_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    JDK 설치 및 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../04_gradle/gradle_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradle 빌드환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05_vscode/vscode_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05_vscode/vscode_user_settings/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06_docker/docker_desktop_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Docker 개발환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_2_8" id="__nav_2_2_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle 개발환경 설치
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_2_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Oracle 개발환경 설치
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../oracle_database_free_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle Database Free 설치 및 접속
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle Tablespace 및 프로젝트 사용자 구성
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Oracle Tablespace 및 프로젝트 사용자 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-system-application-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. SYSTEM과 Application User 역할 분리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-system-freepdb1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. SYSTEM으로 FREEPDB1 접속
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 현재 Tablespace 구성 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-default-permanent-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Default Permanent Tablespace 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-oracle-managed-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Oracle Managed Files 설정 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-datafile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 기존 Datafile 경로 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 프로젝트 Tablespace 생성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 프로젝트 Tablespace 생성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 설정 의미
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 생성 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-microserver-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 새 MICROSERVER User 생성
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 기본 개발 권한 부여
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-microserver-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 기존에 MICROSERVER User를 먼저 만든 경우
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-ora-00959-tablespace-users-does-not-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. ORA-00959: tablespace 'USERS' does not exist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. User 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-system-privilege" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. System Privilege 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-tablespace-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Tablespace Quota 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-microserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. MICROSERVER 계정 접속 검증
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. 현재 단계에서 업무 Object는 만들지 않음
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-tablespace-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Tablespace와 User 관계 이해
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-docker-named-volume-datafile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. Docker Named Volume과 Datafile 관계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. 사용자 재구성 시 주의사항
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="20. 사용자 재구성 시 주의사항">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#201-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20.1 User만 삭제
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20.2 Tablespace 삭제
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. 보안 및 운영 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. 최종 검증
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. 체크리스트
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="23. 체크리스트">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-pdb-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23.1 PDB / Tablespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23.2 User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23.3 접속 검증
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        24. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25. 관련 문서
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../03_macos/01_local/project_local_environment_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    macOS 개발환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../99_reference/development_device/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    (참고)개발 장비 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../../06_server_devops/01_overview/server_devops_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 및 DevOps 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 문서 목적
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-system-application-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. SYSTEM과 Application User 역할 분리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-system-freepdb1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. SYSTEM으로 FREEPDB1 접속
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 현재 Tablespace 구성 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-default-permanent-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Default Permanent Tablespace 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-oracle-managed-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Oracle Managed Files 설정 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-datafile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 기존 Datafile 경로 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 프로젝트 Tablespace 생성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 프로젝트 Tablespace 생성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 설정 의미
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 생성 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-microserver-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 새 MICROSERVER User 생성
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 기본 개발 권한 부여
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-microserver-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. 기존에 MICROSERVER User를 먼저 만든 경우
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-ora-00959-tablespace-users-does-not-exist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. ORA-00959: tablespace 'USERS' does not exist
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. User 상태 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-system-privilege" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14. System Privilege 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-tablespace-quota" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15. Tablespace Quota 확인
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-microserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        16. MICROSERVER 계정 접속 검증
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-object" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17. 현재 단계에서 업무 Object는 만들지 않음
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-tablespace-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        18. Tablespace와 User 관계 이해
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-docker-named-volume-datafile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19. Docker Named Volume과 Datafile 관계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20. 사용자 재구성 시 주의사항
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="20. 사용자 재구성 시 주의사항">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#201-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20.1 User만 삭제
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#202-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        20.2 Tablespace 삭제
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21. 보안 및 운영 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        22. 최종 검증
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23. 체크리스트
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="23. 체크리스트">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#231-pdb-tablespace" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23.1 PDB / Tablespace
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#232-user" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23.2 User
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#233" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        23.3 접속 검증
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        24. 다음 단계
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25. 관련 문서
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="windows-oracle-tablespace">Windows Oracle Tablespace 및 프로젝트 사용자 구성<a class="headerlink" href="#windows-oracle-tablespace" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>본 문서는 Docker 기반 Oracle AI Database Free의 기본 설치와 <code>SYSTEM</code> 계정 접속이 완료된 이후,
+MicroServer Application에서 사용할 <strong>전용 Tablespace와 프로젝트 Schema User</strong>를 구성하는 절차를 설명한다.</p>
+<p>선행 문서:</p>
+<p>→ <a href="../oracle_database_free_setup/">Oracle Database Free 설치 및 접속</a></p>
+<p>현재 문서에서는 다음을 구성한다.</p>
+<ul>
+<li>현재 PDB가 <code>FREEPDB1</code>인지 재확인</li>
+<li>현재 Tablespace 구성 확인</li>
+<li>Default Permanent Tablespace 확인</li>
+<li>Oracle Datafile 경로 확인</li>
+<li><code>MICROSERVER_DATA</code> Tablespace 생성</li>
+<li><code>MICROSERVER</code> User 생성</li>
+<li>Default / Temporary Tablespace 지정</li>
+<li>Tablespace Quota 설정</li>
+<li>Application 개발에 필요한 기본 System Privilege 부여</li>
+<li>사용자 상태와 권한 확인</li>
+<li><code>MICROSERVER</code> 계정 실제 접속 검증</li>
+<li>기존에 User를 먼저 생성한 경우의 보정 절차</li>
+<li><code>ORA-00959: tablespace 'USERS' does not exist</code> 대응</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">SQL*Plus 실행 SQL은 한 줄 기준</p>
+<p>SQL<em>Plus에서 여러 줄 복사/붙여넣기가 불편할 수 있으므로
+실제 실행하는 SQL은 가능한 한 </em><em>한 줄 형태</em>*로 제공한다.</p>
+</div>
+<hr />
+<h2 id="2-system-application-user">2. SYSTEM과 Application User 역할 분리<a class="headerlink" href="#2-system-application-user" title="Permanent link">&para;</a></h2>
+<p>Application이 <code>SYSTEM</code> 계정으로 업무 Table을 생성하거나 SQL을 실행하는 방식은 사용하지 않는다.</p>
+<p>역할:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>SYSTEM
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>→ Database 관리
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>→ Tablespace 생성
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>→ 프로젝트 User / Schema 준비
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>MICROSERVER
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>→ Application 개발용 Schema
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>→ Table / Sequence / View / Procedure 등 업무 Object 소유
+</span></code></pre></div>
+<pre class="mermaid"><code>flowchart TD
+    SYS["SYSTEM"]
+    --&gt; TS["MICROSERVER_DATA Tablespace"]
+    SYS --&gt; USER["MICROSERVER User"]
+    TS --&gt; USER
+    USER --&gt; OBJ["Application Schema Objects"]</code></pre>
+<div class="admonition warning">
+<p class="admonition-title">Application User에 DBA Role을 습관적으로 부여하지 않음</p>
+<p>Local 개발환경이라는 이유만으로 <code>MICROSERVER</code> User에 <code>DBA</code> Role을 부여하지 않는다.</p>
+<p>필요한 권한만 명시적으로 부여한다.</p>
+</div>
+<hr />
+<h2 id="3-system-freepdb1">3. SYSTEM으로 <code>FREEPDB1</code> 접속<a class="headerlink" href="#3-system-freepdb1" title="Permanent link">&para;</a></h2>
+<p>Windows PowerShell:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">docker</span> <span class="n">exec</span> <span class="n">-it</span> <span class="n">microserver-oracle</span> <span class="n">sqlplus</span> <span class="s2">&quot;system/</span><span class="p">$(</span><span class="nv">$env:ORACLE_PWD</span><span class="p">)</span><span class="s2">@FREEPDB1&quot;</span>
+</span></code></pre></div>
+<p>정상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>SQL&gt;
+</span></code></pre></div>
+<p>현재 PDB 확인:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">sys_context</span><span class="p">(</span><span class="s1">&#39;USERENV&#39;</span><span class="p">,</span><span class="s1">&#39;CON_NAME&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">container_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span>
+</span></code></pre></div>
+<p>정상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>FREEPDB1
+</span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">반드시 FREEPDB1에서 작업</p>
+<p>프로젝트 Local User와 Tablespace 구성은 <code>FREEPDB1</code>에 접속한 상태에서 진행한다.</p>
+<p><code>CDB$ROOT</code>에 잘못 생성하지 않도록 먼저 <code>CON_NAME</code>을 확인한다.</p>
+</div>
+<hr />
+<h2 id="4-tablespace">4. 현재 Tablespace 구성 확인<a class="headerlink" href="#4-tablespace" title="Permanent link">&para;</a></h2>
+<p>먼저 현재 <code>FREEPDB1</code>에 어떤 Tablespace가 존재하는지 확인한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">,</span><span class="n">contents</span><span class="p">,</span><span class="n">status</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_tablespaces</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">;</span>
+</span></code></pre></div>
+<p>현재 MicroServer 검증 환경에서는 다음과 같은 기본 구성이 확인되었다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>SYSAUX     PERMANENT   ONLINE
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>SYSTEM     PERMANENT   ONLINE
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>TEMP       TEMPORARY   ONLINE
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>UNDOTBS1   UNDO        ONLINE
+</span></code></pre></div>
+<p>즉 현재 검증한 Oracle Free 환경에는 일반적인 Application용 <code>USERS</code> Tablespace가 존재하지 않았다.</p>
+<div class="admonition note">
+<p class="admonition-title">Oracle 환경마다 기본 Tablespace 구성은 다를 수 있음</p>
+<p>다른 Oracle Version, Image 또는 기존 Database에서는 <code>USERS</code> Tablespace가 존재할 수도 있다.</p>
+<p>따라서 <code>USERS</code>가 당연히 존재한다고 가정하지 말고 실제 환경을 조회한 뒤 구성한다.</p>
+</div>
+<hr />
+<h2 id="5-default-permanent-tablespace">5. Default Permanent Tablespace 확인<a class="headerlink" href="#5-default-permanent-tablespace" title="Permanent link">&para;</a></h2>
+<p>현재 PDB의 Default Permanent Tablespace를 확인한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">property_name</span><span class="p">,</span><span class="n">property_value</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">database_properties</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">property_name</span><span class="o">=</span><span class="s1">&#39;DEFAULT_PERMANENT_TABLESPACE&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>현재 검증 환경의 결과:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>DEFAULT_PERMANENT_TABLESPACE
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>SYSTEM
+</span></code></pre></div>
+<p>이 상태에서 다음과 같이 Tablespace를 지정하지 않고 User를 만들면:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="ss">&quot;&lt;local-password&gt;&quot;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>해당 User의 Default Tablespace가 <code>SYSTEM</code>으로 지정될 수 있다.</p>
+<p>이는 Application Schema 운영 구조로 적절하지 않다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>SYSTEM
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>→ Oracle System 관리 영역
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>MICROSERVER_DATA
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>→ MicroServer Application Data 영역
+</span></code></pre></div>
+<p>따라서 프로젝트용 Tablespace를 별도로 생성한다.</p>
+<hr />
+<h2 id="6-oracle-managed-files">6. Oracle Managed Files 설정 확인<a class="headerlink" href="#6-oracle-managed-files" title="Permanent link">&para;</a></h2>
+<p>Oracle이 Datafile 경로를 자동으로 관리하는지 확인한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">SHOW</span><span class="w"> </span><span class="k">PARAMETER</span><span class="w"> </span><span class="n">db_create_file_dest</span><span class="p">;</span>
+</span></code></pre></div>
+<p>현재 검증 환경에서는 <code>VALUE</code>가 비어 있었다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>db_create_file_dest    string
+</span></code></pre></div>
+<p>즉 현재 환경은 <code>CREATE TABLESPACE</code> 시 Datafile 위치를 자동으로 결정하도록
+<code>db_create_file_dest</code>가 설정되어 있지 않다.</p>
+<p>따라서 기존 Datafile의 실제 Directory를 확인하고
+동일한 PDB Data Directory 아래에 프로젝트 Datafile을 명시적으로 생성한다.</p>
+<hr />
+<h2 id="7-datafile">7. 기존 Datafile 경로 확인<a class="headerlink" href="#7-datafile" title="Permanent link">&para;</a></h2>
+<p>다음 SQL로 실제 Datafile 경로를 확인한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">,</span><span class="n">file_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_data_files</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">;</span>
+</span></code></pre></div>
+<p>현재 MicroServer 검증 환경에서는 다음 경로가 확인되었다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>SYSAUX
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>/opt/oracle/oradata/FREE/FREEPDB1/sysaux01.dbf
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>SYSTEM
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>/opt/oracle/oradata/FREE/FREEPDB1/system01.dbf
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>UNDOTBS1
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>/opt/oracle/oradata/FREE/FREEPDB1/undotbs01.dbf
+</span></code></pre></div>
+<p>따라서 PDB Datafile Directory는 다음과 같다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>/opt/oracle/oradata/FREE/FREEPDB1/
+</span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">Datafile 경로는 실제 조회 결과를 기준으로 사용</p>
+<p>다른 Image나 Version에서는 경로가 다를 수 있다.</p>
+<p>가이드의 경로를 무조건 복사하지 말고 먼저 <code>dba_data_files</code> 결과를 확인한다.</p>
+</div>
+<hr />
+<h2 id="8-tablespace">8. 프로젝트 Tablespace 생성<a class="headerlink" href="#8-tablespace" title="Permanent link">&para;</a></h2>
+<p>MicroServer Application용 Tablespace 이름은 다음을 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>MICROSERVER_DATA
+</span></code></pre></div>
+<p>Datafile:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>/opt/oracle/oradata/FREE/FREEPDB1/microserver_data01.dbf
+</span></code></pre></div>
+<p>생성 SQL:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">MICROSERVER_DATA</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="s1">&#39;/opt/oracle/oradata/FREE/FREEPDB1/microserver_data01.dbf&#39;</span><span class="w"> </span><span class="k">SIZE</span><span class="w"> </span><span class="mi">100</span><span class="n">M</span><span class="w"> </span><span class="n">AUTOEXTEND</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">NEXT</span><span class="w"> </span><span class="mi">100</span><span class="n">M</span><span class="w"> </span><span class="n">MAXSIZE</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="p">;</span>
+</span></code></pre></div>
+<p>정상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>Tablespace created.
+</span></code></pre></div>
+<h3 id="81">8.1 설정 의미<a class="headerlink" href="#81" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>설정</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>MICROSERVER_DATA</code></td>
+<td>프로젝트 전용 Tablespace</td>
+</tr>
+<tr>
+<td><code>SIZE 100M</code></td>
+<td>최초 Datafile 크기</td>
+</tr>
+<tr>
+<td><code>AUTOEXTEND ON</code></td>
+<td>공간 부족 시 자동 확장</td>
+</tr>
+<tr>
+<td><code>NEXT 100M</code></td>
+<td>한 번 확장할 때 증가 단위</td>
+</tr>
+<tr>
+<td><code>MAXSIZE UNLIMITED</code></td>
+<td>Oracle이 허용하는 범위에서 자동 확장</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Local 개발환경 기준</p>
+<p>현재 크기 정책은 Local 개발 편의를 위한 기본값이다.</p>
+<p>운영 DB의 Tablespace Size, Autoextend, Maxsize 정책은
+실제 운영 Database 관리 기준에 따라 별도로 설계한다.</p>
+</div>
+<h3 id="82">8.2 생성 확인<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">,</span><span class="n">contents</span><span class="p">,</span><span class="n">status</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_tablespaces</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">tablespace_name</span><span class="o">=</span><span class="s1">&#39;MICROSERVER_DATA&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>정상 예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>MICROSERVER_DATA   PERMANENT   ONLINE
+</span></code></pre></div>
+<p>Datafile 확인:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">,</span><span class="n">file_name</span><span class="p">,</span><span class="n">bytes</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">size_mb</span><span class="p">,</span><span class="n">autoextensible</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_data_files</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">tablespace_name</span><span class="o">=</span><span class="s1">&#39;MICROSERVER_DATA&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="9-microserver-user">9. 새 <code>MICROSERVER</code> User 생성<a class="headerlink" href="#9-microserver-user" title="Permanent link">&para;</a></h2>
+<p>새 환경에서는 <strong>Tablespace를 먼저 생성한 뒤 User를 생성</strong>한다.</p>
+<p>권장 생성 SQL:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="ss">&quot;&lt;local-password&gt;&quot;</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">MICROSERVER_DATA</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">TEMP</span><span class="w"> </span><span class="n">QUOTA</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">MICROSERVER_DATA</span><span class="p">;</span>
+</span></code></pre></div>
+<p>이 SQL은 다음을 한 번에 지정한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>User                  MICROSERVER
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>Default Tablespace    MICROSERVER_DATA
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>Temporary Tablespace  TEMP
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>Quota                  UNLIMITED on MICROSERVER_DATA
+</span></code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">실제 Password를 문서나 Git에 기록하지 않음</p>
+<p><code>&lt;local-password&gt;</code>는 실제 개발자 Local Password로 대체한다.</p>
+<p>Production Credential을 Local DB에 재사용하지 않는다.</p>
+</div>
+<hr />
+<h2 id="10">10. 기본 개발 권한 부여<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<p>Application 개발에 필요한 기본 System Privilege를 명시적으로 부여한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">SESSION</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="n">SEQUENCE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">VIEW</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">GRANT</span><span class="w"> </span><span class="k">CREATE</span><span class="w"> </span><span class="k">PROCEDURE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="p">;</span>
+</span></code></pre></div>
+<p>현재 단계에서는 다음과 같은 광범위 권한을 기본으로 부여하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>DBA
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>RESOURCE
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>UNLIMITED TABLESPACE
+</span></code></pre></div>
+<p><code>MICROSERVER_DATA</code>에 대해서만 필요한 Quota를 부여하는 구조를 사용한다.</p>
+<hr />
+<h2 id="11-microserver-user">11. 기존에 <code>MICROSERVER</code> User를 먼저 만든 경우<a class="headerlink" href="#11-microserver-user" title="Permanent link">&para;</a></h2>
+<p>이미 다음과 같이 User를 생성했다면:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="n">IDENTIFIED</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="ss">&quot;&lt;local-password&gt;&quot;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>현재 검증 환경에서는 Default Permanent Tablespace가 <code>SYSTEM</code>이므로
+<code>MICROSERVER</code>의 Default Tablespace도 <code>SYSTEM</code>으로 지정되었을 수 있다.</p>
+<p>먼저 확인:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="n">account_status</span><span class="p">,</span><span class="n">default_tablespace</span><span class="p">,</span><span class="n">temporary_tablespace</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;MICROSERVER&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>MICROSERVER   OPEN   SYSTEM   TEMP
+</span></code></pre></div>
+<p>이 경우 User를 삭제하고 다시 만들 필요는 없다.</p>
+<p><code>MICROSERVER_DATA</code> Tablespace를 생성한 뒤 다음과 같이 변경한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">MICROSERVER_DATA</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">TEMP</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Quota 설정:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="n">QUOTA</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">MICROSERVER_DATA</span><span class="p">;</span>
+</span></code></pre></div>
+<p>권한이 아직 없다면 기본 개발 권한을 부여한다.</p>
+<hr />
+<h2 id="12-ora-00959-tablespace-users-does-not-exist">12. <code>ORA-00959: tablespace 'USERS' does not exist</code><a class="headerlink" href="#12-ora-00959-tablespace-users-does-not-exist" title="Permanent link">&para;</a></h2>
+<p>다음 SQL 실행 시:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="n">QUOTA</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">USERS</span><span class="p">;</span>
+</span></code></pre></div>
+<p>다음 오류가 발생할 수 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>ORA-00959: tablespace &#39;USERS&#39; does not exist
+</span></code></pre></div>
+<p>의미:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>현재 접속한 PDB에 USERS Tablespace가 존재하지 않음
+</span></code></pre></div>
+<p>확인:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">,</span><span class="n">contents</span><span class="p">,</span><span class="n">status</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_tablespaces</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">;</span>
+</span></code></pre></div>
+<p>현재 MicroServer 검증 환경에서는 <code>USERS</code>가 존재하지 않았고,
+Default Permanent Tablespace가 <code>SYSTEM</code>이었다.</p>
+<p>따라서 본 프로젝트에서는 <code>USERS</code>를 새로 전제로 사용하지 않고
+명시적인 프로젝트 전용 Tablespace를 구성한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>USERS
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>→ 사용하지 않음
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>MICROSERVER_DATA
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>→ MicroServer Application 전용
+</span></code></pre></div>
+<p>해결:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">MICROSERVER_DATA</span><span class="w"> </span><span class="n">DATAFILE</span><span class="w"> </span><span class="s1">&#39;/opt/oracle/oradata/FREE/FREEPDB1/microserver_data01.dbf&#39;</span><span class="w"> </span><span class="k">SIZE</span><span class="w"> </span><span class="mi">100</span><span class="n">M</span><span class="w"> </span><span class="n">AUTOEXTEND</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="k">NEXT</span><span class="w"> </span><span class="mi">100</span><span class="n">M</span><span class="w"> </span><span class="n">MAXSIZE</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="p">;</span>
+</span></code></pre></div>
+<p>기존 User 변경:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="k">DEFAULT</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">MICROSERVER_DATA</span><span class="w"> </span><span class="k">TEMPORARY</span><span class="w"> </span><span class="n">TABLESPACE</span><span class="w"> </span><span class="n">TEMP</span><span class="p">;</span>
+</span></code></pre></div>
+<p>Quota:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="n">QUOTA</span><span class="w"> </span><span class="n">UNLIMITED</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">MICROSERVER_DATA</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="13-user">13. User 상태 확인<a class="headerlink" href="#13-user" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="n">account_status</span><span class="p">,</span><span class="n">default_tablespace</span><span class="p">,</span><span class="n">temporary_tablespace</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;MICROSERVER&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p>정상 기준:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>USERNAME              MICROSERVER
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>ACCOUNT_STATUS         OPEN
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>DEFAULT_TABLESPACE     MICROSERVER_DATA
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a>TEMPORARY_TABLESPACE   TEMP
+</span></code></pre></div>
+<hr />
+<h2 id="14-system-privilege">14. System Privilege 확인<a class="headerlink" href="#14-system-privilege" title="Permanent link">&para;</a></h2>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">privilege</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_sys_privs</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">grantee</span><span class="o">=</span><span class="s1">&#39;MICROSERVER&#39;</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">privilege</span><span class="p">;</span>
+</span></code></pre></div>
+<p>예상 권한:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>CREATE PROCEDURE
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>CREATE SEQUENCE
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a>CREATE SESSION
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a>CREATE TABLE
+</span><span id="__span-47-5"><a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a>CREATE VIEW
+</span></code></pre></div>
+<hr />
+<h2 id="15-tablespace-quota">15. Tablespace Quota 확인<a class="headerlink" href="#15-tablespace-quota" title="Permanent link">&para;</a></h2>
+<p>Quota를 확인한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">,</span><span class="n">username</span><span class="p">,</span><span class="n">bytes</span><span class="p">,</span><span class="n">max_bytes</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_ts_quotas</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;MICROSERVER&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<p><code>MAX_BYTES = -1</code> 등으로 표시되면 Unlimited Quota로 관리되는 환경일 수 있다.</p>
+<p>핵심 확인 대상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>USERNAME         MICROSERVER
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>TABLESPACE_NAME  MICROSERVER_DATA
+</span></code></pre></div>
+<hr />
+<h2 id="16-microserver">16. MICROSERVER 계정 접속 검증<a class="headerlink" href="#16-microserver" title="Permanent link">&para;</a></h2>
+<p>SYSTEM Session을 종료한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="n">exit</span>
+</span></code></pre></div>
+<p>Windows PowerShell에서 <code>MICROSERVER</code> 계정으로 접속한다.</p>
+<p>Password를 직접 Command History에 남기는 방식은 피하는 것이 좋지만,
+로컬 환경에서 단순 접속 검증을 수행할 경우 SQL*Plus Prompt 방식으로 접속할 수 있다.</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="n">docker</span> <span class="n">exec</span> <span class="n">-it</span> <span class="n">microserver-oracle</span> <span class="n">sqlplus</span> <span class="n">MICROSERVER</span><span class="nv">@FREEPDB1</span>
+</span></code></pre></div>
+<p>SQL*Plus가 Password를 요청하면 개발자 Local Password를 입력한다.</p>
+<p>정상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a>SQL&gt;
+</span></code></pre></div>
+<p>현재 User 확인:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span>
+</span></code></pre></div>
+<p>정상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a>MICROSERVER
+</span></code></pre></div>
+<p>현재 PDB 확인:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">sys_context</span><span class="p">(</span><span class="s1">&#39;USERENV&#39;</span><span class="p">,</span><span class="s1">&#39;CON_NAME&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">container_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span>
+</span></code></pre></div>
+<p>정상:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>FREEPDB1
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Password를 Command Line에 직접 넣지 않는 이유</p>
+<p>Command Line에 Password를 직접 작성하면 Terminal History나 Process 정보에 노출될 수 있다.</p>
+<p>가능하면 SQL*Plus Password Prompt를 이용한다.</p>
+</div>
+<hr />
+<h2 id="17-object">17. 현재 단계에서 업무 Object는 만들지 않음<a class="headerlink" href="#17-object" title="Permanent link">&para;</a></h2>
+<p>현재 단계의 완료 기준은 다음까지이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>FREEPDB1
+</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>    ↓
+</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>MICROSERVER_DATA
+</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>    ↓
+</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>MICROSERVER
+</span></code></pre></div>
+<p>다음 Object는 Spring Boot 프로젝트와 Database Schema 설계 이후 생성한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-58-1"><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>Table
+</span><span id="__span-58-2"><a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>Sequence
+</span><span id="__span-58-3"><a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>Index
+</span><span id="__span-58-4"><a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a>View
+</span><span id="__span-58-5"><a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>Procedure
+</span><span id="__span-58-6"><a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>Seed Data
+</span><span id="__span-58-7"><a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>Migration History
+</span></code></pre></div>
+<p>환경 확인을 위해 임의의 업무 Table을 미리 만들지 않는다.</p>
+<hr />
+<h2 id="18-tablespace-user">18. Tablespace와 User 관계 이해<a class="headerlink" href="#18-tablespace-user" title="Permanent link">&para;</a></h2>
+<p>Oracle에서 <strong>User 자체가 Tablespace 안에 저장되는 것은 아니다.</strong></p>
+<p><code>CREATE USER</code>는 Database Dictionary에 사용자 / Schema 정보를 등록한다.</p>
+<p>실제 저장공간을 사용하는 것은 이후 User가 생성하는 Segment이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-59-1"><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>MICROSERVER User / Schema
+</span><span id="__span-59-2"><a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>        ↓
+</span><span id="__span-59-3"><a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a>CREATE TABLE ...
+</span><span id="__span-59-4"><a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a>CREATE INDEX ...
+</span><span id="__span-59-5"><a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a>        ↓
+</span><span id="__span-59-6"><a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a>Segment 생성
+</span><span id="__span-59-7"><a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a>        ↓
+</span><span id="__span-59-8"><a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a>MICROSERVER_DATA Tablespace
+</span><span id="__span-59-9"><a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a>        ↓
+</span><span id="__span-59-10"><a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a>microserver_data01.dbf
+</span></code></pre></div>
+<p>Default Tablespace는 Object 생성 시 별도 Tablespace를 지정하지 않았을 때
+기본적으로 사용할 저장공간을 결정한다.</p>
+<p>Temporary Tablespace <code>TEMP</code>는 Sort, Join 등 임시 작업에 사용된다.</p>
+<hr />
+<h2 id="19-docker-named-volume-datafile">19. Docker Named Volume과 Datafile 관계<a class="headerlink" href="#19-docker-named-volume-datafile" title="Permanent link">&para;</a></h2>
+<p>Oracle Container는 다음 Named Volume을 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-60-1"><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>microserver-oracle-data
+</span></code></pre></div>
+<p>Mount:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-61-1"><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>microserver-oracle-data
+</span><span id="__span-61-2"><a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>        ↓
+</span><span id="__span-61-3"><a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a>/opt/oracle/oradata
+</span><span id="__span-61-4"><a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>        ↓
+</span><span id="__span-61-5"><a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>FREE
+</span><span id="__span-61-6"><a id="__codelineno-61-6" name="__codelineno-61-6" href="#__codelineno-61-6"></a>└─ FREEPDB1
+</span><span id="__span-61-7"><a id="__codelineno-61-7" name="__codelineno-61-7" href="#__codelineno-61-7"></a>   ├─ system01.dbf
+</span><span id="__span-61-8"><a id="__codelineno-61-8" name="__codelineno-61-8" href="#__codelineno-61-8"></a>   ├─ sysaux01.dbf
+</span><span id="__span-61-9"><a id="__codelineno-61-9" name="__codelineno-61-9" href="#__codelineno-61-9"></a>   ├─ undotbs01.dbf
+</span><span id="__span-61-10"><a id="__codelineno-61-10" name="__codelineno-61-10" href="#__codelineno-61-10"></a>   └─ microserver_data01.dbf
+</span></code></pre></div>
+<p>따라서 <code>MICROSERVER_DATA</code>의 Datafile 역시 Named Volume 안에 저장된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-62-1"><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>Container 삭제
+</span><span id="__span-62-2"><a id="__codelineno-62-2" name="__codelineno-62-2" href="#__codelineno-62-2"></a>→ Volume 유지
+</span><span id="__span-62-3"><a id="__codelineno-62-3" name="__codelineno-62-3" href="#__codelineno-62-3"></a>→ Datafile 유지 가능
+</span><span id="__span-62-4"><a id="__codelineno-62-4" name="__codelineno-62-4" href="#__codelineno-62-4"></a>
+</span><span id="__span-62-5"><a id="__codelineno-62-5" name="__codelineno-62-5" href="#__codelineno-62-5"></a>Volume 삭제
+</span><span id="__span-62-6"><a id="__codelineno-62-6" name="__codelineno-62-6" href="#__codelineno-62-6"></a>→ Oracle Database Data 전체 삭제
+</span></code></pre></div>
+<hr />
+<h2 id="20">20. 사용자 재구성 시 주의사항<a class="headerlink" href="#20" title="Permanent link">&para;</a></h2>
+<h3 id="201-user">20.1 User만 삭제<a class="headerlink" href="#201-user" title="Permanent link">&para;</a></h3>
+<p>향후 User를 재구성해야 하는 경우 <code>DROP USER</code>는 신중하게 사용한다.</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-63-1"><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a><span class="k">DROP</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="n">MICROSERVER</span><span class="w"> </span><span class="k">CASCADE</span><span class="p">;</span>
+</span></code></pre></div>
+<p><code>CASCADE</code>는 해당 User가 소유한 Schema Object를 함께 삭제한다.</p>
+<p>현재 실제 업무 Object가 존재한다면 Data 손실이 발생할 수 있다.</p>
+<h3 id="202-tablespace">20.2 Tablespace 삭제<a class="headerlink" href="#202-tablespace" title="Permanent link">&para;</a></h3>
+<p>Tablespace 삭제는 더욱 주의한다.</p>
+<p>현재 문서에서는 일반 개발 절차로 <code>DROP TABLESPACE</code>를 수행하지 않는다.</p>
+<p>Database를 완전히 초기화하려는 목적이라면
+개별 Object를 수동으로 정리하기보다 Local Oracle Named Volume 전체 초기화 여부를 먼저 검토한다.</p>
+<hr />
+<h2 id="21">21. 보안 및 운영 원칙<a class="headerlink" href="#21" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>SYSTEM</code> 계정은 Application에서 사용하지 않는다.</li>
+<li>Application은 <code>MICROSERVER</code> 계정을 사용한다.</li>
+<li>실제 Password를 Markdown / Git에 기록하지 않는다.</li>
+<li>Production DB 계정과 Password를 Local Database에 재사용하지 않는다.</li>
+<li>Local 환경이라고 <code>DBA</code> Role을 무조건 부여하지 않는다.</li>
+<li>Tablespace와 Quota를 명시적으로 지정한다.</li>
+<li>운영환경의 Tablespace Size 정책은 DBA / 운영 기준을 따른다.</li>
+</ul>
+<hr />
+<h2 id="22">22. 최종 검증<a class="headerlink" href="#22" title="Permanent link">&para;</a></h2>
+<p>SYSTEM으로 확인:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-64-1"><a id="__codelineno-64-1" name="__codelineno-64-1" href="#__codelineno-64-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">tablespace_name</span><span class="p">,</span><span class="n">contents</span><span class="p">,</span><span class="n">status</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_tablespaces</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">tablespace_name</span><span class="o">=</span><span class="s1">&#39;MICROSERVER_DATA&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-65-1"><a id="__codelineno-65-1" name="__codelineno-65-1" href="#__codelineno-65-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="n">account_status</span><span class="p">,</span><span class="n">default_tablespace</span><span class="p">,</span><span class="n">temporary_tablespace</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;MICROSERVER&#39;</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-66-1"><a id="__codelineno-66-1" name="__codelineno-66-1" href="#__codelineno-66-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">privilege</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dba_sys_privs</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">grantee</span><span class="o">=</span><span class="s1">&#39;MICROSERVER&#39;</span><span class="w"> </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">privilege</span><span class="p">;</span>
+</span></code></pre></div>
+<p>MICROSERVER로 확인:</p>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-67-1"><a id="__codelineno-67-1" name="__codelineno-67-1" href="#__codelineno-67-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="k">USER</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span>
+</span></code></pre></div>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-68-1"><a id="__codelineno-68-1" name="__codelineno-68-1" href="#__codelineno-68-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">sys_context</span><span class="p">(</span><span class="s1">&#39;USERENV&#39;</span><span class="p">,</span><span class="s1">&#39;CON_NAME&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">container_name</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">dual</span><span class="p">;</span>
+</span></code></pre></div>
+<p>최종 목표:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-69-1"><a id="__codelineno-69-1" name="__codelineno-69-1" href="#__codelineno-69-1"></a>FREEPDB1
+</span><span id="__span-69-2"><a id="__codelineno-69-2" name="__codelineno-69-2" href="#__codelineno-69-2"></a>│
+</span><span id="__span-69-3"><a id="__codelineno-69-3" name="__codelineno-69-3" href="#__codelineno-69-3"></a>├─ SYSTEM / SYSAUX / UNDO / TEMP
+</span><span id="__span-69-4"><a id="__codelineno-69-4" name="__codelineno-69-4" href="#__codelineno-69-4"></a>│
+</span><span id="__span-69-5"><a id="__codelineno-69-5" name="__codelineno-69-5" href="#__codelineno-69-5"></a>└─ MICROSERVER_DATA
+</span><span id="__span-69-6"><a id="__codelineno-69-6" name="__codelineno-69-6" href="#__codelineno-69-6"></a>      ↓
+</span><span id="__span-69-7"><a id="__codelineno-69-7" name="__codelineno-69-7" href="#__codelineno-69-7"></a>   MICROSERVER
+</span><span id="__span-69-8"><a id="__codelineno-69-8" name="__codelineno-69-8" href="#__codelineno-69-8"></a>      ↓
+</span><span id="__span-69-9"><a id="__codelineno-69-9" name="__codelineno-69-9" href="#__codelineno-69-9"></a>Application Schema Objects
+</span></code></pre></div>
+<hr />
+<h2 id="23">23. 체크리스트<a class="headerlink" href="#23" title="Permanent link">&para;</a></h2>
+<h3 id="231-pdb-tablespace">23.1 PDB / Tablespace<a class="headerlink" href="#231-pdb-tablespace" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>SYSTEM</code>으로 <code>FREEPDB1</code>에 접속했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>CON_NAME</code>이 <code>FREEPDB1</code>인지 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>dba_tablespaces</code>로 실제 Tablespace 목록을 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Default Permanent Tablespace를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>db_create_file_dest</code> 설정 여부를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>dba_data_files</code>에서 실제 Datafile Directory를 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>MICROSERVER_DATA</code> Tablespace를 생성했다.</li>
+</ul>
+<h3 id="232-user">23.2 User<a class="headerlink" href="#232-user" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>MICROSERVER</code> User를 생성했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Default Tablespace가 <code>MICROSERVER_DATA</code>이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Temporary Tablespace가 <code>TEMP</code>이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>MICROSERVER_DATA</code> Quota가 설정되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 필요한 System Privilege만 부여했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>DBA</code> Role을 부여하지 않았다.</li>
+</ul>
+<h3 id="233">23.3 접속 검증<a class="headerlink" href="#233" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>MICROSERVER@FREEPDB1</code>으로 접속할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>SELECT USER FROM dual;</code> 결과가 <code>MICROSERVER</code>이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 현재 <code>CON_NAME</code>이 <code>FREEPDB1</code>이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 아직 실제 업무 Table / Sequence는 생성하지 않았다.</li>
+</ul>
+<hr />
+<h2 id="24">24. 다음 단계<a class="headerlink" href="#24" title="Permanent link">&para;</a></h2>
+<p>Oracle 프로젝트 Schema 준비가 완료되면
+Spring Boot 프로젝트의 Database 연계 단계에서 다음 내용을 진행한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-70-1"><a id="__codelineno-70-1" name="__codelineno-70-1" href="#__codelineno-70-1"></a>MICROSERVER_DATA / MICROSERVER 완료
+</span><span id="__span-70-2"><a id="__codelineno-70-2" name="__codelineno-70-2" href="#__codelineno-70-2"></a>        ↓
+</span><span id="__span-70-3"><a id="__codelineno-70-3" name="__codelineno-70-3" href="#__codelineno-70-3"></a>Oracle JDBC Driver
+</span><span id="__span-70-4"><a id="__codelineno-70-4" name="__codelineno-70-4" href="#__codelineno-70-4"></a>        ↓
+</span><span id="__span-70-5"><a id="__codelineno-70-5" name="__codelineno-70-5" href="#__codelineno-70-5"></a>Spring Boot Datasource
+</span><span id="__span-70-6"><a id="__codelineno-70-6" name="__codelineno-70-6" href="#__codelineno-70-6"></a>        ↓
+</span><span id="__span-70-7"><a id="__codelineno-70-7" name="__codelineno-70-7" href="#__codelineno-70-7"></a>Local Profile / Secret 연계
+</span><span id="__span-70-8"><a id="__codelineno-70-8" name="__codelineno-70-8" href="#__codelineno-70-8"></a>        ↓
+</span><span id="__span-70-9"><a id="__codelineno-70-9" name="__codelineno-70-9" href="#__codelineno-70-9"></a>Schema / Migration
+</span><span id="__span-70-10"><a id="__codelineno-70-10" name="__codelineno-70-10" href="#__codelineno-70-10"></a>        ↓
+</span><span id="__span-70-11"><a id="__codelineno-70-11" name="__codelineno-70-11" href="#__codelineno-70-11"></a>DAO / Persistence
+</span><span id="__span-70-12"><a id="__codelineno-70-12" name="__codelineno-70-12" href="#__codelineno-70-12"></a>        ↓
+</span><span id="__span-70-13"><a id="__codelineno-70-13" name="__codelineno-70-13" href="#__codelineno-70-13"></a>Service Transaction
+</span><span id="__span-70-14"><a id="__codelineno-70-14" name="__codelineno-70-14" href="#__codelineno-70-14"></a>        ↓
+</span><span id="__span-70-15"><a id="__codelineno-70-15" name="__codelineno-70-15" href="#__codelineno-70-15"></a>Application DB 연결 검증
+</span></code></pre></div>
+<p>현재 단계에서는 아직 Spring Boot Database Object를 만들지 않는다.</p>
+<hr />
+<h2 id="25">25. 관련 문서<a class="headerlink" href="#25" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../oracle_database_free_setup/">Oracle Database Free 설치 및 접속</a></li>
+<li><a href="docker_desktop_setup.md">Docker Desktop 개요 및 공통 환경</a></li>
+<li><a href="docker_desktop_windows_setup.md">Windows Docker Desktop 설치</a></li>
+<li><a href="docker_desktop_macos_setup.md">macOS Docker Desktop 설치</a></li>
+<li><a href="oracle_docker_apple_silicon_support.md">Apple Silicon Oracle Docker 지원 및 검증</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>
