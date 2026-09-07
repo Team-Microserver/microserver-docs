@@ -97,9 +97,9 @@ mkdir -p ~/local-microserver/tools/jdk
 
 ```text
 ~/local-microserver/tools/jdk/
-├─ temurin-17.jdk/
-├─ temurin-21.jdk/
-└─ temurin-25.jdk/
+├─ temurin-17/
+├─ temurin-21/
+└─ temurin-25/
 ```
 
 ---
@@ -112,22 +112,41 @@ mkdir -p ~/local-microserver/tools/jdk
 tar -xzf OpenJDK25U-jdk_*.tar.gz -C ~/local-microserver/tools/jdk
 ```
 
-압축 해제 후 실제 Directory 이름은 Release에 따라 다를 수 있다.
+macOS용 Temurin JDK를 압축 해제하면 Release Version이 포함된 일반 Directory가 생성된다.
 
-필요하면 관리하기 쉬운 이름으로 정리한다.
+예:
 
 ```text
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home.jdk
+jdk-25.0.4.1+1
+```
+
+MicroServer 개발환경에서는 Patch Version이 변경되어도 동일한 경로를 사용할 수 있도록 Directory 이름을 `temurin-25`로 통일한다.
+
+```bash
+cd ~/local-microserver/tools/jdk
+mv jdk-25* temurin-25
+```
+
+위 명령을 실행하면 다음 표준 경로로 정리된다.
+
+```text
+~/local-microserver/tools/jdk/temurin-25
+```
+
+macOS용 JDK는 내부에 `Contents/Home` 구조를 사용하므로 실제 JDK Home은 다음 경로이다.
+
+```text
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
 ---
 
 ## 6. macOS JDK 구조
 
-macOS용 JDK는 일반적으로 `.jdk` Bundle 구조를 사용한다.
+macOS용 JDK는 압축 해제 후 일반 Directory 형태로 관리되며, 내부에는 `Contents/Home` 구조가 있다.
 
 ```text
-temurin-25.jdk
+temurin-25
 └─ Contents
    └─ Home
       ├─ bin
@@ -150,14 +169,14 @@ temurin-25.jdk
     Contents/Home/bin/javac
     ```
 
-JDK Bundle과 실제 JDK Home을 구분한다.
+JDK Directory와 실제 JDK Home을 구분한다.
 
 ```text
-JDK Bundle
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home.jdk
+JDK Directory
+~/local-microserver/tools/jdk/temurin-25
 
 JDK Home
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
 Gradle이나 VS Code에서 JDK Home을 지정해야 할 때는 `Contents/Home`까지 포함한 경로를 사용한다.
@@ -171,13 +190,13 @@ Gradle이나 VS Code에서 JDK Home을 지정해야 할 때는 `Contents/Home`�
 ### 7.1 Java Runtime
 
 ```bash
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home/bin/java -version
+~/local-microserver/tools/jdk/temurin-25/Contents/Home/bin/java -version
 ```
 
 ### 7.2 Java Compiler
 
 ```bash
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home/bin/javac -version
+~/local-microserver/tools/jdk/temurin-25/Contents/Home/bin/javac -version
 ```
 
 정상적인 경우 Java 25 계열 정보가 표시된다.
@@ -218,14 +237,14 @@ JDK 자체가 정상적으로 준비되었는지는 앞에서 설명한 절대 �
 JDK Home:
 
 ```text
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
 확인:
 
 ```bash
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home/bin/java -version
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home/bin/javac -version
+~/local-microserver/tools/jdk/temurin-25/Contents/Home/bin/java -version
+~/local-microserver/tools/jdk/temurin-25/Contents/Home/bin/javac -version
 ```
 
 두 명령이 Java 25 계열로 정상 실행되면 macOS JDK 준비가 완료된 것이다.

@@ -53,6 +53,16 @@ Directory 이름은 가능한 한 표준 구조를 유지한다. 개발자마다
 
 ## 3. 하나의 Root로 관리하는 이유
 
+### 3.1 `~/local-microserver`를 표준 Root로 선택한 이유
+
+Unix/Linux에서는 시스템 공용 Software를 `/usr/local` 또는 `/opt` 아래에 설치하는 것이 일반적이다. 그러나 MicroServer의 로컬 개발환경은 시스템 공용 Runtime이 아니라 **개발자별 개발도구, Workspace, Cache 및 개인 환경설정을 함께 관리하는 사용자 개발환경**이다.
+
+따라서 관리자 권한이 필요한 시스템 영역보다 사용자 Home Directory 아래의 `~/local-microserver`를 표준 Root로 사용한다. 이를 통해 `sudo`나 시스템 전역 설정에 대한 의존을 줄이고, 개발환경 전체를 다른 장비로 복사하거나 복원하기 쉽게 한다.
+
+> Linux 서버의 MicroServer Runtime 설치 경로는 로컬 개발환경과 목적이 다르므로 `/opt/microserver`와 같은 시스템 영역을 별도 기준으로 사용할 수 있다.
+
+### 3.2 하나의 Root로 관리하는 장점
+
 `~/local-microserver`를 개발환경 기준 Root로 사용하면 다음 장점이 있다.
 
 - JDK / Gradle / VS Code Version을 프로젝트 기준으로 통제할 수 있다.
