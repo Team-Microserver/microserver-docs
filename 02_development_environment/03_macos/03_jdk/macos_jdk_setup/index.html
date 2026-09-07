@@ -1840,71 +1840,81 @@ macOS의 프로젝트 로컬 개발환경 Root가 별도로 표준화되면 이 
 </span></code></pre></div>
 <p>여러 JDK Version은 다음과 같이 보관할 수 있다.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~/local-microserver/tools/jdk/
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>├─ temurin-17.jdk/
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>├─ temurin-21.jdk/
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>└─ temurin-25.jdk/
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>├─ temurin-17/
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>├─ temurin-21/
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>└─ temurin-25/
 </span></code></pre></div>
 <hr />
 <h2 id="5-jdk">5. JDK 압축 해제<a class="headerlink" href="#5-jdk" title="Permanent link">&para;</a></h2>
 <p>다운로드한 TAR.GZ 파일을 <code>~/local-microserver/tools/jdk</code>에 압축 해제한다.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>tar<span class="w"> </span>-xzf<span class="w"> </span>OpenJDK25U-jdk_*.tar.gz<span class="w"> </span>-C<span class="w"> </span>~/local-microserver/tools/jdk
 </span></code></pre></div>
-<p>압축 해제 후 실제 Directory 이름은 Release에 따라 다를 수 있다.</p>
-<p>필요하면 관리하기 쉬운 이름으로 정리한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home.jdk
+<p>macOS용 Temurin JDK를 압축 해제하면 Release Version이 포함된 일반 Directory가 생성된다.</p>
+<p>예:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>jdk-25.0.4.1+1
+</span></code></pre></div>
+<p>MicroServer 개발환경에서는 Patch Version이 변경되어도 동일한 경로를 사용할 수 있도록 Directory 이름을 <code>temurin-25</code>로 통일한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nb">cd</span><span class="w"> </span>~/local-microserver/tools/jdk
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>mv<span class="w"> </span>jdk-25*<span class="w"> </span>temurin-25
+</span></code></pre></div>
+<p>위 명령을 실행하면 다음 표준 경로로 정리된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>~/local-microserver/tools/jdk/temurin-25
+</span></code></pre></div>
+<p>macOS용 JDK는 내부에 <code>Contents/Home</code> 구조를 사용하므로 실제 JDK Home은 다음 경로이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
 <hr />
 <h2 id="6-macos-jdk">6. macOS JDK 구조<a class="headerlink" href="#6-macos-jdk" title="Permanent link">&para;</a></h2>
-<p>macOS용 JDK는 일반적으로 <code>.jdk</code> Bundle 구조를 사용한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>temurin-25.jdk
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>└─ Contents
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>   └─ Home
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>      ├─ bin
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>      ├─ conf
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>      ├─ include
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>      ├─ legal
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>      ├─ lib
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>      └─ release
+<p>macOS용 JDK는 압축 해제 후 일반 Directory 형태로 관리되며, 내부에는 <code>Contents/Home</code> 구조가 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>temurin-25
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>└─ Contents
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>   └─ Home
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>      ├─ bin
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>      ├─ conf
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>      ├─ include
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>      ├─ legal
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>      ├─ lib
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>      └─ release
 </span></code></pre></div>
 <div class="admonition note">
 <p class="admonition-title">JDK 25의 <code>jmods</code> Directory</p>
 <p>Temurin JDK 25부터는 <code>jmods</code> Directory가 기본 배포본에 포함되지 않을 수 있다.</p>
 <p>따라서 <code>Contents/Home</code> 아래에 <code>jmods</code>가 없어도 정상적인 JDK 25 배포본일 수 있다.</p>
 <p>JDK 설치 검증에서는 다음 실행파일을 우선 확인한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>Contents/Home/bin/java
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Contents/Home/bin/javac
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>Contents/Home/bin/java
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Contents/Home/bin/javac
 </span></code></pre></div>
 </div>
-<p>JDK Bundle과 실제 JDK Home을 구분한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>JDK Bundle
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home.jdk
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>JDK Home
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+<p>JDK Directory와 실제 JDK Home을 구분한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>JDK Directory
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>~/local-microserver/tools/jdk/temurin-25
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>JDK Home
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
 <p>Gradle이나 VS Code에서 JDK Home을 지정해야 할 때는 <code>Contents/Home</code>까지 포함한 경로를 사용한다.</p>
 <hr />
 <h2 id="7-jdk">7. JDK 정상 동작 확인<a class="headerlink" href="#7-jdk" title="Permanent link">&para;</a></h2>
 <p>시스템 <code>JAVA_HOME</code>을 설정하지 않고 실행파일을 직접 호출한다.</p>
 <h3 id="71-java-runtime">7.1 Java Runtime<a class="headerlink" href="#71-java-runtime" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home/bin/java<span class="w"> </span>-version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home/bin/java<span class="w"> </span>-version
 </span></code></pre></div>
 <h3 id="72-java-compiler">7.2 Java Compiler<a class="headerlink" href="#72-java-compiler" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home/bin/javac<span class="w"> </span>-version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home/bin/javac<span class="w"> </span>-version
 </span></code></pre></div>
 <p>정상적인 경우 Java 25 계열 정보가 표시된다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>openjdk version &quot;25...&quot;
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>OpenJDK Runtime Environment Temurin-25...
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>OpenJDK 64-Bit Server VM Temurin-25...
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>openjdk version &quot;25...&quot;
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>OpenJDK Runtime Environment Temurin-25...
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>OpenJDK 64-Bit Server VM Temurin-25...
 </span></code></pre></div>
 <p>Compiler:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>javac 25...
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>javac 25...
 </span></code></pre></div>
 <hr />
 <h2 id="8-java_home">8. 전역 JAVA_HOME을 기본 방식으로 사용하지 않음<a class="headerlink" href="#8-java_home" title="Permanent link">&para;</a></h2>
 <p>현재 단계에서는 다음 설정을 기본 구성으로 사용하지 않는다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>...
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span>...
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
 </span></code></pre></div>
 <p>따라서 <code>~/.zshrc</code>에 MicroServer 프로젝트용 JDK를 전역 기본값으로 등록하지 않는다.</p>
 <p>JDK 자체가 정상적으로 준비되었는지는 앞에서 설명한 절대 경로 실행 방식으로 확인한다.</p>
@@ -1912,11 +1922,11 @@ macOS의 프로젝트 로컬 개발환경 Root가 별도로 표준화되면 이 
 <hr />
 <h2 id="9">9. 최종 확인<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
 <p>JDK Home:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
 <p>확인:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home/bin/java<span class="w"> </span>-version
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home/bin/javac<span class="w"> </span>-version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home/bin/java<span class="w"> </span>-version
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home/bin/javac<span class="w"> </span>-version
 </span></code></pre></div>
 <p>두 명령이 Java 25 계열로 정상 실행되면 macOS JDK 준비가 완료된 것이다.</p>
 <hr />

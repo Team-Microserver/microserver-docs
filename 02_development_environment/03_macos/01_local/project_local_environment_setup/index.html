@@ -738,6 +738,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="3. 하나의 Root로 관리하는 이유">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-local-microserver-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 ~/local-microserver를 표준 Root로 선택한 이유
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 하나의 Root로 관리하는 장점
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1826,6 +1854,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="3. 하나의 Root로 관리하는 이유">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-local-microserver-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 ~/local-microserver를 표준 Root로 선택한 이유
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 하나의 Root로 관리하는 장점
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2296,6 +2352,13 @@
 <p>Directory 이름은 가능한 한 표준 구조를 유지한다. 개발자마다 임의의 위치에 JDK, Gradle, VS Code를 배치하면 환경 재현성과 문제 분석이 어려워진다.</p>
 <hr />
 <h2 id="3-root">3. 하나의 Root로 관리하는 이유<a class="headerlink" href="#3-root" title="Permanent link">&para;</a></h2>
+<h3 id="31-local-microserver-root">3.1 <code>~/local-microserver</code>를 표준 Root로 선택한 이유<a class="headerlink" href="#31-local-microserver-root" title="Permanent link">&para;</a></h3>
+<p>Unix/Linux에서는 시스템 공용 Software를 <code>/usr/local</code> 또는 <code>/opt</code> 아래에 설치하는 것이 일반적이다. 그러나 MicroServer의 로컬 개발환경은 시스템 공용 Runtime이 아니라 <strong>개발자별 개발도구, Workspace, Cache 및 개인 환경설정을 함께 관리하는 사용자 개발환경</strong>이다.</p>
+<p>따라서 관리자 권한이 필요한 시스템 영역보다 사용자 Home Directory 아래의 <code>~/local-microserver</code>를 표준 Root로 사용한다. 이를 통해 <code>sudo</code>나 시스템 전역 설정에 대한 의존을 줄이고, 개발환경 전체를 다른 장비로 복사하거나 복원하기 쉽게 한다.</p>
+<blockquote>
+<p>Linux 서버의 MicroServer Runtime 설치 경로는 로컬 개발환경과 목적이 다르므로 <code>/opt/microserver</code>와 같은 시스템 영역을 별도 기준으로 사용할 수 있다.</p>
+</blockquote>
+<h3 id="32-root">3.2 하나의 Root로 관리하는 장점<a class="headerlink" href="#32-root" title="Permanent link">&para;</a></h3>
 <p><code>~/local-microserver</code>를 개발환경 기준 Root로 사용하면 다음 장점이 있다.</p>
 <ul>
 <li>JDK / Gradle / VS Code Version을 프로젝트 기준으로 통제할 수 있다.</li>
