@@ -149,14 +149,14 @@ Extension Pack for Java를 설치한 뒤에는 Java Extension이 사용할 JDK �
 
 
 ```text
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
 JDK 설치 여부는 Terminal에서 다음과 같이 확인할 수 있다.
 
 ```bash
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home\bin\java.exe -version
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home\bin\javac.exe -version
+~/local-microserver/tools/jdk/temurin-25/Contents/Home\bin\java.exe -version
+~/local-microserver/tools/jdk/temurin-25/Contents/Home\bin\javac.exe -version
 ```
 
 Portable VS Code의 User Settings는 다음 위치에서 관리된다.
@@ -178,12 +178,12 @@ JDK 25를 기본 Runtime으로 사용할 경우 다음과 같이 등록한다.
 
 ```json
 {
-    "java.jdt.ls.java.home": "~/local-microserver//tools//jdk//temurin-25",
+    "java.jdt.ls.java.home": "~/local-microserver/tools/jdk/temurin-25/Contents/Home",
 
     "java.configuration.runtimes": [
         {
             "name": "JavaSE-25",
-            "path": "~/local-microserver//tools//jdk//temurin-25",
+            "path": "~/local-microserver/tools/jdk/temurin-25/Contents/Home",
             "default": true
         }
     ]
@@ -196,7 +196,7 @@ JDK 25를 기본 Runtime으로 사용할 경우 다음과 같이 등록한다.
 
 ```json
 {
-    "java.jdt.ls.java.home": "~/local-microserver//tools//jdk//temurin-25",
+    "java.jdt.ls.java.home": "~/local-microserver/tools/jdk/temurin-25/Contents/Home",
 
     "java.configuration.runtimes": [
         {
@@ -205,7 +205,7 @@ JDK 25를 기본 Runtime으로 사용할 경우 다음과 같이 등록한다.
         },
         {
             "name": "JavaSE-25",
-            "path": "~/local-microserver//tools//jdk//temurin-25",
+            "path": "~/local-microserver/tools/jdk/temurin-25/Contents/Home",
             "default": true
         }
     ]
@@ -224,13 +224,13 @@ JDK 25를 기본 Runtime으로 사용할 경우 다음과 같이 등록한다.
     다음과 같이 `bin`까지 지정하지 않는다.
 
     ```text
-    ~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home\bin   ← 잘못된 예
+    ~/local-microserver/tools/jdk/temurin-25/Contents/Home\bin   ← 잘못된 예
     ```
 
     JDK Home을 지정한다.
 
     ```text
-    ~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home       ← 올바른 예
+    ~/local-microserver/tools/jdk/temurin-25/Contents/Home       ← 올바른 예
     ```
 
 설정 변경 후 다음 명령으로 VS Code를 Reload한다.
@@ -610,7 +610,7 @@ Portable VS Code에 Java Extension Pack을 설치한 뒤 배포용 Package를 �
 MicroServer에서는 JDK를 별도로 다음 위치에서 관리한다.
 
 ```text
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
 

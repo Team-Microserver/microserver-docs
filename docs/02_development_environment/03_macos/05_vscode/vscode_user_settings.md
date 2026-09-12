@@ -10,7 +10,7 @@ Java / JDK 관련 설정을 구성하고 이해하는 방법을 설명한다.
 ```text
 Java Version : 25
 JDK          : Eclipse Temurin 25
-macOS JDK  : ~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+macOS JDK  : ~/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
 User Settings는 **개발자 개인 VS Code 환경에 적용되는 설정**이며
@@ -117,7 +117,7 @@ VS Code User Settings
 "java.configuration.runtimes": [
   {
     "name": "JavaSE-25",
-    "path": "~/local-microserver//tools//jdk//temurin-25",
+    "path": "~/local-microserver/tools/jdk/temurin-25/Contents/Home",
     "default": true
   }
 ]
@@ -138,7 +138,7 @@ JavaSE-25
         ↓
 VS Code에서 사용할 수 있는 로컬 JDK
         ↓
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
 개발 PC에 여러 JDK가 있다면 여러 Runtime을 등록할 수 있다.
@@ -228,14 +228,14 @@ Java Language Server가 `name`의 Type이 `String`임을 분석하기 때문이�
 
 ```json
 "java.jdt.ls.java.home":
-  "~/local-microserver//tools//jdk//temurin-25"
+  "~/local-microserver/tools/jdk/temurin-25/Contents/Home"
 ```
 
 정확한 의미:
 
 ```text
 VS Code 뒤에서 실행되는 Java Language Server를
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
 JDK로 실행한다.
 ```
 
@@ -262,7 +262,7 @@ java.jdt.ls.java.home
 사용 목적은 서로 다르다.
 
 ```text
-~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
         │
         ├─ Project Runtime 등록
         │   → java.configuration.runtimes
@@ -287,14 +287,14 @@ macOS에서도 역할은 동일하며 JDK 경로만 다르다.
 예:
 
 ```text
-/Users/<USER>/dev/jdks/temurin-25.jdk/Contents/Home
+/Users/<USER>/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
 ```json
 "java.configuration.runtimes": [
   {
     "name": "JavaSE-25",
-    "path": "/Users/<USER>/dev/jdks/temurin-25.jdk/Contents/Home",
+    "path": "/Users/<USER>/local-microserver/tools/jdk/temurin-25/Contents/Home",
     "default": true
   }
 ]

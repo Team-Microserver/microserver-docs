@@ -1,398 +1,120 @@
-# macOS VS Code 설정 원칙
+# macOS VS Code 개발환경 구성 원칙
 
 ## 1. 문서 목적
 
+본 문서는 MicroServer macOS 개발환경에서 Visual Studio Code를 어떤 기준으로 설치하고 운영할지 정의한다.
 
-## macOS Portable 개발환경 원칙
-
-Apple Silicon macOS에서도 Windows와 동일하게 Directory 단위 전달을 지향한다.
-
-```text
-~/local-microserver/tools/vscode/
-├─ Visual Studio Code.app
-└─ code-portable-data/
-```
-
-VS Code 실행은 Finder에서 App을 직접 여는 방식보다 다음 흐름을 권장한다.
-
-```text
-setup.command
-→ create-vscode-shortcut.command
-→ MicroServer VS Code.command
-→ start-vscode.command
-```
-
-`start-vscode.command`가 JDK와 Gradle 환경을 먼저 주입한 후 VS Code를 실행한다.
-
-
-본 문서는 MicroServer 프로젝트의 표준 개발 도구인 **Visual Studio Code(VS Code)** 개발환경 구성에 대한 전체 방향과 세부 가이드의 진행 순서를 설명한다.
-
-VS Code 환경 구성은 하나의 문서에서 모든 내용을 다루지 않고 다음과 같이 역할별로 분리한다.
-
-```text
-VS Code 개발환경 구성
- ├─ VS Code 설정 원칙
- ├─ VS Code 설치 및 기본 설정
- ├─ Java 개발 Extension 구성
- ├─ Spring Boot Extension 구성
- ├─ 개발 지원 Extension 및 Profile 구성
- └─ JDK 연계 및 개발환경 운영
-```
-
-현재 단계에서는 아직 MicroServer Spring Boot 프로젝트를 생성하지 않는다.
-
-따라서 다음 작업은 이후 가이드에서 진행한다.
-
-- Spring Boot 프로젝트 생성
-- `build.gradle` / `settings.gradle` 작성 및 수정
-- Gradle Dependency 구성
-- Java Package / Class 작성
-- `application.yml` 작성
-- 애플리케이션 실행
-- Debug 실행
-- JUnit 테스트 작성
-- Database 연결
-
-본 단계의 목표는 **프로젝트를 생성하기 전에 VS Code를 Java / Spring Boot 개발용 IDE로 사용할 수 있도록 준비하는 것**이다.
+Windows 최신 가이드와 동일하게 **설치 단계**와 **개발환경 설정 단계**를 분리한다. macOS에서도 VS Code 자체 설치, Portable Mode 구성, Editor 기본 설정을 먼저 완료한 뒤 Java / Spring Boot 개발환경을 구성한다.
 
 ---
 
-## 2. 전체 개발환경 구성 순서
-
-MicroServer 개발환경은 다음 순서로 구성한다.
-
-```mermaid
-flowchart LR
-    A[Git / GitHub 환경 구성] --> B[Temurin JDK 준비]
-    B --> C[Gradle 기본 환경]
-    C --> D[VS Code 설치]
-    D --> E[Java Extension 구성]
-    E --> F[Spring Boot Extension 구성]
-    F --> G[지원 Extension / Profile 구성]
-    G --> H[JDK 연계 방식 확인]
-    H --> I[Spring Boot 프로젝트 생성]
-    I --> J[프로젝트 JDK / Gradle / VS Code 설정]
-```
-
-현재 가이드는 다음 범위를 담당한다.
-
-```mermaid
-flowchart LR
-    JDK[Temurin JDK 준비] --> GRADLE[Gradle 준비]
-
-    subgraph VSCODE["VS Code 개발환경 구성"]
-        direction LR
-        VS1[VS Code 설치]
-        VS2[Java Extension]
-        VS3[Spring Boot Extension]
-        VS4[지원 Extension]
-        VS5[Profile]
-        VS6[JDK 연계 방식 확인]
-
-        VS1 --> VS2 --> VS3 --> VS4 --> VS5 --> VS6
-    end
-
-    SPRING[Spring Boot 프로젝트 생성]
-    PROJECT[프로젝트 개발환경 설정]
-
-    GRADLE --> VSCODE
-    VSCODE --> SPRING
-    SPRING --> PROJECT
-```
-
----
-
-## 3. VS Code 환경 구성 원칙
-
-MicroServer 프로젝트에서는 다음 원칙으로 VS Code 개발환경을 구성한다.
-
-### 3.1 VS Code를 표준 IDE로 사용
-
-프로젝트의 기본 개발 IDE는 VS Code로 통일한다.
-
-개발자별로 다른 IDE를 사용하면 다음 항목에서 차이가 발생할 수 있다.
-
-- JDK 인식 방식
-- Build Tool 연계 방식
-- Formatter
-- Debug 설정
-- Extension 지원
-- Workspace 설정
-
-따라서 프로젝트 가이드와 예제는 VS Code를 기준으로 작성한다.
-
-
-### 3.3 Java 기능은 Extension Pack으로 구성
-
-Java 개발 기능은 개별 Extension을 임의로 조합하기보다 **Extension Pack for Java**를 기본 구성으로 사용한다.
-
-이를 통해 개발자별 Extension 누락을 줄일 수 있다.
-
-### 3.4 Spring Boot 기능은 Spring Boot Extension Pack으로 구성
-
-Spring Boot 개발 기능은 **Spring Boot Extension Pack**을 기본 구성으로 사용한다.
-
-Java Extension이 Java 언어 자체의 개발환경을 제공한다면 Spring Boot Extension은 그 위에 Spring 전용 개발 기능을 추가한다.
-
-### 3.5 프로젝트별 JDK 운영
-
-JDK는 OS 전체에 하나의 Java 버전을 고정하는 방식보다, 앞 단계에서 준비한 Eclipse Temurin JDK를 **프로젝트별 VS Code Workspace에서 선택하는 방식**을 기본으로 한다.
+## 2. MicroServer macOS VS Code 구성 방향
 
 ```text
-Developer PC
- ├─ Temurin JDK 17
- ├─ Temurin JDK 21
- ├─ Temurin JDK 25 LTS
- └─ VS Code
-      ├─ Project A → JDK A
-      └─ Project B → JDK B
-```
-
-실제 Workspace 설정은 프로젝트 생성 이후 적용한다.
-
-### 3.6 개발환경은 Directory 단위로 전달 가능한 구조를 지향
-
-macOS 개발환경은 다음 구조를 기본으로 한다.
-
-```text
-~/local-microserver                       ← Git Repository 아님
-│
+~/local-microserver
 ├─ tools
 │  ├─ jdk
 │  │  └─ temurin-25
+│  │     └─ Contents
+│  │        └─ Home
 │  ├─ gradle
 │  │  └─ gradle-9.7.1
 │  └─ vscode
 │     ├─ Visual Studio Code.app
-│     └─ data
-│
+│     └─ code-portable-data
+│        ├─ user-data
+│        └─ extensions
 ├─ gradle-home
-│
 ├─ workspace
-│  ├─ microserver.code-workspace
-│  ├─ microserver                         ← Git Repository
-│  └─ microserver-docs                    ← 별도 Git Repository
-│
-├─ env
-│  ├─ setup.command
-│  ├─ start-vscode.command
-│  ├─ create-vscode-shortcut.command
-│  ├─ local-env.example.sh
-│  └─ local-env.sh
-│
-├─ icons
-│  └─ microserver.ico
-│
-└─ MicroServer VS Code.lnk
+└─ env
 ```
 
-`~/local-microserver`는 개발환경 Package Root이며 Git Repository가 아니다.
-`workspace` 아래 실제 프로젝트 Directory가 각각 Git Repository가 된다.
+!!! important "JDK Directory와 JAVA_HOME 구분"
+    JDK 보관 Directory는 `~/local-microserver/tools/jdk/temurin-25/Contents/Home`이지만 실제 `JAVA_HOME`은 다음 경로다.
 
-
-```text
-setup.command
-→ 일반 Terminal Session 환경 구성
-
-start-vscode.command
-→ 환경 구성 + Portable VS Code 실행
-
-local-env.example.sh
-→ 배포 가능한 Local 설정 Sample
-
-local-env.sh
-→ 개발자 개인 Secret / 배포 제외
-
-create-vscode-shortcut.command
-→ MicroServer VS Code.lnk 생성
-```
-
-### 3.8 Local Secret은 Git이 아니라 개발환경 Package 정책으로 분리
-
-`ORACLE_PWD` 같은 개발자별 Local Secret은 다음 파일에 둘 수 있다.
-
-```text
-~/local-microserver/env/local-env.sh
-```
-
-이 파일은 `workspace\microserver` Git Repository 밖에 있으므로
-프로젝트 `.gitignore`로 제외하는 파일이 아니다.
-
-```text
-Repository 내부 .env
-→ .gitignore 사용
-
-Repository 밖 local-env.sh
-→ Git 대상 아님
-→ 개발환경 ZIP / 배포 Package에서 제외
-```
-
-Sample 파일:
-
-```text
-local-env.example.sh    ← 배포
-local-env.sh            ← 배포 제외
-```
-
+    ```text
+    ~/local-microserver/tools/jdk/temurin-25/Contents/Home
+    ```
 
 ---
 
-## 4. 세부 가이드 구성
-
-### 4.1 VS Code 설치 및 기본 설정
-
-다음 내용을 다룬다.
-
-- `~/local-microserver/tools/vscode` 표준 배치
-- Portable `data` Directory와 User Data / Extension 저장 구조
-- `start-vscode.command`을 이용한 독립 실행환경 구성
-- `MicroServer VS Code.lnk`를 이용한 더블클릭 실행
-- `icons\microserver.ico`를 이용한 공통 Shortcut Icon 적용
-- `local-env.example.sh` / `local-env.sh`를 이용한 Local Secret 분리
-- Git Repository와 개발환경 Package Root의 경계 구분
-- Portable VS Code Update 및 배포 Package 관리
-- macOS VS Code 설치와 Portable Mode 참고
-- `code` 명령 사용 방식
-- 주요 화면 구성
-- Command Palette
-- Extensions 화면
-- Terminal
-- UTF-8 등 기본 Editor 설정
-- User Settings와 Workspace Settings의 차이
-
-→ [VS Code 설치](vscode_install.md)
-
-→ [VS Code 기본 설정](vscode_basic_setup.md)
-
-### 4.2 Java 개발 Extension 구성
-
-다음 내용을 다룬다.
-
-- Extension Pack for Java 설치
-- Java Extension Pack을 사용하는 이유
-- Language Support for Java
-- Debugger for Java
-- Test Runner for Java
-- Gradle for Java
-- Maven for Java (비교/호환)
-- Project Manager for Java
-- 각 Extension의 역할과 이후 사용 시점
-
-→ [Java 개발 Extension 구성](java_extension_setup.md)
-
-### 4.3 Spring Boot Extension 구성
-
-다음 내용을 다룬다.
-
-- Spring Boot Extension Pack 설치
-- Spring Boot Tools
-- Spring Initializr Java Support
-- Spring Boot Dashboard
-- Java Extension과 Spring Extension의 관계
-- 현재 단계와 프로젝트 생성 이후 단계의 구분
-
-→ [Spring Boot Extension 구성](spring_boot_extension_setup.md)
-
-### 4.4 개발 지원 Extension 및 Profile 구성
-
-다음 내용을 다룬다.
-
-- YAML
-- XML
-- Container Tools
-- CLI 일괄 설치
-- 설치 상태 확인
-- VS Code Profile
-- Java Spring Profile Template
-- Extension 자동 업데이트와 운영 원칙
-
-→ [개발 지원 Extension 및 Profile 구성](support_extension_profile_setup.md)
-
-### 4.5 JDK 연계 및 개발환경 운영
-
-다음 내용을 다룬다.
-
-- VS Code와 JDK의 관계
-- `Java: Configure Java Runtime`
-- 프로젝트별 JDK 운영 방향
-- `JAVA_HOME` 의존 최소화
-- Extension 문제 확인
-- Output / Reload
-- 현재 단계에서 하지 않는 작업
-- 최종 환경 확인 체크리스트
-
-→ [JDK 연계 및 개발환경 운영](jdk_workspace_environment_setup.md)
-
----
-
-## 5. 완료 기준
-
-VS Code 환경 구성 단계가 끝났을 때 다음 상태가 되어 있어야 한다.
+## 3. 전체 구성 순서
 
 ```mermaid
-flowchart TB
-    PC[Developer PC]
-
-    PC --> JDK[Eclipse Temurin JDK]
-    PC --> GIT[Git]
-    PC --> VS[Visual Studio Code]
-
-    VS --> JAVA[Extension Pack for Java]
-    VS --> SPRING[Spring Boot Extension Pack]
-    VS --> SUPPORT[Support Extensions]
-
-    SUPPORT --> YAML[YAML]
-    SUPPORT --> XML[XML]
-    SUPPORT --> CT[Container Tools]
-
-    JAVA --> READY[Java 개발환경 준비]
-    SPRING --> READY
-    JDK --> READY
+flowchart LR
+    A[VS Code 설치] --> B[Portable Mode 설정]
+    B --> C[VS Code 기본 설정]
+    C --> D[VS Code 설정 방식 이해]
+    D --> E[User Settings]
+    E --> F[Java Extension]
+    F --> G[Spring Boot Extension]
+    G --> H[지원 Extension / Profile]
+    H --> I[JDK 연계 및 운영]
 ```
 
-완료 기준:
+## 4. 설정 범위 원칙
 
-- VS Code가 정상 실행된다.
-- Java 개발용 Extension이 준비되어 있다.
-- Spring Boot 개발용 Extension이 준비되어 있다.
-- YAML / XML / Container 개발 지원 Extension이 준비되어 있다.
-- Eclipse Temurin JDK가 준비되어 있다.
-- VS Code의 Settings / Extension이 Portable `data` 영역에서 관리되는 구조를 이해했다.
-- VS Code에서 프로젝트별 JDK를 연결할 수 있는 구조를 이해했다.
-- `~/local-microserver` Root와 실제 Git Repository 범위를 구분할 수 있다.
-- Repository 밖의 `local-env.sh`은 `.gitignore`가 아니라 배포 Package에서 제외한다.
-- `MicroServer VS Code.lnk`를 바탕화면에 복사하여 실행 진입점으로 사용할 수 있다.
-- 아직 Spring Boot 프로젝트를 생성하지 않았다.
+| 범위 | 용도 |
+|---|---|
+| Default Settings | VS Code 기본값 |
+| User Settings | 해당 Portable VS Code 인스턴스 공통 설정 |
+| Profile | 목적별 Extension / Settings 묶음 |
+| Workspace Settings | 프로젝트별 공통 설정 |
+| `.vscode` | 프로젝트에 포함할 VS Code 설정 |
 
----
+현재 단계에서는 Portable VS Code의 User Settings와 Extension 환경을 준비한다. 실제 프로젝트별 `.vscode/settings.json` 구성은 프로젝트 생성 이후에 수행한다.
 
-## 6. 다음 단계
+## 5. macOS Portable Mode 운영 원칙
 
-VS Code 환경 구성이 끝나면 **Spring Boot 프로젝트 생성 단계**로 진행한다.
+- Windows: VS Code ZIP Directory 내부에 `data` Directory 생성
+- macOS: `Visual Studio Code.app`의 **형제 Directory**로 `code-portable-data` 생성
+- macOS Stable: `code-portable-data`
+- macOS Insiders: `code-insiders-portable-data`
 
+Portable Mode는 VS Code의 User Data와 Extension을 독립화하는 기능이다. JDK, Gradle, Git 등 외부 개발도구 자체를 설치하는 기능은 아니다.
+
+## 6. MicroServer 운영 원칙
+
+### 6.1 시스템 전역 설정 최소화
+가능하면 개발환경을 `~/local-microserver` 아래에 모아 관리한다.
+
+### 6.2 JDK 표준 경로
 ```text
-JDK 설치 및 설정
-        ↓
-Gradle 설치 및 기본 환경 구성
-        ↓
-VS Code 개발환경 구성       ← 현재
-        ↓
-Spring Boot 프로젝트 생성
-        ↓
-프로젝트 JDK / Gradle / VS Code 설정
+JAVA_HOME
+~/local-microserver/tools/jdk/temurin-25/Contents/Home
 ```
 
-JDK와 Gradle 기본 환경은 앞 단계에서 이미 준비되어 있다.
+### 6.3 Gradle 프로젝트 Build는 Wrapper 우선
+```bash
+./gradlew build
+```
 
-VS Code 단계에서는 IDE와 Java / Spring Boot 개발 Extension을 준비하고,
-실제 프로젝트 JDK Runtime, Gradle Wrapper, `build.gradle`, `settings.gradle`, Workspace 설정 등은
-Spring Boot 프로젝트가 생성된 이후의 **프로젝트 개발환경 설정 단계**에서 적용한다.
+### 6.4 개인 설정과 프로젝트 설정 분리
+개인 UI 편의 설정은 User Settings 또는 Profile에 두고, 팀 전체가 공유해야 할 프로젝트 설정은 프로젝트 생성 이후 `.vscode`에서 관리한다.
 
+## 7. 가이드 문서 구성
 
----
+### VS Code 설치
+1. `vscode_setup.md` — 개발환경 구성 원칙
+2. `vscode_install.md` — macOS VS Code 설치
+3. `vscode_portable_setup.md` — macOS Portable Mode 설정
+4. `vscode_basic_settings.md` — VS Code 기본 설정
 
-## 참고
+### VS Code 개발환경 설정
+1. `vscode_configuration_model.md`
+2. `vscode_user_settings.md`
+3. `java_extension_setup.md`
+4. `spring_boot_extension_setup.md`
+5. `support_extension_profile_setup.md`
+6. `jdk_workspace_environment_setup.md`
 
-- [VS Code 공식 Download](https://code.visualstudio.com/Download)
-- [VS Code Portable Mode](https://code.visualstudio.com/docs/setup/portable)
-- [VS Code Command Line Interface](https://code.visualstudio.com/docs/configure/command-line)
+## 8. 완료 기준
+
+- [ ] VS Code Application이 `~/local-microserver/tools/vscode` 아래에 있다.
+- [ ] `code-portable-data`의 역할을 이해했다.
+- [ ] 실제 `JAVA_HOME`이 `~/local-microserver/tools/jdk/temurin-25/Contents/Home`임을 이해했다.
+- [ ] User Settings와 Workspace Settings의 역할을 구분할 수 있다.
+
+## 9. 다음 단계
+
+→ [macOS VS Code 설치](vscode_install.md)
