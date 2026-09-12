@@ -23,10 +23,12 @@ flowchart TD
     --> D["Script 실행 권한 부여"]
     --> E["필요 시 local-env.sh 생성"]
     --> F["start-vscode.command로 최초 실행"]
-    --> G["Portable Mode / 환경변수 확인"]
-    --> H["create-vscode-shortcut.command 실행"]
-    --> I["MicroServer VS Code.app / Desktop Alias 생성"]
-    --> J["이후 Launcher로 일상 실행"]
+    --> G["Portable Mode 확인"]
+    --> H["Integrated Terminal 환경변수 표준 설정"]
+    --> I["JDK / Gradle 환경변수 검증"]
+    --> J["create-vscode-shortcut.command 실행"]
+    --> K["MicroServer VS Code.app / Desktop Alias 생성"]
+    --> L["이후 Launcher로 일상 실행"]
 ```
 
 !!! important "이 문서는 새 개발환경 구성을 기본 기준으로 한다"
@@ -331,36 +333,25 @@ export ORACLE_PWD="<개발자-개인-비밀번호>"
 `code-portable-data`와 Script 준비가 완료된 뒤 **이 단계에서 처음으로
 MicroServer Portable VS Code를 실행한다.**
 
-실행 전에 일반 VS Code를 포함하여 실행 중인 VS Code를 모두 종료한다.
+실행하기 전에 일반 VS Code를 포함하여 열려 있는 VS Code Window를 모두 종료한다.
 
 ```text
 VS Code
 → Command + Q
 ```
 
-!!! important "기존 VS Code Process를 먼저 종료한다"
-    MicroServer Portable VS Code의 실행환경을 정확하게 검증하기 위해
-    기존 VS Code Process가 없는 상태에서 `start-vscode.command`를 실행한다.
+!!! important "왜 다시 VS Code를 모두 종료하는가?"
+    VS Code는 여러 Window를 실행할 때 먼저 실행된 VS Code Process의 환경을
+    공유할 수 있다.
+
+    따라서 `start-vscode.command`에서 설정한 `JAVA_HOME`, `GRADLE_HOME` 등의
+    환경을 정확하게 검증하려면 **기존 VS Code Process가 없는 상태에서**
+    MicroServer Portable VS Code를 시작하는 것이 가장 명확하다.
 
 이제 다음 Script로 실행한다.
 
 ```bash
 "$HOME/local-microserver/env/start-vscode.command"
-```
-
-`start-vscode.command`는 VS Code를 **Background Process로 실행한 뒤 종료**한다.
-따라서 VS Code가 열린 후 실행에 사용한 Terminal은 다시 Prompt로 돌아온다.
-
-```text
-start-vscode.command 실행
-        ↓
-setup.sh 적용
-        ↓
-VS Code Background 실행
-        ↓
-start-vscode.command 종료
-        ↓
-Terminal Prompt 복귀
 ```
 
 Script 내부 실행 흐름:
@@ -451,9 +442,108 @@ MicroServer Portable VS Code
 
 ---
 
-### 3.7 Step 7. MicroServer 환경변수 확인
+### 3.7 Step 7. Integrated Terminal 환경변수 표준 설정
 
-MicroServer VS Code의 Integrated Terminal을 새로 열고 확인한다.
+`start-vscode.command`는 VS Code Process를 실행하기 전에 `setup.sh`을 읽어
+MicroServer 환경변수를 설정한다.
+
+하지만 macOS의 VS Code Integrated Terminal은 다음 요소의 영향을 받을 수 있다.
+
+```text
+기존에 실행 중이던 VS Code Process
+macOS Login Shell 초기화
+~/.zprofile / ~/.zshrc
+VS Code terminal.integrated.inheritEnv 설정
+기존 Terminal Session 복원
+```
+
+따라서 **Launcher Process의 환경변수 상속만을 전제로 하지 않고**,
+MicroServer Portable VS Code의 Integrated Terminal에도 표준 환경변수를
+명시적으로 설정한다.
+
+!!! note "이 설정을 Portable 구성 단계에 포함하는 이유"
+    이 설정은 Editor Theme, Font, Extension 같은 일반 VS Code 사용자 설정이 아니라
+    **MicroServer 실행환경 자체를 보장하기 위한 최소 Runtime 설정**이다.
+
+    따라서 후속 문서인 `VS Code 기본 설정`보다 먼저 적용한다.
+
+Portable VS Code의 User Settings 파일 위치:
+
+```text
+~/local-microserver/tools/vscode/
+└─ code-portable-data
+   └─ user-data
+      └─ User
+         └─ settings.json
+```
+
+`settings.json`을 열고 기존 설정이 없다면 다음 내용을 적용한다.
+
+```json
+{
+  "terminal.integrated.inheritEnv": true,
+  "terminal.integrated.env.osx": {
+    "LOCAL_MICROSERVER": "${env:HOME}/local-microserver",
+    "JAVA_HOME": "${env:HOME}/local-microserver/tools/jdk/temurin-25/Contents/Home",
+    "GRADLE_HOME": "${env:HOME}/local-microserver/tools/gradle/gradle-9.7.1",
+    "GRADLE_USER_HOME": "${env:HOME}/local-microserver/gradle-home",
+    "PATH": "${env:HOME}/local-microserver/tools/jdk/temurin-25/Contents/Home/bin:${env:HOME}/local-microserver/tools/gradle/gradle-9.7.1/bin:${env:PATH}"
+  }
+}
+```
+
+이미 `settings.json`에 다른 설정이 있다면 전체 파일을 덮어쓰지 말고
+다음 두 설정만 기존 JSON Object에 추가한다.
+
+```json
+"terminal.integrated.inheritEnv": true,
+"terminal.integrated.env.osx": {
+  "LOCAL_MICROSERVER": "${env:HOME}/local-microserver",
+  "JAVA_HOME": "${env:HOME}/local-microserver/tools/jdk/temurin-25/Contents/Home",
+  "GRADLE_HOME": "${env:HOME}/local-microserver/tools/gradle/gradle-9.7.1",
+  "GRADLE_USER_HOME": "${env:HOME}/local-microserver/gradle-home",
+  "PATH": "${env:HOME}/local-microserver/tools/jdk/temurin-25/Contents/Home/bin:${env:HOME}/local-microserver/tools/gradle/gradle-9.7.1/bin:${env:PATH}"
+}
+```
+
+!!! tip "`${env:HOME}`를 사용하는 이유"
+    `/Users/사용자명`을 직접 작성하지 않고 현재 Mac 사용자의 Home Directory를
+    기준으로 경로를 구성한다.
+
+    따라서 개발자마다 계정명이 달라도 같은 Portable 설정 구조를 사용할 수 있다.
+
+설정을 저장한 후 **기존 Integrated Terminal은 닫고 새 Terminal을 생성한다.**
+
+```text
+Terminal
+→ Kill Terminal
+
+Terminal
+→ New Terminal
+```
+
+기존 Terminal Session은 생성 당시의 환경을 유지할 수 있으므로
+반드시 새 Terminal에서 다음 Step을 검증한다.
+
+---
+
+### 3.8 Step 8. MicroServer 환경변수 확인
+
+MicroServer Portable VS Code에서 **새 Integrated Terminal**을 열고 확인한다.
+
+먼저 현재 Terminal이 VS Code Integrated Terminal인지 확인한다.
+
+```bash
+echo "$TERM_PROGRAM"
+```
+
+예상:
+
+```text
+vscode
+```
+
+이후 MicroServer 환경변수를 확인한다.
 
 ```bash
 echo "$LOCAL_MICROSERVER"
@@ -489,73 +579,39 @@ Project Build는 설치된 Gradle보다 Gradle Wrapper 사용을 기본으로 �
 ./gradlew --version
 ```
 
-!!! important "`JAVA_HOME`이 비어 있으면 바로 `source setup.sh`로 정상 처리하지 않는다"
-    `source "$HOME/local-microserver/env/setup.sh"`을 실행하면
-    현재 Terminal Session에는 환경변수가 주입되므로 문제가 가려질 수 있다.
+!!! important "`source setup.sh`은 정상 검증 명령이 아니다"
+    다음 명령을 실행하면 **현재 Terminal Session에만** 환경변수가 주입되므로
+    값이 정상 출력될 수 있다.
 
-    먼저 `~/.zshrc`, `~/.zprofile` 등 macOS Shell 초기화 파일이
-    MicroServer에서 전달한 `JAVA_HOME`을 다시 덮어쓰는지 확인한다.
+    ```bash
+    source "$HOME/local-microserver/env/setup.sh"
+    ```
 
-확인:
+    따라서 최초 구성 검증 단계에서 `JAVA_HOME` 등이 비어 있다고 해서
+    바로 `source setup.sh`을 실행하고 정상으로 판단하지 않는다.
 
-```bash
-grep -nH "JAVA_HOME" \
-  ~/.zshenv \
-  ~/.zprofile \
-  ~/.zshrc \
-  ~/.zlogin \
-  ~/.profile \
-  2>/dev/null
-```
+    먼저 새 Integrated Terminal을 만들고,
+    `terminal.integrated.env.osx` 설정이 적용되었는지 확인해야 한다.
 
-예를 들어 다음 설정은 앞에서 전달된 `JAVA_HOME`을 강제로 빈 값으로 만든다.
-
-```bash
-export JAVA_HOME=
-```
-
-일반 macOS Terminal에서도 별도의 Java 환경이 필요한 경우
-`JAVA_HOME` 설정 자체를 제거하는 것이 아니라,
-**외부에서 이미 전달된 값이 있으면 그 값을 유지하고 없을 때만 기본 Java를 설정**한다.
-
-예:
-
-```bash
-export JAVA_HOME="${JAVA_HOME:-/Volumes/data/localDevMicroServer/jdk/jdk-17.0.14+7/Contents/Home}"
-```
-
-동작:
+문제가 있을 때는 다음 순서로 확인한다.
 
 ```text
-일반 macOS Terminal
+① 기존 Integrated Terminal 종료
         ↓
-JAVA_HOME이 아직 없음
+② 새 Terminal 생성
         ↓
-.zshrc의 기본 Java 적용
-
-MicroServer VS Code
+③ echo "$JAVA_HOME" 확인
         ↓
-setup.sh에서 Java 25 설정
+④ 비어 있으면 settings.json의 terminal.integrated.env.osx 확인
         ↓
-.zshrc 실행
+⑤ VS Code 전체 종료(Command + Q)
         ↓
-이미 JAVA_HOME이 있으므로 Java 25 유지
+⑥ start-vscode.command로 다시 실행
+        ↓
+⑦ 새 Terminal에서 다시 확인
 ```
 
-!!! tip "환경변수 관리 원칙"
-    MicroServer 전용 JDK / Gradle 경로의 기준은 `setup.sh` 한 곳에서 관리한다.
-
-    VS Code `settings.json`에 동일한 `JAVA_HOME`, `GRADLE_HOME`을 다시 작성하여
-    중복 관리하지 않는다.
-
-Shell 설정을 수정했다면 VS Code를 `Command + Q`로 완전히 종료한 뒤
-다시 `start-vscode.command`로 실행하고 새 Integrated Terminal에서 확인한다.
-
-```bash
-"$HOME/local-microserver/env/start-vscode.command"
-```
-
-문제가 계속되는 경우에만 `setup.sh` 자체를 진단한다.
+`setup.sh` 자체가 정상인지 별도로 확인해야 할 때만 다음 명령을 사용한다.
 
 ```bash
 source "$HOME/local-microserver/env/setup.sh"
@@ -565,8 +621,8 @@ echo "$GRADLE_HOME"
 echo "$GRADLE_USER_HOME"
 ```
 
-이때 값이 정상 출력되면 `setup.sh` 자체는 정상이며,
-Shell 초기화 파일에서 환경변수를 덮어쓰는 부분을 다시 확인한다.
+이 명령으로 값이 정상 출력되면 `setup.sh` 자체는 정상이며,
+VS Code Integrated Terminal의 환경 상속 또는 설정 영역을 확인한다.
 
 Secret은 값 자체를 출력하지 않고 설정 여부만 확인한다.
 
@@ -580,7 +636,7 @@ fi
 
 ---
 
-### 3.8 Step 8. MicroServer 실행 Shortcut / Icon 생성
+### 3.9 Step 9. MicroServer 실행 Shortcut / Icon 생성
 
 Portable Mode와 환경변수가 정상임을 확인한 뒤 **최초 1회** 다음 Script를
 실행한다.
@@ -623,7 +679,7 @@ Application + Finder Alias** 방식을 사용한다.
 
 ---
 
-### 3.9 Step 9. Desktop / Dock 실행 확인
+### 3.10 Step 10. Desktop / Dock 실행 확인
 
 Desktop의 다음 Icon을 더블클릭한다.
 
@@ -1065,9 +1121,9 @@ Script 실행 권한 부여
     ↓
 start-vscode.command 최초 실행
     ↓
-VS Code Background 실행 / Terminal Prompt 복귀
-    ↓
 Portable Mode 확인
+    ↓
+Integrated Terminal 환경변수 표준 설정
     ↓
 JDK / Gradle 환경변수 확인
     ↓
@@ -1123,10 +1179,10 @@ Portable VS Code
 -   [ ] `.command` Script에 실행 권한을 부여했다.
 -   [ ] 필요한 경우 `local-env.sh`을 생성했다.
 -   [ ] `start-vscode.command`로 최초 실행했다.
--   [ ] VS Code 실행 후 최초 실행 Terminal이 Prompt로 복귀했다.
 -   [ ] `user-data`와 `extensions`가 Portable Directory 아래에 생성됐다.
--   [ ] Integrated Terminal에서 JDK / Gradle 환경변수를 확인했다.
--   [ ] `JAVA_HOME`이 비어 있다면 Shell 초기화 파일의 덮어쓰기 설정을 확인했다.
+-   [ ] `terminal.integrated.env.osx`에 MicroServer Runtime 환경을 설정했다.
+-   [ ] 기존 Terminal을 닫고 새 Integrated Terminal을 생성했다.
+-   [ ] 새 Integrated Terminal에서 JDK / Gradle 환경변수를 확인했다.
 -   [ ] `create-vscode-shortcut.command`를 실행했다.
 -   [ ] `MicroServer VS Code.app`과 Desktop Alias가 생성됐다.
 -   [ ] Desktop 또는 Dock Launcher로 실행되는 것을 확인했다.
@@ -1249,7 +1305,7 @@ fi
 #
 # 목적:
 #   setup.sh을 읽어 JDK / Gradle / 개인 환경변수를 적용한 뒤
-#   MicroServer용 Portable VS Code를 정확한 실행 파일로 Background 실행한다.
+#   MicroServer용 Portable VS Code를 정확한 실행 파일로 실행한다.
 #
 # 최초 구성:
 #   code-portable-data를 만든 뒤 이 Script로 최초 실행을 검증한다.
@@ -1319,13 +1375,14 @@ fi
 mkdir -p "$WORKSPACE"
 
 # macOS의 open 명령을 사용하지 않고 정확한 Bundle 내부 실행 파일을 직접 실행한다.
-# nohup + & 로 VS Code를 Background Process로 실행한다.
-# 따라서 이 Script를 실행한 Terminal은 VS Code가 열린 뒤 다시 Prompt로 돌아온다.
+# exec를 사용하면 현재 Script Process가 VS Code Process로 대체된다.
 # --new-window는 지정한 workspace를 새 VS Code Window로 열도록 요청한다.
-nohup "$VSCODE_BIN" --new-window "$WORKSPACE"   >/dev/null 2>&1 &
-
-# Background 실행을 시작한 뒤 Script를 정상 종료한다.
-exit 0
+#
+# 주의:
+#   이 Script에서 export한 환경은 VS Code Process 실행환경을 구성한다.
+#   macOS Integrated Terminal은 Login Shell / VS Code Terminal 설정의 영향도 받으므로
+#   Terminal Runtime 환경은 terminal.integrated.env.osx에서도 별도로 보장한다.
+exec "$VSCODE_BIN" --new-window "$WORKSPACE"
 ```
 
 ### 16.3 `create-vscode-shortcut.command` - Launcher / Shortcut 생성

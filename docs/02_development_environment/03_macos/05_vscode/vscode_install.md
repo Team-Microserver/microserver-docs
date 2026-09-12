@@ -24,11 +24,11 @@ VS Code : 1.134.0
 - Mac Architecture 확인
 - `~/local-microserver/tools/vscode` Directory 준비
 - `Visual Studio Code.app` 배치
-- Application 및 CLI 위치 확인
-- VS Code 최초 실행 및 Version 확인
+- Application Bundle과 내부 실행 파일/CLI 존재 확인
 
-`code-portable-data` Directory 생성과 Portable Mode 활성화, 실행 Script,
-Portable Update, 다른 개발자에게 전달할 Package 구성은 다음 **VS Code Portable 설정** 문서에서 수행한다.
+`code-portable-data` Directory 생성과 Portable Mode 활성화, 실제 VS Code 실행,
+Version 확인, 독립 Instance 확인, 실행 Script, Portable Update,
+다른 개발자에게 전달할 Package 구성은 다음 **VS Code Portable 설정** 문서에서 수행한다.
 
 Editor의 Encoding, Auto Save, Format On Save와 Settings 적용 범위는
 그 다음 **VS Code 기본 설정** 문서에서 다룬다.
@@ -257,16 +257,82 @@ ls -l \
 
 ---
 
-## 3. 설치 확인
+## 3. 설치 파일 확인
 
-### 3.1 Application 존재 확인
+현재 단계에서는 아직 `code-portable-data`를 생성하지 않았기 때문에
+VS Code를 실행하여 Portable Mode 동작을 확인하지 않는다.
+
+macOS의 VS Code는 이미 실행 중인 VS Code Instance가 있는 경우
+Application 경로를 직접 지정해도 기존 Instance와 연결될 수 있다.
+
+따라서 **설치 단계에서는 Application Bundle과 내부 실행 파일이 정상적으로 배치되었는지만 확인**한다.
+
+실제 실행과 Portable Mode 분리 여부는 다음 **VS Code Portable 설정** 단계에서 검증한다.
+
+### 3.1 Application Bundle 존재 확인
 
 ```bash
 test -d "$HOME/local-microserver/tools/vscode/Visual Studio Code.app" \
   && echo "VS Code Application OK"
 ```
 
-CLI 확인:
+정상이라면:
+
+```text
+VS Code Application OK
+```
+
+### 3.2 macOS 실제 실행 파일 존재 확인
+
+VS Code Application Bundle 내부의 실제 macOS 실행 파일은 다음 위치에 있다.
+
+```text
+~/local-microserver/tools/vscode/Visual Studio Code.app/Contents/MacOS/Code
+```
+
+확인:
+
+```bash
+ls -l \
+  "$HOME/local-microserver/tools/vscode/Visual Studio Code.app/Contents/MacOS/Code"
+```
+
+실행 가능 파일인지 확인:
+
+```bash
+test -x \
+  "$HOME/local-microserver/tools/vscode/Visual Studio Code.app/Contents/MacOS/Code" \
+  && echo "VS Code Executable OK"
+```
+
+!!! note "현재 단계에서는 Code를 직접 실행하지 않음"
+    다음과 같이 실행 파일을 직접 호출할 수는 있다.
+
+    ```text
+    Visual Studio Code.app/Contents/MacOS/Code
+    ```
+
+    하지만 Portable Mode가 아직 구성되지 않은 상태에서는
+    이미 실행 중인 일반 VS Code Instance와 연결될 수 있다.
+
+    따라서 설치 단계의 검증 명령으로 사용하지 않는다.
+
+### 3.3 내부 `code` CLI 존재 확인
+
+Application 내부 CLI:
+
+```text
+~/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code
+```
+
+확인:
+
+```bash
+ls -l \
+  "$HOME/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code"
+```
+
+실행 가능 여부:
 
 ```bash
 test -x \
@@ -274,36 +340,48 @@ test -x \
   && echo "VS Code CLI OK"
 ```
 
-### 3.2 VS Code 최초 실행
+!!! note "`code --version`도 다음 단계에서 실행"
+    `code` CLI 역시 실행 시 기존 VS Code Instance와 연결될 수 있는 동작이 포함될 수 있으므로,
+    이 문서에서는 **파일 존재와 실행 권한만 확인**한다.
 
-```bash
-open "$HOME/local-microserver/tools/vscode/Visual Studio Code.app"
-```
+    Version 확인은 `code-portable-data`를 구성한 뒤
+    **VS Code Portable 설정** 문서에서 함께 수행한다.
 
-### 3.3 Version 확인
+### 3.4 설치 단계 최종 구조
 
-```bash
-"$HOME/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code" \
-  --version
-```
-
-Version과 Architecture를 확인한다.
-
-### 3.4 `code` 명령은 아직 필수 아님
-
-Microsoft의 일반 macOS 가이드에서는 Command Palette에서 다음 명령으로 `code`를 PATH에 추가할 수 있다.
+현재 문서 완료 시점의 구조:
 
 ```text
-Shell Command: Install 'code' command in PATH
+~/local-microserver
+└─ tools
+   └─ vscode
+      └─ Visual Studio Code.app
 ```
 
-하지만 MicroServer는 시스템 전역 설정을 최소화하고 `~/local-microserver` 아래의 개발환경을 명시적으로 운영하는 것을 우선한다.
+아직 다음 항목은 생성하지 않는다.
+
+```text
+code-portable-data
+```
+
+다음 Portable 설정 단계가 완료되면:
+
+```text
+~/local-microserver
+└─ tools
+   └─ vscode
+      ├─ Visual Studio Code.app
+      └─ code-portable-data
+```
+
+구조가 된다.
 
 ---
 
 ## 4. macOS 보안 / quarantine 참고
 
-Portable Mode가 정상 동작하지 않는 경우 확인한다.
+이 항목은 설치 과정에서 Application 실행이 macOS 보안 정책에 의해 차단되거나,
+다음 Portable 설정 단계에서 실행 문제가 발생하는 경우 참고한다.
 
 ```bash
 xattr \
@@ -329,10 +407,10 @@ xattr -dr com.apple.quarantine \
 - [ ] Apple Silicon 환경에서는 Apple silicon(Arm64) 또는 Universal 배포본을 선택했다.
 - [ ] `~/local-microserver/tools/vscode` Directory를 준비했다.
 - [ ] `Visual Studio Code.app`을 표준 Directory에 배치했다.
+- [ ] `Contents/MacOS/Code` 실행 파일이 존재한다.
 - [ ] Application 내부 `code` CLI가 존재한다.
-- [ ] VS Code가 정상 실행된다.
-- [ ] Version을 확인했다.
-- [ ] `code-portable-data` 구성은 다음 단계에서 수행한다.
+- [ ] 현재 단계에서는 VS Code를 실행하지 않는다.
+- [ ] `code-portable-data` 생성과 실제 실행 검증은 다음 단계에서 수행한다.
 
 ---
 
@@ -342,8 +420,9 @@ xattr -dr com.apple.quarantine \
 flowchart LR
     A["VS Code macOS 다운로드"]
     --> B["Visual Studio Code.app 배치"]
-    --> C["Application / Version 확인"]
+    --> C["Application / 실행 파일 존재 확인"]
     --> D["VS Code Portable 설정"]
+    --> E["실제 실행 / Version / 독립 Instance 확인"]
 ```
 
 **[VS Code Portable 설정](vscode_portable_setup.md)**

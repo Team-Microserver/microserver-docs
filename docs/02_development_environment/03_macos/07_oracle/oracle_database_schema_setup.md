@@ -2,78 +2,68 @@
 
 ## 1. 문서 목적
 
-본 문서는 Docker 기반 Oracle AI Database Free의 기본 설치와 `SYSTEM` 계정 접속이 완료된 이후,
-MicroServer Application에서 사용할 **전용 Tablespace와 프로젝트 Schema User**를 구성하는 절차를 설명한다.
+본 문서는 Oracle AI Database Free의 기본 설치와 `SYSTEM` 계정 접속이 완료된 이후,
+MicroServer Application에서 사용할 **전용 Tablespace와 Schema User**를 구성하는 절차를 설명한다.
 
 선행 문서:
 
-→ [Oracle Database Free 설치 및 접속](oracle_database_free_setup.md)
+**[Oracle Database Free 설치 및 접속](oracle_database_free_setup.md)**
 
-현재 문서에서는 다음을 구성한다.
+현재 단계의 목표:
 
-- 현재 PDB가 `FREEPDB1`인지 재확인
-- 현재 Tablespace 구성 확인
-- Default Permanent Tablespace 확인
-- Oracle Datafile 경로 확인
-- `MICROSERVER_DATA` Tablespace 생성
+- `FREEPDB1` 접속 상태 확인
+- 프로젝트 Tablespace `MICROSERVER_DATA` 생성
 - `MICROSERVER` User 생성
-- Default / Temporary Tablespace 지정
-- Tablespace Quota 설정
+- Default / Temporary Tablespace와 Quota 설정
 - Application 개발에 필요한 기본 System Privilege 부여
-- 사용자 상태와 권한 확인
-- `MICROSERVER` 계정 실제 접속 검증
-- 기존에 User를 먼저 생성한 경우의 보정 절차
-- `ORA-00959: tablespace 'USERS' does not exist` 대응
+- `MICROSERVER@FREEPDB1` 접속 검증
 
-!!! tip "SQL*Plus 실행 SQL은 한 줄 기준"
-    SQL*Plus에서 여러 줄 복사/붙여넣기가 불편할 수 있으므로
-    실제 실행하는 SQL은 가능한 한 **한 줄 형태**로 제공한다.
+!!! tip "실행 SQL"
+    SQL*Plus에서 실행할 SQL은 복사/붙여넣기 편의를 위해 가능한 한 한 줄 형태로 제공한다.
 
 ---
 
-## 2. SYSTEM과 Application User 역할 분리
+## 2. SYSTEM과 Application User 분리
 
-Application이 `SYSTEM` 계정으로 업무 Table을 생성하거나 SQL을 실행하는 방식은 사용하지 않는다.
-
-역할:
+Application에서 `SYSTEM` 계정을 사용하지 않는다.
 
 ```text
 SYSTEM
 → Database 관리
-→ Tablespace 생성
-→ 프로젝트 User / Schema 준비
+→ Tablespace / User 구성
 
 MICROSERVER
-→ Application 개발용 Schema
-→ Table / Sequence / View / Procedure 등 업무 Object 소유
+→ Application Schema
+→ 업무 Object 소유
 ```
 
 ```mermaid
 flowchart TD
     SYS["SYSTEM"]
-    --> TS["MICROSERVER_DATA Tablespace"]
-    SYS --> USER["MICROSERVER User"]
+    --> TS["MICROSERVER_DATA"]
+    SYS --> USER["MICROSERVER"]
     TS --> USER
     USER --> OBJ["Application Schema Objects"]
 ```
 
-!!! warning "Application User에 DBA Role을 습관적으로 부여하지 않음"
-    Local 개발환경이라는 이유만으로 `MICROSERVER` User에 `DBA` Role을 부여하지 않는다.
+!!! warning "DBA Role을 기본 부여하지 않음"
+    Local 개발환경이라도 `MICROSERVER`에 `DBA` Role을 습관적으로 부여하지 않는다.
 
     필요한 권한만 명시적으로 부여한다.
 
 ---
 
-## 3. SYSTEM으로 `FREEPDB1` 접속
+## 3. SYSTEM으로 FREEPDB1 확인
 
+SYSTEM으로 접속한다.
 
-정상:
-
-```text
-SQL>
+```bash
+docker exec -it microserver-oracle sqlplus SYSTEM@FREEPDB1
 ```
 
-현재 PDB 확인:
+Password Prompt에서 Local SYSTEM Password를 입력한다.
+
+현재 PDB:
 
 ```sql
 SELECT sys_context('USERENV','CON_NAME') AS container_name FROM dual;
@@ -85,22 +75,22 @@ SELECT sys_context('USERENV','CON_NAME') AS container_name FROM dual;
 FREEPDB1
 ```
 
-!!! important "반드시 FREEPDB1에서 작업"
-    프로젝트 Local User와 Tablespace 구성은 `FREEPDB1`에 접속한 상태에서 진행한다.
+!!! important "FREEPDB1에서 작업"
+    프로젝트 Local User와 Tablespace는 `FREEPDB1`에 구성한다.
 
     `CDB$ROOT`에 잘못 생성하지 않도록 먼저 `CON_NAME`을 확인한다.
 
 ---
 
-## 4. 현재 Tablespace 구성 확인
+## 4. Tablespace 환경 확인
 
-먼저 현재 `FREEPDB1`에 어떤 Tablespace가 존재하는지 확인한다.
+현재 `FREEPDB1`의 Tablespace 구성을 먼저 확인한다.
 
 ```sql
 SELECT tablespace_name,contents,status FROM dba_tablespaces ORDER BY tablespace_name;
 ```
 
-현재 MicroServer 검증 환경에서는 다음과 같은 기본 구성이 확인되었다.
+MicroServer 검증 환경에서는 다음과 같은 기본 구성이 확인되었다.
 
 ```text
 SYSAUX     PERMANENT   ONLINE
@@ -109,163 +99,192 @@ TEMP       TEMPORARY   ONLINE
 UNDOTBS1   UNDO        ONLINE
 ```
 
-즉 현재 검증한 Oracle Free 환경에는 일반적인 Application용 `USERS` Tablespace가 존재하지 않았다.
+일반적인 Application용 `USERS` Tablespace는 존재하지 않았다.
 
-!!! note "Oracle 환경마다 기본 Tablespace 구성은 다를 수 있음"
-    다른 Oracle Version, Image 또는 기존 Database에서는 `USERS` Tablespace가 존재할 수도 있다.
+환경마다 기본 Tablespace 구성이 다를 수 있으므로
+`USERS`가 당연히 존재한다고 가정하지 않고 실제 조회 결과를 기준으로 한다.
 
-    따라서 `USERS`가 당연히 존재한다고 가정하지 말고 실제 환경을 조회한 뒤 구성한다.
-
----
-
-## 5. Default Permanent Tablespace 확인
-
-현재 PDB의 Default Permanent Tablespace를 확인한다.
+### 4.1 Default Permanent Tablespace 확인
 
 ```sql
 SELECT property_name,property_value FROM database_properties WHERE property_name='DEFAULT_PERMANENT_TABLESPACE';
 ```
 
-현재 검증 환경의 결과:
+MicroServer 검증 환경의 실제 실행 결과:
 
 ```text
+PROPERTY_NAME
+--------------------------------------------------------------------------------
+PROPERTY_VALUE
+--------------------------------------------------------------------------------
 DEFAULT_PERMANENT_TABLESPACE
 SYSTEM
 ```
 
-이 상태에서 다음과 같이 Tablespace를 지정하지 않고 User를 만들면:
+즉 현재 `FREEPDB1`의 Default Permanent Tablespace는 `SYSTEM`이다.
+
+```text
+DEFAULT_PERMANENT_TABLESPACE
+        ↓
+      SYSTEM
+```
+
+이 상태에서 Default Tablespace를 지정하지 않고 Application User를 생성하면
+`MICROSERVER`의 Default Tablespace가 `SYSTEM`으로 지정될 수 있다.
 
 ```sql
 CREATE USER MICROSERVER IDENTIFIED BY "<local-password>";
 ```
 
-해당 User의 Default Tablespace가 `SYSTEM`으로 지정될 수 있다.
+`SYSTEM`은 Oracle System 관리 영역이므로 Application Object의 기본 저장공간으로 사용하지 않는다.
 
-이는 Application Schema 운영 구조로 적절하지 않다.
+따라서 MicroServer에서는 다음 구조를 사용한다.
 
 ```text
 SYSTEM
 → Oracle System 관리 영역
 
 MICROSERVER_DATA
-→ MicroServer Application Data 영역
+→ MicroServer Application 전용 영역
 ```
 
-따라서 프로젝트용 Tablespace를 별도로 생성한다.
+프로젝트 전용 `MICROSERVER_DATA` Tablespace를 먼저 생성한 뒤
+`MICROSERVER` User의 Default Tablespace로 명시적으로 지정한다.
 
 ---
 
-## 6. Oracle Managed Files 설정 확인
+## 5. Datafile 위치 확인
 
-Oracle이 Datafile 경로를 자동으로 관리하는지 확인한다.
+`MICROSERVER_DATA` Tablespace를 생성하기 전에 Oracle이 Datafile 경로를 자동으로 관리하는지 확인한다.
+
+### 5.1 Oracle Managed Files 설정 확인
 
 ```sql
 SHOW PARAMETER db_create_file_dest;
 ```
 
-현재 검증 환경에서는 `VALUE`가 비어 있었다.
+MicroServer 검증 환경의 실제 실행 결과:
 
 ```text
-db_create_file_dest    string
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+db_create_file_dest                  string
 ```
 
-즉 현재 환경은 `CREATE TABLESPACE` 시 Datafile 위치를 자동으로 결정하도록
-`db_create_file_dest`가 설정되어 있지 않다.
+`VALUE` 영역이 비어 있다.
 
-따라서 기존 Datafile의 실제 Directory를 확인하고
-동일한 PDB Data Directory 아래에 프로젝트 Datafile을 명시적으로 생성한다.
+즉 현재 검증 환경에서는 `db_create_file_dest`가 설정되어 있지 않으므로
+`CREATE TABLESPACE` 실행 시 사용할 Datafile 위치를 명시적으로 결정해야 한다.
 
----
+```text
+db_create_file_dest
+        ↓
+     VALUE 없음
+        ↓
+기존 Datafile 경로 확인
+        ↓
+동일한 FREEPDB1 Directory 사용
+```
 
-## 7. 기존 Datafile 경로 확인
+### 5.2 기존 Datafile 경로 확인
 
-다음 SQL로 실제 Datafile 경로를 확인한다.
+현재 PDB에서 사용 중인 Datafile의 실제 위치를 조회한다.
 
 ```sql
 SELECT tablespace_name,file_name FROM dba_data_files ORDER BY tablespace_name;
 ```
 
-현재 MicroServer 검증 환경에서는 다음 경로가 확인되었다.
+MicroServer 검증 환경의 실제 실행 결과:
 
 ```text
+TABLESPACE_NAME
+------------------------------
+FILE_NAME
+--------------------------------------------------------------------------------
 SYSAUX
 /opt/oracle/oradata/FREE/FREEPDB1/sysaux01.dbf
 
 SYSTEM
 /opt/oracle/oradata/FREE/FREEPDB1/system01.dbf
-
-UNDOTBS1
-/opt/oracle/oradata/FREE/FREEPDB1/undotbs01.dbf
 ```
 
-따라서 PDB Datafile Directory는 다음과 같다.
+이 결과에서 `SYSAUX`와 `SYSTEM` Datafile이 모두 다음 Directory 아래에 있음을 확인할 수 있다.
 
 ```text
 /opt/oracle/oradata/FREE/FREEPDB1/
 ```
 
-!!! important "Datafile 경로는 실제 조회 결과를 기준으로 사용"
-    다른 Image나 Version에서는 경로가 다를 수 있다.
-
-    가이드의 경로를 무조건 복사하지 말고 먼저 `dba_data_files` 결과를 확인한다.
-
----
-
-## 8. 프로젝트 Tablespace 생성
-
-MicroServer Application용 Tablespace 이름은 다음을 사용한다.
+따라서 MicroServer 프로젝트 Datafile도 같은 PDB Data Directory 아래에 생성한다.
 
 ```text
-MICROSERVER_DATA
+/opt/oracle/oradata/FREE/FREEPDB1/
+├─ sysaux01.dbf
+├─ system01.dbf
+└─ microserver_data01.dbf       ← 생성 예정
 ```
 
-Datafile:
+!!! important "Datafile 경로 판단 기준"
+    가이드에 적힌 경로를 무조건 사용하는 것이 아니라
+    **현재 환경의 `dba_data_files` 조회 결과를 기준으로 Directory를 결정한다.**
+
+    Image나 Database Version이 달라져 조회 경로가 다르다면
+    실제 확인된 PDB Data Directory를 사용한다.
+
+### 5.3 현재 검증 결과 정리
+
+Tablespace 생성 전 확인 결과를 정리하면 다음과 같다.
+
+| 확인 항목 | MicroServer 검증 결과 | 판단 |
+|---|---|---|
+| 현재 PDB | `FREEPDB1` | 프로젝트 Schema 구성 위치 |
+| Default Permanent Tablespace | `SYSTEM` | Application용으로 사용하지 않음 |
+| `db_create_file_dest` | 값 없음 | Datafile 경로 명시 필요 |
+| 기존 Datafile Directory | `/opt/oracle/oradata/FREE/FREEPDB1/` | 프로젝트 Datafile 생성 위치 |
+| Application Tablespace | 없음 | `MICROSERVER_DATA` 생성 필요 |
+
+따라서 다음 단계에서 사용할 Datafile은 다음과 같다.
 
 ```text
 /opt/oracle/oradata/FREE/FREEPDB1/microserver_data01.dbf
 ```
 
-생성 SQL:
+---
+
+## 6. MICROSERVER_DATA Tablespace 생성
+
+프로젝트 Tablespace:
+
+```text
+MICROSERVER_DATA
+```
+
+원본 검증 환경의 Datafile 경로를 기준으로 한 생성 SQL:
 
 ```sql
 CREATE TABLESPACE MICROSERVER_DATA DATAFILE '/opt/oracle/oradata/FREE/FREEPDB1/microserver_data01.dbf' SIZE 100M AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
 ```
 
-정상:
-
-```text
-Tablespace created.
-```
-
-### 8.1 설정 의미
+설정:
 
 | 설정 | 의미 |
 |---|---|
-| `MICROSERVER_DATA` | 프로젝트 전용 Tablespace |
 | `SIZE 100M` | 최초 Datafile 크기 |
 | `AUTOEXTEND ON` | 공간 부족 시 자동 확장 |
-| `NEXT 100M` | 한 번 확장할 때 증가 단위 |
+| `NEXT 100M` | 확장 단위 |
 | `MAXSIZE UNLIMITED` | Oracle이 허용하는 범위에서 자동 확장 |
 
 !!! note "Local 개발환경 기준"
-    현재 크기 정책은 Local 개발 편의를 위한 기본값이다.
+    위 Size / Autoextend 정책은 Local 개발환경의 기본값이다.
 
-    운영 DB의 Tablespace Size, Autoextend, Maxsize 정책은
-    실제 운영 Database 관리 기준에 따라 별도로 설계한다.
+    운영 DB의 Tablespace 정책은 실제 운영 기준에 따라 별도로 설계한다.
 
-### 8.2 생성 확인
+생성 확인:
 
 ```sql
 SELECT tablespace_name,contents,status FROM dba_tablespaces WHERE tablespace_name='MICROSERVER_DATA';
 ```
 
-정상 예:
-
-```text
-MICROSERVER_DATA   PERMANENT   ONLINE
-```
-
-Datafile 확인:
+Datafile:
 
 ```sql
 SELECT tablespace_name,file_name,bytes/1024/1024 AS size_mb,autoextensible FROM dba_data_files WHERE tablespace_name='MICROSERVER_DATA';
@@ -273,17 +292,15 @@ SELECT tablespace_name,file_name,bytes/1024/1024 AS size_mb,autoextensible FROM 
 
 ---
 
-## 9. 새 `MICROSERVER` User 생성
+## 7. MICROSERVER User 생성
 
-새 환경에서는 **Tablespace를 먼저 생성한 뒤 User를 생성**한다.
-
-권장 생성 SQL:
+새 환경에서는 **Tablespace를 먼저 만든 뒤 User를 생성**한다.
 
 ```sql
 CREATE USER MICROSERVER IDENTIFIED BY "<local-password>" DEFAULT TABLESPACE MICROSERVER_DATA TEMPORARY TABLESPACE TEMP QUOTA UNLIMITED ON MICROSERVER_DATA;
 ```
 
-이 SQL은 다음을 한 번에 지정한다.
+구성:
 
 ```text
 User                  MICROSERVER
@@ -292,38 +309,26 @@ Temporary Tablespace  TEMP
 Quota                  UNLIMITED on MICROSERVER_DATA
 ```
 
-!!! danger "실제 Password를 문서나 Git에 기록하지 않음"
-    `<local-password>`는 실제 개발자 Local Password로 대체한다.
+!!! danger "Password 관리"
+    `<local-password>`는 개발자 Local Password로 대체한다.
 
-    Production Credential을 Local DB에 재사용하지 않는다.
+    실제 Password를 Markdown / Git에 기록하지 않고 Production Credential도 재사용하지 않는다.
 
 ---
 
-## 10. 기본 개발 권한 부여
+## 8. 기본 개발 권한 부여
 
 Application 개발에 필요한 기본 System Privilege를 명시적으로 부여한다.
 
 ```sql
 GRANT CREATE SESSION TO MICROSERVER;
-```
-
-```sql
 GRANT CREATE TABLE TO MICROSERVER;
-```
-
-```sql
 GRANT CREATE SEQUENCE TO MICROSERVER;
-```
-
-```sql
 GRANT CREATE VIEW TO MICROSERVER;
-```
-
-```sql
 GRANT CREATE PROCEDURE TO MICROSERVER;
 ```
 
-현재 단계에서는 다음과 같은 광범위 권한을 기본으로 부여하지 않는다.
+기본적으로 다음과 같은 광범위 권한은 부여하지 않는다.
 
 ```text
 DBA
@@ -331,112 +336,13 @@ RESOURCE
 UNLIMITED TABLESPACE
 ```
 
-`MICROSERVER_DATA`에 대해서만 필요한 Quota를 부여하는 구조를 사용한다.
+`MICROSERVER_DATA`에 필요한 Quota를 지정하는 구조를 사용한다.
 
 ---
 
-## 11. 기존에 `MICROSERVER` User를 먼저 만든 경우
+## 9. 생성 결과 확인
 
-이미 다음과 같이 User를 생성했다면:
-
-```sql
-CREATE USER MICROSERVER IDENTIFIED BY "<local-password>";
-```
-
-현재 검증 환경에서는 Default Permanent Tablespace가 `SYSTEM`이므로
-`MICROSERVER`의 Default Tablespace도 `SYSTEM`으로 지정되었을 수 있다.
-
-먼저 확인:
-
-```sql
-SELECT username,account_status,default_tablespace,temporary_tablespace FROM dba_users WHERE username='MICROSERVER';
-```
-
-예:
-
-```text
-MICROSERVER   OPEN   SYSTEM   TEMP
-```
-
-이 경우 User를 삭제하고 다시 만들 필요는 없다.
-
-`MICROSERVER_DATA` Tablespace를 생성한 뒤 다음과 같이 변경한다.
-
-```sql
-ALTER USER MICROSERVER DEFAULT TABLESPACE MICROSERVER_DATA TEMPORARY TABLESPACE TEMP;
-```
-
-Quota 설정:
-
-```sql
-ALTER USER MICROSERVER QUOTA UNLIMITED ON MICROSERVER_DATA;
-```
-
-권한이 아직 없다면 기본 개발 권한을 부여한다.
-
----
-
-## 12. `ORA-00959: tablespace 'USERS' does not exist`
-
-다음 SQL 실행 시:
-
-```sql
-ALTER USER MICROSERVER QUOTA UNLIMITED ON USERS;
-```
-
-다음 오류가 발생할 수 있다.
-
-```text
-ORA-00959: tablespace 'USERS' does not exist
-```
-
-의미:
-
-```text
-현재 접속한 PDB에 USERS Tablespace가 존재하지 않음
-```
-
-확인:
-
-```sql
-SELECT tablespace_name,contents,status FROM dba_tablespaces ORDER BY tablespace_name;
-```
-
-현재 MicroServer 검증 환경에서는 `USERS`가 존재하지 않았고,
-Default Permanent Tablespace가 `SYSTEM`이었다.
-
-따라서 본 프로젝트에서는 `USERS`를 새로 전제로 사용하지 않고
-명시적인 프로젝트 전용 Tablespace를 구성한다.
-
-```text
-USERS
-→ 사용하지 않음
-
-MICROSERVER_DATA
-→ MicroServer Application 전용
-```
-
-해결:
-
-```sql
-CREATE TABLESPACE MICROSERVER_DATA DATAFILE '/opt/oracle/oradata/FREE/FREEPDB1/microserver_data01.dbf' SIZE 100M AUTOEXTEND ON NEXT 100M MAXSIZE UNLIMITED;
-```
-
-기존 User 변경:
-
-```sql
-ALTER USER MICROSERVER DEFAULT TABLESPACE MICROSERVER_DATA TEMPORARY TABLESPACE TEMP;
-```
-
-Quota:
-
-```sql
-ALTER USER MICROSERVER QUOTA UNLIMITED ON MICROSERVER_DATA;
-```
-
----
-
-## 13. User 상태 확인
+User:
 
 ```sql
 SELECT username,account_status,default_tablespace,temporary_tablespace FROM dba_users WHERE username='MICROSERVER';
@@ -451,15 +357,13 @@ DEFAULT_TABLESPACE     MICROSERVER_DATA
 TEMPORARY_TABLESPACE   TEMP
 ```
 
----
-
-## 14. System Privilege 확인
+System Privilege:
 
 ```sql
 SELECT privilege FROM dba_sys_privs WHERE grantee='MICROSERVER' ORDER BY privilege;
 ```
 
-예상 권한:
+예상:
 
 ```text
 CREATE PROCEDURE
@@ -469,19 +373,13 @@ CREATE TABLE
 CREATE VIEW
 ```
 
----
-
-## 15. Tablespace Quota 확인
-
-Quota를 확인한다.
+Quota:
 
 ```sql
 SELECT tablespace_name,username,bytes,max_bytes FROM dba_ts_quotas WHERE username='MICROSERVER';
 ```
 
-`MAX_BYTES = -1` 등으로 표시되면 Unlimited Quota로 관리되는 환경일 수 있다.
-
-핵심 확인 대상:
+핵심 확인:
 
 ```text
 USERNAME         MICROSERVER
@@ -490,7 +388,7 @@ TABLESPACE_NAME  MICROSERVER_DATA
 
 ---
 
-## 16. MICROSERVER 계정 접속 검증
+## 10. MICROSERVER 계정 접속 검증
 
 SYSTEM Session을 종료한다.
 
@@ -498,65 +396,167 @@ SYSTEM Session을 종료한다.
 exit
 ```
 
-Password를 직접 Command History에 남기는 방식은 피하는 것이 좋지만,
-로컬 환경에서 단순 접속 검증을 수행할 경우 SQL*Plus Prompt 방식으로 접속할 수 있다.
+Password Prompt 방식으로 접속한다.
 
 ```bash
 docker exec -it microserver-oracle sqlplus MICROSERVER@FREEPDB1
 ```
 
-SQL*Plus가 Password를 요청하면 개발자 Local Password를 입력한다.
+### 10.1 현재 User 확인
 
-정상:
-
-```text
-SQL>
-```
-
-현재 User 확인:
+`MICROSERVER@FREEPDB1`으로 정상 접속되었는지 현재 User를 확인한다.
 
 ```sql
 SELECT USER FROM dual;
 ```
 
-정상:
+MicroServer 검증 환경의 실제 실행 결과:
 
 ```text
+USER
+--------------------------------------------------------------------------------
 MICROSERVER
 ```
 
-현재 PDB 확인:
+즉 현재 SQL*Plus Session이 `MICROSERVER` 계정으로 연결되어 있음을 의미한다.
+
+```text
+SQL*Plus Session
+        ↓
+Current User
+        ↓
+MICROSERVER
+```
+
+!!! tip "접속 검증 핵심"
+    `SELECT USER FROM dual;` 결과가 `MICROSERVER`이면
+    Application Schema User로 정상 로그인된 상태이다.
+
+### 10.2 현재 PDB 확인
+
+현재 Session이 `FREEPDB1`에 연결되어 있는지도 확인한다.
 
 ```sql
 SELECT sys_context('USERENV','CON_NAME') AS container_name FROM dual;
 ```
 
-정상:
+정상 기준:
 
 ```text
+CONTAINER_NAME
+--------------------------------------------------------------------------------
 FREEPDB1
 ```
 
-!!! tip "Password를 Command Line에 직접 넣지 않는 이유"
-    Command Line에 Password를 직접 작성하면 Terminal History나 Process 정보에 노출될 수 있다.
+최종적으로 다음 두 조건이 모두 확인되어야 한다.
 
-    가능하면 SQL*Plus Password Prompt를 이용한다.
+```text
+User       → MICROSERVER
+Container  → FREEPDB1
+```
+
+즉 최종 접속 상태는 다음과 같다.
+
+```text
+MICROSERVER@FREEPDB1
+```
 
 ---
 
-## 17. 현재 단계에서 업무 Object는 만들지 않음
+## 11. 기존 User가 있는 경우
 
-현재 단계의 완료 기준은 다음까지이다.
+이미 `MICROSERVER` User를 Tablespace 지정 없이 생성했다면 먼저 상태를 확인한다.
+
+```sql
+SELECT username,account_status,default_tablespace,temporary_tablespace FROM dba_users WHERE username='MICROSERVER';
+```
+
+Default Tablespace가 `SYSTEM`이라면 User를 삭제하지 않고 변경할 수 있다.
+
+```sql
+ALTER USER MICROSERVER DEFAULT TABLESPACE MICROSERVER_DATA TEMPORARY TABLESPACE TEMP;
+```
+
+Quota:
+
+```sql
+ALTER USER MICROSERVER QUOTA UNLIMITED ON MICROSERVER_DATA;
+```
+
+필요한 System Privilege가 없다면 8장의 기본 권한을 부여한다.
+
+### `ORA-00959: tablespace 'USERS' does not exist`
+
+다음과 같은 SQL에서 오류가 발생한다면:
+
+```sql
+ALTER USER MICROSERVER QUOTA UNLIMITED ON USERS;
+```
+
+현재 PDB에 `USERS` Tablespace가 실제로 존재하는지 확인한다.
+
+```sql
+SELECT tablespace_name,contents,status FROM dba_tablespaces ORDER BY tablespace_name;
+```
+
+MicroServer 표준에서는 `USERS`를 전제로 하지 않고 명시적인 `MICROSERVER_DATA` Tablespace를 사용한다.
+
+---
+
+## 12. Tablespace / User / Volume 관계
+
+Oracle User 자체가 Tablespace 안에 저장되는 것은 아니다.
+
+```text
+MICROSERVER User / Schema
+        ↓
+Table / Index 등 Segment 생성
+        ↓
+MICROSERVER_DATA Tablespace
+        ↓
+microserver_data01.dbf
+        ↓
+/opt/oracle/oradata
+        ↓
+microserver-oracle-data Named Volume
+```
+
+따라서 Container를 삭제하더라도 Named Volume이 유지되면 Database Datafile은 유지될 수 있다.
+
+Named Volume을 삭제하면 Oracle Database Data 자체가 삭제될 수 있으므로 주의한다.
+
+---
+
+## 13. 재구성 시 주의사항
+
+User 삭제:
+
+```sql
+DROP USER MICROSERVER CASCADE;
+```
+
+`CASCADE`는 해당 User가 소유한 Schema Object까지 삭제하므로 실제 업무 Object가 존재하는 상태에서는 신중하게 사용한다.
+
+Tablespace 삭제도 일반적인 개발 절차로 수행하지 않는다.
+
+Local Database 전체 초기화가 목적이라면 개별 Object 삭제보다
+Oracle Named Volume 전체 초기화가 필요한 상황인지 먼저 판단한다.
+
+---
+
+## 14. 현재 단계에서 하지 않는 작업
+
+현재 완료 구조:
 
 ```text
 FREEPDB1
-    ↓
+   ↓
 MICROSERVER_DATA
-    ↓
+   ↓
 MICROSERVER
 ```
 
-다음 Object는 Spring Boot 프로젝트와 Database Schema 설계 이후 생성한다.
+다음 Object는 Project의 Database Schema 설계 이후 생성한다.
 
 ```text
 Table
@@ -568,211 +568,61 @@ Seed Data
 Migration History
 ```
 
-환경 확인을 위해 임의의 업무 Table을 미리 만들지 않는다.
+환경 확인 목적으로 임의의 업무 Table을 미리 만들지 않는다.
 
 ---
 
-## 18. Tablespace와 User 관계 이해
+## 15. 보안 및 운영 원칙
 
-Oracle에서 **User 자체가 Tablespace 안에 저장되는 것은 아니다.**
-
-`CREATE USER`는 Database Dictionary에 사용자 / Schema 정보를 등록한다.
-
-실제 저장공간을 사용하는 것은 이후 User가 생성하는 Segment이다.
-
-```text
-MICROSERVER User / Schema
-        ↓
-CREATE TABLE ...
-CREATE INDEX ...
-        ↓
-Segment 생성
-        ↓
-MICROSERVER_DATA Tablespace
-        ↓
-microserver_data01.dbf
-```
-
-Default Tablespace는 Object 생성 시 별도 Tablespace를 지정하지 않았을 때
-기본적으로 사용할 저장공간을 결정한다.
-
-Temporary Tablespace `TEMP`는 Sort, Join 등 임시 작업에 사용된다.
-
----
-
-## 19. Docker Named Volume과 Datafile 관계
-
-Oracle Container는 다음 Named Volume을 사용한다.
-
-```text
-microserver-oracle-data
-```
-
-Mount:
-
-```text
-microserver-oracle-data
-        ↓
-/opt/oracle/oradata
-        ↓
-FREE
-└─ FREEPDB1
-   ├─ system01.dbf
-   ├─ sysaux01.dbf
-   ├─ undotbs01.dbf
-   └─ microserver_data01.dbf
-```
-
-따라서 `MICROSERVER_DATA`의 Datafile 역시 Named Volume 안에 저장된다.
-
-```text
-Container 삭제
-→ Volume 유지
-→ Datafile 유지 가능
-
-Volume 삭제
-→ Oracle Database Data 전체 삭제
-```
-
----
-
-## 20. 사용자 재구성 시 주의사항
-
-### 20.1 User만 삭제
-
-향후 User를 재구성해야 하는 경우 `DROP USER`는 신중하게 사용한다.
-
-```sql
-DROP USER MICROSERVER CASCADE;
-```
-
-`CASCADE`는 해당 User가 소유한 Schema Object를 함께 삭제한다.
-
-현재 실제 업무 Object가 존재한다면 Data 손실이 발생할 수 있다.
-
-### 20.2 Tablespace 삭제
-
-Tablespace 삭제는 더욱 주의한다.
-
-현재 문서에서는 일반 개발 절차로 `DROP TABLESPACE`를 수행하지 않는다.
-
-Database를 완전히 초기화하려는 목적이라면
-개별 Object를 수동으로 정리하기보다 Local Oracle Named Volume 전체 초기화 여부를 먼저 검토한다.
-
----
-
-## 21. 보안 및 운영 원칙
-
-- `SYSTEM` 계정은 Application에서 사용하지 않는다.
+- `SYSTEM`은 Application에서 사용하지 않는다.
 - Application은 `MICROSERVER` 계정을 사용한다.
-- 실제 Password를 Markdown / Git에 기록하지 않는다.
-- Production DB 계정과 Password를 Local Database에 재사용하지 않는다.
-- Local 환경이라고 `DBA` Role을 무조건 부여하지 않는다.
-- Tablespace와 Quota를 명시적으로 지정한다.
-- 운영환경의 Tablespace Size 정책은 DBA / 운영 기준을 따른다.
+- Password를 Markdown / Git에 기록하지 않는다.
+- Production Credential을 Local Database에 재사용하지 않는다.
+- Local 환경이라고 `DBA` Role을 기본 부여하지 않는다.
+- Tablespace와 Quota를 명시적으로 관리한다.
+- 운영 Tablespace Size 정책은 운영 DBA 기준을 따른다.
 
 ---
 
-## 22. 최종 검증
-
-SYSTEM으로 확인:
-
-```sql
-SELECT tablespace_name,contents,status FROM dba_tablespaces WHERE tablespace_name='MICROSERVER_DATA';
-```
-
-```sql
-SELECT username,account_status,default_tablespace,temporary_tablespace FROM dba_users WHERE username='MICROSERVER';
-```
-
-```sql
-SELECT privilege FROM dba_sys_privs WHERE grantee='MICROSERVER' ORDER BY privilege;
-```
-
-MICROSERVER로 확인:
-
-```sql
-SELECT USER FROM dual;
-```
-
-```sql
-SELECT sys_context('USERENV','CON_NAME') AS container_name FROM dual;
-```
-
-최종 목표:
-
-```text
-FREEPDB1
-│
-├─ SYSTEM / SYSAUX / UNDO / TEMP
-│
-└─ MICROSERVER_DATA
-      ↓
-   MICROSERVER
-      ↓
-Application Schema Objects
-```
-
----
-
-## 23. 체크리스트
-
-### 23.1 PDB / Tablespace
+## 16. 체크리스트
 
 - [ ] `SYSTEM`으로 `FREEPDB1`에 접속했다.
-- [ ] `CON_NAME`이 `FREEPDB1`인지 확인했다.
-- [ ] `dba_tablespaces`로 실제 Tablespace 목록을 확인했다.
-- [ ] Default Permanent Tablespace를 확인했다.
-- [ ] `db_create_file_dest` 설정 여부를 확인했다.
-- [ ] `dba_data_files`에서 실제 Datafile Directory를 확인했다.
+- [ ] `CON_NAME`이 `FREEPDB1`이다.
+- [ ] 실제 Tablespace와 Datafile Directory를 조회했다.
 - [ ] `MICROSERVER_DATA` Tablespace를 생성했다.
-
-### 23.2 User
-
 - [ ] `MICROSERVER` User를 생성했다.
 - [ ] Default Tablespace가 `MICROSERVER_DATA`이다.
 - [ ] Temporary Tablespace가 `TEMP`이다.
 - [ ] `MICROSERVER_DATA` Quota가 설정되어 있다.
 - [ ] 필요한 System Privilege만 부여했다.
 - [ ] `DBA` Role을 부여하지 않았다.
-
-### 23.3 접속 검증
-
 - [ ] `MICROSERVER@FREEPDB1`으로 접속할 수 있다.
 - [ ] `SELECT USER FROM dual;` 결과가 `MICROSERVER`이다.
-- [ ] 현재 `CON_NAME`이 `FREEPDB1`이다.
-- [ ] 아직 실제 업무 Table / Sequence는 생성하지 않았다.
+- [ ] 아직 업무 Schema Object를 생성하지 않았다.
 
 ---
 
-## 24. 다음 단계
+## 17. 다음 단계
 
-Oracle 프로젝트 Schema 준비가 완료되면
-Spring Boot 프로젝트의 Database 연계 단계에서 다음 내용을 진행한다.
+Oracle 프로젝트 Schema 준비가 완료되면 Spring Boot의 Database 연계 단계로 이동한다.
 
 ```text
-MICROSERVER_DATA / MICROSERVER 완료
+MICROSERVER_DATA / MICROSERVER 완료       ← 현재 완료
         ↓
 Oracle JDBC Driver
         ↓
 Spring Boot Datasource
         ↓
-Local Profile / Secret 연계
+Local Profile / Secret
         ↓
 Schema / Migration
         ↓
 DAO / Persistence
         ↓
-Service Transaction
-        ↓
-Application DB 연결 검증
+Transaction
 ```
 
-현재 단계에서는 아직 Spring Boot Database Object를 만들지 않는다.
-
----
-
-## 25. 관련 문서
+## 관련 문서
 
 - [Oracle Database Free 설치 및 접속](oracle_database_free_setup.md)
 - [Docker Desktop 개요 및 공통 환경](docker_desktop_setup.md)
