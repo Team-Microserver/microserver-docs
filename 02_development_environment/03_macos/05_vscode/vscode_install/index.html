@@ -1025,19 +1025,19 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 설치 확인
+        3. 설치 파일 확인
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. 설치 확인">
+    <nav class="md-nav" aria-label="3. 설치 파일 확인">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-application" class="md-nav__link">
+  <a href="#31-application-bundle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 Application 존재 확인
+        3.1 Application Bundle 존재 확인
       
     </span>
   </a>
@@ -1045,10 +1045,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-vs-code" class="md-nav__link">
+  <a href="#32-macos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 VS Code 최초 실행
+        3.2 macOS 실제 실행 파일 존재 확인
       
     </span>
   </a>
@@ -1056,10 +1056,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#33-version" class="md-nav__link">
+  <a href="#33-code-cli" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.3 Version 확인
+        3.3 내부 code CLI 존재 확인
       
     </span>
   </a>
@@ -1067,10 +1067,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#34-code" class="md-nav__link">
+  <a href="#34" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4 code 명령은 아직 필수 아님
+        3.4 설치 단계 최종 구조
       
     </span>
   </a>
@@ -1779,19 +1779,19 @@
   <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 설치 확인
+        3. 설치 파일 확인
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. 설치 확인">
+    <nav class="md-nav" aria-label="3. 설치 파일 확인">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-application" class="md-nav__link">
+  <a href="#31-application-bundle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 Application 존재 확인
+        3.1 Application Bundle 존재 확인
       
     </span>
   </a>
@@ -1799,10 +1799,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-vs-code" class="md-nav__link">
+  <a href="#32-macos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 VS Code 최초 실행
+        3.2 macOS 실제 실행 파일 존재 확인
       
     </span>
   </a>
@@ -1810,10 +1810,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#33-version" class="md-nav__link">
+  <a href="#33-code-cli" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.3 Version 확인
+        3.3 내부 code CLI 존재 확인
       
     </span>
   </a>
@@ -1821,10 +1821,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#34-code" class="md-nav__link">
+  <a href="#34" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.4 code 명령은 아직 필수 아님
+        3.4 설치 단계 최종 구조
       
     </span>
   </a>
@@ -1914,11 +1914,11 @@
 <li>Mac Architecture 확인</li>
 <li><code>~/local-microserver/tools/vscode</code> Directory 준비</li>
 <li><code>Visual Studio Code.app</code> 배치</li>
-<li>Application 및 CLI 위치 확인</li>
-<li>VS Code 최초 실행 및 Version 확인</li>
+<li>Application Bundle과 내부 실행 파일/CLI 존재 확인</li>
 </ul>
-<p><code>code-portable-data</code> Directory 생성과 Portable Mode 활성화, 실행 Script,
-Portable Update, 다른 개발자에게 전달할 Package 구성은 다음 <strong>VS Code Portable 설정</strong> 문서에서 수행한다.</p>
+<p><code>code-portable-data</code> Directory 생성과 Portable Mode 활성화, 실제 VS Code 실행,
+Version 확인, 독립 Instance 확인, 실행 Script, Portable Update,
+다른 개발자에게 전달할 Package 구성은 다음 <strong>VS Code Portable 설정</strong> 문서에서 수행한다.</p>
 <p>Editor의 Encoding, Auto Save, Format On Save와 Settings 적용 범위는
 그 다음 <strong>VS Code 기본 설정</strong> 문서에서 다룬다.</p>
 <hr />
@@ -2062,38 +2062,90 @@ MicroServer는 JDK, Gradle, VS Code와 주요 설정을 <code>~/local-microserve
 </span></code></pre></div>
 </div>
 <hr />
-<h2 id="3">3. 설치 확인<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
-<h3 id="31-application">3.1 Application 존재 확인<a class="headerlink" href="#31-application" title="Permanent link">&para;</a></h3>
+<h2 id="3">3. 설치 파일 확인<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>현재 단계에서는 아직 <code>code-portable-data</code>를 생성하지 않았기 때문에
+VS Code를 실행하여 Portable Mode 동작을 확인하지 않는다.</p>
+<p>macOS의 VS Code는 이미 실행 중인 VS Code Instance가 있는 경우
+Application 경로를 직접 지정해도 기존 Instance와 연결될 수 있다.</p>
+<p>따라서 <strong>설치 단계에서는 Application Bundle과 내부 실행 파일이 정상적으로 배치되었는지만 확인</strong>한다.</p>
+<p>실제 실행과 Portable Mode 분리 여부는 다음 <strong>VS Code Portable 설정</strong> 단계에서 검증한다.</p>
+<h3 id="31-application-bundle">3.1 Application Bundle 존재 확인<a class="headerlink" href="#31-application-bundle" title="Permanent link">&para;</a></h3>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nb">test</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app&quot;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;VS Code Application OK&quot;</span>
 </span></code></pre></div>
-<p>CLI 확인:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">test</span><span class="w"> </span>-x<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;VS Code CLI OK&quot;</span>
+<p>정상이라면:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>VS Code Application OK
 </span></code></pre></div>
-<h3 id="32-vs-code">3.2 VS Code 최초 실행<a class="headerlink" href="#32-vs-code" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>open<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app&quot;</span>
+<h3 id="32-macos">3.2 macOS 실제 실행 파일 존재 확인<a class="headerlink" href="#32-macos" title="Permanent link">&para;</a></h3>
+<p>VS Code Application Bundle 내부의 실제 macOS 실행 파일은 다음 위치에 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>~/local-microserver/tools/vscode/Visual Studio Code.app/Contents/MacOS/Code
 </span></code></pre></div>
-<h3 id="33-version">3.3 Version 확인<a class="headerlink" href="#33-version" title="Permanent link">&para;</a></h3>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code&quot;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span>--version
+<p>확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>ls<span class="w"> </span>-l<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app/Contents/MacOS/Code&quot;</span>
 </span></code></pre></div>
-<p>Version과 Architecture를 확인한다.</p>
-<h3 id="34-code">3.4 <code>code</code> 명령은 아직 필수 아님<a class="headerlink" href="#34-code" title="Permanent link">&para;</a></h3>
-<p>Microsoft의 일반 macOS 가이드에서는 Command Palette에서 다음 명령으로 <code>code</code>를 PATH에 추가할 수 있다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>Shell Command: Install &#39;code&#39; command in PATH
+<p>실행 가능 파일인지 확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nb">test</span><span class="w"> </span>-x<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app/Contents/MacOS/Code&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;VS Code Executable OK&quot;</span>
 </span></code></pre></div>
-<p>하지만 MicroServer는 시스템 전역 설정을 최소화하고 <code>~/local-microserver</code> 아래의 개발환경을 명시적으로 운영하는 것을 우선한다.</p>
+<div class="admonition note">
+<p class="admonition-title">현재 단계에서는 Code를 직접 실행하지 않음</p>
+<p>다음과 같이 실행 파일을 직접 호출할 수는 있다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>Visual Studio Code.app/Contents/MacOS/Code
+</span></code></pre></div>
+<p>하지만 Portable Mode가 아직 구성되지 않은 상태에서는
+이미 실행 중인 일반 VS Code Instance와 연결될 수 있다.</p>
+<p>따라서 설치 단계의 검증 명령으로 사용하지 않는다.</p>
+</div>
+<h3 id="33-code-cli">3.3 내부 <code>code</code> CLI 존재 확인<a class="headerlink" href="#33-code-cli" title="Permanent link">&para;</a></h3>
+<p>Application 내부 CLI:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>~/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code
+</span></code></pre></div>
+<p>확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>ls<span class="w"> </span>-l<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code&quot;</span>
+</span></code></pre></div>
+<p>실행 가능 여부:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="nb">test</span><span class="w"> </span>-x<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app/Contents/Resources/app/bin/code&quot;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;VS Code CLI OK&quot;</span>
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title"><code>code --version</code>도 다음 단계에서 실행</p>
+<p><code>code</code> CLI 역시 실행 시 기존 VS Code Instance와 연결될 수 있는 동작이 포함될 수 있으므로,
+이 문서에서는 <strong>파일 존재와 실행 권한만 확인</strong>한다.</p>
+<p>Version 확인은 <code>code-portable-data</code>를 구성한 뒤
+<strong>VS Code Portable 설정</strong> 문서에서 함께 수행한다.</p>
+</div>
+<h3 id="34">3.4 설치 단계 최종 구조<a class="headerlink" href="#34" title="Permanent link">&para;</a></h3>
+<p>현재 문서 완료 시점의 구조:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>~/local-microserver
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>└─ tools
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>   └─ vscode
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>      └─ Visual Studio Code.app
+</span></code></pre></div>
+<p>아직 다음 항목은 생성하지 않는다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>code-portable-data
+</span></code></pre></div>
+<p>다음 Portable 설정 단계가 완료되면:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>~/local-microserver
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>└─ tools
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>   └─ vscode
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>      ├─ Visual Studio Code.app
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>      └─ code-portable-data
+</span></code></pre></div>
+<p>구조가 된다.</p>
 <hr />
 <h2 id="4-macos-quarantine">4. macOS 보안 / quarantine 참고<a class="headerlink" href="#4-macos-quarantine" title="Permanent link">&para;</a></h2>
-<p>Portable Mode가 정상 동작하지 않는 경우 확인한다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>xattr<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app&quot;</span>
+<p>이 항목은 설치 과정에서 Application 실행이 macOS 보안 정책에 의해 차단되거나,
+다음 Portable 설정 단계에서 실행 문제가 발생하는 경우 참고한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>xattr<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app&quot;</span>
 </span></code></pre></div>
 <p>공식 배포처에서 받은 VS Code임을 확인한 후 필요한 경우:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>xattr<span class="w"> </span>-dr<span class="w"> </span>com.apple.quarantine<span class="w"> </span><span class="se">\</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>xattr<span class="w"> </span>-dr<span class="w"> </span>com.apple.quarantine<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver/tools/vscode/Visual Studio Code.app&quot;</span>
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">무조건 제거하지 않음</p>
@@ -2107,18 +2159,19 @@ MicroServer는 JDK, Gradle, VS Code와 주요 설정을 <code>~/local-microserve
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Apple Silicon 환경에서는 Apple silicon(Arm64) 또는 Universal 배포본을 선택했다.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>~/local-microserver/tools/vscode</code> Directory를 준비했다.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Visual Studio Code.app</code>을 표준 Directory에 배치했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>Contents/MacOS/Code</code> 실행 파일이 존재한다.</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Application 내부 <code>code</code> CLI가 존재한다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code가 정상 실행된다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Version을 확인했다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>code-portable-data</code> 구성은 다음 단계에서 수행한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 현재 단계에서는 VS Code를 실행하지 않는다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>code-portable-data</code> 생성과 실제 실행 검증은 다음 단계에서 수행한다.</li>
 </ul>
 <hr />
 <h2 id="6">6. 다음 단계<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
     A["VS Code macOS 다운로드"]
     --&gt; B["Visual Studio Code.app 배치"]
-    --&gt; C["Application / Version 확인"]
-    --&gt; D["VS Code Portable 설정"]</code></pre>
+    --&gt; C["Application / 실행 파일 존재 확인"]
+    --&gt; D["VS Code Portable 설정"]
+    --&gt; E["실제 실행 / Version / 독립 Instance 확인"]</code></pre>
 <p><strong><a href="../vscode_portable_setup/">VS Code Portable 설정</a></strong></p>
 <hr />
 <h2 id="7">7. 공식 참고<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
