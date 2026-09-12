@@ -27,7 +27,7 @@
     
     
       
-        <title>VS Code 설정 원칙 - MicroServer 구축 가이드</title>
+        <title>개발환경 구성 원칙 - MicroServer 구축 가이드</title>
       
     
     
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              VS Code 설정 원칙
+              개발환경 구성 원칙
             
           </span>
         </div>
@@ -774,7 +774,7 @@
   
   
   
-    <a href="../../04_gradle/gradle_setup/" class="md-nav__link">
+    <a href="../../04_gradle/macos_gradle_setup/" class="md-nav__link">
       
   
   
@@ -833,7 +833,7 @@
   <span class="md-ellipsis">
     
   
-    VS Code 개발환경 설치
+    VS Code 설치
   
 
     
@@ -849,7 +849,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    VS Code 개발환경 설치
+    VS Code 설치
   
 
           </label>
@@ -878,7 +878,7 @@
   <span class="md-ellipsis">
     
   
-    VS Code 설정 원칙
+    개발환경 구성 원칙
   
 
     
@@ -896,7 +896,7 @@
   <span class="md-ellipsis">
     
   
-    VS Code 설정 원칙
+    개발환경 구성 원칙
   
 
     
@@ -933,10 +933,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#macos-portable" class="md-nav__link">
+  <a href="#2-microserver-macos-vs-code" class="md-nav__link">
     <span class="md-ellipsis">
       
-        macOS Portable 개발환경 원칙
+        2. MicroServer macOS VS Code 구성 방향
       
     </span>
   </a>
@@ -944,96 +944,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 전체 개발환경 구성 순서
+        3. 전체 구성 순서
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-vs-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. VS Code 환경 구성 원칙
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. VS Code 환경 구성 원칙">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-vs-code-ide" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 VS Code를 표준 IDE로 사용
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-java-extension-pack" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 Java 기능은 Extension Pack으로 구성
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-spring-boot-spring-boot-extension-pack" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 Spring Boot 기능은 Spring Boot Extension Pack으로 구성
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#35-jdk" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.5 프로젝트별 JDK 운영
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#36-directory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.6 개발환경은 Directory 단위로 전달 가능한 구조를 지향
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#38-local-secret-git-package" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.8 Local Secret은 Git이 아니라 개발환경 Package 정책으로 분리
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1041,19 +958,41 @@
   <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 세부 가이드 구성
+        4. 설정 범위 원칙
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. 세부 가이드 구성">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-macos-portable-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. macOS Portable Mode 운영 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-microserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. MicroServer 운영 원칙
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. MicroServer 운영 원칙">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#41-vs-code" class="md-nav__link">
+  <a href="#61" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.1 VS Code 설치 및 기본 설정
+        6.1 시스템 전역 설정 최소화
       
     </span>
   </a>
@@ -1061,10 +1000,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#42-java-extension" class="md-nav__link">
+  <a href="#62-jdk" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.2 Java 개발 Extension 구성
+        6.2 JDK 표준 경로
       
     </span>
   </a>
@@ -1072,10 +1011,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#43-spring-boot-extension" class="md-nav__link">
+  <a href="#63-gradle-build-wrapper" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.3 Spring Boot Extension 구성
+        6.3 Gradle 프로젝트 Build는 Wrapper 우선
       
     </span>
   </a>
@@ -1083,21 +1022,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#44-extension-profile" class="md-nav__link">
+  <a href="#64" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.4 개발 지원 Extension 및 Profile 구성
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#45-jdk" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.5 JDK 연계 및 개발환경 운영
+        6.4 개인 설정과 프로젝트 설정 분리
       
     </span>
   </a>
@@ -1110,10 +1038,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
+  <a href="#7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. 완료 기준
+        7. 가이드 문서 구성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 가이드 문서 구성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code 설치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-code_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code 개발환경 설정
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 완료 기준
       
     </span>
   </a>
@@ -1121,21 +1088,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6" class="md-nav__link">
+  <a href="#9" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. 다음 단계
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        참고
+        9. 다음 단계
       
     </span>
   </a>
@@ -1186,7 +1142,35 @@
   
   
     <li class="md-nav__item">
-      <a href="../vscode_basic_setup/" class="md-nav__link">
+      <a href="../vscode_portable_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code Portable 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../vscode_basic_settings/" class="md-nav__link">
         
   
   
@@ -1207,176 +1191,60 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../vscode_user_settings/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    VS Code User Settings
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../java_extension_setup/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Java 개발 Extension 구성
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../spring_boot_extension_setup/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Spring Boot Extension 구성
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../support_extension_profile_setup/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    개발 지원 Extension 및 Profile 구성
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../jdk_workspace_environment_setup/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    JDK 연계 및 개발환경 운영
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../vscode_install_basic_setup_legacy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    설치 및 기본 설정 통합 문서 (기존)
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../vscode_configuration_model/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경 설정
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
       
     </li>
   
@@ -1847,10 +1715,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#macos-portable" class="md-nav__link">
+  <a href="#2-microserver-macos-vs-code" class="md-nav__link">
     <span class="md-ellipsis">
       
-        macOS Portable 개발환경 원칙
+        2. MicroServer macOS VS Code 구성 방향
       
     </span>
   </a>
@@ -1858,96 +1726,13 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
+  <a href="#3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 전체 개발환경 구성 순서
+        3. 전체 구성 순서
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3-vs-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3. VS Code 환경 구성 원칙
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="3. VS Code 환경 구성 원칙">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#31-vs-code-ide" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.1 VS Code를 표준 IDE로 사용
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#33-java-extension-pack" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.3 Java 기능은 Extension Pack으로 구성
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#34-spring-boot-spring-boot-extension-pack" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.4 Spring Boot 기능은 Spring Boot Extension Pack으로 구성
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#35-jdk" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.5 프로젝트별 JDK 운영
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#36-directory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.6 개발환경은 Directory 단위로 전달 가능한 구조를 지향
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#38-local-secret-git-package" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        3.8 Local Secret은 Git이 아니라 개발환경 Package 정책으로 분리
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -1955,19 +1740,41 @@
   <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. 세부 가이드 구성
+        4. 설정 범위 원칙
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="4. 세부 가이드 구성">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-macos-portable-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. macOS Portable Mode 운영 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-microserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. MicroServer 운영 원칙
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. MicroServer 운영 원칙">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#41-vs-code" class="md-nav__link">
+  <a href="#61" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.1 VS Code 설치 및 기본 설정
+        6.1 시스템 전역 설정 최소화
       
     </span>
   </a>
@@ -1975,10 +1782,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#42-java-extension" class="md-nav__link">
+  <a href="#62-jdk" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.2 Java 개발 Extension 구성
+        6.2 JDK 표준 경로
       
     </span>
   </a>
@@ -1986,10 +1793,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#43-spring-boot-extension" class="md-nav__link">
+  <a href="#63-gradle-build-wrapper" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.3 Spring Boot Extension 구성
+        6.3 Gradle 프로젝트 Build는 Wrapper 우선
       
     </span>
   </a>
@@ -1997,21 +1804,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#44-extension-profile" class="md-nav__link">
+  <a href="#64" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4.4 개발 지원 Extension 및 Profile 구성
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#45-jdk" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        4.5 JDK 연계 및 개발환경 운영
+        6.4 개인 설정과 프로젝트 설정 분리
       
     </span>
   </a>
@@ -2024,10 +1820,49 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
+  <a href="#7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. 완료 기준
+        7. 가이드 문서 구성
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 가이드 문서 구성">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code 설치
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-code_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VS Code 개발환경 설정
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 완료 기준
       
     </span>
   </a>
@@ -2035,21 +1870,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6" class="md-nav__link">
+  <a href="#9" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. 다음 단계
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        참고
+        9. 다음 단계
       
     </span>
   </a>
@@ -2073,312 +1897,124 @@
 
 
 
-<h1 id="macos-vs-code">macOS VS Code 설정 원칙<a class="headerlink" href="#macos-vs-code" title="Permanent link">&para;</a></h1>
+<h1 id="macos-vs-code">macOS VS Code 개발환경 구성 원칙<a class="headerlink" href="#macos-vs-code" title="Permanent link">&para;</a></h1>
 <h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
-<h2 id="macos-portable">macOS Portable 개발환경 원칙<a class="headerlink" href="#macos-portable" title="Permanent link">&para;</a></h2>
-<p>Apple Silicon macOS에서도 Windows와 동일하게 Directory 단위 전달을 지향한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>~/local-microserver/tools/vscode/
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ Visual Studio Code.app
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>└─ code-portable-data/
-</span></code></pre></div>
-<p>VS Code 실행은 Finder에서 App을 직접 여는 방식보다 다음 흐름을 권장한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>setup.command
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>→ create-vscode-shortcut.command
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>→ MicroServer VS Code.command
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>→ start-vscode.command
-</span></code></pre></div>
-<p><code>start-vscode.command</code>가 JDK와 Gradle 환경을 먼저 주입한 후 VS Code를 실행한다.</p>
-<p>본 문서는 MicroServer 프로젝트의 표준 개발 도구인 <strong>Visual Studio Code(VS Code)</strong> 개발환경 구성에 대한 전체 방향과 세부 가이드의 진행 순서를 설명한다.</p>
-<p>VS Code 환경 구성은 하나의 문서에서 모든 내용을 다루지 않고 다음과 같이 역할별로 분리한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>VS Code 개발환경 구성
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a> ├─ VS Code 설정 원칙
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a> ├─ VS Code 설치 및 기본 설정
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a> ├─ Java 개발 Extension 구성
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a> ├─ Spring Boot Extension 구성
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a> ├─ 개발 지원 Extension 및 Profile 구성
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a> └─ JDK 연계 및 개발환경 운영
-</span></code></pre></div>
-<p>현재 단계에서는 아직 MicroServer Spring Boot 프로젝트를 생성하지 않는다.</p>
-<p>따라서 다음 작업은 이후 가이드에서 진행한다.</p>
-<ul>
-<li>Spring Boot 프로젝트 생성</li>
-<li><code>build.gradle</code> / <code>settings.gradle</code> 작성 및 수정</li>
-<li>Gradle Dependency 구성</li>
-<li>Java Package / Class 작성</li>
-<li><code>application.yml</code> 작성</li>
-<li>애플리케이션 실행</li>
-<li>Debug 실행</li>
-<li>JUnit 테스트 작성</li>
-<li>Database 연결</li>
-</ul>
-<p>본 단계의 목표는 <strong>프로젝트를 생성하기 전에 VS Code를 Java / Spring Boot 개발용 IDE로 사용할 수 있도록 준비하는 것</strong>이다.</p>
+<p>본 문서는 MicroServer macOS 개발환경에서 Visual Studio Code를 어떤 기준으로 설치하고 운영할지 정의한다.</p>
+<p>Windows 최신 가이드와 동일하게 <strong>설치 단계</strong>와 <strong>개발환경 설정 단계</strong>를 분리한다. macOS에서도 VS Code 자체 설치, Portable Mode 구성, Editor 기본 설정을 먼저 완료한 뒤 Java / Spring Boot 개발환경을 구성한다.</p>
 <hr />
-<h2 id="2">2. 전체 개발환경 구성 순서<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
-<p>MicroServer 개발환경은 다음 순서로 구성한다.</p>
+<h2 id="2-microserver-macos-vs-code">2. MicroServer macOS VS Code 구성 방향<a class="headerlink" href="#2-microserver-macos-vs-code" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>~/local-microserver
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├─ tools
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>│  ├─ jdk
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│  │  └─ temurin-25
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│  │     └─ Contents
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│  │        └─ Home
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│  ├─ gradle
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│  │  └─ gradle-9.7.1
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>│  └─ vscode
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>│     ├─ Visual Studio Code.app
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>│     └─ code-portable-data
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>│        ├─ user-data
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>│        └─ extensions
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>├─ gradle-home
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>├─ workspace
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>└─ env
+</span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">JDK Directory와 JAVA_HOME 구분</p>
+<p>JDK 보관 Directory는 <code>~/local-microserver/tools/jdk/temurin-25/Contents/Home</code>이지만 실제 <code>JAVA_HOME</code>은 다음 경로다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
+</span></code></pre></div>
+</div>
+<hr />
+<h2 id="3">3. 전체 구성 순서<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
-    A[Git / GitHub 환경 구성] --&gt; B[Temurin JDK 준비]
-    B --&gt; C[Gradle 기본 환경]
-    C --&gt; D[VS Code 설치]
-    D --&gt; E[Java Extension 구성]
-    E --&gt; F[Spring Boot Extension 구성]
-    F --&gt; G[지원 Extension / Profile 구성]
-    G --&gt; H[JDK 연계 방식 확인]
-    H --&gt; I[Spring Boot 프로젝트 생성]
-    I --&gt; J[프로젝트 JDK / Gradle / VS Code 설정]</code></pre>
-<p>현재 가이드는 다음 범위를 담당한다.</p>
-<pre class="mermaid"><code>flowchart LR
-    JDK[Temurin JDK 준비] --&gt; GRADLE[Gradle 준비]
-
-    subgraph VSCODE["VS Code 개발환경 구성"]
-        direction LR
-        VS1[VS Code 설치]
-        VS2[Java Extension]
-        VS3[Spring Boot Extension]
-        VS4[지원 Extension]
-        VS5[Profile]
-        VS6[JDK 연계 방식 확인]
-
-        VS1 --&gt; VS2 --&gt; VS3 --&gt; VS4 --&gt; VS5 --&gt; VS6
-    end
-
-    SPRING[Spring Boot 프로젝트 생성]
-    PROJECT[프로젝트 개발환경 설정]
-
-    GRADLE --&gt; VSCODE
-    VSCODE --&gt; SPRING
-    SPRING --&gt; PROJECT</code></pre>
-<hr />
-<h2 id="3-vs-code">3. VS Code 환경 구성 원칙<a class="headerlink" href="#3-vs-code" title="Permanent link">&para;</a></h2>
-<p>MicroServer 프로젝트에서는 다음 원칙으로 VS Code 개발환경을 구성한다.</p>
-<h3 id="31-vs-code-ide">3.1 VS Code를 표준 IDE로 사용<a class="headerlink" href="#31-vs-code-ide" title="Permanent link">&para;</a></h3>
-<p>프로젝트의 기본 개발 IDE는 VS Code로 통일한다.</p>
-<p>개발자별로 다른 IDE를 사용하면 다음 항목에서 차이가 발생할 수 있다.</p>
+    A[VS Code 설치] --&gt; B[Portable Mode 설정]
+    B --&gt; C[VS Code 기본 설정]
+    C --&gt; D[VS Code 설정 방식 이해]
+    D --&gt; E[User Settings]
+    E --&gt; F[Java Extension]
+    F --&gt; G[Spring Boot Extension]
+    G --&gt; H[지원 Extension / Profile]
+    H --&gt; I[JDK 연계 및 운영]</code></pre>
+<h2 id="4">4. 설정 범위 원칙<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>범위</th>
+<th>용도</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Default Settings</td>
+<td>VS Code 기본값</td>
+</tr>
+<tr>
+<td>User Settings</td>
+<td>해당 Portable VS Code 인스턴스 공통 설정</td>
+</tr>
+<tr>
+<td>Profile</td>
+<td>목적별 Extension / Settings 묶음</td>
+</tr>
+<tr>
+<td>Workspace Settings</td>
+<td>프로젝트별 공통 설정</td>
+</tr>
+<tr>
+<td><code>.vscode</code></td>
+<td>프로젝트에 포함할 VS Code 설정</td>
+</tr>
+</tbody>
+</table>
+<p>현재 단계에서는 Portable VS Code의 User Settings와 Extension 환경을 준비한다. 실제 프로젝트별 <code>.vscode/settings.json</code> 구성은 프로젝트 생성 이후에 수행한다.</p>
+<h2 id="5-macos-portable-mode">5. macOS Portable Mode 운영 원칙<a class="headerlink" href="#5-macos-portable-mode" title="Permanent link">&para;</a></h2>
 <ul>
-<li>JDK 인식 방식</li>
-<li>Build Tool 연계 방식</li>
-<li>Formatter</li>
-<li>Debug 설정</li>
-<li>Extension 지원</li>
-<li>Workspace 설정</li>
+<li>Windows: VS Code ZIP Directory 내부에 <code>data</code> Directory 생성</li>
+<li>macOS: <code>Visual Studio Code.app</code>의 <strong>형제 Directory</strong>로 <code>code-portable-data</code> 생성</li>
+<li>macOS Stable: <code>code-portable-data</code></li>
+<li>macOS Insiders: <code>code-insiders-portable-data</code></li>
 </ul>
-<p>따라서 프로젝트 가이드와 예제는 VS Code를 기준으로 작성한다.</p>
-<h3 id="33-java-extension-pack">3.3 Java 기능은 Extension Pack으로 구성<a class="headerlink" href="#33-java-extension-pack" title="Permanent link">&para;</a></h3>
-<p>Java 개발 기능은 개별 Extension을 임의로 조합하기보다 <strong>Extension Pack for Java</strong>를 기본 구성으로 사용한다.</p>
-<p>이를 통해 개발자별 Extension 누락을 줄일 수 있다.</p>
-<h3 id="34-spring-boot-spring-boot-extension-pack">3.4 Spring Boot 기능은 Spring Boot Extension Pack으로 구성<a class="headerlink" href="#34-spring-boot-spring-boot-extension-pack" title="Permanent link">&para;</a></h3>
-<p>Spring Boot 개발 기능은 <strong>Spring Boot Extension Pack</strong>을 기본 구성으로 사용한다.</p>
-<p>Java Extension이 Java 언어 자체의 개발환경을 제공한다면 Spring Boot Extension은 그 위에 Spring 전용 개발 기능을 추가한다.</p>
-<h3 id="35-jdk">3.5 프로젝트별 JDK 운영<a class="headerlink" href="#35-jdk" title="Permanent link">&para;</a></h3>
-<p>JDK는 OS 전체에 하나의 Java 버전을 고정하는 방식보다, 앞 단계에서 준비한 Eclipse Temurin JDK를 <strong>프로젝트별 VS Code Workspace에서 선택하는 방식</strong>을 기본으로 한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Developer PC
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a> ├─ Temurin JDK 17
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a> ├─ Temurin JDK 21
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a> ├─ Temurin JDK 25 LTS
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a> └─ VS Code
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>      ├─ Project A → JDK A
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>      └─ Project B → JDK B
+<p>Portable Mode는 VS Code의 User Data와 Extension을 독립화하는 기능이다. JDK, Gradle, Git 등 외부 개발도구 자체를 설치하는 기능은 아니다.</p>
+<h2 id="6-microserver">6. MicroServer 운영 원칙<a class="headerlink" href="#6-microserver" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 시스템 전역 설정 최소화<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<p>가능하면 개발환경을 <code>~/local-microserver</code> 아래에 모아 관리한다.</p>
+<h3 id="62-jdk">6.2 JDK 표준 경로<a class="headerlink" href="#62-jdk" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>JAVA_HOME
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
-<p>실제 Workspace 설정은 프로젝트 생성 이후 적용한다.</p>
-<h3 id="36-directory">3.6 개발환경은 Directory 단위로 전달 가능한 구조를 지향<a class="headerlink" href="#36-directory" title="Permanent link">&para;</a></h3>
-<p>macOS 개발환경은 다음 구조를 기본으로 한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>~/local-microserver                       ← Git Repository 아님
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>│
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>├─ tools
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>│  ├─ jdk
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>│  │  └─ temurin-25
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>│  ├─ gradle
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>│  │  └─ gradle-9.7.1
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>│  └─ vscode
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>│     ├─ Visual Studio Code.app
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>│     └─ data
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>│
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>├─ gradle-home
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>│
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>├─ workspace
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>│  ├─ microserver.code-workspace
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>│  ├─ microserver                         ← Git Repository
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>│  └─ microserver-docs                    ← 별도 Git Repository
-</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>│
-</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>├─ env
-</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>│  ├─ setup.command
-</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>│  ├─ start-vscode.command
-</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>│  ├─ create-vscode-shortcut.command
-</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a>│  ├─ local-env.example.sh
-</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>│  └─ local-env.sh
-</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a>│
-</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a>├─ icons
-</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>│  └─ microserver.ico
-</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>│
-</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a>└─ MicroServer VS Code.lnk
+<h3 id="63-gradle-build-wrapper">6.3 Gradle 프로젝트 Build는 Wrapper 우선<a class="headerlink" href="#63-gradle-build-wrapper" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>./gradlew<span class="w"> </span>build
 </span></code></pre></div>
-<p><code>~/local-microserver</code>는 개발환경 Package Root이며 Git Repository가 아니다.
-<code>workspace</code> 아래 실제 프로젝트 Directory가 각각 Git Repository가 된다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>setup.command
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>→ 일반 Terminal Session 환경 구성
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>start-vscode.command
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>→ 환경 구성 + Portable VS Code 실행
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>local-env.example.sh
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>→ 배포 가능한 Local 설정 Sample
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>local-env.sh
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>→ 개발자 개인 Secret / 배포 제외
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>create-vscode-shortcut.command
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>→ MicroServer VS Code.lnk 생성
-</span></code></pre></div>
-<h3 id="38-local-secret-git-package">3.8 Local Secret은 Git이 아니라 개발환경 Package 정책으로 분리<a class="headerlink" href="#38-local-secret-git-package" title="Permanent link">&para;</a></h3>
-<p><code>ORACLE_PWD</code> 같은 개발자별 Local Secret은 다음 파일에 둘 수 있다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>~/local-microserver/env/local-env.sh
-</span></code></pre></div>
-<p>이 파일은 <code>workspace\microserver</code> Git Repository 밖에 있으므로
-프로젝트 <code>.gitignore</code>로 제외하는 파일이 아니다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>Repository 내부 .env
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>→ .gitignore 사용
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>Repository 밖 local-env.sh
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>→ Git 대상 아님
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>→ 개발환경 ZIP / 배포 Package에서 제외
-</span></code></pre></div>
-<p>Sample 파일:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>local-env.example.sh    ← 배포
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>local-env.sh            ← 배포 제외
-</span></code></pre></div>
-<hr />
-<h2 id="4">4. 세부 가이드 구성<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
-<h3 id="41-vs-code">4.1 VS Code 설치 및 기본 설정<a class="headerlink" href="#41-vs-code" title="Permanent link">&para;</a></h3>
-<p>다음 내용을 다룬다.</p>
-<ul>
-<li><code>~/local-microserver/tools/vscode</code> 표준 배치</li>
-<li>Portable <code>data</code> Directory와 User Data / Extension 저장 구조</li>
-<li><code>start-vscode.command</code>을 이용한 독립 실행환경 구성</li>
-<li><code>MicroServer VS Code.lnk</code>를 이용한 더블클릭 실행</li>
-<li><code>icons\microserver.ico</code>를 이용한 공통 Shortcut Icon 적용</li>
-<li><code>local-env.example.sh</code> / <code>local-env.sh</code>를 이용한 Local Secret 분리</li>
-<li>Git Repository와 개발환경 Package Root의 경계 구분</li>
-<li>Portable VS Code Update 및 배포 Package 관리</li>
-<li>macOS VS Code 설치와 Portable Mode 참고</li>
-<li><code>code</code> 명령 사용 방식</li>
-<li>주요 화면 구성</li>
-<li>Command Palette</li>
-<li>Extensions 화면</li>
-<li>Terminal</li>
-<li>UTF-8 등 기본 Editor 설정</li>
-<li>User Settings와 Workspace Settings의 차이</li>
+<h3 id="64">6.4 개인 설정과 프로젝트 설정 분리<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<p>개인 UI 편의 설정은 User Settings 또는 Profile에 두고, 팀 전체가 공유해야 할 프로젝트 설정은 프로젝트 생성 이후 <code>.vscode</code>에서 관리한다.</p>
+<h2 id="7">7. 가이드 문서 구성<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<h3 id="vs-code">VS Code 설치<a class="headerlink" href="#vs-code" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>vscode_setup.md</code> — 개발환경 구성 원칙</li>
+<li><code>vscode_install.md</code> — macOS VS Code 설치</li>
+<li><code>vscode_portable_setup.md</code> — macOS Portable Mode 설정</li>
+<li><code>vscode_basic_settings.md</code> — VS Code 기본 설정</li>
+</ol>
+<h3 id="vs-code_1">VS Code 개발환경 설정<a class="headerlink" href="#vs-code_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li><code>vscode_configuration_model.md</code></li>
+<li><code>vscode_user_settings.md</code></li>
+<li><code>java_extension_setup.md</code></li>
+<li><code>spring_boot_extension_setup.md</code></li>
+<li><code>support_extension_profile_setup.md</code></li>
+<li><code>jdk_workspace_environment_setup.md</code></li>
+</ol>
+<h2 id="8">8. 완료 기준<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> VS Code Application이 <code>~/local-microserver/tools/vscode</code> 아래에 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>code-portable-data</code>의 역할을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 실제 <code>JAVA_HOME</code>이 <code>~/local-microserver/tools/jdk/temurin-25/Contents/Home</code>임을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> User Settings와 Workspace Settings의 역할을 구분할 수 있다.</li>
 </ul>
-<p>→ <a href="../vscode_install/">VS Code 설치</a></p>
-<p>→ <a href="../vscode_basic_setup/">VS Code 기본 설정</a></p>
-<h3 id="42-java-extension">4.2 Java 개발 Extension 구성<a class="headerlink" href="#42-java-extension" title="Permanent link">&para;</a></h3>
-<p>다음 내용을 다룬다.</p>
-<ul>
-<li>Extension Pack for Java 설치</li>
-<li>Java Extension Pack을 사용하는 이유</li>
-<li>Language Support for Java</li>
-<li>Debugger for Java</li>
-<li>Test Runner for Java</li>
-<li>Gradle for Java</li>
-<li>Maven for Java (비교/호환)</li>
-<li>Project Manager for Java</li>
-<li>각 Extension의 역할과 이후 사용 시점</li>
-</ul>
-<p>→ <a href="../java_extension_setup/">Java 개발 Extension 구성</a></p>
-<h3 id="43-spring-boot-extension">4.3 Spring Boot Extension 구성<a class="headerlink" href="#43-spring-boot-extension" title="Permanent link">&para;</a></h3>
-<p>다음 내용을 다룬다.</p>
-<ul>
-<li>Spring Boot Extension Pack 설치</li>
-<li>Spring Boot Tools</li>
-<li>Spring Initializr Java Support</li>
-<li>Spring Boot Dashboard</li>
-<li>Java Extension과 Spring Extension의 관계</li>
-<li>현재 단계와 프로젝트 생성 이후 단계의 구분</li>
-</ul>
-<p>→ <a href="../spring_boot_extension_setup/">Spring Boot Extension 구성</a></p>
-<h3 id="44-extension-profile">4.4 개발 지원 Extension 및 Profile 구성<a class="headerlink" href="#44-extension-profile" title="Permanent link">&para;</a></h3>
-<p>다음 내용을 다룬다.</p>
-<ul>
-<li>YAML</li>
-<li>XML</li>
-<li>Container Tools</li>
-<li>CLI 일괄 설치</li>
-<li>설치 상태 확인</li>
-<li>VS Code Profile</li>
-<li>Java Spring Profile Template</li>
-<li>Extension 자동 업데이트와 운영 원칙</li>
-</ul>
-<p>→ <a href="../support_extension_profile_setup/">개발 지원 Extension 및 Profile 구성</a></p>
-<h3 id="45-jdk">4.5 JDK 연계 및 개발환경 운영<a class="headerlink" href="#45-jdk" title="Permanent link">&para;</a></h3>
-<p>다음 내용을 다룬다.</p>
-<ul>
-<li>VS Code와 JDK의 관계</li>
-<li><code>Java: Configure Java Runtime</code></li>
-<li>프로젝트별 JDK 운영 방향</li>
-<li><code>JAVA_HOME</code> 의존 최소화</li>
-<li>Extension 문제 확인</li>
-<li>Output / Reload</li>
-<li>현재 단계에서 하지 않는 작업</li>
-<li>최종 환경 확인 체크리스트</li>
-</ul>
-<p>→ <a href="../jdk_workspace_environment_setup/">JDK 연계 및 개발환경 운영</a></p>
-<hr />
-<h2 id="5">5. 완료 기준<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
-<p>VS Code 환경 구성 단계가 끝났을 때 다음 상태가 되어 있어야 한다.</p>
-<pre class="mermaid"><code>flowchart TB
-    PC[Developer PC]
-
-    PC --&gt; JDK[Eclipse Temurin JDK]
-    PC --&gt; GIT[Git]
-    PC --&gt; VS[Visual Studio Code]
-
-    VS --&gt; JAVA[Extension Pack for Java]
-    VS --&gt; SPRING[Spring Boot Extension Pack]
-    VS --&gt; SUPPORT[Support Extensions]
-
-    SUPPORT --&gt; YAML[YAML]
-    SUPPORT --&gt; XML[XML]
-    SUPPORT --&gt; CT[Container Tools]
-
-    JAVA --&gt; READY[Java 개발환경 준비]
-    SPRING --&gt; READY
-    JDK --&gt; READY</code></pre>
-<p>완료 기준:</p>
-<ul>
-<li>VS Code가 정상 실행된다.</li>
-<li>Java 개발용 Extension이 준비되어 있다.</li>
-<li>Spring Boot 개발용 Extension이 준비되어 있다.</li>
-<li>YAML / XML / Container 개발 지원 Extension이 준비되어 있다.</li>
-<li>Eclipse Temurin JDK가 준비되어 있다.</li>
-<li>VS Code의 Settings / Extension이 Portable <code>data</code> 영역에서 관리되는 구조를 이해했다.</li>
-<li>VS Code에서 프로젝트별 JDK를 연결할 수 있는 구조를 이해했다.</li>
-<li><code>~/local-microserver</code> Root와 실제 Git Repository 범위를 구분할 수 있다.</li>
-<li>Repository 밖의 <code>local-env.sh</code>은 <code>.gitignore</code>가 아니라 배포 Package에서 제외한다.</li>
-<li><code>MicroServer VS Code.lnk</code>를 바탕화면에 복사하여 실행 진입점으로 사용할 수 있다.</li>
-<li>아직 Spring Boot 프로젝트를 생성하지 않았다.</li>
-</ul>
-<hr />
-<h2 id="6">6. 다음 단계<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
-<p>VS Code 환경 구성이 끝나면 <strong>Spring Boot 프로젝트 생성 단계</strong>로 진행한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>JDK 설치 및 설정
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>        ↓
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Gradle 설치 및 기본 환경 구성
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        ↓
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>VS Code 개발환경 구성       ← 현재
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        ↓
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>Spring Boot 프로젝트 생성
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        ↓
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>프로젝트 JDK / Gradle / VS Code 설정
-</span></code></pre></div>
-<p>JDK와 Gradle 기본 환경은 앞 단계에서 이미 준비되어 있다.</p>
-<p>VS Code 단계에서는 IDE와 Java / Spring Boot 개발 Extension을 준비하고,
-실제 프로젝트 JDK Runtime, Gradle Wrapper, <code>build.gradle</code>, <code>settings.gradle</code>, Workspace 설정 등은
-Spring Boot 프로젝트가 생성된 이후의 <strong>프로젝트 개발환경 설정 단계</strong>에서 적용한다.</p>
-<hr />
-<h2 id="_1">참고<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="https://code.visualstudio.com/Download">VS Code 공식 Download</a></li>
-<li><a href="https://code.visualstudio.com/docs/setup/portable">VS Code Portable Mode</a></li>
-<li><a href="https://code.visualstudio.com/docs/configure/command-line">VS Code Command Line Interface</a></li>
-</ul>
+<h2 id="9">9. 다음 단계<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<p>→ <a href="../vscode_install/">macOS VS Code 설치</a></p>
 
 
 

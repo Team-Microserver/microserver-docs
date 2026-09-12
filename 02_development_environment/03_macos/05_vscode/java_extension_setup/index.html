@@ -774,7 +774,7 @@
   
   
   
-    <a href="../../04_gradle/gradle_setup/" class="md-nav__link">
+    <a href="../../04_gradle/macos_gradle_setup/" class="md-nav__link">
       
   
   
@@ -782,6 +782,58 @@
     
   
     Gradle 빌드환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../vscode_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치
   
 
     
@@ -823,17 +875,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_2_3_5" id="__nav_2_3_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_3_6" id="__nav_2_3_6_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    VS Code 개발환경 설치
+    VS Code 개발환경 설정
   
 
     
@@ -844,12 +896,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_3_5">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3_6">
             <span class="md-nav__icon md-icon"></span>
             
   
-    VS Code 개발환경 설치
+    VS Code 개발환경 설정
   
 
           </label>
@@ -862,70 +914,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../vscode_setup/" class="md-nav__link">
+      <a href="../vscode_configuration_model/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    VS Code 설정 원칙
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../vscode_install/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    VS Code 설치
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../vscode_basic_setup/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    VS Code 기본 설정
+    VS Code 설정 방식 이해
   
 
     
@@ -1401,34 +1397,6 @@
     
   
     JDK 연계 및 개발환경 운영
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../vscode_install_basic_setup_legacy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    설치 및 기본 설정 통합 문서 (기존)
   
 
     
@@ -2306,11 +2274,11 @@ Portable VS Code의 <code>bin\code.cmd</code>를 명시적으로 사용한다.</
 </div>
 <h3 id="31-portable-vs-code-jdk-runtime">3.1 Portable VS Code에 JDK Runtime 등록<a class="headerlink" href="#31-portable-vs-code-jdk-runtime" title="Permanent link">&para;</a></h3>
 <p>Extension Pack for Java를 설치한 뒤에는 Java Extension이 사용할 JDK 위치를 VS Code에 등록한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
 <p>JDK 설치 여부는 Terminal에서 다음과 같이 확인할 수 있다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home<span class="se">\b</span>in<span class="se">\j</span>ava.exe<span class="w"> </span>-version
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home<span class="se">\b</span>in<span class="se">\j</span>avac.exe<span class="w"> </span>-version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home<span class="se">\b</span>in<span class="se">\j</span>ava.exe<span class="w"> </span>-version
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home<span class="se">\b</span>in<span class="se">\j</span>avac.exe<span class="w"> </span>-version
 </span></code></pre></div>
 <p>Portable VS Code의 User Settings는 다음 위치에서 관리된다.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>~/local-microserver/tools/vscode/code-portable-data/user-data/User/settings.json
@@ -2322,12 +2290,12 @@ Portable VS Code의 <code>bin\code.cmd</code>를 명시적으로 사용한다.</
 </span></code></pre></div>
 <p>JDK 25를 기본 Runtime으로 사용할 경우 다음과 같이 등록한다.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="p">{</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="nt">&quot;java.jdt.ls.java.home&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="nt">&quot;java.jdt.ls.java.home&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver/tools/jdk/temurin-25/Contents/Home&quot;</span><span class="p">,</span>
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="nt">&quot;java.configuration.runtimes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 </span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">        </span><span class="p">{</span>
 </span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JavaSE-25&quot;</span><span class="p">,</span>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">            </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">            </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver/tools/jdk/temurin-25/Contents/Home&quot;</span><span class="p">,</span>
 </span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 </span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">        </span><span class="p">}</span>
 </span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="p">]</span>
@@ -2336,7 +2304,7 @@ Portable VS Code의 <code>bin\code.cmd</code>를 명시적으로 사용한다.</
 <p><code>java.configuration.runtimes</code>는 배열이므로 여러 JDK를 함께 등록할 수 있다.</p>
 <p>예를 들어 JDK 21과 JDK 25를 함께 관리한다면:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="p">{</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="nt">&quot;java.jdt.ls.java.home&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="nt">&quot;java.jdt.ls.java.home&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver/tools/jdk/temurin-25/Contents/Home&quot;</span><span class="p">,</span>
 </span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
 </span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">    </span><span class="nt">&quot;java.configuration.runtimes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 </span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">        </span><span class="p">{</span>
@@ -2345,7 +2313,7 @@ Portable VS Code의 <code>bin\code.cmd</code>를 명시적으로 사용한다.</
 </span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">        </span><span class="p">},</span>
 </span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">        </span><span class="p">{</span>
 </span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JavaSE-25&quot;</span><span class="p">,</span>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">            </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">            </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver/tools/jdk/temurin-25/Contents/Home&quot;</span><span class="p">,</span>
 </span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">            </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 </span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">        </span><span class="p">}</span>
 </span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">    </span><span class="p">]</span>
@@ -2377,10 +2345,10 @@ Portable VS Code의 <code>bin\code.cmd</code>를 명시적으로 사용한다.</
 <div class="admonition important">
 <p class="admonition-title">JDK 경로는 bin 폴더가 아닌 JDK Home을 지정</p>
 <p>다음과 같이 <code>bin</code>까지 지정하지 않는다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home\bin   ← 잘못된 예
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home\bin   ← 잘못된 예
 </span></code></pre></div>
 <p>JDK Home을 지정한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home       ← 올바른 예
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home       ← 올바른 예
 </span></code></pre></div>
 </div>
 <p>설정 변경 후 다음 명령으로 VS Code를 Reload한다.</p>
@@ -2627,7 +2595,7 @@ Portable VS Code의 <code>bin\code.cmd</code>를 명시적으로 사용한다.</
 <strong>배포 Package를 만들 때 어떤 VS Code / Extension Version을 기준으로 했는지 기록</strong>하는 것이 좋다.</p>
 <p>또한 Java Extension이 설치되어 있어도 JDK Binary 자체가 Extension 안에 포함되는 것은 아니다.</p>
 <p>MicroServer에서는 JDK를 별도로 다음 위치에서 관리한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+<div class="language-text highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
 <h2 id="14">14. 현재 단계에서 하지 않는 작업<a class="headerlink" href="#14" title="Permanent link">&para;</a></h2>
 <p>Java Extension이 설치되었더라도 아직 다음 작업은 하지 않는다.</p>

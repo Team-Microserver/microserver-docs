@@ -13,7 +13,7 @@
       
       
       
-        <link rel="prev" href="../vscode_basic_setup/">
+        <link rel="prev" href="../vscode_configuration_model/">
       
       
         <link rel="next" href="../java_extension_setup/">
@@ -774,7 +774,7 @@
   
   
   
-    <a href="../../04_gradle/gradle_setup/" class="md-nav__link">
+    <a href="../../04_gradle/macos_gradle_setup/" class="md-nav__link">
       
   
   
@@ -782,6 +782,58 @@
     
   
     Gradle 빌드환경 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../vscode_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 설치
   
 
     
@@ -823,17 +875,17 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3_6" checked>
         
           
-          <label class="md-nav__link" for="__nav_2_3_5" id="__nav_2_3_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_3_6" id="__nav_2_3_6_label" tabindex="0">
             
   
   
   <span class="md-ellipsis">
     
   
-    VS Code 개발환경 설치
+    VS Code 개발환경 설정
   
 
     
@@ -844,12 +896,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_3_5">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_2_3_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3_6">
             <span class="md-nav__icon md-icon"></span>
             
   
-    VS Code 개발환경 설치
+    VS Code 개발환경 설정
   
 
           </label>
@@ -862,70 +914,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../vscode_setup/" class="md-nav__link">
+      <a href="../vscode_configuration_model/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    VS Code 설정 원칙
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../vscode_install/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    VS Code 설치
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../vscode_basic_setup/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    VS Code 기본 설정
+    VS Code 설정 방식 이해
   
 
     
@@ -1229,34 +1225,6 @@
     
   
     JDK 연계 및 개발환경 운영
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../vscode_install_basic_setup_legacy/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    설치 및 기본 설정 통합 문서 (기존)
   
 
     
@@ -1870,7 +1838,7 @@ Java / JDK 관련 설정을 구성하고 이해하는 방법을 설명한다.</p
 <p>현재 기준:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Java Version : 25
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>JDK          : Eclipse Temurin 25
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>macOS JDK  : ~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>macOS JDK  : ~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
 <p>User Settings는 <strong>개발자 개인 VS Code 환경에 적용되는 설정</strong>이며
 MicroServer Project Repository에는 저장되지 않는다.</p>
@@ -1960,7 +1928,7 @@ Project Java Version이 자동으로 Java 25가 되는 것은 아니다.</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">&quot;java.configuration.runtimes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="p">{</span>
 </span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JavaSE-25&quot;</span><span class="p">,</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span><span class="p">,</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;~/local-microserver/tools/jdk/temurin-25/Contents/Home&quot;</span><span class="p">,</span>
 </span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 </span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="p">]</span>
@@ -1993,7 +1961,7 @@ Project Java Version이 자동으로 Java 25가 되는 것은 아니다.</p>
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>        ↓
 </span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>VS Code에서 사용할 수 있는 로컬 JDK
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>        ↓
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
 <p>개발 PC에 여러 JDK가 있다면 여러 Runtime을 등록할 수 있다.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>JavaSE-17 → JDK 17 경로
@@ -2056,11 +2024,11 @@ Java Language Server가 <code>name</code>의 Type이 <code>String</code>임을 �
 <strong>Java Language Server 프로그램 자체를 어떤 JDK로 실행할지 지정</strong>한다.</p>
 <p>예:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nt">&quot;java.jdt.ls.java.home&quot;</span><span class="p">:</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="s2">&quot;~/local-microserver//tools//jdk//temurin-25&quot;</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">  </span><span class="s2">&quot;~/local-microserver/tools/jdk/temurin-25/Contents/Home&quot;</span>
 </span></code></pre></div>
 <p>정확한 의미:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>VS Code 뒤에서 실행되는 Java Language Server를
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>JDK로 실행한다.
 </span></code></pre></div>
 <p>다음 의미는 아니다.</p>
@@ -2077,7 +2045,7 @@ Java Language Server가 <code>name</code>의 Type이 <code>String</code>임을 �
 </span></code></pre></div>
 <p>같은 JDK 경로를 두 설정에 사용할 수 있지만
 사용 목적은 서로 다르다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>~/local-microserver/tools/jdk/temurin-25.jdk/Contents/Home
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>        │
 </span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>        ├─ Project Runtime 등록
 </span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>        │   → java.configuration.runtimes
@@ -2095,12 +2063,12 @@ Java Language Server가 <code>name</code>의 Type이 <code>String</code>임을 �
 <h2 id="8-macos-user-settings">8. macOS User Settings<a class="headerlink" href="#8-macos-user-settings" title="Permanent link">&para;</a></h2>
 <p>macOS에서도 역할은 동일하며 JDK 경로만 다르다.</p>
 <p>예:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>/Users/&lt;USER&gt;/dev/jdks/temurin-25.jdk/Contents/Home
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>/Users/&lt;USER&gt;/local-microserver/tools/jdk/temurin-25/Contents/Home
 </span></code></pre></div>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="nt">&quot;java.configuration.runtimes&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
 </span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">  </span><span class="p">{</span>
 </span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JavaSE-25&quot;</span><span class="p">,</span>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Users/&lt;USER&gt;/dev/jdks/temurin-25.jdk/Contents/Home&quot;</span><span class="p">,</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">    </span><span class="nt">&quot;path&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;/Users/&lt;USER&gt;/local-microserver/tools/jdk/temurin-25/Contents/Home&quot;</span><span class="p">,</span>
 </span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">    </span><span class="nt">&quot;default&quot;</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
 </span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="p">]</span>

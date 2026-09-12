@@ -13,7 +13,7 @@
       
       
       
-        <link rel="prev" href="../gradle_setup/">
+        <link rel="prev" href="../macos_gradle_setup/">
       
       
         <link rel="next" href="../gradle_wrapper/">
@@ -810,7 +810,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gradle_setup/" class="md-nav__link">
+      <a href="../macos_gradle_setup/" class="md-nav__link">
         
   
   
@@ -920,22 +920,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-gradle" class="md-nav__link">
+  <a href="#3-macos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Gradle 공식 다운로드
+        3. macOS 표준 개발환경 구조 확인
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Gradle 공식 다운로드">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Gradle 공식 다운로드
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Gradle 공식 다운로드">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-releases" class="md-nav__link">
+  <a href="#41-releases" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 공식 Releases 페이지
+        4.1 공식 Releases 페이지
       
     </span>
   </a>
@@ -943,10 +954,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-bin-all" class="md-nav__link">
+  <a href="#42-bin-all" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 bin과 all의 차이
+        4.2 bin과 all의 차이
       
     </span>
   </a>
@@ -959,10 +970,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-gradle" class="md-nav__link">
+  <a href="#5-gradle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Gradle 설치가 반드시 필요한가
+        5. Gradle 설치가 반드시 필요한가
       
     </span>
   </a>
@@ -970,15 +981,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-macos" class="md-nav__link">
+  <a href="#6-macos-gradle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. macOS 환경 구성
+        6. macOS Gradle 설치 및 환경 구성
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="6. macOS 환경 구성">
+    <nav class="md-nav" aria-label="6. macOS Gradle 설치 및 환경 구성">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -993,10 +1004,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#62-macos-binary-zip" class="md-nav__link">
+  <a href="#62-gradle-directory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.2 macOS Binary ZIP 직접 설치
+        6.2 Gradle Directory 준비
       
     </span>
   </a>
@@ -1004,10 +1015,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#63-macos-terminal-session" class="md-nav__link">
+  <a href="#63-binary-zip" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.3 macOS 현재 Terminal Session에서 실행
+        6.3 Binary ZIP 압축 해제 및 배치
       
     </span>
   </a>
@@ -1015,10 +1026,54 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#64-macos-homebrew" class="md-nav__link">
+  <a href="#64-jdk-gradle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.4 macOS Homebrew 설치
+        6.4 JDK와 Gradle 표준 경로 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-terminal-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 현재 Terminal Session에서 직접 실행
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66-gradle_home-gradle_user_home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 GRADLE_HOME과 GRADLE_USER_HOME
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#67-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 환경 Script와의 연계
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#68-homebrew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Homebrew 설치는 보조 방법
       
     </span>
   </a>
@@ -1034,7 +1089,7 @@
   <a href="#7-gradle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. gradle 명령이 어떤 실행파일을 사용하는지 확인
+        7. 실제 사용 중인 Gradle 실행파일 확인
       
     </span>
   </a>
@@ -1218,7 +1273,59 @@
   <span class="md-ellipsis">
     
   
-    VS Code 개발환경 설치
+    VS Code 설치
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../05_vscode/vscode_configuration_model/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code 개발환경 설정
   
 
     
@@ -1713,22 +1820,33 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3-gradle" class="md-nav__link">
+  <a href="#3-macos" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Gradle 공식 다운로드
+        3. macOS 표준 개발환경 구조 확인
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="3. Gradle 공식 다운로드">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-gradle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Gradle 공식 다운로드
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Gradle 공식 다운로드">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#31-releases" class="md-nav__link">
+  <a href="#41-releases" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.1 공식 Releases 페이지
+        4.1 공식 Releases 페이지
       
     </span>
   </a>
@@ -1736,10 +1854,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#32-bin-all" class="md-nav__link">
+  <a href="#42-bin-all" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3.2 bin과 all의 차이
+        4.2 bin과 all의 차이
       
     </span>
   </a>
@@ -1752,10 +1870,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-gradle" class="md-nav__link">
+  <a href="#5-gradle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Gradle 설치가 반드시 필요한가
+        5. Gradle 설치가 반드시 필요한가
       
     </span>
   </a>
@@ -1763,15 +1881,15 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-macos" class="md-nav__link">
+  <a href="#6-macos-gradle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. macOS 환경 구성
+        6. macOS Gradle 설치 및 환경 구성
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="6. macOS 환경 구성">
+    <nav class="md-nav" aria-label="6. macOS Gradle 설치 및 환경 구성">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -1786,10 +1904,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#62-macos-binary-zip" class="md-nav__link">
+  <a href="#62-gradle-directory" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.2 macOS Binary ZIP 직접 설치
+        6.2 Gradle Directory 준비
       
     </span>
   </a>
@@ -1797,10 +1915,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#63-macos-terminal-session" class="md-nav__link">
+  <a href="#63-binary-zip" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.3 macOS 현재 Terminal Session에서 실행
+        6.3 Binary ZIP 압축 해제 및 배치
       
     </span>
   </a>
@@ -1808,10 +1926,54 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#64-macos-homebrew" class="md-nav__link">
+  <a href="#64-jdk-gradle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6.4 macOS Homebrew 설치
+        6.4 JDK와 Gradle 표준 경로 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-terminal-session" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 현재 Terminal Session에서 직접 실행
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66-gradle_home-gradle_user_home" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 GRADLE_HOME과 GRADLE_USER_HOME
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#67-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 환경 Script와의 연계
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#68-homebrew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Homebrew 설치는 보조 방법
       
     </span>
   </a>
@@ -1827,7 +1989,7 @@
   <a href="#7-gradle" class="md-nav__link">
     <span class="md-ellipsis">
       
-        7. gradle 명령이 어떤 실행파일을 사용하는지 확인
+        7. 실제 사용 중인 Gradle 실행파일 확인
       
     </span>
   </a>
@@ -1897,9 +2059,13 @@
 
 <h1 id="macos-gradle">macOS Gradle 설치 및 기본 환경 구성<a class="headerlink" href="#macos-gradle" title="Permanent link">&para;</a></h1>
 <h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
-<p>본 문서는 Windows 및 macOS 개발 PC에서 <strong>Gradle 9.7.1을 설치하고 기본 실행환경을 확인하는 방법</strong>을 설명한다.</p>
-<p>문서 구조는 하나의 최상위 제목 아래에서 Windows와 macOS 환경을 구분하여 구성한다.
-이를 통해 MkDocs 오른쪽 목차(TOC)에서도 OS별 설치 절차와 세부 항목이 계층적으로 표시되도록 한다.</p>
+<p>본 문서는 MicroServer <strong>macOS 표준 로컬 개발환경</strong>에 Gradle 9.7.1을 배치하고, Eclipse Temurin JDK 25 LTS와 연계하여 기본 실행환경을 확인하는 방법을 설명한다.</p>
+<p>이 문서는 Windows와 macOS 설치 절차를 한 문서에 혼합하지 않는다.</p>
+<p>Windows에서 먼저 확정한 MicroServer 로컬 개발환경 운영 원칙을 유지하되,
+macOS에서 확정한 표준 Root와 Directory 구조에 맞추어 Gradle 환경을 구성한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>macOS 표준 Root
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>~/local-microserver
+</span></code></pre></div>
 <p>중요한 점은 다음과 같다.</p>
 <blockquote>
 <p>개발 PC에 Gradle을 설치하는 것과 실제 프로젝트가 사용하는 Gradle Version은 별개의 개념이다.</p>
@@ -1928,27 +2094,90 @@ MicroServer의 <strong>Temurin 25 LTS + Gradle 9.7.1</strong> 조합을 사용�
 </div>
 <p>먼저 Java가 정상적으로 실행되는지 확인한다.</p>
 <p>macOS Terminal:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>java<span class="w"> </span>-version
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>javac<span class="w"> </span>-version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>java<span class="w"> </span>-version
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>javac<span class="w"> </span>-version
 </span></code></pre></div>
 <p>MicroServer에서는 OS 전체 <code>JAVA_HOME</code>을 하나의 JDK로 영구 고정하기보다<br />
 프로젝트 및 Terminal Session에서 필요한 JDK를 명시적으로 선택하는 방식을 기본으로 한다.</p>
 <hr />
-<h2 id="3-gradle">3. Gradle 공식 다운로드<a class="headerlink" href="#3-gradle" title="Permanent link">&para;</a></h2>
+<h2 id="3-macos">3. macOS 표준 개발환경 구조 확인<a class="headerlink" href="#3-macos" title="Permanent link">&para;</a></h2>
+<p>Gradle을 설치하기 전에 macOS MicroServer 개발환경의 표준 Directory 구조를 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>~/local-microserver
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>├─ tools
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>│  ├─ jdk
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>│  │  └─ temurin-25
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>│  ├─ gradle
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>│  │  └─ gradle-9.7.1
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>│  └─ vscode
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>│     ├─ Visual Studio Code.app
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>│     └─ code-portable-data
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>│        ├─ user-data
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>│        └─ extensions
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>│
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>├─ gradle-home
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>│
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>├─ workspace
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>│  ├─ microserver
+</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>│  └─ microserver-docs
+</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>│
+</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>├─ env
+</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>│  ├─ setup.command
+</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>│  ├─ create-vscode-shortcut.command
+</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>│  ├─ start-vscode.command
+</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>│  ├─ local-env.example.sh
+</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>│  └─ local-env.sh
+</span><span id="__span-2-25"><a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>│
+</span><span id="__span-2-26"><a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>└─ README.md
+</span></code></pre></div>
+<p>Gradle 관련 위치는 다음 세 영역으로 구분한다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>표준 위치</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Local Gradle</td>
+<td><code>~/local-microserver/tools/gradle/gradle-9.7.1</code></td>
+<td>Gradle 학습, 확인, Wrapper 생성/복구</td>
+</tr>
+<tr>
+<td>Gradle User Home</td>
+<td><code>~/local-microserver/gradle-home</code></td>
+<td>Cache, Wrapper Distribution, Daemon 등</td>
+</tr>
+<tr>
+<td>프로젝트 Wrapper</td>
+<td><code>~/local-microserver/workspace/&lt;project&gt;/gradlew</code></td>
+<td>실제 프로젝트 Build 기준</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition important">
+<p class="admonition-title">경로 기준</p>
+<p>이 문서에서는 임의의 <code>~/dev</code>, <code>~/dev/tools</code>, <code>~/dev/jdks</code> 경로를 사용하지 않는다.</p>
+<p>JDK, Gradle, VS Code, Workspace는 모두 이미 정의한
+<code>~/local-microserver</code> 표준 Root를 기준으로 설명한다.</p>
+</div>
+<hr />
+<h2 id="4-gradle">4. Gradle 공식 다운로드<a class="headerlink" href="#4-gradle" title="Permanent link">&para;</a></h2>
 <p>Gradle은 반드시 <strong>공식 Gradle 사이트</strong>에서 다운로드한다.</p>
-<h3 id="31-releases">3.1 공식 Releases 페이지<a class="headerlink" href="#31-releases" title="Permanent link">&para;</a></h3>
+<h3 id="41-releases">4.1 공식 Releases 페이지<a class="headerlink" href="#41-releases" title="Permanent link">&para;</a></h3>
 <p><a href="https://gradle.org/releases/">Gradle 공식 Releases 페이지</a></p>
 <p>현재 프로젝트 기준 Version은 다음과 같다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Gradle 9.7.1
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Gradle 9.7.1
 </span></code></pre></div>
 <p>다운로드할 파일:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>gradle-9.7.1-bin.zip
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>gradle-9.7.1-bin.zip
 </span></code></pre></div>
 <p>공식 Distribution 직접 경로:</p>
 <p><a href="https://services.gradle.org/distributions/gradle-9.7.1-bin.zip">gradle-9.7.1-bin.zip</a></p>
 <p>Release Note:</p>
 <p><a href="https://docs.gradle.org/9.7.1/release-notes.html">Gradle 9.7.1 Release Notes</a></p>
-<h3 id="32-bin-all">3.2 <code>bin</code>과 <code>all</code>의 차이<a class="headerlink" href="#32-bin-all" title="Permanent link">&para;</a></h3>
+<h3 id="42-bin-all">4.2 <code>bin</code>과 <code>all</code>의 차이<a class="headerlink" href="#42-bin-all" title="Permanent link">&para;</a></h3>
 <p>Gradle Distribution은 대표적으로 다음 두 종류가 있다.</p>
 <table>
 <thead>
@@ -1972,129 +2201,275 @@ MicroServer의 <strong>Temurin 25 LTS + Gradle 9.7.1</strong> 조합을 사용�
 </tbody>
 </table>
 <p>MicroServer 기본 개발환경에서는 다음 파일을 사용한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>gradle-9.7.1-bin.zip
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>gradle-9.7.1-bin.zip
 </span></code></pre></div>
 <p><code>-bin</code>으로 일반적인 Build와 Wrapper 생성에 필요한 기능을 모두 사용할 수 있다.</p>
 <hr />
-<h2 id="4-gradle">4. Gradle 설치가 반드시 필요한가<a class="headerlink" href="#4-gradle" title="Permanent link">&para;</a></h2>
-<p>Gradle 공식 문서는 <strong>기존 프로젝트에 <code>gradlew</code> 또는 <code>gradlew</code>가 있다면 Gradle을 별도로 설치하지 않아도 된다</strong>고 설명한다.</p>
+<h2 id="5-gradle">5. Gradle 설치가 반드시 필요한가<a class="headerlink" href="#5-gradle" title="Permanent link">&para;</a></h2>
+<p>Gradle 공식 문서는 <strong>기존 프로젝트에 <code>gradlew</code> 또는 <code>gradlew.bat</code>가 있다면 Gradle을 별도로 설치하지 않아도 된다</strong>고 설명한다.</p>
 <p>즉, 일반적인 개발 프로젝트는 다음 구조가 가능하다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>JDK 설치
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>   ↓
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>Git Clone
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>   ↓
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>./gradlew build
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>   ↓
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>Wrapper가 필요한 Gradle 자동 준비
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>JDK 설치
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>   ↓
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Git Clone
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>   ↓
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>./gradlew build
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>   ↓
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>Wrapper가 필요한 Gradle 자동 준비
 </span></code></pre></div>
 <p>그러나 MicroServer 프로젝트에서는 Gradle 학습과 초기 Build 환경 관리까지 직접 진행하므로 개발 PC에 Gradle을 설치한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>프로젝트 Build
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>→ Wrapper 사용             [프로젝트 표준]
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>개발 PC Gradle 설치
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>→ 학습 / 초기 구성 / 관리   [개발환경 권장]
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>프로젝트 Build
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>→ Wrapper 사용             [프로젝트 표준]
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>개발 PC Gradle 설치
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>→ 학습 / 초기 구성 / 관리   [개발환경 권장]
 </span></code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">공식 설치 가이드</p>
 <p><a href="https://docs.gradle.org/current/userguide/installation.html">Installing Gradle</a></p>
 </div>
 <hr />
-<h2 id="6-macos">6. macOS 환경 구성<a class="headerlink" href="#6-macos" title="Permanent link">&para;</a></h2>
+<h2 id="6-macos-gradle">6. macOS Gradle 설치 및 환경 구성<a class="headerlink" href="#6-macos-gradle" title="Permanent link">&para;</a></h2>
 <h3 id="61-macos">6.1 macOS 설치 방법 선택<a class="headerlink" href="#61-macos" title="Permanent link">&para;</a></h3>
 <p>macOS에서는 크게 두 가지 방식이 있다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>방법 A. 공식 Binary ZIP 직접 설치
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>방법 B. Homebrew 설치
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>방법 A. 공식 Binary ZIP 직접 설치
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>방법 B. Homebrew 설치
 </span></code></pre></div>
 <p>MicroServer 문서에서는 Version 위치를 명확히 알 수 있는 <strong>Binary ZIP 직접 설치 방식</strong>을 기본 설명으로 사용한다.</p>
 <p>Homebrew는 편의 설치 방식으로 함께 소개한다.</p>
 <hr />
-<h3 id="62-macos-binary-zip">6.2 macOS Binary ZIP 직접 설치<a class="headerlink" href="#62-macos-binary-zip" title="Permanent link">&para;</a></h3>
+<h3 id="62-gradle-directory">6.2 Gradle Directory 준비<a class="headerlink" href="#62-gradle-directory" title="Permanent link">&para;</a></h3>
+<p>Gradle은 다음 표준 Directory에 배치한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>~/local-microserver/tools/gradle
+</span></code></pre></div>
+<p>Directory가 없다면 생성한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span>~/local-microserver/tools/gradle
+</span></code></pre></div>
+<hr />
+<h3 id="63-binary-zip">6.3 Binary ZIP 압축 해제 및 배치<a class="headerlink" href="#63-binary-zip" title="Permanent link">&para;</a></h3>
 <p>Gradle 공식 Releases 페이지에서 다음 파일을 다운로드한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>gradle-9.7.1-bin.zip
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>gradle-9.7.1-bin.zip
 </span></code></pre></div>
-<p>권장 Directory 예:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>~/local-microserver/tools/gradle/gradle-9.7.1
+<p>예를 들어 파일이 macOS 기본 Download Directory에 있다면 다음과 같이 압축을 해제할 수 있다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>unzip<span class="w"> </span>~/Downloads/gradle-9.7.1-bin.zip<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span>-d<span class="w"> </span>~/local-microserver/tools/gradle
 </span></code></pre></div>
-<p>예상 구조:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>~/local-microserver/tools/gradle/
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>└─ gradle-9.7.1/
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>   ├─ bin/
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>   ├─ init.d/
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>   ├─ lib/
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>   ├─ LICENSE
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>   └─ NOTICE
-</span></code></pre></div>
-<hr />
-<h3 id="63-macos-terminal-session">6.3 macOS 현재 Terminal Session에서 실행<a class="headerlink" href="#63-macos-terminal-session" title="Permanent link">&para;</a></h3>
-<p>예를 들어 JDK와 Gradle을 다음 경로에 두었다고 가정한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>JDK
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>~/local-microserver/jdks/temurin-25.jdk/Contents/Home
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>Gradle
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>~/local-microserver/tools/gradle/gradle-9.7.1
-</span></code></pre></div>
-<p>현재 Terminal Session에 설정한다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/dev/jdks/temurin-25.jdk/Contents/Home&quot;</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GRADLE_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/dev/tools/gradle/gradle-9.7.1&quot;</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$GRADLE_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+<p>압축 해제 후 다음 구조인지 확인한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>~/local-microserver/tools/gradle/
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>└─ gradle-9.7.1/
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>   ├─ bin/
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>   │  ├─ gradle
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>   │  └─ gradle.bat
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>   ├─ init.d/
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>   ├─ lib/
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>   ├─ LICENSE
+</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>   └─ NOTICE
 </span></code></pre></div>
 <p>확인:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>java<span class="w"> </span>-version
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>gradle<span class="w"> </span>--version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>ls<span class="w"> </span>-la<span class="w"> </span>~/local-microserver/tools/gradle/gradle-9.7.1
+</span></code></pre></div>
+<p>Gradle 실행파일 확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nb">test</span><span class="w"> </span>-x<span class="w"> </span>~/local-microserver/tools/gradle/gradle-9.7.1/bin/gradle<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">  </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Gradle executable OK&quot;</span>
 </span></code></pre></div>
 <hr />
-<h3 id="64-macos-homebrew">6.4 macOS Homebrew 설치<a class="headerlink" href="#64-macos-homebrew" title="Permanent link">&para;</a></h3>
-<p>Homebrew를 사용하는 경우 다음 명령으로 설치할 수 있다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>brew<span class="w"> </span>install<span class="w"> </span>gradle
+<h3 id="64-jdk-gradle">6.4 JDK와 Gradle 표준 경로 확인<a class="headerlink" href="#64-jdk-gradle" title="Permanent link">&para;</a></h3>
+<p>앞 단계에서 구성한 macOS JDK의 실제 Home은 다음 경로이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
+</span></code></pre></div>
+<p>Gradle은 다음 경로를 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>~/local-microserver/tools/gradle/gradle-9.7.1
+</span></code></pre></div>
+<p>즉 두 개발도구는 다음처럼 동일한 Root 아래에 배치된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>~/local-microserver
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>└─ tools
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>   ├─ jdk
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>   │  └─ temurin-25
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>   │     └─ Contents
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>   │        └─ Home
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>   └─ gradle
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>      └─ gradle-9.7.1
+</span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">JDK 보관 Directory와 JAVA_HOME은 다름</p>
+<p>MicroServer에서는 Temurin JDK Bundle의 바깥 Directory 이름을 <code>temurin-25</code>로 정리하여 보관한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>JDK 보관 Directory
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>~/local-microserver/tools/jdk/temurin-25
+</span></code></pre></div>
+<p>하지만 macOS Temurin JDK의 실제 Java Home은 Bundle 내부의 <code>Contents/Home</code>이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>JAVA_HOME
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
+</span></code></pre></div>
+<p>따라서 <code>JAVA_HOME</code>을 <code>temurin-25</code>까지만 지정하면 <code>$JAVA_HOME/bin/java</code>가 존재하지 않는다.</p>
+</div>
+<hr />
+<h3 id="65-terminal-session">6.5 현재 Terminal Session에서 직접 실행<a class="headerlink" href="#65-terminal-session" title="Permanent link">&para;</a></h3>
+<p>먼저 현재 Terminal에서 MicroServer 표준 경로를 기준으로 환경을 설정해본다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">LOCAL_MICROSERVER</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$HOME</span><span class="s2">/local-microserver&quot;</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">JAVA_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$LOCAL_MICROSERVER</span><span class="s2">/tools/jdk/temurin-25/Contents/Home&quot;</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GRADLE_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$LOCAL_MICROSERVER</span><span class="s2">/tools/gradle/gradle-9.7.1&quot;</span>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a><span class="nb">export</span><span class="w"> </span><span class="nv">GRADLE_USER_HOME</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$LOCAL_MICROSERVER</span><span class="s2">/gradle-home&quot;</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin:</span><span class="nv">$GRADLE_HOME</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p><code>gradle-home</code> Directory가 없다면 생성한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>mkdir<span class="w"> </span>-p<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GRADLE_USER_HOME</span><span class="s2">&quot;</span>
 </span></code></pre></div>
 <p>확인:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>gradle<span class="w"> </span>--version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$LOCAL_MICROSERVER</span><span class="s2">&quot;</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">&quot;</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GRADLE_HOME</span><span class="s2">&quot;</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GRADLE_USER_HOME</span><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p>Java 확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin/java&quot;</span><span class="w"> </span>-version
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">/bin/javac&quot;</span><span class="w"> </span>-version
+</span></code></pre></div>
+<p>이 확인이 먼저 성공해야 <code>JAVA_HOME</code>이 실제 JDK Home을 정확히 가리키고 있는 것이다.</p>
+<p>이후 PATH를 통한 실행도 확인한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>which<span class="w"> </span>java
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>java<span class="w"> </span>-version
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>javac<span class="w"> </span>-version
+</span></code></pre></div>
+<p>Gradle 확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>gradle<span class="w"> </span>--version
+</span></code></pre></div>
+<div class="admonition important">
+<p class="admonition-title">현재 Terminal Session 확인용</p>
+<p>위 <code>export</code> 명령은 현재 Terminal Session에서 설치 상태를 확인하기 위한 것이다.</p>
+<p>MicroServer macOS 표준 환경에서는 이러한 값을 개발자 개인의 <code>.zshrc</code>에
+무조건 영구 등록하는 방식보다 <code>~/local-microserver/env</code>의 환경 Script에서 관리하는 방향을 사용한다.</p>
+</div>
+<hr />
+<h3 id="66-gradle_home-gradle_user_home">6.6 <code>GRADLE_HOME</code>과 <code>GRADLE_USER_HOME</code><a class="headerlink" href="#66-gradle_home-gradle_user_home" title="Permanent link">&para;</a></h3>
+<p>두 환경변수는 역할이 다르다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>GRADLE_HOME
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>~/local-microserver/tools/gradle/gradle-9.7.1
+</span></code></pre></div>
+<p><code>GRADLE_HOME</code>은 <strong>Gradle 프로그램 자체가 위치한 Directory</strong>이다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>GRADLE_USER_HOME
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>~/local-microserver/gradle-home
+</span></code></pre></div>
+<p><code>GRADLE_USER_HOME</code>은 Gradle이 실행되면서 사용하는 <strong>사용자 데이터 영역</strong>이다.</p>
+<p>대표적으로 다음 데이터가 저장된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>~/local-microserver/gradle-home
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>├─ caches
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a>├─ daemon
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>├─ native
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>├─ notifications
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a>└─ wrapper
+</span></code></pre></div>
+<p>Windows에서 <code>C:\local-microserver\gradle-home</code>으로 분리했던 것과 같은 원칙을 macOS에서도 적용한다.</p>
+<div class="admonition warning">
+<p class="admonition-title">gradle-home은 Source가 아님</p>
+<p><code>gradle-home</code>은 Dependency Cache와 Wrapper Distribution 등이 저장되는 실행 데이터 영역이다.</p>
+<p>프로젝트 Git Repository에 Commit하지 않는다.</p>
+</div>
+<hr />
+<h3 id="67-script">6.7 환경 Script와의 연계<a class="headerlink" href="#67-script" title="Permanent link">&para;</a></h3>
+<p>macOS 표준 개발환경의 <code>env</code> Directory는 다음 구조를 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>~/local-microserver/env
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>├─ setup.command
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>├─ create-vscode-shortcut.command
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>├─ start-vscode.command
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>├─ local-env.example.sh
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>└─ local-env.sh
+</span></code></pre></div>
+<p>Gradle 설치 단계에서는 JDK와 Gradle의 실제 경로가 다음과 같이 확정된다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>JAVA_HOME
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a>~/local-microserver/tools/jdk/temurin-25/Contents/Home
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>GRADLE_HOME
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a>~/local-microserver/tools/gradle/gradle-9.7.1
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a>GRADLE_USER_HOME
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a>~/local-microserver/gradle-home
+</span></code></pre></div>
+<p>이 값들은 이후 <code>local-env.sh</code>, <code>setup.command</code>, <code>start-vscode.command</code>를 구성할 때 동일하게 사용한다.</p>
+<p>즉 Terminal, VS Code, Gradle이 서로 다른 JDK나 Gradle 경로를 바라보지 않도록
+<strong>하나의 표준 경로를 공유하는 것</strong>이 목적이다.</p>
+<hr />
+<h3 id="68-homebrew">6.8 Homebrew 설치는 보조 방법<a class="headerlink" href="#68-homebrew" title="Permanent link">&para;</a></h3>
+<p>개인 개발환경에서 Homebrew를 사용하는 경우 다음 명령으로 Gradle을 설치할 수도 있다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>brew<span class="w"> </span>install<span class="w"> </span>gradle
+</span></code></pre></div>
+<p>확인:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>gradle<span class="w"> </span>--version
 </span></code></pre></div>
 <p>현재 실행되는 Gradle의 위치를 확인하려면:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>which<span class="w"> </span>gradle
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>which<span class="w"> </span>gradle
 </span></code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">MicroServer 표준 설치 방식은 Binary ZIP</p>
+<p>MicroServer macOS 표준 개발환경은 <code>~/local-microserver/tools/gradle/gradle-9.7.1</code>에
+Binary ZIP을 직접 배치하는 방식을 기준으로 한다.</p>
+<p>Homebrew 설치는 개인 편의를 위한 보조 방법이며 표준 개발환경 Package의 기준으로 사용하지 않는다.</p>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">프로젝트 Version과 Homebrew Version은 다를 수 있음</p>
 <p>Homebrew가 Gradle을 Upgrade하면 <code>gradle</code> 명령의 Version이 변경될 수 있다.</p>
 <p>하지만 MicroServer 프로젝트의 실제 Build는 <code>./gradlew</code>가 지정한 Version을 사용하므로 프로젝트 Build 기준은 변경되지 않는다.</p>
 </div>
 <hr />
-<h2 id="7-gradle">7. <code>gradle</code> 명령이 어떤 실행파일을 사용하는지 확인<a class="headerlink" href="#7-gradle" title="Permanent link">&para;</a></h2>
+<h2 id="7-gradle">7. 실제 사용 중인 Gradle 실행파일 확인<a class="headerlink" href="#7-gradle" title="Permanent link">&para;</a></h2>
 <p>macOS:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>which<span class="w"> </span>gradle
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>which<span class="w"> </span>gradle
 </span></code></pre></div>
 <p>이 명령은 <strong>현재 PATH에서 어떤 Gradle 실행파일이 선택되는지</strong> 확인하는 용도이다.</p>
-<p>여러 Gradle Version이나 Package Manager를 함께 사용하는 경우 유용하다.</p>
+<p>MicroServer 표준 환경이 적용되었다면 다음 경로가 선택되어야 한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>~/local-microserver/tools/gradle/gradle-9.7.1/bin/gradle
+</span></code></pre></div>
+<p>Homebrew 또는 시스템의 다른 Gradle이 표시된다면 현재 Terminal의 <code>PATH</code> 순서를 확인한다.</p>
 <hr />
 <h2 id="8-gradle-jvm">8. Gradle 실행 JVM 확인<a class="headerlink" href="#8-gradle-jvm" title="Permanent link">&para;</a></h2>
 <p>다음 명령을 실행한다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>gradle<span class="w"> </span>--version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>gradle<span class="w"> </span>--version
 </span></code></pre></div>
 <p>출력에서 JVM 정보를 확인한다.</p>
-<p>Gradle 자체가 Java 25으로 실행되어야 하는 경우 JVM 항목이 Java 25인지 확인한다.</p>
+<p>Gradle 자체가 Java 25로 실행되어야 하는 경우 JVM 항목이 Java 25인지 확인한다.</p>
 <p>예:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>Gradle 9.7.1
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>...
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>JVM: 25 (...)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>Gradle 9.7.1
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>...
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a>JVM: 25 (...)
 </span></code></pre></div>
 <p>Java Version이 예상과 다르면 먼저 현재 Terminal의 <code>JAVA_HOME</code>과 PATH를 확인한다.</p>
 <p>macOS:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">&quot;</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>which<span class="w"> </span>java
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>java<span class="w"> </span>-version
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$JAVA_HOME</span><span class="s2">&quot;</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GRADLE_HOME</span><span class="s2">&quot;</span>
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$GRADLE_USER_HOME</span><span class="s2">&quot;</span>
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a>which<span class="w"> </span>java
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>which<span class="w"> </span>gradle
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>java<span class="w"> </span>-version
 </span></code></pre></div>
 <hr />
 <h2 id="9">9. 설치 완료 기준<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
-<p>다음 항목을 확인하면 개발 PC Gradle 기본 환경 구성이 완료된 것이다.</p>
+<p>다음 항목을 확인하면 macOS Gradle 기본 환경 구성이 완료된 것이다.</p>
 <ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JDK 25 LTS가 준비되어 있다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Gradle 공식 사이트에서 9.7.1 Binary Distribution을 확인했다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Gradle을 <code>~/local-microserver/tools/gradle/gradle-9.7.1</code>에 설치했다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>gradle --version</code>이 실행된다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Gradle 출력에서 사용 중인 JVM을 확인할 수 있다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>GRADLE_HOME</code>과 <code>GRADLE_USER_HOME</code>의 차이를 이해했다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 실제 프로젝트 Build는 설치본이 아니라 Wrapper를 사용할 것임을 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Eclipse Temurin JDK 25 LTS가 준비되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> JDK 보관 Directory가 <code>~/local-microserver/tools/jdk/temurin-25</code>이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 실제 <code>JAVA_HOME</code>이 <code>~/local-microserver/tools/jdk/temurin-25/Contents/Home</code>이다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Gradle 9.7.1 Binary Distribution을 사용한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Gradle이 <code>~/local-microserver/tools/gradle/gradle-9.7.1</code>에 배치되어 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>GRADLE_USER_HOME</code>을 <code>~/local-microserver/gradle-home</code>으로 사용할 수 있다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>java -version</code>과 <code>javac -version</code>이 Java 25를 표시한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>gradle --version</code>이 Gradle 9.7.1을 표시한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>gradle --version</code>의 JVM이 Java 25인지 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>which gradle</code>이 MicroServer 표준 Gradle 경로를 가리키는지 확인했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>GRADLE_HOME</code>과 <code>GRADLE_USER_HOME</code>의 역할 차이를 이해했다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Local Gradle은 개발환경 도구이고 실제 프로젝트 Build는 Wrapper를 사용한다.</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 환경변수는 이후 <code>~/local-microserver/env</code>의 Script와 동일한 경로를 사용한다.</li>
 </ul>
+<p>최종 구조:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>~/local-microserver
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>├─ tools
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a>│  ├─ jdk
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a>│  │  └─ temurin-25
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>│  └─ gradle
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>│     └─ gradle-9.7.1
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a>├─ gradle-home
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a>├─ workspace
+</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>└─ env
+</span></code></pre></div>
 <hr />
 <h2 id="10">10. 다음 문서<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
 <p>다음 문서에서는 Gradle을 사용하는 데 가장 중요한 개념인 <strong>Gradle Wrapper</strong>를 자세히 설명한다.</p>
