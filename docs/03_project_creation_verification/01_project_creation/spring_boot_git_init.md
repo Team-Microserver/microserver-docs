@@ -3,17 +3,22 @@
 ## 1. 문서 목적
 
 본 문서는 Spring Initializr로 생성한 MicroServer Spring Boot 프로젝트를
-**독립적인 Git Repository로 초기화하고 최초 Commit 기준점을 생성하는 절차**를 설명한다.
+**독립적인 Git Repository로 초기화하고 최초 Commit 기준점을 생성한 뒤 GitHub Remote와 연결하는 절차**를 설명한다.
+
+본 문서는 Windows와 macOS에서 동일한 Git Repository 구성 원칙을 사용한다.
+
+운영체제에 따라 달라지는 부분은 다음 정도이다.
+
+```text
+Windows : C:\local-microserver\workspace\microserver / PowerShell
+macOS   : ~/local-microserver/workspace/microserver / Terminal(zsh)
+```
+
+Git 명령과 Repository 구성 원칙은 동일하다.
 
 선행 문서:
 
 → [Spring Boot 프로젝트 생성](spring_boot_project_create.md)
-
-현재 단계의 Project Root:
-
-```text
-C:\local-microserver\workspace\microserver
-```
 
 현재 단계에서는 다음을 진행한다.
 
@@ -34,14 +39,23 @@ git add
         ↓
 Initial Commit
         ↓
-필요 시 GitHub Remote 연결
+main Branch 확인
+        ↓
+필요 시 GitHub Remote 연결 / Push
 ```
+
+!!! note "이미 Repository가 존재하는 경우"
+    기존 MicroServer Repository에 참여하는 개발자는
+    프로젝트를 다시 생성하거나 `git init`을 수행하지 않는다.
+
+    이 경우에는 본 문서의 **14. 기존 Repository에 참여하는 경우**를 참고하여
+    Repository를 Clone한다.
 
 ---
 
 ## 2. Git 초기화 순서 기준
 
-신규 MicroServer 프로젝트에서는 다음 순서를 표준으로 사용한다.
+신규 MicroServer 프로젝트를 **처음 구축하는 경우** 다음 순서를 표준으로 사용한다.
 
 ```text
 workspace 준비
@@ -52,82 +66,122 @@ Spring Initializr Project 생성
         ↓
 git init
         ↓
+.gitignore 확인
+        ↓
 Initial Commit
         ↓
-필요 시 GitHub Remote 연결
+main Branch 확인
+        ↓
+GitHub Remote 연결
+        ↓
+Push
 ```
 
-즉 **Git Repository를 먼저 만든 뒤 생성 파일을 복사하는 방식이 아니라,
-Spring Boot 프로젝트를 먼저 생성한 후 해당 Project Root에서 `git init`을 수행**한다.
+즉 Git Repository를 먼저 만든 뒤 생성 파일을 복사하는 방식이 아니라,
+Spring Boot 프로젝트를 먼저 생성한 후 해당 Project Root에서 `git init`을 수행한다.
 
 이 방식은 다음 장점이 있다.
 
 - Initializr 생성 작업과 Git 초기화를 분리할 수 있다.
 - 실제 생성된 Directory를 확인한 뒤 Repository Root를 확정할 수 있다.
-- `microserver\microserver` 같은 Directory 중첩을 Git 초기화 전에 확인할 수 있다.
-- 신규 프로젝트에서 임시 생성 후 복사하는 절차를 줄일 수 있다.
+- `microserver/microserver` 같은 Directory 중첩을 Git 초기화 전에 확인할 수 있다.
+- 최초 생성 상태를 하나의 Commit 기준점으로 남길 수 있다.
 
 ---
 
-## 3. Project Root 이동
+## 3. Project Root 기준
 
-PowerShell:
-
-```powershell
-Set-Location C:\local-microserver\workspace\microserver
-```
-
-현재 Directory 확인:
-
-```powershell
-Get-Location
-```
-
-기대값:
+MicroServer Source Repository의 논리적 위치:
 
 ```text
-C:\local-microserver\workspace\microserver
+<MICROSERVER_HOME>
+└─ workspace
+   └─ microserver              ← Project / Repository Root
 ```
 
-Project 파일 확인:
+운영체제별 기본 위치:
 
-```powershell
-Get-ChildItem -Force
-```
+| 운영체제 | Project Root |
+|---|---|
+| Windows | `C:\local-microserver\workspace\microserver` |
+| macOS | `~/local-microserver/workspace/microserver` |
 
-최소 다음 항목이 있어야 한다.
+최소 다음 항목이 있는 Directory가 Project Root이다.
 
 ```text
-build.gradle
-settings.gradle
-gradlew
-gradlew.bat
-gradle
-src
-.gitignore
+microserver
+├─ build.gradle
+├─ settings.gradle
+├─ gradlew
+├─ gradlew.bat
+├─ gradle
+├─ src
+└─ .gitignore
 ```
 
-!!! important "Git 초기화 전에 Project Root 확인"
-    다음 위치에서 `git init`을 실행한다.
+!!! important "Git Repository Root"
+    `git init`은 반드시 `microserver` Project Root에서 실행한다.
 
     ```text
-    O C:\local-microserver\workspace\microserver
-    ```
+    O <MICROSERVER_HOME>/workspace/microserver
 
-    다음 위치에서는 실행하지 않는다.
-
-    ```text
-    X C:\local-microserver
-    X C:\local-microserver\workspace
+    X <MICROSERVER_HOME>
+    X <MICROSERVER_HOME>/workspace
     ```
 
 ---
 
-## 4. 기존 Git 상태 확인
+## 4. Project Root 이동
 
-Git 초기화 전에 다음을 실행할 수 있다.
+=== "Windows"
 
-```powershell
+    PowerShell:
+
+    ```powershell
+    Set-Location C:\local-microserver\workspace\microserver
+    ```
+
+    현재 Directory:
+
+    ```powershell
+    Get-Location
+    ```
+
+    파일 확인:
+
+    ```powershell
+    Get-ChildItem -Force
+    ```
+
+=== "macOS"
+
+    Terminal(zsh):
+
+    ```bash
+    cd ~/local-microserver/workspace/microserver
+    ```
+
+    현재 Directory:
+
+    ```bash
+    pwd
+    ```
+
+    파일 확인:
+
+    ```bash
+    ls -la
+    ```
+
+Project Root에 `build.gradle`, `settings.gradle`, `src` 등이 있는지 확인한다.
+
+---
+
+## 5. 기존 Git 상태 확인
+
+Git 초기화 전에 다음 명령을 실행할 수 있다.
+
+```bash
 git status
 ```
 
@@ -137,22 +191,27 @@ git status
 fatal: not a git repository
 ```
 
-신규 Spring Boot 프로젝트라면 정상적인 상태이다.
+신규 Spring Boot 프로젝트를 처음 Git Repository로 구성하는 단계라면 정상적인 상태이다.
+
+반대로 `git status`가 정상적으로 동작하고 기존 Commit / Branch가 확인된다면
+이미 Git Repository일 수 있으므로 무조건 `git init`을 반복하지 않는다.
 
 ---
 
-## 5. Git Repository 초기화
+## 6. Git Repository 초기화
 
 Project Root에서 실행한다.
 
-```powershell
+```bash
 git init
 ```
+
+이 명령은 Windows PowerShell과 macOS Terminal에서 동일하다.
 
 초기화되면 Project Root 아래에 `.git` Directory가 생성된다.
 
 ```text
-C:\local-microserver
+<MICROSERVER_HOME>
 └─ workspace
    └─ microserver
       ├─ .git
@@ -163,7 +222,7 @@ C:\local-microserver
       └─ settings.gradle
 ```
 
-`.git`은 Source File이 아니라 다음 정보를 관리하는 Git Repository Metadata이다.
+`.git`은 Source File이 아니라 Git Repository Metadata를 관리하는 Directory이다.
 
 ```text
 Commit History
@@ -174,42 +233,64 @@ Remote
 Repository 설정
 ```
 
+!!! warning "`.git` Directory 직접 수정 금지"
+    `.git`에는 Repository History와 상태 정보가 저장된다.
+
+    일반적인 개발 과정에서는 `.git` 내부 파일을 직접 수정하거나
+    다른 Repository의 `.git` Directory로 교체하지 않는다.
+
 ---
 
-## 6. Repository Root 확인
+## 7. Repository Root 확인
 
-```powershell
+다음 명령으로 Git이 인식하는 Repository Root를 확인한다.
+
+```bash
 git rev-parse --show-toplevel
 ```
 
-기대 결과:
+Windows 예:
 
 ```text
 C:/local-microserver/workspace/microserver
 ```
 
-이 결과가 다음처럼 상위 Directory를 가리킨다면 잘못된 위치에서 Git Repository가 생성된 것이다.
+macOS 예:
 
 ```text
-X C:/local-microserver
-X C:/local-microserver/workspace
+/Users/<USER>/local-microserver/workspace/microserver
 ```
 
-정상:
+핵심은 운영체제의 절대경로가 아니라 Repository Root가 다음 Project를 가리키는 것이다.
 
 ```text
-O C:/local-microserver/workspace/microserver
+O .../local-microserver/workspace/microserver
+```
+
+다음처럼 상위 Directory를 가리키면 현재 MicroServer 구성 기준과 맞지 않는다.
+
+```text
+X .../local-microserver
+X .../local-microserver/workspace
 ```
 
 ---
 
-## 7. `.gitignore` 확인
+## 8. `.gitignore` 확인
 
 Spring Initializr가 생성한 `.gitignore`를 확인한다.
 
-```powershell
-Get-Content .gitignore
-```
+=== "Windows"
+
+    ```powershell
+    Get-Content .gitignore
+    ```
+
+=== "macOS"
+
+    ```bash
+    cat .gitignore
+    ```
 
 Gradle Project의 대표적인 제외 대상:
 
@@ -227,36 +308,47 @@ gradle/wrapper/gradle-wrapper.jar
 gradle/wrapper/gradle-wrapper.properties
 ```
 
-!!! warning "Gradle Wrapper를 `.gitignore`로 제외하지 않음"
-    Wrapper는 개발자마다 별도의 Gradle 설치를 강제하지 않고
-    프로젝트에서 정한 Gradle Version을 재현하는 데 사용된다.
-
-### 7.1 Repository 밖 Local Secret
-
-다음 Local Secret 파일은 Source Repository 밖에 있다.
+Windows와 macOS가 동일 Repository를 사용하므로
+현재 운영체제에서 사용하지 않는 Wrapper Script도 삭제하지 않는다.
 
 ```text
-C:\local-microserver\env\local-env.ps1
+Windows : gradlew.bat
+macOS   : gradlew
 ```
 
-따라서 Project `.gitignore` 대상이 아니다.
+!!! warning "Gradle Wrapper를 `.gitignore`로 제외하지 않음"
+    Wrapper는 개발자마다 별도의 Gradle 설치를 강제하지 않고
+    프로젝트에서 정한 Gradle Version을 재현하는 데 사용한다.
+
+### 8.1 Repository 밖 Local Secret
+
+Local Secret은 Source Repository 밖에서 관리하는 것을 원칙으로 한다.
+
+예:
+
+```text
+Windows : C:\local-microserver\env\...
+macOS   : ~/local-microserver/env/...
+```
+
+Repository 밖에 있는 파일은 Project `.gitignore`의 관리 대상이 아니다.
 
 ```text
 Repository 밖 Secret
-→ Git Ignore 대상 아님
-→ 개발환경 공유 ZIP / Package에서는 제외
+→ Project Git Ignore 대상 아님
+→ 개발환경 공유 Package 작성 시 별도 제외
 ```
 
-향후 Repository 내부에 `.env` 같은 Secret 파일을 만들면
-그때는 해당 Repository의 `.gitignore` 정책을 적용한다.
+향후 Repository 내부에 `.env` 등의 Secret 파일을 만들 경우에는
+Project `.gitignore` 정책을 적용한다.
 
 ---
 
-## 8. 최초 Git 상태 확인
+## 9. 최초 Git 상태 확인
 
 Git 초기화 후:
 
-```powershell
+```bash
 git status
 ```
 
@@ -277,27 +369,27 @@ src/...
 
 `.gradle/`이나 `build/`는 `.gitignore`에 의해 제외되어야 한다.
 
-현재는 Build를 아직 실행하지 않았으므로 `build/`가 존재하지 않을 수도 있다.
+현재 Build를 아직 실행하지 않았다면 `build/`가 존재하지 않을 수도 있다.
 
 ---
 
-## 9. 최초 Commit
+## 10. Initial Commit
 
 전체 변경사항을 Staging 한다.
 
-```powershell
+```bash
 git add .
 ```
 
 상태 확인:
 
-```powershell
+```bash
 git status
 ```
 
 Commit:
 
-```powershell
+```bash
 git commit -m "chore: create initial Spring Boot project"
 ```
 
@@ -313,7 +405,7 @@ Gradle Wrapper
 .gitignore
 ```
 
-아직 다음 설정은 포함하지 않는다.
+아직 다음 설정은 포함하지 않는 것을 기본으로 한다.
 
 ```text
 Project JDK 상세 설정
@@ -330,25 +422,25 @@ Framework 공통 기능
 
 ---
 
-## 10. Branch 확인
+## 11. Branch 확인
 
-현재 Branch 확인:
+현재 Branch:
 
-```powershell
+```bash
 git branch
 ```
 
 Git 설정이나 Version에 따라 초기 Branch 이름이 다를 수 있다.
 
-프로젝트 표준 Branch를 `main`으로 사용할 경우:
+MicroServer의 표준 Branch를 `main`으로 사용할 경우:
 
-```powershell
+```bash
 git branch -M main
 ```
 
 확인:
 
-```powershell
+```bash
 git branch
 ```
 
@@ -358,156 +450,384 @@ git branch
 * main
 ```
 
+`-M`은 현재 Branch 이름을 강제로 변경하는 옵션이다.
+
+이미 Branch가 `main`이라면 다시 실행할 필요는 없다.
+
 ---
 
-## 11. GitHub Remote 연결
+## 12. GitHub Remote 연결
 
-### 11.1 Remote Repository가 아직 없는 경우
+### 12.1 Remote Repository가 아직 없는 경우
 
-현재 Local Repository만 유지해도 된다.
+현재 Local Repository만 유지할 수 있다.
 
 ```text
-C:\local-microserver\workspace\microserver
+<MICROSERVER_HOME>/workspace/microserver
 └─ .git
 ```
 
-나중에 GitHub Repository를 만든 뒤 Remote를 연결할 수 있다.
+이후 GitHub Repository를 생성한 뒤 Remote를 연결한다.
 
-### 11.2 GitHub에 빈 Repository가 있는 경우
+### 12.2 GitHub에 빈 Repository가 있는 경우
 
 Remote를 연결한다.
 
-```powershell
+```bash
 git remote add origin <GitHub Repository URL>
 ```
 
 확인:
 
-```powershell
+```bash
 git remote -v
 ```
-
-Branch를 `main`으로 맞춘다.
-
-```powershell
-git branch -M main
-```
-
-Push:
-
-```powershell
-git push -u origin main
-```
-
-### 11.3 GitHub Repository 생성 시 권장
-
-신규 MicroServer Source Repository는
-가능하면 **빈 Repository**로 생성한다.
-
-GitHub에서 Repository 생성 시 다음 항목을 미리 만들지 않는 방식을 권장한다.
-
-```text
-README
-.gitignore
-LICENSE
-```
-
-이유는 Local에서 이미 최초 Commit을 만들었기 때문이다.
-
----
-
-## 12. Remote에 기존 Commit이 있는 경우
-
-GitHub Repository를 만들면서 README, LICENSE, `.gitignore` 등을 추가했다면
-Remote Repository에 이미 Commit History가 존재할 수 있다.
-
-이 경우 Local Initial Commit과 Remote Initial Commit이 서로 다른 History가 될 수 있으므로
-단순 `git push` 전에 Remote 상태를 확인해야 한다.
-
-현재 신규 프로젝트에서는 이런 상황을 피하기 위해
-**GitHub Repository를 빈 상태로 만든 뒤 Local Commit을 Push하는 방식**을 기본으로 한다.
-
----
-
-## 13. 이미 Git Repository를 Clone한 경우
-
-이미 GitHub Repository에 기존 Commit이 있고
-이를 먼저 Clone한 경우는 신규 프로젝트 절차와 다르다.
 
 예:
 
 ```text
-C:\local-microserver\workspace\microserver
-├─ .git
-├─ README.md
-└─ ...
+origin  <GitHub Repository URL> (fetch)
+origin  <GitHub Repository URL> (push)
 ```
 
-이 경우에는 다시 `git init`을 하지 않는다.
+Branch가 `main`인지 확인한 뒤 Push한다.
 
-권장 흐름:
+```bash
+git push -u origin main
+```
+
+`-u` 옵션은 Local `main` Branch가 Remote의 `origin/main`을
+Upstream Branch로 추적하도록 설정한다.
+
+최초 Push 이후에는 일반적으로 다음처럼 사용할 수 있다.
+
+```bash
+git push
+git pull
+```
+
+### 12.3 GitHub Repository 생성 시 권장
+
+Local에서 이미 Spring Boot 프로젝트를 생성하고
+`git init`과 Initial Commit까지 완료했다면,
+GitHub에서는 **소스 파일이나 Initial Commit이 아직 없는 새 Repository**를 만드는 것을 권장한다.
+
+여기서 말하는 **빈 Repository**는
+GitHub에 Repository 자체가 존재하지 않는다는 뜻이 아니다.
+
+다음처럼 GitHub에서 Repository 이름과 공개 범위 등을 지정해
+Repository는 생성하되,
+생성 단계에서 README, `.gitignore`, LICENSE를 추가하지 않는 상태를 의미한다.
 
 ```text
-기존 Repository Clone
-        ↓
-Spring Initializr Project 임시 생성
-        ↓
-생성 결과 확인
-        ↓
-기존 Repository Root에 필요한 파일 병합
-        ↓
-.git / 기존 History 유지
-        ↓
-git status
+GitHub Repository 생성
+├─ Repository name        : microserver
+├─ Visibility             : Public 또는 Private
+├─ Add a README file      : 선택하지 않음
+├─ Add .gitignore         : 선택하지 않음
+└─ Choose a license       : 선택하지 않음
 ```
 
-!!! warning "기존 `.git`을 삭제하거나 덮어쓰지 않음"
-    `.git`은 해당 Repository의 History와 Remote 정보를 가지고 있다.
+이렇게 생성하면 GitHub에는 Repository 공간과 URL은 만들어지지만
+아직 Source File이나 Commit History는 없는 상태가 된다.
 
-    Initializr 결과를 기존 Repository에 반영할 때
-    `.git` Directory를 삭제하거나 교체하지 않는다.
+예:
+
+```text
+GitHub
+microserver Repository 생성 완료
+        ↓
+아직 Commit 없음
+아직 Source 없음
+        ↓
+Local Repository의 Initial Commit을 최초 Push
+```
+
+Local에서 이미 다음 상태까지 만들어 놓았기 때문에:
+
+```text
+Spring Boot Project 생성
+        ↓
+git init
+        ↓
+git add .
+        ↓
+Initial Commit
+```
+
+GitHub에서도 다시 README, `.gitignore`, LICENSE를 생성해
+별도의 Initial Commit을 만들 필요가 없다.
+
+!!! warning "GitHub에서 README 등을 먼저 생성하지 않는 이유"
+    GitHub Repository 생성 화면에서 README, `.gitignore`, LICENSE 중 하나라도 추가하면
+    GitHub 쪽에 별도의 Initial Commit이 먼저 생성된다.
+
+    그러면 Local Repository의 Initial Commit과
+    GitHub Remote의 Initial Commit이 서로 다른 History에서 시작할 수 있다.
+
+정상 권장 흐름:
+
+```text
+Local Spring Boot Project 생성
+        ↓
+git init
+        ↓
+Initial Commit
+        ↓
+GitHub에서 Repository 생성
+(README / .gitignore / LICENSE는 생성하지 않음)
+        ↓
+git remote add origin <GitHub Repository URL>
+        ↓
+git push -u origin main
+```
+
+이 방식이면 Local에서 만든 Initial Commit이
+GitHub Repository의 첫 번째 Commit이 된다.
 
 ---
 
-## 14. 현재 단계에서 하지 않는 작업
+## 13. GitHub에 이미 Commit이 생성되어 있는 경우
 
-현재 단계는 **Git Repository 초기화와 최초 Commit**까지만 담당한다.
+GitHub Repository를 생성하면서
+README, LICENSE, `.gitignore` 등을 추가했다면
+GitHub 쪽에는 이미 하나 이상의 Commit이 존재한다.
 
-아직 다음 명령은 실행하지 않는다.
+예:
 
 ```text
-gradlew.bat build
-gradlew.bat bootRun
+Local Repository
+A --- Spring Boot Initial Commit
+
+GitHub Remote
+B --- README Initial Commit
 ```
 
-다음 구성도 아직 하지 않는다.
+이 경우 `A`와 `B`는 서로 다른 Initial Commit이므로
+Local과 Remote가 같은 History에서 시작하지 않은 상태가 될 수 있다.
+
+따라서 단순히 다음 명령만 실행하면 Push가 거절되거나
+추가적인 병합 절차가 필요할 수 있다.
+
+```bash
+git push -u origin main
+```
+
+이 상황은 Git이 잘못된 것이 아니라
+Local과 Remote 양쪽에서 각각 독립적으로 Commit을 생성했기 때문에 발생한다.
+
+현재 MicroServer 신규 구축의 표준 절차에서는
+이 문제를 처음부터 만들지 않는 방향을 권장한다.
 
 ```text
-.vscode/settings.json
-.vscode/extensions.json
-application-local.yml
-Oracle JDBC Driver
-Datasource
+권장
+Local에서 Initial Commit 생성
+        ↓
+GitHub Repository 생성
+        ↓
+README / .gitignore / LICENSE 추가하지 않음
+        ↓
+Local Commit을 최초 Push
+```
+
+반대로 이미 Remote에 Commit이 존재하는 Repository를 사용해야 한다면
+Remote 상태를 먼저 확인한 뒤 해당 Repository의 History와
+Local History를 어떻게 통합할지 결정해야 한다.
+
+!!! note "이 절의 목적"
+    이 절은 Remote History를 강제로 덮어쓰는 방법을 안내하기 위한 것이 아니다.
+
+    신규 프로젝트에서는 Local과 Remote에
+    서로 다른 Initial Commit을 만들지 않는 것이 가장 단순하고 안전하다.
+
+---
+
+## 14. 기존 Repository에 참여하는 경우
+
+일반 개발자가 이미 존재하는 MicroServer 프로젝트에 참여하는 경우에는
+**프로젝트 생성 및 Git 초기화 절차를 반복하지 않고 Source Repository를 Clone하는 것을 기본 방식으로 한다.**
+
+```text
+기존 GitHub Repository
+        ↓
+Local workspace 준비
+        ↓
+git clone
+        ↓
+Project Root 생성
+        ↓
+.git / Commit History / origin 구성
+        ↓
+VS Code에서 Project Open
+```
+
+### 14.1 Clone
+
+먼저 Workspace로 이동한다.
+
+=== "Windows"
+
+    ```powershell
+    Set-Location C:\local-microserver\workspace
+    ```
+
+=== "macOS"
+
+    ```bash
+    cd ~/local-microserver/workspace
+    ```
+
+Clone:
+
+```bash
+git clone <GitHub Repository URL>
+```
+
+Repository 이름이 `microserver`라면 일반적으로 다음 Directory가 생성된다.
+
+```text
+<MICROSERVER_HOME>
+└─ workspace
+   └─ microserver
+      ├─ .git
+      ├─ .gitignore
+      ├─ gradle
+      ├─ src
+      ├─ build.gradle
+      └─ settings.gradle
+```
+
+!!! important "Clone한 Repository에서는 `git init`을 하지 않음"
+    `git clone`은 Source File뿐 아니라 다음 Repository 정보도 함께 구성한다.
+
+    ```text
+    .git
+    Commit History
+    Branch
+    origin
+    Remote Tracking 정보
+    ```
+
+### 14.2 Clone 상태 확인
+
+Project Root로 이동한 후:
+
+```bash
+git status
+git branch --show-current
+git remote -v
+git rev-parse --show-toplevel
+```
+
+Clone 직후 변경사항이 없다면 일반적으로 다음 상태가 된다.
+
+```text
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+```
+
+### 14.3 VS Code에서 열기
+
+Clone된 `microserver` Project Root를 연다.
+
+```text
+File
+→ Open Folder...
+→ <MICROSERVER_HOME>/workspace/microserver
+```
+
+`build.gradle`과 `settings.gradle`이 바로 보이는 Project Root를 여는 것을 기준으로 한다.
+
+Java / Gradle Extension이 설치되어 있다면
+VS Code가 기존 프로젝트를 Java / Gradle Project로 Import한다.
+
+### 14.4 Source Package로 전달받는 경우
+
+Repository 접근이 제한된 폐쇄망이나 별도 반입 절차가 필요한 환경에서는
+Source를 ZIP 또는 Directory Package로 전달받을 수도 있다.
+
+다만 일반 개발환경의 표준 Source 획득 방식은 Git Clone을 권장한다.
+
+```text
+표준
+Git Repository Clone
+
+예외
+Source ZIP / Directory Package
+```
+
+Source Package 방식에서는 `.git` 포함 여부와 Repository 연결 상태가
+배포 방식에 따라 달라질 수 있으므로 별도의 환경 정책을 따른다.
+
+---
+
+## 15. GitHub 인증에 대한 이해
+
+Browser에서 GitHub에 로그인한 것과
+Terminal에서 Git 명령으로 Remote Repository에 접근하는 인증은 구분해서 이해한다.
+
+Git Remote URL은 일반적으로 다음 방식 중 하나를 사용한다.
+
+```text
+HTTPS
+SSH
+```
+
+현재 Repository가 어떤 방식을 사용하는지는 다음 명령으로 확인한다.
+
+```bash
+git remote -v
+```
+
+기존 프로젝트에 참여하는 개발자는 임의로 인증 방식을 변경하기보다
+프로젝트에서 사용하는 Remote 방식을 우선 확인한다.
+
+---
+
+## 16. 현재 단계에서 하지 않는 작업
+
+현재 단계는 Git Repository 구성과 최초 Source 관리 기준을 만드는 단계이다.
+
+신규 구축 시 아직 다음 Build / Run 작업은 수행하지 않는다.
+
+=== "Windows"
+
+    ```powershell
+    .\gradlew.bat build
+    .\gradlew.bat bootRun
+    ```
+
+=== "macOS"
+
+    ```bash
+    ./gradlew build
+    ./gradlew bootRun
+    ```
+
+다음 구성도 이후 단계에서 진행한다.
+
+```text
+Project JDK / VS Code 상세 설정
+Oracle JDBC / Datasource
 Docker Compose
-Controller
-Service
-DAO
-Filter
-AOP
-Security
-Transaction
-Cache
+Controller / Service / DAO
+Filter / AOP
+Security / Transaction / Cache
 Gradle Multi-Project
 ```
 
 ---
 
-## 15. 전체 흐름 요약
+## 17. 전체 흐름 요약
+
+### 17.1 최초 프로젝트 구축
 
 ```mermaid
 flowchart TD
     A["Spring Boot Project 생성 완료"]
-    --> B["C:\local-microserver\workspace\microserver 이동"]
+    --> B["Project Root 이동"]
     --> C["git init"]
     --> D["Repository Root 확인"]
     --> E[".gitignore 확인"]
@@ -515,13 +835,28 @@ flowchart TD
     --> G["git add ."]
     --> H["Initial Commit"]
     --> I["main Branch 확인"]
-    --> J["필요 시 GitHub Remote 연결"]
+    --> J["GitHub Remote 연결"]
+    --> K["git push -u origin main"]
 ```
 
-최종 구조:
+### 17.2 기존 프로젝트 참여
+
+```mermaid
+flowchart TD
+    A["GitHub 기존 Repository"]
+    --> B["workspace 이동"]
+    --> C["git clone"]
+    --> D["Project Root 이동"]
+    --> E["git status"]
+    --> F["Branch / origin 확인"]
+    --> G["VS Code Open"]
+    --> H["Java / Gradle Project 인식"]
+```
+
+최종 Repository 구조:
 
 ```text
-C:\local-microserver
+<MICROSERVER_HOME>
 └─ workspace
    └─ microserver
       ├─ .git
@@ -537,55 +872,67 @@ C:\local-microserver
 
 ---
 
-## 16. 체크리스트
+## 18. 체크리스트
 
-### 16.1 Repository 초기화
+### 18.1 최초 Repository 구축
 
-- [ ] Project Root가 `C:\local-microserver\workspace\microserver`이다.
-- [ ] `C:\local-microserver`에는 `git init`을 하지 않았다.
-- [ ] `C:\local-microserver\workspace`에는 `git init`을 하지 않았다.
-- [ ] Project Root에서 `git init`을 실행했다.
+- [ ] `microserver` Project Root에서 작업하고 있다.
+- [ ] 상위 `local-microserver` 또는 `workspace`에서 `git init`을 하지 않았다.
+- [ ] `git init`을 실행했다.
 - [ ] `.git` Directory가 생성되었다.
 - [ ] `git rev-parse --show-toplevel` 결과가 Project Root이다.
-
-### 16.2 Git 관리 대상
-
 - [ ] `.gitignore`를 확인했다.
 - [ ] `.gradle/`과 `build/`가 제외 대상이다.
-- [ ] `gradlew`, `gradlew.bat`, `gradle/wrapper/`는 Git 관리 대상이다.
-- [ ] Repository 밖 `local-env.ps1`은 Project `.gitignore` 대상이 아님을 확인했다.
-
-### 16.3 최초 Commit
-
-- [ ] `git status`로 생성 파일을 확인했다.
+- [ ] Gradle Wrapper는 Git 관리 대상이다.
 - [ ] `git add .`을 실행했다.
-- [ ] 최초 Commit을 생성했다.
-- [ ] Branch 이름을 확인했다.
-- [ ] 필요하면 `main`으로 변경했다.
-- [ ] GitHub Remote가 있다면 연결 상태를 확인했다.
+- [ ] Initial Commit을 생성했다.
+- [ ] Branch를 `main`으로 확인했다.
+- [ ] GitHub Remote를 연결했다.
+- [ ] 최초 Push가 필요한 경우 `git push -u origin main`을 실행했다.
 
-### 16.4 단계 범위
+### 18.2 기존 Repository 참여
 
-- [ ] 아직 Build / Run을 하지 않았다.
-- [ ] 아직 Project JDK / VS Code 상세 설정을 하지 않았다.
+- [ ] 프로젝트를 다시 생성하지 않았다.
+- [ ] `git init`을 다시 실행하지 않았다.
+- [ ] 기존 Repository를 `workspace`에 Clone했다.
+- [ ] `git status`가 정상적으로 동작한다.
+- [ ] 현재 Branch를 확인했다.
+- [ ] `origin` Remote를 확인했다.
+- [ ] Repository Root가 `microserver` Project Root이다.
+- [ ] VS Code에서 `microserver` Project Root를 열었다.
+
+### 18.3 단계 범위
+
+- [ ] 아직 Build / Run 검증은 수행하지 않았다.
+- [ ] 아직 Project JDK / VS Code 상세 설정은 이후 단계로 남겨 두었다.
 - [ ] 아직 Oracle JDBC / Datasource를 연결하지 않았다.
 - [ ] 아직 Gradle Multi-Project를 구성하지 않았다.
 
 ---
 
-## 17. 다음 단계
+## 19. 다음 단계
 
-Git Repository 초기화와 최초 Commit이 완료되면
-Spring Initializr가 생성한 프로젝트 구조와 기본 파일을 확인한다.
+Git Repository 초기화와 최초 Commit 또는
+기존 Repository Clone이 완료되면 프로젝트 구조와 기본 파일을 확인한다.
 
 ```text
+최초 구축
 Spring Boot 프로젝트 생성
         ↓
-Git Repository 초기화 / 최초 Commit      ← 현재 완료
+Git Repository 초기화 / 최초 Commit
+
+기존 프로젝트 참여
+Git Repository Clone
         ↓
-생성 프로젝트 구조 확인 및 초기 정리
-        ↓
-프로젝트 JDK / VS Code Workspace 설정
+        └──────────────┐
+                       ↓
+             프로젝트 구조 확인
+                       ↓
+             Project JDK / VS Code 설정
+                       ↓
+             Gradle Wrapper / Gradle 설정
+                       ↓
+             Build / Run 검증
 ```
 
 다음 문서:

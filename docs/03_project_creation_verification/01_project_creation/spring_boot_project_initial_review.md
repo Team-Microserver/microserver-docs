@@ -2,7 +2,7 @@
 
 ## 1. 문서 목적
 
-본 문서는 Spring Initializr로 생성하여 기존 Git Repository Root에 반영한
+본 문서는 Spring Initializr로 생성했거나 기존 Git Repository에서 내려받은
 MicroServer Spring Boot 프로젝트의 **초기 파일 구조와 생성 결과를 확인하고,
 다음 프로젝트 개발환경 설정 단계로 넘어가기 위한 기준 상태를 정리**한다.
 
@@ -59,59 +59,65 @@ Build / Run
 
 ## 3. Repository Root 확인
 
-MicroServer Source Repository 위치:
+MicroServer Source Repository의 논리적 위치:
 
 ```text
-C:\local-microserver\workspace\microserver
+<MICROSERVER_HOME>
+└─ workspace
+   └─ microserver
 ```
 
-PowerShell:
+운영체제별 기본 Project Root:
 
-```powershell
-Set-Location C:\local-microserver\workspace\microserver
-```
+| 운영체제 | Project Root |
+|---|---|
+| Windows | `C:\local-microserver\workspace\microserver` |
+| macOS | `~/local-microserver/workspace/microserver` |
 
-Git Repository Root 확인:
+이하 문서에서는 이 위치를 `<MICROSERVER_PROJECT_ROOT>`로 표현할 수 있다.
 
-```powershell
+Project Root로 이동한다.
+
+=== "Windows"
+
+    ```powershell
+    Set-Location C:\local-microserver\workspace\microserver
+    ```
+
+=== "macOS"
+
+    ```bash
+    cd ~/local-microserver/workspace/microserver
+    ```
+
+Git Repository Root 확인 명령은 두 운영체제에서 동일하다.
+
+```bash
 git rev-parse --show-toplevel
 ```
 
 기대 결과:
 
-```text
-C:/local-microserver/workspace/microserver
-```
+=== "Windows"
+
+    ```text
+    C:/local-microserver/workspace/microserver
+    ```
+
+=== "macOS"
+
+    ```text
+    /Users/<USER>/local-microserver/workspace/microserver
+    ```
 
 !!! important "Repository Root를 먼저 확인"
     이후 모든 Project 파일은 이 Repository Root를 기준으로 확인한다.
 
-    이 문서에서 `.` 또는 `.\`로 시작하는 PowerShell 상대경로 명령도
-    특별한 설명이 없는 한 다음 위치에서 실행하는 것을 기준으로 한다.
+    다음처럼 Project Directory가 한 단계 더 중첩되어 있으면 잘못된 구조이다.
 
     ```text
-    C:\local-microserver\workspace\microserver
-    ```
-
-    예를 들어:
-
-    ```powershell
-    Get-ChildItem .\gradle\wrapper
-    ```
-
-    는 현재 위치가 Project Root일 때
-    `C:\local-microserver\workspace\microserver\gradle\wrapper`를 확인한다.
-
-    다음처럼 한 단계 더 중첩되어 있으면 정리해야 한다.
-
-    ```text
-    X workspace\microserver\microserver\build.gradle
-    ```
-
-    정상:
-
-    ```text
-    O workspace\microserver\build.gradle
+    X workspace/microserver/microserver/build.gradle
+    O workspace/microserver/build.gradle
     ```
 
 ---
@@ -121,7 +127,7 @@ C:/local-microserver/workspace/microserver
 정상적으로 반영되면 다음과 유사한 구조가 된다.
 
 ```text
-C:\local-microserver\workspace\microserver
+<MICROSERVER_PROJECT_ROOT>
 │
 ├─ .git
 ├─ .gitignore
@@ -382,7 +388,7 @@ rootProject.name = 'microserver'
 Project Root 기준 위치:
 
 ```text
-C:\local-microserver\workspace\microserver\settings.gradle
+<MICROSERVER_PROJECT_ROOT>/settings.gradle
 ```
 
 정상 내용:
@@ -613,7 +619,7 @@ Gradle Wrapper는 **개발자가 PC에 별도의 Gradle을 직접 설치하지 �
 Project Root 기준으로 다음 파일이 존재해야 한다.
 
 ```text
-C:\local-microserver\workspace\microserver
+<MICROSERVER_PROJECT_ROOT>
 │
 ├─ gradle
 │  └─ wrapper
@@ -641,93 +647,71 @@ Spring Initializr가 Gradle Project를 정상 생성했는가?
 Gradle Wrapper 관련 파일이 모두 존재하는가?
 ```
 
-### 11.2 반드시 Project Root에서 실행
+### 11.2 반드시 Project Root를 기준으로 확인
 
-아래 명령의 `.`은 **현재 Directory**를 의미한다.
-
-```powershell
-Get-ChildItem .\gradle\wrapper
-```
-
-따라서 이 명령은 실제로 다음 의미이다.
-
-```text
-현재 Directory
-    └─ gradle
-       └─ wrapper
-```
-
-즉, PowerShell의 현재 위치가 반드시 MicroServer Project Root여야 한다.
-
-```text
-C:\local-microserver\workspace\microserver
-```
+Gradle Wrapper 관련 파일은 Project Root 아래에 존재한다.
 
 먼저 현재 위치를 확인한다.
 
-```powershell
-Get-Location
-```
-
-기대 위치:
-
-```text
-Path
-----
-C:\local-microserver\workspace\microserver
-```
-
-다른 위치에 있다면 Project Root로 이동한다.
-
-```powershell
-Set-Location C:\local-microserver\workspace\microserver
-```
-
-PowerShell Prompt도 다음처럼 보여야 한다.
-
-```text
-PS C:\local-microserver\workspace\microserver>
-```
-
-!!! important "이 문서의 Project 상대경로 명령은 Project Root 기준"
-    이후 문서에서 다음처럼 `.`으로 시작하는 상대경로 명령은 특별한 설명이 없는 한
-    `C:\local-microserver\workspace\microserver`에서 실행하는 것을 기준으로 한다.
+=== "Windows"
 
     ```powershell
-    .\gradlew.bat
-    .\gradle\wrapper
-    .\src
+    Get-Location
     ```
+
+    기대 위치:
+
+    ```text
+    C:\local-microserver\workspace\microserver
+    ```
+
+=== "macOS"
+
+    ```bash
+    pwd
+    ```
+
+    기대 위치:
+
+    ```text
+    /Users/<USER>/local-microserver/workspace/microserver
+    ```
+
+다른 위치라면 Project Root로 이동한다.
+
+=== "Windows"
+
+    ```powershell
+    Set-Location C:\local-microserver\workspace\microserver
+    ```
+
+=== "macOS"
+
+    ```bash
+    cd ~/local-microserver/workspace/microserver
+    ```
+
+!!! important "Project 상대경로는 Project Root 기준"
+    이후 `gradle/wrapper`, `src`, `build.gradle` 같은 상대경로는
+    특별한 설명이 없는 한 `microserver` Project Root를 기준으로 한다.
 
 ### 11.3 Wrapper Directory 확인
 
-Project Root에서 다음 명령을 실행한다.
+Project Root에서 Wrapper Directory의 파일을 확인한다.
 
-```powershell
-Get-ChildItem .\gradle\wrapper
-```
+=== "Windows"
 
-`Get-ChildItem`은 지정한 Directory의 파일과 하위 항목을 조회하는 PowerShell 명령이다.
+    ```powershell
+    Get-ChildItem .\gradle\wrapper
+    ```
 
-따라서 위 명령은 다음 의미이다.
+=== "macOS"
 
-```text
-현재 Project Root의 gradle\wrapper Directory에
-어떤 파일이 존재하는지 확인한다.
-```
+    ```bash
+    ls -la ./gradle/wrapper
+    ```
 
-정상적인 경우 다음과 유사한 결과가 출력된다.
-
-```text
-디렉터리: C:\local-microserver\workspace\microserver\gradle\wrapper
-
-Mode                 LastWriteTime         Length Name
-----                 -------------         ------ ----
--a----                                    ...    gradle-wrapper.jar
--a----                                    ...    gradle-wrapper.properties
-```
-
-확인 포인트:
+다음 두 파일이 존재하는지 확인한다.
 
 ```text
 gradle-wrapper.jar          → 존재
@@ -737,56 +721,43 @@ gradle-wrapper.properties   → 존재
 파일의 Size나 LastWriteTime은 생성 시점과 Initializr Version에 따라 달라질 수 있으므로
 **파일 이름과 존재 여부를 중심으로 확인**한다.
 
-### 11.4 `경로가 존재하지 않습니다` 오류가 발생하는 경우
+### 11.4 경로 오류가 발생하는 경우
 
-예를 들어 현재 위치가 다음과 같다고 가정한다.
+Wrapper 조회 명령은 현재 Directory를 기준으로 상대경로를 계산한다.
 
-```text
-PS C:\local-microserver\workspace>
-```
-
-이 상태에서 다음 명령을 실행하면:
-
-```powershell
-Get-ChildItem .\gradle\wrapper
-```
-
-PowerShell은 실제로 다음 경로를 찾는다.
+예를 들어 현재 위치가 `workspace`라면 실제 Wrapper는 그 아래
+`microserver/gradle/wrapper`에 있으므로 Project Root 기준 명령이 실패할 수 있다.
 
 ```text
-C:\local-microserver\workspace\gradle\wrapper
+현재 위치
+<MICROSERVER_HOME>/workspace
+
+실제 Wrapper
+<MICROSERVER_HOME>/workspace/microserver/gradle/wrapper
 ```
 
-하지만 실제 Wrapper 위치는 다음이다.
+Windows에서는 경로 관련 오류가,
+macOS에서는 `No such file or directory`가 표시될 수 있다.
 
-```text
-C:\local-microserver\workspace\microserver\gradle\wrapper
-```
+이 오류는 Wrapper가 반드시 누락되었다는 뜻이 아니다.
+먼저 현재 위치가 Project Root인지 확인한다.
 
-따라서 다음과 같은 오류가 발생한다.
+=== "Windows"
 
-```text
-경로는 존재하지 않으므로 찾을 수 없습니다.
-```
+    ```powershell
+    Set-Location C:\local-microserver\workspace\microserver
+    Get-ChildItem .\gradle\wrapper
+    ```
 
-이 오류는 Gradle Wrapper가 반드시 누락되었다는 의미가 아니라,
-**현재 명령을 실행한 Directory가 Project Root가 아닌 경우에도 발생할 수 있다.**
+=== "macOS"
 
-해결 방법:
+    ```bash
+    cd ~/local-microserver/workspace/microserver
+    ls -la ./gradle/wrapper
+    ```
 
-```powershell
-Set-Location C:\local-microserver\workspace\microserver
-Get-ChildItem .\gradle\wrapper
-```
-
-또는 `workspace` Directory에 그대로 있는 상태라면 전체 상대경로를 지정할 수도 있다.
-
-```powershell
-Get-ChildItem .\microserver\gradle\wrapper
-```
-
-하지만 프로젝트 가이드에서는 명령 기준 위치가 혼동되지 않도록
-**먼저 Project Root로 이동한 뒤 명령을 실행하는 방식을 권장**한다.
+프로젝트 가이드에서는 경로 기준을 일관되게 유지하기 위해
+**먼저 Project Root로 이동한 뒤 명령을 실행하는 방식**을 권장한다.
 
 ### 11.5 현재 단계에서는 Version을 변경하지 않음
 
@@ -828,7 +799,7 @@ Gradle Wrapper 및 프로젝트 Gradle 설정
 Repository Root:
 
 ```text
-C:\local-microserver\workspace\microserver\.gitignore
+<MICROSERVER_PROJECT_ROOT>/.gitignore
 ```
 
 Gradle Build 결과에 대한 대표 제외 기준:
@@ -850,24 +821,32 @@ Initializr 생성 내용과 병합되었는지 확인한다.
     gradle/wrapper/
     ```
 
-Repository 밖에 있는 다음 개발환경 파일은 `.gitignore`와 관계없다.
+Repository 밖에서 관리하는 Local 환경 파일은 Project `.gitignore`와 관계없다.
+
+예:
 
 ```text
-C:\local-microserver\env\local-env.ps1
+Windows : C:\local-microserver\env\...
+macOS   : ~/local-microserver/env/...
 ```
 
-이 파일은 Git Repository 밖에 있으므로
-공유용 개발환경 Package에서 제외하는 정책으로 관리한다.
+이 파일들은 Git Repository 밖에 있으므로
+공유용 개발환경 Package 작성 시 별도 제외 정책으로 관리한다.
 
 ---
 
 ## 13. 현재 Project Root를 VS Code에서 열기
 
-MicroServer Portable VS Code는 다음 Shortcut으로 실행하는 것을 권장한다.
+VS Code를 실행한 뒤 `microserver` Project Root를 연다.
+
+Windows에서 MicroServer Portable VS Code 환경을 사용하는 경우에는
+구성된 Shortcut을 사용할 수 있다.
 
 ```text
 MicroServer VS Code.lnk
 ```
+
+macOS에서는 설치된 VS Code를 실행하여 동일한 Project Root를 연다.
 
 VS Code에서:
 
@@ -876,13 +855,21 @@ File
 → Open Folder...
 ```
 
-다음 Directory를 연다.
+운영체제별 Project Root:
 
-```text
-C:\local-microserver\workspace\microserver
-```
+=== "Windows"
 
-또는 향후 `.code-workspace`를 사용할 경우 프로젝트가 해당 Workspace에 포함되도록 구성한다.
+    ```text
+    C:\local-microserver\workspace\microserver
+    ```
+
+=== "macOS"
+
+    ```text
+    ~/local-microserver/workspace/microserver
+    ```
+
+향후 `.code-workspace`를 사용할 경우 프로젝트가 해당 Workspace에 포함되도록 구성할 수 있다.
 
 현재 Project Root를 열었을 때 Explorer에서 최소 다음이 바로 보여야 한다.
 
@@ -909,7 +896,7 @@ microserver
 현재 프로젝트는 이미 다음 위치에 생성되어 있다.
 
 ```text
-C:\local-microserver\workspace\microserver
+<MICROSERVER_PROJECT_ROOT>
 ```
 
 그리고 Project Root에는 다음 파일이 존재한다.
@@ -958,7 +945,7 @@ VS Code에서 Java Project로 사용 가능
 VS Code에서 다음 Project Root를 `File → Open Folder...`로 열면:
 
 ```text
-C:\local-microserver\workspace\microserver
+<MICROSERVER_PROJECT_ROOT>
 ```
 
 Java / Gradle Extension이 `build.gradle`을 발견하고
@@ -1065,11 +1052,21 @@ Java 오류 표시
 자동 인식이 되지 않았거나 Workspace에 새로운 Java / Gradle Module을 추가한 경우에만
 Command Palette에서 다음 명령을 사용할 수 있다.
 
-```text
-Ctrl + Shift + P
-    ↓
-Java: Import Java Projects in Workspace
-```
+=== "Windows"
+
+    ```text
+    Ctrl + Shift + P
+        ↓
+    Java: Import Java Projects in Workspace
+    ```
+
+=== "macOS"
+
+    ```text
+    Cmd + Shift + P
+        ↓
+    Java: Import Java Projects in Workspace
+    ```
 
 대표적인 사용 상황:
 
@@ -1090,9 +1087,17 @@ VS Code를 다시 열지 않고 새 Project / Module을 다시 검색하고 싶�
 
 Java Project가 Import되었다고 해서 다음 명령이 성공했다는 뜻은 아니다.
 
-```powershell
-.\gradlew.bat build
-```
+=== "Windows"
+
+    ```powershell
+    .\gradlew.bat build
+    ```
+
+=== "macOS"
+
+    ```bash
+    ./gradlew build
+    ```
 
 VS Code의 Import 과정은 IDE가 Java / Gradle Project 구조와 Dependency 정보를 이해하기 위한 과정이다.
 반면 `gradlew build`는 실제 Gradle Build를 수행하여 Compile / Test / Packaging 등의 성공 여부를 검증한다.
@@ -1247,7 +1252,7 @@ Application Run
 
 Repository Root에서:
 
-```powershell
+```bash
 git status
 ```
 
@@ -1277,39 +1282,39 @@ README.md
 
 ---
 
-## 19. 생성 상태 Commit 기준
+## 19. Git 상태 확인 기준
 
-프로젝트 생성 결과가 정상적으로 정리되었다면
-이 상태를 하나의 Git 기준점으로 남긴다.
+선행 **Git 초기화 가이드**에서 이미 Spring Boot 생성 상태를 Initial Commit으로 남겼다면
+이 문서에서 같은 내용으로 다시 Commit하지 않는다.
 
-```powershell
-git add .
-```
+먼저 Repository 상태를 확인한다.
 
-다시 확인:
-
-```powershell
+```bash
 git status
 ```
 
-Commit 예:
+앞 단계의 Commit이 완료되었고 이 문서에서 파일을 수정하지 않았다면
+다음과 같은 Clean 상태가 기대된다.
 
-```powershell
-git commit -m "chore: create initial Spring Boot project"
+```text
+nothing to commit, working tree clean
 ```
 
-Remote Repository에 Push:
+반대로 실제 초기 정리 과정에서 관리 대상 파일을 수정했다면
+변경 내용을 먼저 확인한다.
 
-```powershell
-git push
+```bash
+git diff
+git status
 ```
 
-!!! tip "단계별 Commit"
-    MicroServer 프로젝트는 여러 설정을 한 번에 적용하기보다
-    각 단계에서 정상 상태를 Commit하여 변경 기준점을 남기는 방식을 사용한다.
+의미 있는 변경사항이 있을 때만 별도의 Commit을 생성한다.
 
-    다음 단계에서 JDK / VS Code / Gradle 설정을 적용했을 때 문제가 발생하면
-    Spring Boot 기본 생성 상태와 쉽게 비교할 수 있다.
+!!! tip "단계별 Commit은 변경사항이 있을 때만"
+    MicroServer 프로젝트는 단계별 정상 상태를 Commit 기준점으로 남기는 방식을 사용한다.
+
+    다만 선행 Git 단계에서 이미 동일한 Spring Boot 생성 상태를 Commit했다면
+    같은 목적의 Commit을 반복해서 만들 필요는 없다.
 
 ---
 
@@ -1341,7 +1346,7 @@ Gradle Wrapper                     → 존재 확인
 .gitignore                         → 병합 / 확인
 VS Code Java Project               → 자동 Import / 인식 확인
 Spring Boot Dashboard              → 인식 확인
-Git Commit                         → 생성 기준점 기록
+Git 상태                          → 선행 Commit / Working Tree 확인
 
 Project JDK 상세 연계              → 다음 단계
 Gradle Wrapper 표준화              → 이후 단계
@@ -1356,7 +1361,7 @@ Oracle Datasource                  → 이후 단계
 
 ### 21.1 Project Root
 
-- [ ] Repository Root가 `C:\local-microserver\workspace\microserver`이다.
+- [ ] Repository Root가 운영체제별 `microserver` Project Root이다.
 - [ ] `build.gradle`이 Repository Root에 있다.
 - [ ] `settings.gradle`이 Repository Root에 있다.
 - [ ] Project Directory가 `microserver\microserver`로 중첩되지 않았다.
@@ -1377,7 +1382,7 @@ Oracle Datasource                  → 이후 단계
 
 ### 21.3 Gradle
 
-- [ ] PowerShell 현재 위치가 Project Root인 `C:\local-microserver\workspace\microserver`인지 확인했다.
+- [ ] 현재 Terminal 위치가 `microserver` Project Root인지 확인했다.
 - [ ] `gradlew`가 존재한다.
 - [ ] `gradlew.bat`이 존재한다.
 - [ ] `gradle/wrapper/`가 존재한다.
@@ -1394,7 +1399,7 @@ Oracle Datasource                  → 이후 단계
 - [ ] Spring Boot Dashboard에서 Application을 확인할 수 있다.
 - [ ] 아직 Application을 실행하지 않았다.
 - [ ] `git status`로 생성 변경사항을 확인했다.
-- [ ] 생성 상태를 Commit / Push했다.
+- [ ] 선행 Git 단계의 Commit 상태와 현재 Working Tree 상태를 확인했다.
 
 ---
 
