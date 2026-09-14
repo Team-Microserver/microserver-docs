@@ -27,6 +27,67 @@ IDE          : VS Code
 
 ---
 
+## 1.1 MicroServer Java 환경 표준 정책
+
+MicroServer의 Java 개발환경은 **Windows와 macOS 모두 동일한 독립 실행 원칙**을 사용한다.
+
+핵심은 OS 전역에 `JAVA_HOME`을 영구 설정하는 것이 아니라,
+MicroServer 개발환경 폴더 내부에 JDK를 포함하고 **전용 Launcher가 VS Code를 실행할 때만**
+해당 JDK의 `JAVA_HOME`과 `PATH`를 Process 환경변수로 주입하는 것이다.
+
+```text
+OS 전역 JAVA_HOME
+→ 사용하지 않음
+
+MicroServer Folder 내부 JDK
+→ Eclipse Temurin 25 포함
+
+Windows / macOS Launcher
+→ VS Code 실행 시점에만 JAVA_HOME / PATH 주입
+
+build.gradle Java Toolchain
+→ Project Build Java Version = 25
+
+java.configuration.runtimes
+→ 기본 설정하지 않음
+
+java.jdt.ls.java.home
+→ 기본 설정하지 않음
+```
+
+!!! important "`JAVA_HOME`을 사용하지 않는다는 의미"
+
+    MicroServer에서 `JAVA_HOME`이라는 환경변수 자체를 사용하지 않는다는 뜻이 아니다.
+
+    **Windows/macOS의 시스템 전역 환경변수로 영구 등록하지 않고,
+    MicroServer용 VS Code Process를 시작할 때만 폴더 내부 JDK 경로를 주입한다**는 의미이다.
+
+    따라서 일반 Terminal, 다른 IDE, 다른 Project의 Java 환경에 영향을 주지 않는다.
+
+### 공통 실행 구조
+
+```mermaid
+flowchart TB
+    JDK["MicroServer Folder 내부<br/>Eclipse Temurin 25"]
+    LAUNCHER["전용 Launcher<br/>Windows / macOS"]
+    ENV["Process 환경변수<br/>JAVA_HOME / PATH"]
+    VSCODE["VS Code"]
+    EXT["Java Extension / Language Server"]
+    TERM["Integrated Terminal"]
+    GRADLE["Gradle Wrapper"]
+    BUILD["build.gradle<br/>Java Toolchain = 25"]
+
+    JDK --> LAUNCHER
+    LAUNCHER --> ENV
+    ENV --> VSCODE
+    VSCODE --> EXT
+    VSCODE --> TERM
+    ENV --> GRADLE
+    BUILD --> GRADLE
+```
+
+---
+
 ## 2. 세 설정을 먼저 한눈에 보기
 
 | 설정 | 사용하는 주체 | 역할 |
@@ -378,16 +439,21 @@ D:\jdk\temurin-25
 /Users/user/jdks/temurin-25.jdk/Contents/Home
 ```
 
-따라서 MicroServer에서는:
+`java.configuration.runtimes`는 로컬 JDK 경로를 명시적으로 등록할 수 있는 설정이지만,
+**MicroServer 표준 환경에서는 기본적으로 설정하지 않는다.**
+
+Windows/macOS 모두 전용 Launcher가 폴더 내부 JDK의 `JAVA_HOME` / `PATH`를
+VS Code 실행 시점에 주입하므로 JDK 절대경로를 VS Code Settings에 중복해서 기록하지 않는다.
+
+다만 여러 JDK를 VS Code에 명시적으로 등록해야 하거나 자동 인식 문제를 진단할 때는
+개발 PC의 **User Settings**에서 선택적으로 사용할 수 있다.
 
 ```text
 java.configuration.runtimes
-→ VS Code User Settings
-→ 개발자 PC의 실제 JDK 경로
+→ 기본 설정하지 않음
+→ 필요한 경우에만 User Settings에서 사용
 → Project Git 대상 아님
 ```
-
-으로 관리한다.
 
 ---
 
@@ -553,20 +619,23 @@ Java Language Server 실행용 **내장 JRE를 포함할 수 있다.**
 `java.jdt.ls.java.home`을 지정하면
 내장 Runtime 대신 지정한 JDK로 Language Server를 실행하도록 할 수 있다.
 
-따라서 MicroServer에서는:
+따라서 MicroServer 표준 정책에서는:
 
 ```text
 java.configuration.runtimes
-→ Project JDK 등록
-→ 구성 / 확인 대상
+→ 기본 설정하지 않음
+→ 다중 JDK 등록 / 자동 인식 문제 등 필요한 경우에만 사용
 
 
 java.jdt.ls.java.home
-→ Language Server 실행 JDK를 명시적으로 고정
-→ 선택 설정
+→ 기본 설정하지 않음
+→ Language Server 실행 JDK를 특별히 고정해야 할 때만 사용
 ```
 
 으로 구분한다.
+
+정상적인 MicroServer 환경에서는 Launcher가 VS Code Process에 폴더 내부 JDK 환경을 전달하고,
+Java Extension이 이를 바탕으로 동작할 수 있으므로 두 값을 Project 설정에 고정하지 않는다.
 
 !!! tip "현재 User Settings 값은 유지 가능"
 
@@ -581,69 +650,66 @@ java.jdt.ls.java.home
 
 ---
 
-## 7. 현재 User Settings를 해석해 보기
+## 7. Windows / macOS 공통 실행환경
 
-현재 설정이 다음과 같다고 가정한다.
+MicroServer는 Windows와 macOS 모두 같은 원칙으로 VS Code를 실행한다.
+
+### 7.1 Windows
+
+전용 Launcher는 개념적으로 다음과 같이 동작한다.
+
+```powershell
+$env:JAVA_HOME = "<MicroServer Folder>\tools\jdk\temurin-25"
+$env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
+
+# VS Code 실행
+```
+
+이 값은 Windows 시스템의 전역 `JAVA_HOME`을 변경하는 것이 아니다.
+
+**Launcher에서 시작한 VS Code와 그 하위 Process에만 적용되는 환경변수**이다.
+
+### 7.2 macOS
+
+전용 Launcher 역시 같은 역할을 한다.
+
+```bash
+export JAVA_HOME="<MicroServer Folder>/tools/jdk/temurin-25/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# VS Code 실행
+```
+
+macOS의 Shell Profile에 전역 `JAVA_HOME`을 영구 설정하는 것이 아니라,
+MicroServer용 VS Code를 실행할 때만 필요한 JDK 환경을 구성한다.
+
+### 7.3 Project `settings.json`
+
+Windows/macOS 공통 Project 설정은 OS 독립적인 Editor 설정만 유지한다.
 
 ```json
 {
-  "java.jdt.ls.java.home":
-    "C:\\local-microserver\\tools\\jdk\\temurin-25",
-
-  "java.configuration.runtimes": [
-    {
-      "name": "JavaSE-25",
-      "path": "C:\\local-microserver\\tools\\jdk\\temurin-25",
-      "default": true
-    }
-  ]
+  "files.encoding": "utf8",
+  "files.autoGuessEncoding": false,
+  "files.autoSave": "off",
+  "editor.formatOnSave": false,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true
 }
 ```
 
-첫 번째:
-
-```json
-"java.jdt.ls.java.home":
-  "C:\\local-microserver\\tools\\jdk\\temurin-25"
-```
-
-의미:
-
-```text
-VS Code Java Language Server
-→ Temurin 25로 실행
-```
-
-두 번째:
+다음 두 설정은 기본적으로 넣지 않는다.
 
 ```json
 "java.configuration.runtimes": [...]
 ```
 
-의미:
-
-```text
-VS Code Java Extension
-→ JavaSE-25 JDK 위치 등록
-→ C:\local-microserver\tools\jdk\temurin-25
+```json
+"java.jdt.ls.java.home": "..."
 ```
 
-그리고 Project의:
-
-```groovy
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
-    }
-}
-```
-
-의미:
-
-```text
-Gradle
-→ MicroServer Build는 Java 25 Toolchain 사용
-```
+이렇게 하면 `.vscode/settings.json`을 Git으로 공유해도
+Windows/macOS의 JDK 절대경로 차이가 Project 설정에 들어오지 않는다.
 
 ---
 
@@ -688,7 +754,13 @@ VS Code에서 `microserver` Folder를 열면
 Java / Gradle Extension이 `build.gradle` 등을 분석한다.
 
 ```text
-Project Folder Open
+MicroServer Launcher 실행
+        ↓
+폴더 내부 JDK 환경 주입
+        ↓
+VS Code 실행
+        ↓
+Project Folder / Workspace Open
         ↓
 build.gradle / settings.gradle 감지
         ↓
@@ -704,6 +776,32 @@ JAVA PROJECTS View에 microserver 표시
 정상적으로 `JAVA PROJECTS`에 `microserver`가 표시되면
 이미 Import된 상태이다.
 
+### 9.1 실행환경 확인
+
+Launcher를 통해 VS Code를 실행한 뒤 Integrated Terminal에서 확인한다.
+
+Windows:
+
+```powershell
+$env:JAVA_HOME
+where.exe java
+java --version
+.\gradlew.bat -version
+```
+
+macOS:
+
+```bash
+echo $JAVA_HOME
+which java
+java --version
+./gradlew -version
+```
+
+`JAVA_HOME`, `java`, Gradle 실행 JVM과 Project Toolchain을 함께 확인하면
+독립 JDK 환경이 정상적으로 전달되었는지 검증할 수 있다.
+
+
 ---
 
 ## 10. MicroServer 운영 기준
@@ -715,22 +813,54 @@ Project Java Version
 → Git 공유
 
 
-개발 PC의 Project JDK 위치
-→ java.configuration.runtimes
-→ VS Code User Settings
-→ Git 대상 아님
+JDK 실제 위치
+→ MicroServer 개발환경 Folder 내부
+→ OS 전역 JAVA_HOME에 의존하지 않음
 
 
-Java Language Server 실행 JDK
-→ java.jdt.ls.java.home
-→ VS Code User Settings
-→ 선택 설정
+VS Code 실행환경
+→ Windows / macOS 전용 Launcher
+→ 실행 시점에 JAVA_HOME / PATH 주입
+→ VS Code 및 하위 Process에서만 사용
+
+
+java.configuration.runtimes
+→ 기본 설정하지 않음
+→ 다중 JDK / 자동 인식 문제 등 필요한 경우에만 User Settings에서 사용
+
+
+java.jdt.ls.java.home
+→ 기본 설정하지 않음
+→ Language Server JDK를 명시적으로 고정해야 할 때만 User Settings에서 사용
 
 
 Project 공통 VS Code 설정
 → .vscode/settings.json
+→ Editor / Encoding 등 OS 독립 설정만 유지
 → Git 공유
 ```
+
+!!! important "최종 원칙"
+
+    MicroServer의 Java 개발환경은 **Project가 Java Version을 선언하고,
+    Launcher가 폴더 내부 JDK 실행환경을 제공하는 구조**로 운영한다.
+
+    ```text
+    build.gradle
+    → 무엇을 사용할 것인가? (Java 25)
+
+    MicroServer Folder 내부 JDK
+    → 실제 JDK는 어디에 있는가?
+
+    Launcher
+    → VS Code 실행 시 해당 JDK를 어떻게 전달할 것인가?
+
+    .vscode/settings.json
+    → Project 공통 Editor 정책
+    ```
+
+    Windows와 macOS 모두 OS 전역 Java 환경에 대한 의존성을 제거하면서
+    동일한 MicroServer 독립 개발환경 원칙을 유지한다.
 
 ---
 

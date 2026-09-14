@@ -2,54 +2,130 @@
 
 ## 1. 문서 목적
 
-본 문서는 MicroServer 프로젝트에서 실제로 필요한
-JDK / VS Code Workspace 설정을 적용한다.
+본 문서는 MicroServer 프로젝트에서 **Windows와 macOS에 공통으로 적용할 JDK / VS Code Workspace 설정**을 구성한다.
 
-개념 설명은 다음 문서를 먼저 참고한다.
+Java 설정의 개념과 역할은 다음 문서를 먼저 참고한다.
 
 → [프로젝트 JDK / VS Code 개념](project_jdk_vscode_concepts.md)
 
-현재 기준:
+현재 MicroServer 표준은 다음과 같다.
 
 ```text
 Java Version : 25
-Windows JDK  : C:\local-microserver\tools\jdk\temurin-25
+JDK          : Eclipse Temurin 25
+Build Tool   : Gradle
+IDE          : VS Code
 ```
+
+JDK 관리 원칙:
+
+```mermaid
+flowchart LR
+    JDK["MicroServer 개발환경 Folder<br/>Eclipse Temurin 25 포함"]
+    GLOBAL["OS 전역 JAVA_HOME<br/>의존하지 않음"]
+    LAUNCHER["전용 Launcher"]
+    ENV["Process 환경변수<br/>JAVA_HOME / PATH"]
+    VSCODE["VS Code"]
+
+    JDK --> LAUNCHER
+    GLOBAL -. "전역 설정 불필요" .-> LAUNCHER
+    LAUNCHER --> ENV
+    ENV --> VSCODE
+```
+
+!!! important "Windows / macOS 공통 원칙"
+
+    Windows와 macOS의 JDK Directory 구조와 Launcher 구현은 다를 수 있지만
+    **Project 설정 정책은 동일하게 유지한다.**
+
+    ```text
+    Project Java Version
+    → build.gradle Java Toolchain
+
+    실제 JDK
+    → MicroServer 개발환경 Folder 내부
+
+    VS Code에 JDK 전달
+    → 전용 Launcher의 Process 환경변수
+
+    Project .vscode/settings.json
+    → OS 독립적인 공통 설정만 저장
+    ```
 
 ---
 
 ## 2. 실제 작업 요약
 
-이 문서에서 실제로 수행할 작업은 다음 세 가지이다.
+이 문서에서 수행할 작업은 다음과 같다.
 
-| 순서 | 작업 | 저장 위치 | Git |
-|---|---|---|---|
-| 1 | Java 25 Runtime 등록 | VS Code User Settings | 대상 아님 |
-| 2 | Workspace 공통 설정 | `.vscode/settings.json` | O |
-| 3 | 권장 Extension 설정 | `.vscode/extensions.json` | O |
+| 순서 | 작업 | 적용 위치 | Git |
+|---:|---|---|:---:|
+| 1 | Project Root / Workspace 열기 | VS Code | - |
+| 2 | Workspace Trust 확인 | VS Code | - |
+| 3 | Java 25 Toolchain 확인 | `build.gradle` | O |
+| 4 | Launcher 기반 JDK 실행환경 확인 | Windows / macOS | X |
+| 5 | Workspace 공통 설정 | `.vscode/settings.json` | O |
+| 6 | 권장 Extension 설정 | `.vscode/extensions.json` | O |
+| 7 | `.gitignore` 확인 | `.gitignore` | O |
 
-추가로 `build.gradle`의 Java Toolchain이 25인지 확인한다.
+MicroServer 표준 구성에서는 다음 두 설정을 **기본적으로 사용하지 않는다.**
+
+```text
+java.configuration.runtimes
+java.jdt.ls.java.home
+```
+
+JDK 경로를 VS Code Settings에 중복해서 기록하지 않고,
+Launcher가 VS Code Process에 전달하는 JDK 환경을 사용한다.
 
 ---
 
-## 3. Project Root 열기
+## 3. MicroServer 개발환경 구조
 
-VS Code에서 다음 Directory를 연다.
+Windows와 macOS 모두 개념적으로 다음 구조를 사용한다.
 
 ```text
-C:\local-microserver\workspace\microserver
+MicroServer 개발환경
+├─ tools/
+│  └─ jdk/
+│     └─ Temurin 25
+├─ workspace/
+│  └─ microserver/
+│     ├─ .vscode/
+│     ├─ gradle/
+│     ├─ src/
+│     ├─ build.gradle
+│     ├─ settings.gradle
+│     ├─ gradlew
+│     └─ gradlew.bat
+└─ VS Code Launcher
 ```
 
+실제 JDK Home은 OS에 따라 다르다.
+
 ```text
-File
-→ Open Folder...
-→ C:\local-microserver\workspace\microserver
+Windows
+→ <MicroServer Root>\tools\jdk\temurin-25
+
+macOS
+→ <MicroServer Root>/tools/jdk/temurin-25/Contents/Home
 ```
 
-Explorer:
+!!! note "Project에는 절대경로를 기록하지 않음"
+
+    `C:\...`, `/Users/...`와 같은 개발 PC별 절대경로를
+    Git으로 공유하는 Project 설정에 기록하지 않는다.
+
+---
+
+## 4. Project Root 열기
+
+Git Clone으로 받은 MicroServer Project의 **Project Root를 VS Code에서 연다.**
+
+Project Root는 다음 파일이 존재하는 Directory를 기준으로 판단한다.
 
 ```text
-microserver
+microserver/
 ├─ gradle/
 ├─ src/
 ├─ build.gradle
@@ -58,75 +134,67 @@ microserver
 └─ gradlew.bat
 ```
 
-!!! important "Project Root"
+VS Code에서 다음 순서로 연다.
+
+```mermaid
+flowchart LR
+    FILE["File"]
+    OPEN["Open Folder..."]
+    ROOT["workspace/microserver<br/>Project Root"]
+    GRADLE["build.gradle / settings.gradle<br/>감지"]
+
+    FILE --> OPEN --> ROOT --> GRADLE
+```
+
+실제 선택할 Directory:
+
+```text
+.../workspace/microserver
+```
+
+
+!!! important "Project Root 기준"
+
+    OS별 절대경로가 아니라 **Gradle Project Root가 어디인지**가 중요하다.
 
     ```text
-    X C:\local-microserver\workspace
-    O C:\local-microserver\workspace\microserver
+    X workspace 상위 Directory를 Project Root로 판단
+
+    O build.gradle / settings.gradle이 존재하는
+      microserver Project Root
     ```
 
 ---
 
-## 4. Workspace Trust 확인
+## 5. Workspace Trust 확인
 
-VS Code는 Project Folder를 처음 열 때
-해당 Folder의 코드와 설정을 **신뢰하고 실행해도 되는지** 확인할 수 있다.
+VS Code는 Project Folder 또는 Workspace를 처음 열 때
+해당 코드와 설정을 신뢰하고 실행해도 되는지 확인할 수 있다.
 
-이 기능을 **Workspace Trust**라고 한다.
+이 기능이 **Workspace Trust**이다.
 
-VS Code는 단순히 파일만 보여주는 Editor가 아니라
-Project를 열면 Extension, Task, Debugger, Build Tool 등이
-Project 내부의 설정과 Script를 읽고 실행할 수 있다.
+Java / Gradle Project에서는 Project를 열면 다음 기능들이 동작할 수 있다.
 
-예를 들어 Java / Gradle Project에서는 다음과 같은 기능이 동작할 수 있다.
+```mermaid
+flowchart LR
+    OPEN["Project Root Open"]
+    TRUST["Workspace Trust 확인"]
+    EXT["Java / Gradle Extension"]
+    TASK["Task / Debug"]
+    BUILD["Build Script 분석"]
 
-```text
-Project Folder Open
-        ↓
-VS Code가 Project 설정 확인
-        ↓
-Java Extension 실행
-Gradle Extension 실행
-Task / Debug 설정 사용
-Build Script 분석
+    OPEN --> TRUST
+    TRUST --> EXT
+    TRUST --> TASK
+    TRUST --> BUILD
 ```
 
-따라서 출처가 불분명한 Repository를 바로 신뢰하면
-Project 내부의 설정이나 Script가 실행될 수 있으므로
-VS Code가 먼저 신뢰 여부를 확인하는 것이다.
+직접 생성하고 관리하는 MicroServer Repository라면 출처를 확인한 후 **Trust**를 선택한다.
 
-### 4.1 Trust한 경우
+Trust하지 않으면 Restricted Mode로 열릴 수 있으며
+Java / Gradle Extension, Task, Debug 등의 일부 기능이 제한될 수 있다.
 
-Workspace를 Trust하면 Java / Gradle Extension과
-Task, Debugger 등 Project 개발 기능을 정상적으로 사용할 수 있다.
-
-```text
-Trusted Workspace
-        ↓
-Java Extension 정상 동작
-Gradle Extension 정상 동작
-Task / Debug 사용 가능
-Project 분석 기능 사용 가능
-```
-
-### 4.2 Trust하지 않은 경우
-
-신뢰하지 않은 Workspace는
-**Restricted Mode(제한 모드)**로 열릴 수 있다.
-
-Restricted Mode에서는 파일을 열어보는 것은 가능하지만
-보안을 위해 일부 Project 기능이 제한될 수 있다.
-
-예:
-
-```text
-Java / Gradle Extension 일부 기능 제한
-Task 실행 제한
-Debug 기능 제한
-일부 Project 자동 인식 기능 제한
-```
-
-!!! tip "Workspace Trust는 Git 권한이나 Java Version 설정이 아님"
+!!! tip "Workspace Trust의 역할"
 
     Workspace Trust는 다음을 설정하는 기능이 아니다.
 
@@ -137,42 +205,18 @@ Debug 기능 제한
     Gradle Version
     ```
 
-    단순히 다음을 판단하는 **VS Code 보안 기능**이다.
+    Project 내부 코드와 Script를 VS Code가 실행해도 되는지 판단하는 보안 기능이다.
 
-    ```text
-    "이 Project 안의 코드 / 설정 / Task / Extension 동작을
-    VS Code가 신뢰하고 실행해도 되는가?"
-    ```
+이미 해당 Folder 또는 상위 Folder가 Trust되어 있고 Java / Gradle 기능이 정상 동작한다면
+별도의 변경 없이 다음 단계로 진행한다.
 
-### 4.3 MicroServer에서는 무엇을 하면 되는가
+---
 
-현재 MicroServer처럼 직접 생성하고 관리하는 Project라면
-Workspace Trust 요청이 나타날 때 내용을 확인한 후 **Trust**를 선택한다.
+## 6. `build.gradle` Java Toolchain 확인
 
-```text
-Workspace Trust 요청 표시
-        ↓
-Project 출처 확인
-        ↓
-직접 생성 / 관리하는 MicroServer Project
-        ↓
-Trust 선택
-```
+MicroServer Project의 Java 기준은 **Java 25**이다.
 
-!!! note "Trust 요청이 나타나지 않으면 별도 작업하지 않음"
-
-    이전에 이미 해당 Folder 또는 상위 Folder를 Trust했거나
-    현재 VS Code 설정에 따라 Trust 확인 창이 나타나지 않을 수 있다.
-
-    이런 경우에는 별도로 Trust 설정을 다시 변경할 필요가 없다.
-
-    Java / Gradle 기능이 정상적으로 동작한다면 다음 단계로 진행한다.
-
-## 5. `build.gradle` Java Toolchain 확인
-
-현재 MicroServer Java 기준은 **25**이다.
-
-`build.gradle`:
+`build.gradle`에서 다음 설정을 확인한다.
 
 ```groovy
 java {
@@ -182,124 +226,169 @@ java {
 }
 ```
 
-확인할 값:
+확인할 핵심 값:
 
 ```text
 JavaLanguageVersion.of(25)
 ```
 
-!!! note "현재 단계에서는 확인만"
+이 설정은 Windows/macOS에 관계없이 Git으로 공유되는 **Project Java Version 기준**이다.
 
-    이미 Java 25가 설정되어 있다면 수정하지 않는다.
+!!! note "JDK 절대경로와 구분"
 
----
+    ```mermaid
+    flowchart LR
+        BUILD["build.gradle<br/>Java Toolchain = 25"]
+        REQUIRE["Project가 요구하는<br/>Java Version"]
+        JDK["Folder 내부<br/>Temurin 25"]
+        LAUNCHER["Launcher"]
+        ENV["VS Code Process에<br/>JDK 환경 전달"]
 
-## 6. Windows User Settings 설정
-
-### 6.1 User Settings 열기
-
-Command Palette:
-
-```text
-Ctrl + Shift + P
-```
-
-```text
-Preferences: Open User Settings (JSON)
-```
-
-!!! warning "Project 설정 파일이 아님"
-
-    지금 수정하는 것은 다음 Project 파일이 아니다.
-
-    ```text
-    X microserver/.vscode/settings.json
+        BUILD --> REQUIRE
+        JDK --> LAUNCHER --> ENV
     ```
 
-    VS Code **User Settings JSON**이다.
-
-### 6.2 JDK Home
-
-현재 Windows 기준:
-
-```text
-C:\local-microserver\tools\jdk\temurin-25
-```
-
-정상:
-
-```text
-O C:\local-microserver\tools\jdk\temurin-25
-```
-
-잘못된 예:
-
-```text
-X C:\local-microserver\tools\jdk\temurin-25\bin
-X C:\local-microserver\tools\jdk\temurin-25\bin\java.exe
-```
-
-### 6.3 Java Runtime 등록
-
-기존 User Settings에 다음 항목을 병합한다.
-
-```json
-"java.configuration.runtimes": [
-  {
-    "name": "JavaSE-25",
-    "path": "C:\\local-microserver\\tools\\jdk\\temurin-25",
-    "default": true
-  }
-]
-```
-
-이미 동일하게 등록되어 있다면 다시 추가하지 않는다.
-
-### 6.4 선택 설정
-
-현재 환경에서 Java Language Server도 Portable JDK 25로 명시적으로 실행하려면
-다음 설정을 User Settings에 유지할 수 있다.
-
-```json
-"java.jdt.ls.java.home": "C:\\local-microserver\\tools\\jdk\\temurin-25"
-```
-
-이 값은 선택 설정이며 Project Java Version을 결정하지 않는다.
+    `build.gradle`에는 Windows/macOS의 JDK 설치 절대경로를 넣지 않는다.
 
 ---
 
-## 7. macOS User Settings
+## 7. Launcher 기반 JDK 실행환경
 
-macOS에서도 동일한 원칙을 사용한다.
+### 7.1 공통 원칙
 
-예:
+MicroServer는 OS 전역 `JAVA_HOME`을 표준 개발환경의 전제조건으로 사용하지 않는다.
 
-```text
-/Users/<USER>/dev/jdks/temurin-25.jdk/Contents/Home
+전용 Launcher가 VS Code를 시작하기 전에
+MicroServer Folder 내부 JDK를 기준으로 `JAVA_HOME`과 `PATH`를 구성한다.
+
+```mermaid
+flowchart LR
+    JDK["MicroServer Folder<br/>Temurin 25"]
+    L["VS Code Launcher"]
+    ENV["Process<br/>JAVA_HOME / PATH"]
+    VS["VS Code"]
+    TERM["Integrated Terminal"]
+    JAVA["Java Extension"]
+    GRADLE["Gradle Wrapper"]
+
+    JDK --> L
+    L --> ENV
+    ENV --> VS
+    VS --> TERM
+    VS --> JAVA
+    ENV --> GRADLE
 ```
 
-```json
-"java.configuration.runtimes": [
-  {
-    "name": "JavaSE-25",
-    "path": "/Users/<USER>/dev/jdks/temurin-25.jdk/Contents/Home",
-    "default": true
-  }
-]
+이 환경변수는 **Launcher로 실행된 VS Code와 그 하위 Process에만 적용**한다.
+
+### 7.2 Windows
+
+Windows Launcher는 개념적으로 다음과 같이 동작한다.
+
+```powershell
+$env:JAVA_HOME = "<MicroServer Root>\tools\jdk\temurin-25"
+$env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
+
+# MicroServer용 VS Code 실행
 ```
 
-실제 설치 방식에 따라 JDK Home은 다를 수 있으므로
-해당 개발 PC에서 확인한 경로를 사용한다.
+이는 Windows 시스템 환경변수에 `JAVA_HOME`을 영구 등록하는 방식과 다르다.
+
+VS Code Integrated Terminal에서 확인한다.
+
+```powershell
+$env:JAVA_HOME
+where.exe java
+java --version
+.\gradlew.bat -version
+```
+
+### 7.3 macOS
+
+macOS도 동일한 원칙을 사용한다.
+
+```bash
+export JAVA_HOME="<MicroServer Root>/tools/jdk/temurin-25/Contents/Home"
+export PATH="$JAVA_HOME/bin:$PATH"
+
+# MicroServer용 VS Code 실행
+```
+
+VS Code Integrated Terminal에서 확인한다.
+
+```bash
+echo $JAVA_HOME
+which java
+java --version
+./gradlew -version
+```
+
+!!! important "일반 VS Code 실행과 구분"
+
+    MicroServer 표준 Launcher를 통하지 않고 Finder, Dock, Start Menu 등에서
+    VS Code를 일반 실행하면 Launcher가 구성한 JDK 환경을 상속받지 못할 수 있다.
+
+    MicroServer 독립 개발환경에서는 **전용 Launcher를 통한 실행을 표준**으로 한다.
 
 ---
 
-## 8. `.vscode` Directory 생성
+## 8. VS Code Java 경로 설정 정책
 
-Project Root 아래에 생성한다.
+MicroServer 표준 환경에서는 다음 두 설정을 기본적으로 사용하지 않는다.
+
+```text
+java.configuration.runtimes
+java.jdt.ls.java.home
+```
+
+각 설정의 역할은 다음과 같다.
+
+| 설정 | 역할 | MicroServer 기본 정책 |
+|---|---|---|
+| `java.configuration.runtimes` | VS Code Java Extension에 로컬 JDK 목록 / 위치를 명시적으로 등록 | 기본 미설정 |
+| `java.jdt.ls.java.home` | Java Language Server 자체의 실행 JDK를 명시적으로 지정 | 기본 미설정 |
+
+Launcher가 이미 폴더 내부 JDK 환경을 VS Code에 전달하므로
+동일한 JDK 절대경로를 Settings에 다시 기록하지 않는다.
+
+### 8.1 예외적으로 사용하는 경우
+
+다음과 같은 경우에는 User Settings에서 선택적으로 사용할 수 있다.
+
+```text
+여러 JDK Version을 VS Code에 명시적으로 등록해야 하는 경우
+특정 Java Execution Environment와 JDK를 강제로 연결해야 하는 경우
+Launcher 환경을 전달했지만 Java Extension의 JDK 인식에 문제가 있는 경우
+Java Language Server 자체의 실행 JDK를 특별히 고정해야 하는 경우
+문제 분석을 위해 JDK 경로를 명시적으로 지정해야 하는 경우
+```
+
+!!! warning "Project 설정에 JDK 절대경로 금지"
+
+    예외적으로 설정하더라도 다음 값은
+    Project 공통 `.vscode/settings.json`에 넣지 않는다.
+
+    ```text
+    java.configuration.runtimes
+    java.jdt.ls.java.home
+
+    C:\...\temurin-25
+    /Users/.../temurin-25/Contents/Home
+    ```
+
+    필요한 경우 개발 PC별 **User Settings**에서 관리한다.
+
+---
+
+## 9. `.vscode` Project 공통 설정
+
+Project Root 아래에 `.vscode` Directory를 사용한다.
 
 ```text
 microserver/
 ├─ .vscode/
+│  ├─ settings.json
+│  └─ extensions.json
 ├─ gradle/
 ├─ src/
 ├─ build.gradle
@@ -308,9 +397,9 @@ microserver/
 └─ gradlew.bat
 ```
 
----
+`.vscode`에는 **Project 구성원이 공유할 OS 독립 설정**만 저장한다.
 
-## 9. `.vscode/settings.json`
+### 9.1 `settings.json`
 
 파일:
 
@@ -318,37 +407,44 @@ microserver/
 microserver/.vscode/settings.json
 ```
 
-권장 설정:
+현재 MicroServer 공통 설정:
 
 ```json
 {
   "files.encoding": "utf8",
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "files.autoGuessEncoding": false,
+  "files.autoSave": "off",
+  "editor.formatOnSave": false,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true
 }
 ```
 
-역할:
-
 | 설정 | 역할 |
 |---|---|
-| `files.encoding` | Workspace 기본 Encoding |
-| `java.configuration.updateBuildConfiguration` | Gradle Build 설정 변경 시 Java Project 구성 자동 갱신 |
+| `files.encoding` | 기본 File Encoding을 UTF-8로 사용 |
+| `files.autoGuessEncoding` | Encoding 자동 추측 비활성화 |
+| `files.autoSave` | 자동 저장 비활성화 |
+| `editor.formatOnSave` | 저장 시 자동 Format 비활성화 |
+| `files.trimTrailingWhitespace` | 저장 시 불필요한 후행 공백 제거 |
+| `files.insertFinalNewline` | 파일 마지막 줄에 Newline 유지 |
 
-!!! important "JDK 절대경로 금지"
+이 설정은 Windows와 macOS에서 동일하게 사용한다.
 
-    다음 값은 Project의 `.vscode/settings.json`에 넣지 않는다.
+!!! note "`java.configuration.updateBuildConfiguration`"
 
-    ```text
-    java.configuration.runtimes
-    java.jdt.ls.java.home
-    C:\local-microserver\tools\jdk\temurin-25
+    기존 가이드에는 다음 설정이 포함되어 있었다.
+
+    ```json
+    "java.configuration.updateBuildConfiguration": "automatic"
     ```
 
-    개발 PC별 JDK 경로는 User Settings에서 관리한다.
+    현재는 `.vscode/settings.json`을 **필요 최소한의 공통 설정**으로 유지한다.
 
----
+    Gradle Build 설정 변경 시 자동 갱신 정책을 Project 차원에서 반드시 고정해야 할 필요가 생기면
+    그때 별도로 추가 여부를 검토한다.
 
-## 10. `.vscode/extensions.json`
+### 9.2 `extensions.json`
 
 파일:
 
@@ -356,7 +452,7 @@ microserver/.vscode/settings.json
 microserver/.vscode/extensions.json
 ```
 
-권장:
+권장 Extension:
 
 ```json
 {
@@ -371,63 +467,104 @@ microserver/.vscode/extensions.json
 }
 ```
 
-주요 Extension:
-
 | Extension | 역할 |
 |---|---|
 | Extension Pack for Java | Java 개발 |
 | Gradle for Java | Gradle Project / Task |
-| Spring Boot Extension Pack | Spring Boot / Dashboard |
+| Spring Boot Extension Pack | Spring Boot 개발 / Dashboard |
 | YAML | YAML 편집 |
 | XML | XML 편집 |
 | Container Tools | Container 관련 기능 |
 
 !!! note "Maven View"
 
-    Extension Pack for Java에는 Maven 관련 Extension이 포함될 수 있어
-    Maven View가 표시될 수 있다.
+    Extension Pack for Java에는 Maven 관련 Extension이 포함될 수 있어 Maven View가 표시될 수 있다.
 
-    MicroServer는 `build.gradle` 기반의 Gradle Project이므로
+    MicroServer는 `build.gradle` 기반 Gradle Project이므로
     Maven을 사용하지 않는다면 해당 View는 숨겨도 된다.
 
 ---
 
-## 11. `.gitignore` 확인
+## 10. `.gitignore` 확인
 
-다음 파일은 Git 공유 대상이다.
+다음 파일은 Project 구성원과 공유한다.
 
 ```text
 .vscode/settings.json
 .vscode/extensions.json
 ```
 
-따라서 `.gitignore`에 다음 항목이 있다면 현재 정책과 충돌한다.
+따라서 `.gitignore`에 다음 항목이 있으면 현재 정책과 충돌한다.
 
 ```gitignore
 .vscode/
 ```
 
-JDK 절대경로는 User Settings에 저장하므로
-`.gitignore`로 별도 제외하는 구조가 아니다.
+JDK 절대경로는 Project `.vscode`에 저장하지 않으므로
+Windows/macOS별 JDK 경로를 `.gitignore`로 별도 관리할 필요가 없다.
 
 ---
 
-## 12. 설정 완료 기준
+## 11. 설정 완료 확인
 
-```text
-build.gradle
-→ Java 25 확인
+### 11.1 공통 확인
 
-VS Code User Settings
-→ java.configuration.runtimes 등록
+```mermaid
+flowchart LR
+    JDK["Folder 내부<br/>Temurin 25"]
+    LAUNCHER["전용 Launcher"]
+    VSCODE["VS Code"]
+    PROJECT["MicroServer Project"]
+    BUILD["build.gradle<br/>Toolchain = 25"]
+    SETTINGS[".vscode/settings.json<br/>OS 독립 공통 설정"]
+    EXT[".vscode/extensions.json<br/>권장 Extension"]
 
-.vscode/settings.json
-→ 공통 설정 생성
-
-.vscode/extensions.json
-→ 권장 Extension 생성
+    JDK --> LAUNCHER --> VSCODE --> PROJECT
+    BUILD --> PROJECT
+    SETTINGS --> PROJECT
+    EXT --> VSCODE
 ```
 
-다음 문서에서 실제 인식 상태를 확인한다.
+### 11.2 Windows 확인
+
+```powershell
+$env:JAVA_HOME
+where.exe java
+java --version
+.\gradlew.bat -version
+```
+
+### 11.3 macOS 확인
+
+```bash
+echo $JAVA_HOME
+which java
+java --version
+./gradlew -version
+```
+
+VS Code의 `JAVA PROJECTS` View에서도 MicroServer Project가 정상 Import되고
+Java 25 Runtime이 인식되는지 확인한다.
+
+```text
+microserver
+└─ JRE System Library [JavaSE-25]
+```
+
+!!! success "완료 기준"
+
+    ```mermaid
+    flowchart LR
+        START["Windows / macOS"]
+        NO_GLOBAL["OS 전역 JAVA_HOME<br/>의존 없음"]
+        ENV["Launcher가 Folder 내부<br/>JDK 환경 전달"]
+        JAVA["Java 25 정상 인식"]
+        IMPORT["Gradle Project<br/>정상 Import"]
+        PORTABLE["Project 설정에<br/>OS별 JDK 절대경로 없음"]
+
+        START --> NO_GLOBAL --> ENV --> JAVA --> IMPORT --> PORTABLE
+    ```
+
+다음 문서에서 Java / Gradle / Spring Boot의 실제 인식 상태를 확인한다.
 
 → [프로젝트 JDK / VS Code 설정 확인](project_jdk_vscode_verify.md)
