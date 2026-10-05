@@ -190,10 +190,15 @@ nav:
       - 프로젝트 생성:
           - Spring Boot 프로젝트 생성: 03_project_creation_verification/01_project_creation/spring_boot_project_create.md
           - Git Repository 초기화 및 연결: 03_project_creation_verification/01_project_creation/spring_boot_git_init.md
-          - 생성 프로젝트 구조 확인 및 초기 정리: 03_project_creation_verification/01_project_creation/spring_boot_project_initial_review.md
+          #- 생성 프로젝트 구조 확인 및 초기 정리: 03_project_creation_verification/01_project_creation/spring_boot_project_initial_review.md
+          - 생성 프로젝트 확인:
+            - 생성된 파일 / Directory 구조 확인: 03_project_creation_verification/01_project_creation/spring_boot_project_structure_review.md
+            - 생성된 Gradle / Spring 설정값 확인: 03_project_creation_verification/01_project_creation/spring_boot_project_config_review.md
           - Package 구조 설계: 03_project_creation_verification/01_project_creation/package_structure.md
-          - Maven 기본 구조 (비교 / 참고): 03_project_creation_verification/01_project_creation/maven_project_structure_reference.md
-
+          #- (참고)Maven 기본 구조 (비교 / 참고): 03_project_creation_verification/01_project_creation/maven_project_structure_reference.md
+          - 참고 가이드:
+            - Maven 기본 구조 (비교 / 참고): 03_project_creation_verification/01_project_creation/maven_project_structure_reference.md
+            - 생성 프로젝트 확인 상세 참고: 03_project_creation_verification/01_project_creation/spring_boot_project_review_reference.md
       - 프로젝트 개발환경 설정:
           - VS Code Java 개발환경 개념: 03_project_creation_verification/02_project_environment/project_jdk_vscode_concepts.md
           - 프로젝트 JDK / VS Code Workspace 설정: 03_project_creation_verification/02_project_environment/project_jdk_vscode_setup.md
