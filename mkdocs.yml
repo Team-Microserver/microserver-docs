@@ -207,7 +207,11 @@ nav:
           - Gradle Wrapper 확인 및 Build 기준: 03_project_creation_verification/02_project_environment/project_gradle_setup.md
           - Maven Wrapper 및 프로젝트 설정 (비교 / 참고): 03_project_creation_verification/02_project_environment/project_maven_setup.md
           - application.yml 기본 설정: 03_project_creation_verification/02_project_environment/application_yaml.md
-
+          - 개발환경 이론 / 참고:
+              - Java Runtime / Toolchain / Launcher 구조: 03_project_creation_verification/02_project_environment/project_java_runtime_architecture.md
+              - VS Code Workspace / User Settings 구조: 03_project_creation_verification/02_project_environment/vscode_workspace_concepts.md
+              - Gradle Wrapper / Build 기준 개념: 03_project_creation_verification/02_project_environment/gradle_wrapper_build_concepts.md
+              - Spring Boot Configuration / Profile 개념: 03_project_creation_verification/02_project_environment/spring_boot_configuration_concepts.md
       - 프로젝트 초기 실행 및 검증:
           - 초기 Build 및 Test 검증: 03_project_creation_verification/03_initial_verification/project_initial_build_verification.md
           - 초기 실행 검증: 03_project_creation_verification/03_initial_verification/project_initial_run_verification.md
