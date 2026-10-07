@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../project_maven_setup/">
+        <link rel="prev" href="../project_java_runtime_architecture/">
       
       
-        <link rel="next" href="../project_java_runtime_architecture/">
+        <link rel="next" href="../gradle_wrapper_build_concepts/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>application.yml 기본 설정 - MicroServer 구축 가이드</title>
+        <title>VS Code Workspace / User Settings 구조 - MicroServer 구축 가이드</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#applicationyml" class="md-skip">
+        <a href="#vs-code-workspace-user-settings" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              application.yml 기본 설정
+              VS Code Workspace / User Settings 구조
             
           </span>
         </div>
@@ -838,6 +838,116 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../application_yaml/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    application.yml 기본 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_8" id="__nav_3_2_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발환경 이론 / 참고
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_2_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    개발환경 이론 / 참고
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../project_java_runtime_architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Java Runtime / Toolchain / Launcher 구조
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -857,7 +967,7 @@
   <span class="md-ellipsis">
     
   
-    application.yml 기본 설정
+    VS Code Workspace / User Settings 구조
   
 
     
@@ -875,7 +985,7 @@
   <span class="md-ellipsis">
     
   
-    application.yml 기본 설정
+    VS Code Workspace / User Settings 구조
   
 
     
@@ -915,7 +1025,7 @@
   <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 파일 위치 확인
+        2. 설정 범위
       
     </span>
   </a>
@@ -923,10 +1033,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
+  <a href="#3-git" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 초기 설정 원칙
+        3. Git 공유 기준
       
     </span>
   </a>
@@ -934,10 +1044,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-yaml" class="md-nav__link">
+  <a href="#4-extensionsjson" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. YAML 작성 규칙
+        4. extensions.json
       
     </span>
   </a>
@@ -945,10 +1055,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
+  <a href="#5-workspace-trust" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. 환경별 설정은 지금 분리하지 않음
+        5. Workspace Trust
       
     </span>
   </a>
@@ -956,32 +1066,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-secret" class="md-nav__link">
+  <a href="#6-java-project-import" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Secret 작성 금지
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. 확인
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. 완료 체크리스트
+        6. Java Project Import
       
     </span>
   </a>
@@ -1003,33 +1091,15 @@
   
   
   
-    
-    
-    
-    
-      
-      
-    
-    
-      
+    <li class="md-nav__item">
+      <a href="../gradle_wrapper_build_concepts/" class="md-nav__link">
         
-        
-      
-    
-    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
-      
-        
-  
-  
-  
-    <a href="../project_java_runtime_architecture/" class="md-nav__link">
-      
   
   
   <span class="md-ellipsis">
     
   
-    개발환경 이론 / 참고
+    Gradle Wrapper / Build 기준 개념
   
 
     
@@ -1037,12 +1107,42 @@
   
   
 
-      
-        <span class="md-nav__icon md-icon"></span>
-      
-    </a>
+      </a>
+    </li>
   
 
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../spring_boot_configuration_concepts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spring Boot Configuration / Profile 개념
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
       
     </li>
   
@@ -1379,7 +1479,7 @@
   <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. 파일 위치 확인
+        2. 설정 범위
       
     </span>
   </a>
@@ -1387,10 +1487,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
+  <a href="#3-git" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. 초기 설정 원칙
+        3. Git 공유 기준
       
     </span>
   </a>
@@ -1398,10 +1498,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#4-yaml" class="md-nav__link">
+  <a href="#4-extensionsjson" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. YAML 작성 규칙
+        4. extensions.json
       
     </span>
   </a>
@@ -1409,10 +1509,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#5" class="md-nav__link">
+  <a href="#5-workspace-trust" class="md-nav__link">
     <span class="md-ellipsis">
       
-        5. 환경별 설정은 지금 분리하지 않음
+        5. Workspace Trust
       
     </span>
   </a>
@@ -1420,32 +1520,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-secret" class="md-nav__link">
+  <a href="#6-java-project-import" class="md-nav__link">
     <span class="md-ellipsis">
       
-        6. Secret 작성 금지
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. 확인
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. 완료 체크리스트
+        6. Java Project Import
       
     </span>
   </a>
@@ -1469,74 +1547,39 @@
 
 
 
-<h1 id="applicationyml">application.yml 기본 설정<a class="headerlink" href="#applicationyml" title="Permanent link">&para;</a></h1>
+<h1 id="vs-code-workspace-user-settings">VS Code Workspace / User Settings 구조<a class="headerlink" href="#vs-code-workspace-user-settings" title="Permanent link">&para;</a></h1>
 <h2 id="1">1. 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
-<p>이 문서는 Spring Boot Project의 <code>application.yml</code>에 <strong>초기 공통 설정을 작성하고 확인하는 절차</strong>를 다룬다.</p>
-<p>Profile, 설정 우선순위, Secret 관리 원리는 다음 문서를 참고한다.</p>
-<p>→ <a href="../spring_boot_configuration_concepts/">Spring Boot Configuration / Profile 개념</a></p>
-<hr />
-<h2 id="2">2. 파일 위치 확인<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
-<p>기본 파일:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>src/main/resources/application.yml
+<p>VS Code의 User Settings와 Workspace Settings를 어디에 사용해야 하는지 설명한다.</p>
+<h2 id="2">2. 설정 범위<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>User Settings
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>→ 특정 개발자 / 특정 PC
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>Workspace Settings
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>→ 특정 Project / 팀 공유
 </span></code></pre></div>
-<p>없으면 생성한다.</p>
-<hr />
-<h2 id="3">3. 초기 설정 원칙<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
-<p>초기 Project에서는 환경 의존 값이나 Credential을 먼저 넣지 않는다.</p>
-<p>공통으로 필요한 최소 설정부터 작성한다.</p>
-<p>예:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nt">spring</span><span class="p">:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">application</span><span class="p">:</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">microserver</span>
+<p>MicroServer에서는 Repository의 <code>.vscode/settings.json</code>을 Workspace 공통 설정으로 사용한다.</p>
+<h2 id="3-git">3. Git 공유 기준<a class="headerlink" href="#3-git" title="Permanent link">&para;</a></h2>
+<p>공유하기 좋은 값:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Encoding
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Format 정책
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>Build Configuration 갱신 정책
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Null Analysis 정책
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>권장 Extension
 </span></code></pre></div>
-<p>현재 Project에서 이미 Spring Initializr가 생성한 설정이 있다면 무조건 덮어쓰지 말고 기존 값을 확인한 후 유지 또는 정리한다.</p>
-<hr />
-<h2 id="4-yaml">4. YAML 작성 규칙<a class="headerlink" href="#4-yaml" title="Permanent link">&para;</a></h2>
-<p>YAML은 들여쓰기가 구조를 결정한다.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">spring</span><span class="p">:</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">application</span><span class="p">:</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">microserver</span>
+<p>공유하면 안 되는 값:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>개발자 Home Directory
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Windows / macOS 절대경로
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>개인 JDK 경로
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>Credential
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>개인 UI 취향
 </span></code></pre></div>
-<p>다음 사항을 지킨다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Tab 대신 Space 사용
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>같은 Level의 Key는 같은 들여쓰기
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>중복 Key 작성 금지
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Credential / Password 직접 Commit 금지
-</span></code></pre></div>
-<hr />
-<h2 id="5">5. 환경별 설정은 지금 분리하지 않음<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
-<p>초기 Project 생성/검증 단계에서는 다음 구성을 성급하게 추가하지 않는다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>application-local.yml
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>application-dev.yml
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>application-stg.yml
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>application-prod.yml
-</span></code></pre></div>
-<p>환경별 Profile 정책은 서버/배포 환경 설계와 함께 확정한 뒤 적용한다.</p>
-<p>필요한 원리는 다음 문서를 참고한다.</p>
-<p>→ <a href="../spring_boot_configuration_concepts/">Spring Boot Configuration / Profile 개념</a></p>
-<hr />
-<h2 id="6-secret">6. Secret 작성 금지<a class="headerlink" href="#6-secret" title="Permanent link">&para;</a></h2>
-<p>다음과 같은 실제 Credential을 Repository에 직접 기록하지 않는다.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># 금지 예시</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nt">spring</span><span class="p">:</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">datasource</span><span class="p">:</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">real-user</span>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">real-password</span>
-</span></code></pre></div>
-<p>DB, 외부 API, 인증정보는 이후 환경변수 / Secret 관리 정책에 맞춰 구성한다.</p>
-<hr />
-<h2 id="7">7. 확인<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
-<p>파일 저장 후 YAML 문법 오류가 없는지 VS Code에서 확인한다.</p>
-<p>현재 단계에서는 설정 파일 때문에 Application 구조가 깨지지 않는지만 확인하고 환경별 운영 설정은 추가하지 않는다.</p>
-<hr />
-<h2 id="8">8. 완료 체크리스트<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
-<ul class="task-list">
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>src/main/resources/application.yml</code>이 존재한다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>spring.application.name</code>을 확인했다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> YAML 들여쓰기가 정상이다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 실제 Credential / Secret이 없다.</li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 불필요한 환경별 Profile 파일을 미리 만들지 않았다.</li>
-</ul>
+<h2 id="4-extensionsjson">4. <code>extensions.json</code><a class="headerlink" href="#4-extensionsjson" title="Permanent link">&para;</a></h2>
+<p><code>extensions.json</code>은 Extension을 설치하는 Script가 아니라 Project의 권장 Extension 목록이다.</p>
+<p>새 개발자는 Repository를 Clone한 뒤 Project에 필요한 Extension을 쉽게 확인할 수 있다.</p>
+<h2 id="5-workspace-trust">5. Workspace Trust<a class="headerlink" href="#5-workspace-trust" title="Permanent link">&para;</a></h2>
+<p>Workspace Trust는 Java Version이나 Git 권한 설정이 아니다. Project 내부 Script, Task, Extension 기능의 실행을 허용할지 결정하는 VS Code 보안 기능이다.</p>
+<h2 id="6-java-project-import">6. Java Project Import<a class="headerlink" href="#6-java-project-import" title="Permanent link">&para;</a></h2>
+<p>Project Root를 열면 Extension이 Build Script를 분석해 Project Model을 만든다. 정상적으로 자동 Import되면 수동 Import 명령을 반복할 필요가 없다.</p>
 
 
 

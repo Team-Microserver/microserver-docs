@@ -821,6 +821,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="3. Repository Root 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        운영체제별 Project Root
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-root_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Root로 이동
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-repository-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Repository Root 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1462,6 +1501,45 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="3. Repository Root 확인">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#project-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        운영체제별 Project Root
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-root_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Project Root로 이동
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#git-repository-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Git Repository Root 확인
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1599,16 +1677,13 @@
 
 <h1 id="directory">생성된 파일 / Directory 구조 확인<a class="headerlink" href="#directory" title="Permanent link">&para;</a></h1>
 <h2 id="1">1. 문서 목적<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
-<p>본 문서는 Spring Initializr로 생성했거나 기존 Git Repository에서 Clone한
-MicroServer Spring Boot 프로젝트의 <strong>파일 및 Directory 구조가 정상인지
-확인</strong>한다.</p>
+<p>본 문서는 Spring Initializr로 생성했거나 기존 Git Repository에서 Clone한 MicroServer Spring Boot 프로젝트의 <strong>파일 및 Directory 구조가 정상인지 확인</strong>한다.</p>
 <p>이 단계에서는 프로젝트를 수정하거나 Build / Run하지 않는다. 생성 또는
 Clone된 결과가 MicroServer 프로젝트의 기본 구조와 일치하는지만 확인한다.</p>
 <p>선행 문서:</p>
 <p>→ <a href="../spring_boot_git_init/">Git Repository 초기화 및 연결</a></p>
 <p>다음 문서:</p>
-<p>→ <a href="../spring_boot_project_config_review/">생성된 Gradle / Spring 설정값
-확인</a></p>
+<p>→ <a href="../spring_boot_project_config_review/">생성된 Gradle / Spring 설정값 확인</a></p>
 <hr />
 <h2 id="2">2. 현재 단계의 위치<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <pre class="mermaid"><code>flowchart LR
@@ -1629,17 +1704,31 @@ Clone된 결과가 MicroServer 프로젝트의 기본 구조와 일치하는지�
 </span></code></pre></div>
 <hr />
 <h2 id="3-repository-root">3. Repository Root 확인<a class="headerlink" href="#3-repository-root" title="Permanent link">&para;</a></h2>
-<p>MicroServer Source Repository의 논리적 위치:</p>
+<p>MicroServer Source Repository는 운영체제와 관계없이 다음과 같은 <strong>동일한 논리 구조</strong>를 사용한다.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&lt;MICROSERVER_HOME&gt;
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>└─ workspace
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>   └─ microserver
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>   └─ microserver        ← Project / Repository Root
 </span></code></pre></div>
-<p>운영체제별 기본 Project Root:</p>
-<p>운영체제   Project Root</p>
-<hr />
-<p>Windows    <code>C:\local-microserver\workspace\microserver</code>
-  macOS      <code>~/local-microserver/workspace/microserver</code></p>
-<p>Project Root로 이동한다.</p>
+<h3 id="project-root">운영체제별 Project Root<a class="headerlink" href="#project-root" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>운영체제</th>
+<th>Project Root</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>C:\local-microserver\workspace\microserver</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>~/local-microserver/workspace/microserver</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="project-root_1">Project Root로 이동<a class="headerlink" href="#project-root_1" title="Permanent link">&para;</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Windows</label><label for="__tabbed_1_2">macOS</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
@@ -1652,17 +1741,19 @@ Clone된 결과가 MicroServer 프로젝트의 기본 구조와 일치하는지�
 </div>
 </div>
 </div>
-<p>Git Repository Root 확인:</p>
+<h3 id="git-repository-root">Git Repository Root 확인<a class="headerlink" href="#git-repository-root" title="Permanent link">&para;</a></h3>
+<p>Project Root로 이동한 뒤 다음 명령으로 실제 Git Repository Root를 확인한다.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>rev-parse<span class="w"> </span>--show-toplevel
 </span></code></pre></div>
-<p>기대 결과는 현재 <code>microserver</code> Project Root이다.</p>
-<p>!!! important "Repository Root를 먼저 확인" 이후 모든 Project 파일은 이
-Repository Root를 기준으로 확인한다.</p>
-<div class="language-text highlight"><pre><span></span><code>```text
-X workspace/microserver/microserver/build.gradle
-O workspace/microserver/build.gradle
-```
-</code></pre></div>
+<p>정상이라면 현재 <code>microserver</code> Directory가 Repository Root로 출력되어야 한다.</p>
+<div class="admonition important">
+<p class="admonition-title">Repository Root를 먼저 확인</p>
+<p>이후의 모든 Project 파일 및 Directory 확인은 이 Repository Root를 기준으로 진행한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>X  workspace/microserver/microserver/build.gradle
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>O  workspace/microserver/build.gradle
+</span></code></pre></div>
+<p>즉, <code>microserver</code> Directory 아래에 다시 <code>microserver</code> Directory가 중첩되지 않아야 한다.</p>
+</div>
 <hr />
 <h2 id="4-directory">4. 생성 후 기본 Directory 구조 확인<a class="headerlink" href="#4-directory" title="Permanent link">&para;</a></h2>
 <p>정상적으로 생성 또는 Clone되었다면 다음과 유사한 구조가 된다.</p>
@@ -1702,8 +1793,10 @@ O workspace/microserver/build.gradle
 </span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a>├─ README.md                      ← 기존 Repository에 있던 경우
 </span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a>└─ HELP.md                        ← Initializr Version에 따라 존재 가능
 </span></code></pre></div>
-<p>!!! note "Initializr Version에 따른 차이" <code>.gitattributes</code>, <code>HELP.md</code>
-등의 존재 여부는 Initializr Version에 따라 달라질 수 있다.</p>
+<div class="admonition note">
+<p class="admonition-title">Initializr Version에 따른 차이</p>
+<p><code>.gitattributes</code>, <code>HELP.md</code> 등의 존재 여부는 Initializr Version에 따라 달라질 수 있다.</p>
+</div>
 <p>핵심 확인 대상:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>build.gradle
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>settings.gradle
@@ -1723,18 +1816,17 @@ O workspace/microserver/build.gradle
 </span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>gradlew
 </span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>gradlew.bat
 </span></code></pre></div>
-<p>Maven Project에서 사용하는 다음 파일은 현재 프로젝트의 필수 구조가
-아니다.</p>
+<p>Maven Project에서 사용하는 다음 파일은 현재 프로젝트의 필수 구조가 아니다.</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pom.xml
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>.mvn/
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>mvnw
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>mvnw.cmd
 </span></code></pre></div>
-<p>!!! warning "<code>.mvn</code>을 만들거나 복사하지 않음" 현재 MicroServer는 Gradle
-Project이므로 Maven Wrapper용 <code>.mvn</code> Directory를 생성하거나 복사하지
-않는다.</p>
-<p>Maven 구조에 대한 상세 비교는 별도의 <strong>Maven 기본 구조 (비교 / 참고)</strong>
-문서를 참고한다.</p>
+<div class="admonition warning">
+<p class="admonition-title"><code>.mvn</code>을 만들거나 복사하지 않음</p>
+<p>현재 MicroServer는 Gradle Project이므로 Maven Wrapper용 <code>.mvn</code> Directory를 생성하거나 복사하지 않는다.</p>
+</div>
+<p>Maven 구조에 대한 상세 비교는 별도의 <strong>Maven 기본 구조 (비교 / 참고)</strong> 문서를 참고한다.</p>
 <hr />
 <h2 id="6-main-application-class">6. Main Application Class 확인<a class="headerlink" href="#6-main-application-class" title="Permanent link">&para;</a></h2>
 <p>경로:</p>
@@ -1752,8 +1844,7 @@ Project이므로 Maven Wrapper용 <code>.mvn</code> Directory를 생성하거나
 </span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>현재 단계에서는 생성된 Main Class가 존재하는지만 확인하고 ComponentScan
-범위 변경, Configuration 등록, Bean 추가 등의 작업은 하지 않는다.</p>
+<p>현재 단계에서는 생성된 Main Class가 존재하는지만 확인하고 ComponentScan 범위 변경, Configuration 등록, Bean 추가 등의 작업은 하지 않는다.</p>
 <h3 id="base-package">Base Package 확인<a class="headerlink" href="#base-package" title="Permanent link">&para;</a></h3>
 <p>현재 Base Package:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>io.github.microserverlab.microserver
@@ -1762,8 +1853,7 @@ Project이므로 Maven Wrapper용 <code>.mvn</code> Directory를 생성하거나
 </span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>└─ microserverlab        ← Group / Namespace
 </span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>   └─ microserver        ← Project
 </span></code></pre></div>
-<p>실제 Package 구조의 상세 설계는 뒤의 <strong>Package 구조 설계</strong> 단계에서
-진행한다.</p>
+<p>실제 Package 구조의 상세 설계는 뒤의 <strong>Package 구조 설계</strong> 단계에서 진행한다.</p>
 <hr />
 <h2 id="7-test-class">7. 기본 Test Class 확인<a class="headerlink" href="#7-test-class" title="Permanent link">&para;</a></h2>
 <p>경로 예:</p>
@@ -1778,8 +1868,7 @@ Project이므로 Maven Wrapper용 <code>.mvn</code> Directory를 생성하거나
 </span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>현재 단계에서는 기본 Test Class를 삭제하지 않는다. 실제 Test 실행 여부는
-이후 Build / Run 검증 단계에서 확인한다.</p>
+<p>현재 단계에서는 기본 Test Class를 삭제하지 않는다. 실제 Test 실행 여부는 이후 Build / Run 검증 단계에서 확인한다.</p>
 <hr />
 <h2 id="8-resource-directory">8. Resource Directory 확인<a class="headerlink" href="#8-resource-directory" title="Permanent link">&para;</a></h2>
 <p>기본 설정 파일:</p>
@@ -1815,8 +1904,7 @@ Project이므로 Maven Wrapper용 <code>.mvn</code> Directory를 생성하거나
 </span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>gradle/wrapper/gradle-wrapper.jar
 </span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>gradle/wrapper/gradle-wrapper.properties
 </span></code></pre></div>
-<p>기존 Repository를 Clone한 경우에는 <code>.git</code>과 Commit History가 이미
-구성되어 있으므로 <code>git init</code>을 다시 실행하지 않는다.</p>
+<p>기존 Repository를 Clone한 경우에는 <code>.git</code>과 Commit History가 이미 구성되어 있으므로 <code>git init</code>을 다시 실행하지 않는다.</p>
 <hr />
 <h2 id="10">10. 현재 단계에서 하지 않는 작업<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>build.gradle 상세 수정
@@ -1830,8 +1918,7 @@ Project이므로 Maven Wrapper용 <code>.mvn</code> Directory를 생성하거나
 </span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>Datasource 설정
 </span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>Multi-Project 구성
 </span></code></pre></div>
-<p>이 단계의 목적은 <strong>생성 또는 Clone된 파일과 Directory 구조 자체를
-확인하는 것</strong>이다.</p>
+<p>이 단계의 목적은 <strong>생성 또는 Clone된 파일과 Directory 구조 자체를 확인하는 것</strong>이다.</p>
 <hr />
 <h2 id="11">11. 완료 체크리스트<a class="headerlink" href="#11" title="Permanent link">&para;</a></h2>
 <ul class="task-list">
@@ -1852,10 +1939,8 @@ Project이므로 Maven Wrapper용 <code>.mvn</code> Directory를 생성하거나
 </ul>
 <hr />
 <h2 id="12">12. 다음 단계<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
-<p>다음 단계에서는 파일 존재 여부를 넘어 Spring Initializr가 생성한
-<strong>Gradle / Spring 주요 설정값이 MicroServer 기준과 맞는지 확인</strong>한다.</p>
-<p>→ <a href="../spring_boot_project_config_review/">생성된 Gradle / Spring 설정값
-확인</a></p>
+<p>다음 단계에서는 파일 존재 여부를 넘어 Spring Initializr가 생성한 <strong>Gradle / Spring 주요 설정값이 MicroServer 기준과 맞는지 확인</strong>한다.</p>
+<p>→ <a href="../spring_boot_project_config_review/">생성된 Gradle / Spring 설정값 확인</a></p>
 
 
 
