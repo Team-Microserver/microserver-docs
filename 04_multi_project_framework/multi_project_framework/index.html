@@ -1,0 +1,2095 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../../03_project_creation_verification/03_initial_verification/project_initial_verification_summary/">
+      
+      
+        <link rel="next" href="../../04_multi_project_transition/01_overview/multi_project_transition_overview/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>멀티프로젝트 프레임워크 구성 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              멀티프로젝트 프레임워크 구성
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01_microserver_introduction/01_what_is_microserver/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02_development_environment/01_principles/development_environment_principles/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  멀티프로젝트 프레임워크 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환(백업)
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../06_server_devops/01_overview/server_devops_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 및 DevOps 환경
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../01_microserver_introduction/01_what_is_microserver/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02_development_environment/01_principles/development_environment_principles/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티프로젝트 프레임워크 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    멀티프로젝트 프레임워크 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티프로젝트 프레임워크 구성
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티프로젝트 프레임워크 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 멀티프로젝트란
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-microserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. MicroServer 멀티프로젝트 구성 방향
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Framework 핵심 공통 기능
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Framework 핵심 공통 기능">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        핵심 공통기능 한눈에 보기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 공통 Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-datasource-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 DataSource 및 Transaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-data-access-mybatis-jpa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Data Access - MyBatis / JPA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-filter-interceptor-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Filter / Interceptor - 요청 전처리·후처리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-exception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 공통 Exception 처리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Logging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-security-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Security - 인증 / 인가
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-runtime-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Runtime - 도메인 업무 개발
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-admin-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Admin - Framework 관리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 기타 Framework 제공 기능
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 기타 Framework 제공 기능">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Cache
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 전문(Message) 처리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 표준 Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-aop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 AOP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66-utility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 공통 Utility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 전체 구성 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환(백업)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../06_server_devops/01_overview/server_devops_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 및 DevOps 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 멀티프로젝트란
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-microserver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. MicroServer 멀티프로젝트 구성 방향
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Framework 핵심 공통 기능
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Framework 핵심 공통 기능">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        핵심 공통기능 한눈에 보기
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 공통 Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-datasource-transaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 DataSource 및 Transaction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-data-access-mybatis-jpa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Data Access - MyBatis / JPA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-filter-interceptor-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Filter / Interceptor - 요청 전처리·후처리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-exception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 공통 Exception 처리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Logging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-security-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Security - 인증 / 인가
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-runtime-" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Runtime - 도메인 업무 개발
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-admin-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Admin - Framework 관리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 기타 Framework 제공 기능
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 기타 Framework 제공 기능">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Cache
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 전문(Message) 처리
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 표준 Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-aop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 AOP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66-utility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 공통 Utility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 전체 구성 원칙
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">멀티프로젝트 프레임워크 구성<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1. 멀티프로젝트란<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>Gradle의 멀티프로젝트(Multi-Project)는 하나의 Root Project 아래에 여러
+개의 Sub Project를 구성하고, 각 프로젝트의 역할과 의존성을 분리하여
+하나의 시스템을 개발하는 방식이다.</p>
+<p>하나의 Spring Boot 프로젝트에 Framework 공통 기능, 업무 기능, 관리자
+기능을 모두 구현할 수도 있다. 그러나 시스템이 커질수록 서로 다른 성격의
+코드가 하나의 프로젝트에 섞이고, 특정 기능의 변경이 다른 영역에 영향을
+주기 쉬워진다.</p>
+<p>멀티프로젝트 구조에서는 역할이 다른 기능을 별도의 프로젝트로 분리하고
+필요한 프로젝트만 의존하도록 구성한다. 이를 통해 <strong>코드의 물리적인
+위치뿐 아니라 책임과 의존성의 경계도 명확하게 관리</strong>할 수 있다.</p>
+<p>MicroServer는 다음 세 가지 책임을 분리하기 위해 멀티프로젝트 구조를
+사용한다.</p>
+<ul>
+<li><strong>Framework</strong>: 애플리케이션에서 반복적으로 필요한 공통 기술 기능
+    제공</li>
+<li><strong>Runtime</strong>: Framework를 사용하여 실제 도메인 업무 기능 구현</li>
+<li><strong>Admin</strong>: Framework의 상태를 조회하고 운영·관리하는 독립
+    애플리케이션</li>
+</ul>
+<pre class="mermaid"><code>flowchart TB
+    ROOT["MicroServer Root Project"]
+
+    FW["Framework&lt;br/&gt;공통 기술 기능"]
+    RT["Runtime&lt;br/&gt;도메인 업무 Application"]
+    AD["Admin&lt;br/&gt;Framework 관리 Application"]
+
+    ROOT --&gt; FW
+    ROOT --&gt; RT
+    ROOT --&gt; AD
+
+    RT --&gt;|공통 기능 사용| FW
+    AD -.-&gt;|관리 / 모니터링| FW</code></pre>
+<p>Root Project는 전체 프로젝트의 빌드와 공통 기준을 관리하고,
+Framework·Runtime·Admin은 각자의 책임에 따라 독립된 Sub Project로
+구성한다.</p>
+<hr />
+<h2 id="2-microserver">2. MicroServer 멀티프로젝트 구성 방향<a class="headerlink" href="#2-microserver" title="Permanent link">&para;</a></h2>
+<p>MicroServer Framework의 핵심 목적은 <strong>Runtime 개발자가 애플리케이션마다
+반복되는 기술 기반을 직접 구성하지 않고 도메인 업무 개발에 집중할 수
+있도록 하는 것</strong>이다.</p>
+<p>일반적인 Spring Boot 업무 애플리케이션을 개발하려면 업무 기능 외에도
+Database 연결, Transaction, Data Access, 요청 전·후처리, 예외 처리,
+Logging, 인증·인가와 같은 기반 기능이 필요하다.</p>
+<p>이 기능들은 대부분의 Runtime에서 반복적으로 필요하고 구현 방식의
+일관성도 중요하다. 따라서 MicroServer에서는 이러한 기술 기능을
+Framework에서 표준화하여 제공하고 Runtime은 이를 사용한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph FW["MicroServer Framework"]
+        direction TB
+        CONF["Configuration"]
+        DB["DataSource&lt;br/&gt;Transaction"]
+        DATA["MyBatis&lt;br/&gt;JPA"]
+        WEB["Filter&lt;br/&gt;Interceptor"]
+        EX["Exception"]
+        LOG["Logging"]
+        SEC["Security"]
+    end
+
+    subgraph RT["Runtime Application"]
+        direction TB
+        CTL["Controller"]
+        SVC["Service"]
+        DOM["Domain"]
+        REP["Repository / Mapper"]
+        DTO["DTO / 업무 SQL"]
+    end
+
+    FW --&gt;|"공통 기술 기반 제공"| RT</code></pre>
+<p>Framework가 업무 기능까지 구현하는 것은 아니다. Framework는 <strong>업무
+기능이 실행되기 위해 공통적으로 필요한 기술 기반과 표준 동작</strong>을
+제공하고, 실제 도메인 규칙과 업무 로직은 Runtime이 소유한다.</p>
+<hr />
+<h2 id="3-framework">3. Framework 핵심 공통 기능<a class="headerlink" href="#3-framework" title="Permanent link">&para;</a></h2>
+<p>MicroServer Framework의 핵심은 <strong>Runtime에서 반복적으로 구현되는 기술 기반을 Framework로 분리하여 표준화하는 것</strong>이다.</p>
+<p>아래 7개 기능을 Framework의 핵심 공통기능으로 구성한다. 이 기능들은 특정 업무 도메인에 종속되지 않고 대부분의 업무 애플리케이션에서 공통으로 필요하며, 서로 연계되어 Runtime의 실행 기반을 만든다.</p>
+<pre class="mermaid"><code>flowchart TB
+    CORE(("MicroServer&lt;br/&gt;Framework"))
+
+    CONF["① Configuration&lt;br/&gt;공통 설정과 Bean 구성"]
+    DB["② DataSource / Transaction&lt;br/&gt;DB 연결과 트랜잭션"]
+    DATA["③ MyBatis / JPA&lt;br/&gt;Data Access 기반"]
+    WEB["④ Filter / Interceptor&lt;br/&gt;요청 전·후처리"]
+    EX["⑤ Exception&lt;br/&gt;공통 예외 처리"]
+    LOG["⑥ Logging&lt;br/&gt;요청·업무 추적"]
+    SEC["⑦ Security&lt;br/&gt;인증·인가"]
+
+    CORE --&gt; CONF
+    CORE --&gt; DB
+    CORE --&gt; DATA
+    CORE --&gt; WEB
+    CORE --&gt; EX
+    CORE --&gt; LOG
+    CORE --&gt; SEC</code></pre>
+<h3 id="_2">핵심 공통기능 한눈에 보기<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<h4 id="1-configuration-framework">① Configuration — Framework 구성의 시작점<a class="headerlink" href="#1-configuration-framework" title="Permanent link">&para;</a></h4>
+<p><strong>Framework 기능의 설정, Bean 구성, Property와 기본 동작을 관리한다.</strong></p>
+<p>DataSource, MyBatis, Security 등 각 Framework 기능이 동일한 설정 원칙으로 초기화되고 서로 연결될 수 있도록 하는 기반이다.</p>
+<h4 id="2-datasource-transaction">② DataSource / Transaction — 데이터 처리 기반<a class="headerlink" href="#2-datasource-transaction" title="Permanent link">&para;</a></h4>
+<p><strong>Database Connection과 Transaction을 Framework 표준 방식으로 구성한다.</strong></p>
+<p>Runtime은 업무 Transaction의 범위를 결정하고, Connection Pool과 Transaction Manager 등의 기술 구성은 Framework가 담당한다.</p>
+<h4 id="3-mybatis-jpa-data-access">③ MyBatis / JPA — Data Access 기반<a class="headerlink" href="#3-mybatis-jpa-data-access" title="Permanent link">&para;</a></h4>
+<p><strong>Runtime이 업무 특성에 따라 MyBatis 또는 JPA를 사용할 수 있는 공통 실행 기반을 제공한다.</strong></p>
+<p>Framework는 Data Access 기술의 설정과 연결을 담당하고, Mapper·SQL·Entity·Repository와 같은 업무 데이터 접근 코드는 Runtime이 담당한다.</p>
+<h4 id="4-filter-interceptor">④ Filter / Interceptor — 공통 전처리·후처리<a class="headerlink" href="#4-filter-interceptor" title="Permanent link">&para;</a></h4>
+<p><strong>Controller 전후에서 반복되는 요청 처리 로직을 업무 코드와 분리한다.</strong></p>
+<p>공통 Header, Trace ID, 사용자 Context, 요청 Logging, 권한 확인 등 애플리케이션 전체에 적용되는 처리를 표준화한다.</p>
+<h4 id="5-exception">⑤ Exception — 공통 오류 처리<a class="headerlink" href="#5-exception" title="Permanent link">&para;</a></h4>
+<p><strong>시스템 Exception과 업무 Exception을 일관된 방식으로 분류하고 처리한다.</strong></p>
+<p>Runtime은 업무 오류를 정의하고 발생시키며, Framework는 Exception Handler, 오류 코드, Logging, 표준 오류 Response를 담당한다.</p>
+<h4 id="6-logging">⑥ Logging — 요청과 업무 흐름 추적<a class="headerlink" href="#6-logging" title="Permanent link">&para;</a></h4>
+<p><strong>하나의 요청이 Controller, Service, Data Access를 거치는 전체 흐름을 추적할 수 있는 Logging 기반을 제공한다.</strong></p>
+<p>Trace ID와 공통 Context를 이용하여 장애 분석과 운영 추적에 필요한 일관된 Log를 생성한다.</p>
+<h4 id="7-security">⑦ Security — 인증과 인가<a class="headerlink" href="#7-security" title="Permanent link">&para;</a></h4>
+<p><strong>사용자 또는 시스템의 신원을 확인하고, 요청한 기능을 수행할 권한이 있는지 판단하는 공통 보안 기반을 제공한다.</strong></p>
+<p>Framework는 Spring Security 기반의 인증·인가 처리 구조를 제공하고, 실제 사용자 체계와 업무 권한 정책은 Runtime에서 확장한다.</p>
+<div class="admonition tip">
+<p class="admonition-title">Framework 핵심 원칙</p>
+<p><strong>Framework는 기술 기반을 제공하고, Runtime은 도메인 업무를 구현한다.</strong></p>
+<p>Runtime 개발자가 DataSource 생성, Transaction Manager 구성, MyBatis/JPA 기반 설정, 공통 Filter, Exception Handler, Logging, Security 기반 구성을 반복해서 구현하지 않도록 하는 것이 핵심이다.</p>
+</div>
+<h3 id="31-configuration">3.1 공통 Configuration<a class="headerlink" href="#31-configuration" title="Permanent link">&para;</a></h3>
+<p>Spring Boot 애플리케이션에서는 DataSource, MyBatis, Security, Logging 등
+각각의 기술 기능을 사용하기 위해 여러 Configuration과 Bean을 구성해야
+한다.</p>
+<p>Runtime마다 이러한 설정을 직접 작성하면 프로젝트별 설정 방식이 달라지고
+동일한 Framework를 사용하면서도 서로 다른 동작을 하게 될 수 있다. 또한
+업무 개발자가 Framework 내부 구성까지 이해해야 하는 문제가 생긴다.</p>
+<p>따라서 <strong>Framework 기능을 초기화하고 서로 연결하는 Configuration 자체를
+Framework의 핵심 책임</strong>으로 둔다.</p>
+<p>Framework의 공통 Configuration은 다음 역할을 담당한다.</p>
+<ul>
+<li>Framework 공통 Bean 생성 및 연결</li>
+<li>Framework Property 정의와 바인딩</li>
+<li>기능별 기본 설정값 제공</li>
+<li>Framework 기능 활성화 및 비활성화</li>
+<li>Runtime에서 전달한 설정값 적용</li>
+<li>환경별 설정과 Framework 기능 연결</li>
+</ul>
+<p>Runtime은 Framework 내부 Bean을 직접 조립하기보다 필요한 설정값을
+제공한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    APP["Runtime&lt;br/&gt;application.yml"] --&gt; PROP["Framework&lt;br/&gt;Configuration Properties"]
+    PROP --&gt; CONFIG["Framework&lt;br/&gt;Configuration"]
+    CONFIG --&gt; BEAN["Framework Bean"]
+    BEAN --&gt; FEATURE["Framework 기능"]</code></pre>
+<p>예를 들어 Runtime이 Database URL, 사용자 정보, Connection Pool 관련 값을
+설정하면 Framework의 Configuration이 이를 읽어 DataSource와 Transaction
+Manager를 구성하는 방식이다.</p>
+<p>즉 <strong>설정값은 Runtime이 제공할 수 있지만, 공통 기술 기능을 어떻게
+구성하고 연결할 것인지는 Framework가 담당</strong>한다.</p>
+<hr />
+<h3 id="32-datasource-transaction">3.2 DataSource 및 Transaction<a class="headerlink" href="#32-datasource-transaction" title="Permanent link">&para;</a></h3>
+<p>Database 연결과 Transaction은 대부분의 업무 시스템에서 필수적인 기반
+기능이다.</p>
+<p>Runtime마다 DataSource 생성 방식과 Connection Pool 설정, Transaction
+Manager 구성을 개별적으로 구현하면 동일한 Framework를 사용하는 프로젝트
+사이에서도 Database 처리 방식이 달라질 수 있다.</p>
+<p>따라서 Database에 접근하기 위한 기술 기반은 Framework에서 제공한다.</p>
+<h4 id="datasource">DataSource<a class="headerlink" href="#datasource" title="Permanent link">&para;</a></h4>
+<p>DataSource는 애플리케이션이 Database Connection을 획득하고 관리하기 위한
+기반 객체이다.</p>
+<p>Framework에서는 다음 영역을 담당한다.</p>
+<ul>
+<li>DataSource 생성 및 초기화</li>
+<li>Database 연결 Property 처리</li>
+<li>Connection Pool 기본 설정</li>
+<li>DataSource 관련 공통 Bean 구성</li>
+<li>MyBatis / JPA와 DataSource 연결</li>
+<li>향후 복수 DataSource 구성을 고려한 확장 기반</li>
+</ul>
+<p>Database URL, 사용자 계정 등 환경마다 달라지는 실제 연결정보는 Runtime의
+환경 설정에서 관리하고, 해당 정보를 이용하여 DataSource를 구성하는
+방법은 Framework에서 제공한다.</p>
+<h4 id="transaction">Transaction<a class="headerlink" href="#transaction" title="Permanent link">&para;</a></h4>
+<p>Transaction은 여러 Database 작업을 하나의 논리적인 작업 단위로 처리하여
+데이터의 일관성을 유지하는 기능이다.</p>
+<p>Framework에서는 다음 기능을 제공한다.</p>
+<ul>
+<li>Transaction Manager 구성</li>
+<li>DataSource와 Transaction Manager 연결</li>
+<li>Spring의 선언적 Transaction 사용 기반</li>
+<li>MyBatis / JPA와 Transaction 연계</li>
+<li>공통 Transaction 처리 기준</li>
+</ul>
+<p>Runtime의 Service는 업무적으로 Transaction이 필요한 범위를 정의하고,
+실제 Transaction을 처리하기 위한 기반 구성은 Framework를 사용한다.</p>
+<pre class="mermaid"><code>flowchart TB
+    SERVICE["Runtime Service&lt;br/&gt;업무 Transaction 경계"] --&gt; TX["Framework&lt;br/&gt;Transaction Manager"]
+    TX --&gt; DA["MyBatis / JPA"]
+    DA --&gt; DS["Framework&lt;br/&gt;DataSource"]
+    DS --&gt; DB[("Database")]</code></pre>
+<p>이렇게 역할을 분리하면 <strong>Runtime은 어디까지 하나의 업무 Transaction으로
+처리할지를 결정하고, Framework는 그 Transaction이 실제로 동작할 수 있는
+기술 기반을 제공</strong>한다.</p>
+<hr />
+<h3 id="33-data-access-mybatis-jpa">3.3 Data Access - MyBatis / JPA<a class="headerlink" href="#33-data-access-mybatis-jpa" title="Permanent link">&para;</a></h3>
+<p>업무 애플리케이션은 Database에 저장된 데이터를 조회하고 변경하기 위한
+Data Access 계층이 필요하다.</p>
+<p>MicroServer는 프로젝트 성격에 따라 MyBatis 또는 JPA를 사용할 수 있도록
+Framework에서 공통 기반을 제공한다.</p>
+<p>Framework가 SQL이나 Entity 같은 업무 데이터를 소유하는 것은 아니다.
+<strong>Data Access 기술을 사용할 수 있도록 환경을 구성하는 것과 실제 업무
+데이터 접근을 구현하는 것을 분리</strong>하는 것이 핵심이다.</p>
+<h4 id="mybatis">MyBatis<a class="headerlink" href="#mybatis" title="Permanent link">&para;</a></h4>
+<p>MyBatis는 SQL을 직접 작성하고 Mapper를 통해 Database 작업을 수행하는
+Data Mapper Framework이다. 복잡한 SQL을 직접 제어해야 하는 업무
+시스템에서 유용하다.</p>
+<p>Framework에서는 다음 기능을 담당한다.</p>
+<ul>
+<li>MyBatis 공통 Configuration</li>
+<li>SqlSessionFactory 구성</li>
+<li>SqlSessionTemplate 구성</li>
+<li>Mapper Scan 기준</li>
+<li>MyBatis 공통 Property</li>
+<li>DataSource 연결</li>
+<li>Transaction 연계</li>
+</ul>
+<p>Runtime에서는 다음 업무 영역을 구현한다.</p>
+<ul>
+<li>업무 Mapper Interface</li>
+<li>Mapper XML</li>
+<li>업무 SQL</li>
+<li>업무 조회 및 저장 모델</li>
+</ul>
+<pre class="mermaid"><code>flowchart LR
+    SERVICE["Runtime Service"] --&gt; MAPPER["Runtime Mapper"]
+    MAPPER --&gt; MYBATIS["Framework&lt;br/&gt;MyBatis 기반"]
+    MYBATIS --&gt; DS["Framework&lt;br/&gt;DataSource"]
+    DS --&gt; DB[("Database")]</code></pre>
+<h4 id="jpa">JPA<a class="headerlink" href="#jpa" title="Permanent link">&para;</a></h4>
+<p>JPA는 Entity를 중심으로 객체와 관계형 Database 데이터를 매핑하여
+처리하는 표준 Persistence API이다.</p>
+<p>Framework에서는 JPA를 사용할 수 있도록 다음 기반을 제공한다.</p>
+<ul>
+<li>JPA 기본 Configuration</li>
+<li>EntityManager 기반 구성</li>
+<li>DataSource 연결</li>
+<li>Transaction 연계</li>
+<li>공통 JPA Property</li>
+<li>Spring Data Repository 사용 기반</li>
+</ul>
+<p>Entity와 업무 Repository, 도메인 관계는 Runtime이 구현한다.</p>
+<p>MyBatis와 JPA 중 하나를 Framework가 강제하기보다 <strong>Runtime의 업무 특성에
+따라 적절한 Data Access 방식을 선택할 수 있도록 기반을 제공</strong>하는
+방향으로 구성한다.</p>
+<hr />
+<h3 id="34-filter-interceptor-">3.4 Filter / Interceptor - 요청 전처리·후처리<a class="headerlink" href="#34-filter-interceptor-" title="Permanent link">&para;</a></h3>
+<p>Web 또는 API 애플리케이션에서는 Controller가 실행되기 전과 실행된 후에
+공통으로 처리해야 하는 작업이 많다.</p>
+<p>예를 들어 요청 식별번호 생성, 공통 Header 처리, 사용자 Context 설정,
+요청 Logging, 권한 확인 등을 모든 Controller에서 반복하면 업무 코드와
+기술 코드가 섞이게 된다.</p>
+<p>이러한 공통 처리를 Framework의 Filter와 Interceptor에서 담당한다.</p>
+<h4 id="filter">Filter<a class="headerlink" href="#filter" title="Permanent link">&para;</a></h4>
+<p>Filter는 Servlet 계층에서 HTTP Request와 Response를 처리한다. Spring
+MVC의 Controller에 요청이 전달되기 전부터 동작하므로 애플리케이션 전체
+요청에 적용해야 하는 공통 처리에 적합하다.</p>
+<p>주요 적용 대상은 다음과 같다.</p>
+<ul>
+<li>Request / Response 공통 처리</li>
+<li>공통 Header 처리</li>
+<li>요청 식별정보 또는 Trace ID 생성</li>
+<li>요청·응답 Logging 기반</li>
+<li>공통 보안 전처리</li>
+<li>Character Encoding 등 Servlet 기반 처리</li>
+</ul>
+<h4 id="interceptor">Interceptor<a class="headerlink" href="#interceptor" title="Permanent link">&para;</a></h4>
+<p>Interceptor는 Spring MVC의 Handler 실행 전후에 동작한다. 어떤
+Controller가 실행되는지 알 수 있기 때문에 Controller 및 업무 호출과
+밀접한 공통 처리에 적합하다.</p>
+<p>주요 적용 대상은 다음과 같다.</p>
+<ul>
+<li>Controller 호출 전 공통 검증</li>
+<li>사용자 및 요청 Context 처리</li>
+<li>권한 확인</li>
+<li>업무 호출 추적</li>
+<li>Controller 처리시간 측정</li>
+<li>Controller 실행 후 공통 처리</li>
+</ul>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Client
+    participant Filter
+    participant Interceptor
+    participant Controller
+    participant Service
+
+    Client-&gt;&gt;Filter: HTTP Request
+    Filter-&gt;&gt;Interceptor: 전처리 후 전달
+    Interceptor-&gt;&gt;Controller: Handler 전처리
+    Controller-&gt;&gt;Service: 업무 처리
+    Service--&gt;&gt;Controller: 처리 결과
+    Controller--&gt;&gt;Interceptor: Response
+    Interceptor--&gt;&gt;Filter: Handler 후처리
+    Filter--&gt;&gt;Client: HTTP Response</code></pre>
+<p>Filter와 Interceptor는 모두 전처리·후처리에 사용할 수 있지만 실행 계층과
+목적이 다르다. Framework에서는 각각의 책임을 구분하여 공통 처리 기능이
+중복되지 않도록 구성한다.</p>
+<hr />
+<h3 id="35-exception">3.5 공통 Exception 처리<a class="headerlink" href="#35-exception" title="Permanent link">&para;</a></h3>
+<p>업무 처리 과정에서는 입력 오류, 업무 규칙 위반, Database 오류, 외부
+시스템 오류 등 다양한 Exception이 발생한다.</p>
+<p>각 Controller나 Service에서 <code>try-catch</code>를 반복하고 개별적으로 오류
+Response를 생성하면 오류 처리 방식이 달라지고 업무 코드의 가독성도
+떨어진다.</p>
+<p>따라서 Exception의 최종 처리와 오류 Response 변환은 Framework에서
+공통으로 담당한다.</p>
+<p>Framework의 공통 Exception 기능은 다음을 제공한다.</p>
+<ul>
+<li>Framework 공통 Exception 체계</li>
+<li>업무 Exception을 처리할 수 있는 기반</li>
+<li>Global Exception Handler</li>
+<li>오류 코드 및 오류 메시지 처리</li>
+<li>시스템 Exception과 업무 Exception 구분</li>
+<li>API 오류 Response 표준화</li>
+<li>Exception Logging 연계</li>
+</ul>
+<p>Runtime에서는 업무 규칙에 따라 필요한 업무 Exception을 발생시킨다.
+Framework는 전달된 Exception을 분석하여 Logging하고 표준 오류 형태로
+변환한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    DOMAIN["Runtime&lt;br/&gt;Service / Domain"] --&gt;|Exception 발생| HANDLER["Framework&lt;br/&gt;Exception Handler"]
+    HANDLER --&gt; CLASSIFY["Exception 분류"]
+    CLASSIFY --&gt; LOG["Logging"]
+    CLASSIFY --&gt; ERROR["오류 코드 / 메시지"]
+    ERROR --&gt; RESPONSE["표준 Error Response"]</code></pre>
+<p>이 구조를 사용하면 업무 개발자는 오류 Response를 만드는 기술 처리보다
+<strong>어떤 상황이 업무 오류인지 정의하고 적절한 Exception을 발생시키는
+것</strong>에 집중할 수 있다.</p>
+<hr />
+<h3 id="36-logging">3.6 Logging<a class="headerlink" href="#36-logging" title="Permanent link">&para;</a></h3>
+<p>Logging은 단순히 문자열을 파일에 출력하는 기능이 아니라 운영 중 발생한
+요청과 업무 처리 과정을 추적하고 장애 원인을 분석하기 위한 핵심
+기능이다.</p>
+<p>특히 여러 계층을 거쳐 처리되는 Web/API 시스템에서는 하나의 요청이 어느
+Controller와 Service를 거쳐 어떤 오류로 종료되었는지 연결해서 확인할 수
+있어야 한다.</p>
+<p>Framework에서는 애플리케이션 전체에 적용되는 Logging 기준과 공통 추적
+기반을 제공한다.</p>
+<p>주요 대상은 다음과 같다.</p>
+<ul>
+<li>Application Log</li>
+<li>HTTP 요청 / 응답 Log</li>
+<li>Exception Log</li>
+<li>Framework 내부 Log</li>
+<li>사용자 및 요청 식별정보</li>
+<li>처리시간</li>
+<li>Data Access 관련 Log</li>
+<li>요청 단위 Trace 정보</li>
+</ul>
+<pre class="mermaid"><code>flowchart LR
+    REQ["Request&lt;br/&gt;Trace ID 생성"] --&gt; CTL["Controller"]
+    CTL --&gt; SVC["Service"]
+    SVC --&gt; DATA["Data Access"]
+    DATA --&gt; RES["Response"]
+
+    REQ -. 동일 Trace 정보 .-&gt; CTL
+    CTL -. 동일 Trace 정보 .-&gt; SVC
+    SVC -. 동일 Trace 정보 .-&gt; DATA</code></pre>
+<p>요청 단위 Trace ID와 공통 Context를 사용하면 Filter → Controller →
+Service → Data Access로 이어지는 하나의 처리 흐름을 동일한 식별정보로
+추적할 수 있다.</p>
+<p>Runtime에서는 업무적으로 필요한 정보를 기록하고, Log 형식, 공통
+식별정보, 요청 추적과 같은 기반은 Framework가 제공한다.</p>
+<hr />
+<h3 id="37-security-">3.7 Security - 인증 / 인가<a class="headerlink" href="#37-security-" title="Permanent link">&para;</a></h3>
+<p>대부분의 업무 애플리케이션은 사용자가 누구인지 확인하고 해당 사용자가
+요청한 기능을 수행할 권한이 있는지 판단해야 한다.</p>
+<p>이를 각각 <strong>인증(Authentication)</strong>과 <strong>인가(Authorization)</strong>라고 한다.</p>
+<p>보안 처리를 Runtime마다 개별 구현하면 인증정보 관리, 권한 확인 방식,
+보안 예외 처리 등이 프로젝트마다 달라질 수 있으므로 Framework에서 공통
+보안 기반을 제공한다.</p>
+<h4 id="authentication">인증(Authentication)<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h4>
+<p>인증은 요청한 사용자 또는 시스템의 신원을 확인하는 과정이다.</p>
+<p>적용 가능한 방식은 다음과 같다.</p>
+<ul>
+<li>사용자 로그인 인증</li>
+<li>Session 기반 인증</li>
+<li>Token 기반 인증</li>
+<li>API 인증</li>
+<li>시스템 간 인증</li>
+<li>인증정보 Security Context 관리</li>
+</ul>
+<h4 id="authorization">인가(Authorization)<a class="headerlink" href="#authorization" title="Permanent link">&para;</a></h4>
+<p>인가는 인증된 사용자 또는 시스템이 특정 기능을 수행할 권한이 있는지
+판단하는 과정이다.</p>
+<p>예를 들면 다음과 같다.</p>
+<ul>
+<li>URL 접근 권한</li>
+<li>API 접근 권한</li>
+<li>Role 기반 권한</li>
+<li>기능별 권한</li>
+<li>프로젝트별 업무 권한</li>
+</ul>
+<pre class="mermaid"><code>flowchart LR
+    REQ["Request"] --&gt; AUTHN["인증&lt;br/&gt;Authentication"]
+    AUTHN --&gt; AUTHZ["인가&lt;br/&gt;Authorization"]
+    AUTHZ --&gt; API["Runtime&lt;br/&gt;Controller / API"]</code></pre>
+<p>Framework에서는 Spring Security를 기반으로 인증·인가 처리 흐름, Security
+Context, 공통 예외 처리 등 재사용 가능한 기반을 제공한다.</p>
+<p>반면 실제 사용자 체계, 조직 및 권한 모델, 인증 수단처럼 프로젝트마다
+달라지는 정책은 Runtime에서 정의하거나 Framework의 확장 지점을 이용한다.</p>
+<p>즉 Framework가 모든 프로젝트의 보안 정책을 결정하는 것이 아니라 <strong>보안
+기능을 일관되게 구현할 수 있는 표준 기반을 제공</strong>한다.</p>
+<hr />
+<h2 id="4-runtime-">4. Runtime - 도메인 업무 개발<a class="headerlink" href="#4-runtime-" title="Permanent link">&para;</a></h2>
+<p>Runtime은 MicroServer Framework를 사용하는 실제 실행 애플리케이션이다.</p>
+<p>은행 업무 시스템이 될 수도 있고, 증권 시스템, 일반 Web Application 또는
+REST API Server가 될 수도 있다. 따라서 Framework는 특정 도메인을 전제로
+하지 않으며 실제 업무 모델과 규칙은 Runtime에서 구현한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    FW["MicroServer Framework&lt;br/&gt;공통 기술 기반"]
+
+    subgraph RT["Runtime - Domain Business"]
+        direction TB
+        CONTROLLER["Controller&lt;br/&gt;API / 요청 처리"]
+        SERVICE["Service&lt;br/&gt;업무 흐름 / Transaction 경계"]
+        DOMAIN["Domain&lt;br/&gt;업무 모델 / 업무 규칙"]
+        REPO["Repository / Mapper&lt;br/&gt;업무 Data Access"]
+        CONTROLLER --&gt; SERVICE
+        SERVICE --&gt; DOMAIN
+        SERVICE --&gt; REPO
+    end
+
+    DB[("Database")]
+
+    FW --&gt;|"Framework 기능 사용"| RT
+    REPO --&gt; DB</code></pre>
+<p>Runtime의 주요 개발 대상은 다음과 같다.</p>
+<ul>
+<li>업무 Controller 및 API</li>
+<li>업무 Service</li>
+<li>Domain Model과 업무 규칙</li>
+<li>DTO</li>
+<li>Repository / Mapper</li>
+<li>업무 SQL</li>
+<li>업무 Validation</li>
+<li>업무 Exception</li>
+<li>프로젝트 고유 Configuration</li>
+<li>프로젝트 고유 Resource</li>
+</ul>
+<p>Framework는 이러한 업무 코드를 대신 구현하지 않는다. Framework가 기술
+기반을 제공함으로써 Runtime의 코드에서 DataSource 생성, Transaction
+Manager 구성, 공통 Filter, Logging 설정, Security 기본 구성 등의
+반복적인 기술 코드를 제거하는 것이 목적이다.</p>
+<hr />
+<h2 id="5-admin-framework">5. Admin - Framework 관리<a class="headerlink" href="#5-admin-framework" title="Permanent link">&para;</a></h2>
+<p>Admin은 Runtime의 업무 관리자 화면과 구분되는 <strong>MicroServer Framework
+관리 애플리케이션</strong>이다.</p>
+<p>Framework의 상태를 확인하고 Framework가 제공하는 운영 기능을 제어하기
+위한 독립 실행 애플리케이션으로 구성한다.</p>
+<pre class="mermaid"><code>flowchart TB
+    ADMIN(("MicroServer&lt;br/&gt;Admin"))
+
+    MON["Monitoring&lt;br/&gt;Framework / 시스템 상태"]
+    CONFIG["Configuration&lt;br/&gt;설정 조회·관리"]
+    CACHE["Cache&lt;br/&gt;조회·초기화·갱신"]
+    MSG["Message&lt;br/&gt;전문 조회·관리"]
+    SYSTEM["System&lt;br/&gt;Framework 기능 제어"]
+
+    ADMIN --&gt; MON
+    ADMIN --&gt; CONFIG
+    ADMIN --&gt; CACHE
+    ADMIN --&gt; MSG
+    ADMIN --&gt; SYSTEM</code></pre>
+<p>관리 기능의 예시는 다음과 같다.</p>
+<ul>
+<li>Framework 상태 및 시스템 모니터링</li>
+<li>Framework 설정 조회 및 관리</li>
+<li>Cache 상태 조회, 초기화 및 갱신</li>
+<li>전문(Message) 정보 조회 및 관리</li>
+<li>Framework 공통 게시판 관리</li>
+<li>시스템 및 Port 관련 설정 관리</li>
+<li>Framework 제공 기능의 상태 확인과 제어</li>
+</ul>
+<p>Admin이 별도의 프로세스로 실행되는 Runtime을 관리하려면 Runtime 내부
+상태를 직접 참조할 수 없으므로 관리 API 또는 별도의 관리 인터페이스가
+필요하다.</p>
+<p>따라서 Admin은 Framework의 관리 기능을 제공하되 Runtime 업무 코드와 직접
+결합하지 않는 구조로 구성한다.</p>
+<hr />
+<h2 id="6-framework">6. 기타 Framework 제공 기능<a class="headerlink" href="#6-framework" title="Permanent link">&para;</a></h2>
+<p>다음 기능들은 핵심 기반 기능 위에 선택적으로 추가할 수 있는 Framework
+확장 기능이다.</p>
+<h3 id="61-cache">6.1 Cache<a class="headerlink" href="#61-cache" title="Permanent link">&para;</a></h3>
+<p>반복적으로 조회되는 데이터의 성능을 개선하기 위해 Cache 공통 기능을
+제공할 수 있다.</p>
+<p>Framework에서는 Cache Manager 구성, Cache 생성·제거·갱신 등의 기반을
+제공하고 Runtime에서는 어떤 업무 데이터를 Cache할 것인지 결정한다.</p>
+<p>Admin과 연계하면 운영 중 Cache 상태 조회 또는 초기화 기능을 제공할 수
+있다.</p>
+<h3 id="62-message">6.2 전문(Message) 처리<a class="headerlink" href="#62-message" title="Permanent link">&para;</a></h3>
+<p>금융 시스템이나 외부 시스템 연계에서 사용하는 전문 처리 기능을
+Framework로 제공할 수 있다.</p>
+<p>공통 전문 Header, 전문 Format, Parsing, 송수신, 추적정보 및 오류 처리
+등을 표준화하면 Runtime에서는 개별 업무 전문의 데이터와 처리 로직에
+집중할 수 있다.</p>
+<p>Admin에서는 전문 정의나 처리 상태 등을 관리하는 기능으로 확장할 수 있다.</p>
+<h3 id="63-validation">6.3 Validation<a class="headerlink" href="#63-validation" title="Permanent link">&para;</a></h3>
+<p>Spring Bean Validation과 공통 Validator를 활용하여 입력값 검증 기반을
+제공할 수 있다.</p>
+<p>Framework는 Validation 실패 결과를 공통 Exception 처리와 연결하고
+Runtime은 업무별 검증 규칙을 정의한다.</p>
+<h3 id="64-response">6.4 표준 Response<a class="headerlink" href="#64-response" title="Permanent link">&para;</a></h3>
+<p>REST API에서 프로젝트 전체가 동일한 Response 구조를 사용해야 하는 경우
+정상 응답, 오류 응답, 공통 Header, 오류 코드 등의 표준 형식을
+Framework에서 제공할 수 있다.</p>
+<h3 id="65-aop">6.5 AOP<a class="headerlink" href="#65-aop" title="Permanent link">&para;</a></h3>
+<p>AOP는 여러 업무 코드에 반복되는 횡단 관심사를 업무 로직과 분리하기 위해
+사용한다.</p>
+<p>업무 호출 추적, 처리시간 측정, 공통 Logging 또는 특정 Framework 기능
+적용 등에 사용할 수 있다. 단, Filter나 Interceptor와 역할이 중복되지
+않도록 적용 대상을 명확히 구분한다.</p>
+<h3 id="66-utility">6.6 공통 Utility<a class="headerlink" href="#66-utility" title="Permanent link">&para;</a></h3>
+<p>날짜, 문자열, 변환 등 여러 Runtime에서 실제로 반복되는 범용 기능은
+Framework Utility로 제공할 수 있다.</p>
+<p>특정 업무에만 필요한 Utility는 이름이 공통처럼 보이더라도 Framework에
+포함하지 않고 해당 Runtime이 소유한다.</p>
+<hr />
+<h2 id="7">7. 전체 구성 원칙<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p>MicroServer 멀티프로젝트 Framework의 전체 책임은 다음과 같이 정리한다.</p>
+<pre class="mermaid"><code>flowchart LR
+    subgraph FW["Framework"]
+        direction TB
+        F1["Configuration"]
+        F2["DataSource / Transaction"]
+        F3["MyBatis / JPA"]
+        F4["Filter / Interceptor"]
+        F5["Exception"]
+        F6["Logging"]
+        F7["Security"]
+    end
+
+    subgraph RT["Runtime"]
+        direction TB
+        R1["Controller"]
+        R2["Service / Domain"]
+        R3["Repository / Mapper"]
+    end
+
+    subgraph AD["Admin"]
+        direction TB
+        A1["Monitoring"]
+        A2["Framework 설정"]
+        A3["Cache / 전문 관리"]
+    end
+
+    FW --&gt;|"기술 기반 제공"| RT
+    AD -.-&gt;|"운영 / 관리"| FW</code></pre>
+<p>Framework에는 특정 프로젝트의 도메인 업무를 포함하지 않는다.</p>
+<p>Runtime에서는 Framework가 제공하는 기술 기능을 다시 구현하지 않고 도메인
+업무 구현에 집중한다.</p>
+<p>Admin은 Framework 운영과 관리에 집중하며 Runtime의 업무 관리자 기능과
+구분한다.</p>
+<p>이 책임 분리를 기준으로 Gradle 멀티프로젝트를 구성하고, Framework 기능이
+커져 독립적인 책임 분리가 필요한 경우 Framework 내부를 추가 모듈로
+확장한다.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>
