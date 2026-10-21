@@ -220,32 +220,7 @@ nav:
           - 초기 Project 검증 및 Troubleshooting: 03_project_creation_verification/03_initial_verification/project_initial_verification_summary.md
 
   - 멀티프로젝트 프레임워크 구성:
-      - 구성 개요: 04_multi_project_framework/01_overview/multi_project_framework_overview.md
-
-      - 아키텍처 설계:
-          - MicroServer Framework 아키텍처: 04_multi_project_framework/02_architecture/framework_architecture.md
-          - 프로젝트별 책임 정의: 04_multi_project_framework/02_architecture/module_responsibility.md
-          - 프로젝트 의존성 설계: 04_multi_project_framework/02_architecture/module_dependency.md
-
-      - 프로젝트 구조 설계:
-          - 멀티프로젝트 구조 설계: 04_multi_project_framework/03_project_structure/multi_project_structure.md
-          - Package 구조 설계: 04_multi_project_framework/03_project_structure/package_structure.md
-
-      - Gradle Multi-Project 구성:
-          - Gradle Multi-Project 구성: 04_multi_project_framework/04_gradle/gradle_multi_project_setup.md
-
-      - Framework 구성:
-          - Framework 프로젝트 구성: 04_multi_project_framework/05_framework/framework_project_setup.md
-
-      - Runtime 구성:
-          - Runtime Application 구성: 04_multi_project_framework/06_runtime/runtime_project_setup.md
-
-      - Admin 구성:
-          - Admin Application 구성: 04_multi_project_framework/07_admin/admin_project_setup.md
-
-      - 구성 검증:
-          - 멀티프로젝트 Framework 검증: 04_multi_project_framework/08_verification/multi_project_verification.md
-
+      - 멀티프로젝트 프레임워크 구성: 04_multi_project_framework/multi_project_framework.md
 
 
   - 멀티 프로젝트 전환(백업):
