@@ -219,8 +219,16 @@ nav:
           - 최초 실행 문서 (기존): 03_project_creation_verification/03_initial_verification/first_run_legacy.md
           - 초기 Project 검증 및 Troubleshooting: 03_project_creation_verification/03_initial_verification/project_initial_verification_summary.md
 
+
   - 멀티프로젝트 프레임워크 구성:
       - 멀티프로젝트 프레임워크 구성: 04_multi_project_framework/multi_project_framework.md
+
+      - DataSource 구성:
+          - 기존 DataSource 구성 분석: 04_multi_project_framework/01_datasource/legacy_datasource_structure.md
+          - DataSource Framework 구성 및 접속 검증: 04_multi_project_framework/01_datasource/datasource_framework_setup.md
+
+
+
 
 
   - 멀티 프로젝트 전환(백업):
