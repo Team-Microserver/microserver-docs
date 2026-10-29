@@ -101,10 +101,7 @@ microserver/
 ├── framework/
 ├── runtime/
 │   └── src/main/resources/
-│       ├── application.yml
-│       ├── application-local.yml
-│       ├── application-dev.yml
-│       └── application-prod.yml
+│       └── application.yml
 ├── build.gradle
 └── settings.gradle
 
@@ -133,7 +130,7 @@ flowchart LR
     DEV["업무 개발자"]
 
     subgraph SOURCE["MicroServer Source / Git"]
-        APP["Runtime<br/>application.yml<br/>application-{profile}.yml"]
+        APP["Runtime<br/>application.yml"]
         FW["Framework<br/>DataSource / Transaction"]
     end
 
@@ -248,86 +245,139 @@ spring.application.name=microserver
 
 Spring Boot는 Properties와 YAML을 모두 지원한다. YAML 전환은 외부 YAML을 읽기 위한 필수조건이 아니라 **MicroServer의 설정 관리 기준**이다.
 
-DataSource, Security, MyBatis, Logging 등 계층적인 Framework 설정이 늘어날 것을 고려하여 다음처럼 변경한다.
+DataSource, Security, MyBatis, Logging 등 계층적인 Framework 설정이 늘어날 것을 고려하여 `application.yml`을 공통 설정 진입점으로 사용한다.
+
+### 5.2 외부 Resource Import는 `application.yml`에서 공통 관리
+
+MicroServer에서는 Local / Dev / Prod마다 동일한 종류의 외부 설정파일을 사용한다. 따라서 각 `application-local.yml`, `application-dev.yml`, `application-prod.yml`에 동일한 `spring.config.import` 목록을 반복하지 않는다.
+
+대신 **`application.yml`에서 `${spring.profiles.active}`를 사용하여 현재 활성 Profile에 대응하는 외부 Resource 디렉터리를 선택**한다.
 
 ```yaml
 spring:
   application:
     name: microserver
-```
 
-### 5.2 Spring Profile에 따른 로딩과 Override
-
-다음 파일이 존재한다고 가정한다.
-
-```text
-application.yml
-application-local.yml
-application-dev.yml
-application-prod.yml
-```
-
-활성 Profile이 `local`이면 Spring Boot는 `application.yml`과 `application-local.yml`을 함께 적용한다.
-
-```text
-1. application.yml
-   └── 모든 환경의 공통 기본 설정
-
-2. application-local.yml
-   └── local 환경 전용 설정
-```
-
-`application-local.yml`이 `application.yml`을 대체하는 것이 아니다. **기본 설정 위에 Profile 전용 설정이 추가 적용**되고, 동일한 Property가 있으면 Profile 전용 값이 공통값을 Override한다.
-
-```mermaid
-flowchart TB
-    RUN["Application 실행<br/>Profile = local"]
-    BASE["application.yml<br/>공통 기본 설정"]
-    LOCAL["application-local.yml<br/>Local 전용 설정"]
-    FINAL["최종 Environment"]
-
-    RUN --> BASE
-    RUN --> LOCAL
-    BASE --> FINAL
-    LOCAL -->|"동일 Property Override"| FINAL
-```
-
-`local`만 활성화되어 있다면 `application-dev.yml`, `application-prod.yml`은 적용되지 않는다.
-
-### 5.3 Profile 파일은 외부 설정의 위치를 연결한다
-
-`application-local.yml`에는 DB URL, 계정, Password 같은 실제 환경값을 넣지 않는다.
-
-Profile 파일은 **현재 환경에서 사용할 외부 설정 한 벌의 위치를 연결**한다.
-
-```yaml
-spring:
   config:
     import:
-      - file:${microserver.resource-dir}/config/application-context/local/application-datasource.yml
+      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-datasource.yml
 ```
+
+실행 Profile이 `local`이면 위 경로는 다음 파일을 가리킨다.
+
+```text
+${microserver.resource-dir}/config/application-context/local/application-datasource.yml
+```
+
+`dev`이면 다음과 같이 자동으로 변경된다.
+
+```text
+${microserver.resource-dir}/config/application-context/dev/application-datasource.yml
+```
+
+즉 Application Source에서 환경별 Import 경로를 반복해서 관리하지 않고 **Profile 값만으로 동일한 Resource 구조의 환경별 설정 한 벌을 선택**한다.
 
 ```mermaid
 flowchart LR
-    PROFILE["Profile = local"]
-    LOCAL["application-local.yml"]
-    ROOT["microserver.resource-dir<br/>외부 Resource Root"]
-    CONTEXT["application-context/local"]
+    RUN["Application 실행"]
+    PROFILE["spring.profiles.active<br/>local / dev / prod"]
+    APP["application.yml<br/>공통 Import 규칙"]
+    ROOT["microserver.resource-dir"]
+    ENV["application-context/${spring.profiles.active}"]
     DS["application-datasource.yml"]
-    SEC["application-security.yml<br/>향후 추가"]
 
-    PROFILE --> LOCAL
-    LOCAL --> ROOT
-    ROOT --> CONTEXT
-    CONTEXT --> DS
-    CONTEXT -.-> SEC
+    RUN --> PROFILE
+    RUN --> APP
+    APP --> ROOT
+    PROFILE --> ENV
+    ROOT --> ENV
+    ENV --> DS
 ```
 
-Runtime은 외부 설정의 **위치와 종류**만 알고 실제 환경별 값은 별도 Resource 영역이 소유한다.
+### 5.3 Framework 설정파일이 늘어나도 Import 규칙은 한 곳에서 관리
 
-### 5.4 Resource Root 지정
+향후 Security, Web, Cache, Logging 등의 외부 설정이 추가되어도 Import 목록은 `application.yml` 한 곳에서 확장한다.
 
-예를 들어 외부 Resource가 `/opt/microserver-resource`에 있다면 실행환경에서 다음 값을 제공한다.
+```yaml
+spring:
+  application:
+    name: microserver
+
+  config:
+    import:
+      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-datasource.yml
+      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-security.yml
+      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-web.yml
+      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-cache.yml
+      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-logging.yml
+```
+
+이 방식의 핵심은 **환경별로 Import 목록을 복제하지 않는 것**이다. Local / Dev / Prod Resource는 동일한 파일명과 책임을 유지하고 실제 설정값만 환경에 따라 달라진다.
+
+```text
+microserver-resource/
+└── config/
+    └── application-context/
+        ├── local/
+        │   ├── application-datasource.yml
+        │   ├── application-security.yml
+        │   └── ...
+        ├── dev/
+        │   ├── application-datasource.yml
+        │   ├── application-security.yml
+        │   └── ...
+        └── prod/
+            ├── application-datasource.yml
+            ├── application-security.yml
+            └── ...
+```
+
+### 5.4 MicroServer Profile 운영 기준
+
+`${spring.profiles.active}` 값을 Resource 디렉터리명으로 직접 사용하므로 MicroServer의 **실행환경 Profile은 단일 환경 Profile을 사용하는 것을 표준으로 한다.**
+
+```text
+local
+
+dev
+
+prod
+```
+
+예를 들어 다음과 같이 하나의 환경 Profile을 활성화한다.
+
+```text
+--spring.profiles.active=local
+```
+
+`local,test`처럼 여러 Profile을 동시에 활성화하면 `${spring.profiles.active}` 값 전체를 Resource 경로로 사용할 때 디렉터리 의미가 불명확해질 수 있다. 따라서 **외부 Resource 환경을 선택하는 Profile은 하나만 활성화한다.**
+
+향후 기능성 Profile이 추가로 필요해지는 경우에는 실행환경 Profile과 기능 Profile의 역할을 분리하는 별도 설계를 검토한다.
+
+### 5.5 `application-{profile}.yml` 사용 기준
+
+현재 구조에서는 외부 Resource 선택을 위해 `application-local.yml`, `application-dev.yml`, `application-prod.yml`을 반드시 만들 필요가 없다.
+
+환경에 관계없이 동일한 설정 구조를 사용한다면 다음과 같이 `application.yml` 하나로 충분하다.
+
+```text
+src/main/resources/
+└── application.yml
+```
+
+다만 특정 환경에서만 필요한 **Application 자체의 Spring 설정**이 생기면 `application-{profile}.yml`을 사용할 수 있다. 이 경우에도 외부 Resource Import 목록을 환경별 파일마다 반복하지 않고 `application.yml`의 공통 Import 규칙은 유지한다.
+
+즉 역할을 다음처럼 구분한다.
+
+| 설정파일 | 역할 |
+| --- | --- |
+| `application.yml` | MicroServer 공통 설정 및 외부 Resource Import 규칙 |
+| `application-{profile}.yml` | 필요한 경우에만 해당 환경의 Application 전용 차이값 |
+| 외부 `application-*.yml` | DataSource, Security 등 실제 환경별 Framework 설정값 |
+
+### 5.6 Resource Root 지정
+
+외부 Resource가 `/opt/microserver-resource`에 있다면 실행환경에서 다음 값을 제공한다.
 
 ```text
 microserver.resource-dir=/opt/microserver-resource
@@ -342,59 +392,21 @@ java \
   --spring.profiles.active=local
 ```
 
+VS Code Local 실행에서는 `launch.json`의 `vmArgs`와 `args`를 이용할 수 있다.
+
+```json
+{
+  "vmArgs": "-Dmicroserver.resource-dir=${workspaceFolder}/microserver_resource",
+  "args": "--spring.profiles.active=local"
+}
+```
+
 개발 PC와 운영서버의 실제 Resource Root는 달라도 된다. Application은 `${microserver.resource-dir}`만 참조하므로 Source 수정 없이 실행환경에서 위치를 결정할 수 있다.
 
 !!! note "Resource Root와 Secret"
     `microserver.resource-dir`은 외부 Resource의 **위치**를 전달하는 값이다.
 
     DB Password 같은 Secret 자체를 이 값에 넣는 것이 아니다. Secret은 환경변수나 별도 Secret 관리기능을 통해 외부 설정파일에서 참조하도록 구성할 수 있다.
-
-### 5.5 환경별 Profile과 설정 한 벌
-
-```text
-application-local.yml
-    → ${microserver.resource-dir}/config/application-context/local/
-
-application-dev.yml
-    → ${microserver.resource-dir}/config/application-context/dev/
-
-application-prod.yml
-    → ${microserver.resource-dir}/config/application-context/prod/
-```
-
-예를 들어 `application-dev.yml`은 Dev Resource를 연결한다.
-
-```yaml
-spring:
-  config:
-    import:
-      - file:${microserver.resource-dir}/config/application-context/dev/application-datasource.yml
-```
-
-Security가 추가되면 같은 환경의 설정을 함께 연결한다.
-
-```yaml
-spring:
-  config:
-    import:
-      - file:${microserver.resource-dir}/config/application-context/local/application-datasource.yml
-      - file:${microserver.resource-dir}/config/application-context/local/application-security.yml
-```
-
-### 5.6 `${spring.profiles.active}`를 경로에 사용할지 여부
-
-다음처럼 활성 Profile을 경로에 직접 사용할 수도 있다.
-
-```yaml
-spring:
-  config:
-    import:
-      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-datasource.yml
-```
-
-반복을 줄일 수 있지만 복수 Profile 등으로 구조가 확장되면 경로 의미가 불명확해질 수 있다.
-
-따라서 초기에는 **각 `application-{profile}.yml`이 대응하는 환경 디렉터리를 명시적으로 연결**하고, 구조가 충분히 검증된 뒤 공통화 여부를 판단한다.
 
 ### 5.7 `optional:` 사용 기준
 
@@ -404,7 +416,7 @@ spring:
 spring:
   config:
     import:
-      - optional:file:${microserver.resource-dir}/config/application-context/local/application-datasource.yml
+      - optional:file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-datasource.yml
 ```
 
 하지만 DataSource 설정은 Runtime 실행에 필요한 핵심 설정이므로 구성이 안정화되면 `optional:`을 제거하여 설정 누락을 기동 시점에 발견하도록 한다.
@@ -413,7 +425,9 @@ spring:
 
 예전 Framework도 Spring Profile로 환경을 선택하고 환경별 외부 설정 한 벌을 관리했다. 이 설계 원칙은 유지한다.
 
-달라지는 것은 외부 Resource를 Build 과정에서 Classpath로 복사하지 않는다는 점이다.
+이번 구조에서는 한 단계 더 정리하여 **공통 Import 규칙을 `application.yml`에 집중시키고 활성 Profile을 외부 Resource 디렉터리 선택값으로 사용**한다.
+
+또한 외부 Resource를 Build 과정에서 Classpath로 복사하지 않는다.
 
 ```mermaid
 flowchart LR
@@ -425,17 +439,20 @@ flowchart LR
     end
 
     subgraph NEW["새 MicroServer"]
+        APP["application.yml<br/>공통 Import"]
+        PROFILE["spring.profiles.active"]
         NR["별도 microserver-resource"]
-        PROFILE["Spring Profile"]
         IMPORT["spring.config.import"]
-        NR -->|"파일시스템에서 직접 읽음"| IMPORT
+
+        APP --> IMPORT
         PROFILE --> IMPORT
+        NR -->|"파일시스템에서 직접 읽음"| IMPORT
     end
 ```
 
 새 구조에서는 외부 Resource를 끝까지 외부에 유지하고 Spring Boot의 Externalized Configuration으로 실행 시 직접 읽는다.
 
-이를 통해 **환경별 설정 분리라는 기존 장점은 유지하면서 Classpath 복사 Build 작업을 제거하고, Source Repository와 실제 환경 Resource의 저장 위치를 분리**한다.
+이를 통해 **환경별 설정 분리라는 기존 장점은 유지하면서, 환경별 Application 설정파일에 반복되던 Import 정의와 Classpath 복사 Build 작업을 제거**한다.
 
 ---
 
@@ -463,6 +480,23 @@ dependencies {
     // VS Code / IDE에서 사용자 정의 YAML Property의 자동완성, 설명 및 검증을 지원한다.
     // 애플리케이션 실행 기능이 아니라 개발도구 지원을 위한 Annotation Processor이다.
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // Lombok Annotation을 Java 소스 컴파일 시 사용할 수 있게 한다.
+    // @Getter, @Setter 등의 Annotation을 코드에서 사용할 수 있게 하며,
+    // Lombok은 컴파일 과정에서 코드를 생성하므로 Runtime 의존성에는 포함하지 않는다.
+    compileOnly 'org.projectlombok:lombok'
+
+    // Java 컴파일 시 Lombok Annotation Processor를 실행한다.
+    // @Getter, @Setter 등의 Annotation을 분석하여 실제 Getter / Setter 코드를 생성한다.
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // 테스트 소스(src/test/java)에서도 Lombok Annotation을 사용할 수 있게 한다.
+    // 테스트용 클래스에서 @Getter, @Setter 등을 사용할 때 필요하다.
+    testCompileOnly 'org.projectlombok:lombok'
+
+    // 테스트 Java 소스를 컴파일할 때도 Lombok Annotation Processor를 실행한다.
+    // 테스트 코드에 선언된 Lombok Annotation을 실제 코드로 생성한다.
+    testAnnotationProcessor 'org.projectlombok:lombok'
 
     // 초기 DataSource 구성 및 접속 검증용 In-Memory Database
     runtimeOnly 'com.h2database:h2'
@@ -514,6 +548,17 @@ Metadata를 생성한다.
 > `annotationProcessor`는 DataSource 실행을 위한 JDBC Driver가 아니다.
 > Framework에서 정의한 Configuration Property 정보를 Build 시점에
 > 생성하기 위한 개발 지원 의존성이다.
+
+#### `lombok`
+
+Lombok은 Getter / Setter처럼 반복적으로 작성되는 Java 코드를 Annotation으로 생성하기 위해 사용한다.
+
+DataSource Property 클래스는 외부 YAML 값을 바인딩하기 위해 여러 Property 필드의 Getter / Setter가 필요하다. 이를 직접 작성하면 설정 항목이 늘어날수록 반복 코드가 많아지므로 `@Getter`, `@Setter`를 사용하여 Property 클래스의 핵심 설정 구조가 더 잘 보이도록 한다.
+
+Gradle에서는 Lombok Annotation을 소스에서 참조하기 위한 `compileOnly`와 컴파일 과정에서 실제 코드를 생성하기 위한 `annotationProcessor`를 함께 사용한다. 테스트 코드에서 Lombok을 사용할 수 있도록 `testCompileOnly`, `testAnnotationProcessor`도 함께 구성한다.
+
+> Lombok은 Runtime에서 Getter / Setter를 동적으로 만드는 라이브러리가 아니다.
+> Java 컴파일 과정에서 Annotation Processor가 필요한 코드를 생성하므로 Runtime 의존성으로 포함하지 않는다.
 
 #### `h2`
 
@@ -596,91 +641,46 @@ flowchart LR
 Framework에 다음 클래스를 생성한다.
 
 ```text
-framework
-└── src/main/java
-    └── .../framework/datasource
+src/main/java
+└── io/github/microserverlab/microserver
+    └── framework/datasource
         └── MicroServerDataSourceProperties.java
 ```
 
 ```java
-package com.microserver.framework.datasource;
+package io.github.microserverlab.microserver.framework.datasource;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+@Getter
 @ConfigurationProperties(prefix = "microserver.datasource")
 public class MicroServerDataSourceProperties {
 
     private final DataSourceProperty framework = new DataSourceProperty();
     private final DataSourceProperty business = new DataSourceProperty();
 
-    public DataSourceProperty getFramework() {
-        return framework;
-    }
-
-    public DataSourceProperty getBusiness() {
-        return business;
-    }
-
+    @Getter
+    @Setter
     public static class DataSourceProperty {
+
         private String driverClassName;
         private String jdbcUrl;
         private String username;
         private String password;
         private int maximumPoolSize = 10;
         private int minimumIdle = 1;
-
-        public String getDriverClassName() {
-            return driverClassName;
-        }
-
-        public void setDriverClassName(String driverClassName) {
-            this.driverClassName = driverClassName;
-        }
-
-        public String getJdbcUrl() {
-            return jdbcUrl;
-        }
-
-        public void setJdbcUrl(String jdbcUrl) {
-            this.jdbcUrl = jdbcUrl;
-        }
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
-        public int getMaximumPoolSize() {
-            return maximumPoolSize;
-        }
-
-        public void setMaximumPoolSize(int maximumPoolSize) {
-            this.maximumPoolSize = maximumPoolSize;
-        }
-
-        public int getMinimumIdle() {
-            return minimumIdle;
-        }
-
-        public void setMinimumIdle(int minimumIdle) {
-            this.minimumIdle = minimumIdle;
-        }
     }
 }
 ```
 
 이 클래스는 외부 YAML의 `microserver.datasource` 설정을 Java 객체로 바인딩하여 Framework의 DataSource 생성 코드가 사용하게 한다.
+
+최상위 `framework`, `business` 객체는 생성 후 교체하지 않으므로 `final`로 유지하고 `@Getter`만 적용한다. 실제 YAML 값이 바인딩되는 내부 `DataSourceProperty`에는 `@Getter`, `@Setter`를 적용하여 Spring Boot가 각 설정값을 주입할 수 있게 한다.
+
+Lombok을 사용함으로써 `driverClassName`, `jdbcUrl`, `username`, `password`, Connection Pool 설정마다 반복되는 Getter / Setter를 직접 작성하지 않아도 된다. 이 클래스에서는 `equals`, `hashCode`, `toString`까지 자동 생성하는 `@Data`보다 필요한 기능만 명시하는 `@Getter`, `@Setter`를 사용한다.
 
 문자열 Key로 설정을 직접 읽지 않고 `@ConfigurationProperties`를 사용하는 이유는 **설정 구조를 하나의 타입으로 정의하고 IDE 자동완성 및 검증을 받을 수 있게 하기 위해서**이다.
 
@@ -704,14 +704,14 @@ microserver.datasource
 다음 클래스를 생성한다.
 
 ```text
-framework
-└── src/main/java
-    └── .../framework/datasource
+src/main/java
+└── io/github/microserverlab/microserver
+    └── framework/datasource
         └── MicroServerDataSourceConfig.java
 ```
 
 ```java
-package com.microserver.framework.datasource;
+package io.github.microserverlab.microserver.framework.datasource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -799,47 +799,56 @@ Framework DB를 사용하는 Framework 기능은 다음처럼 Bean 이름을 명
 실수로 사용하는 가능성을 줄일 수 있다.
 
 ---
-## 9. Runtime이 Framework Configuration을 인식하도록 구성
+## 9. 현재 MicroserverApplication에서 Framework Configuration 인식
 
-초기 구현 단계에서는 Runtime의 `@SpringBootApplication` package 하위에
-Framework package가 포함되지 않을 수 있다.
+현재 프로젝트의 실제 Main Class는 다음 Package를 사용한다.
 
-가장 단순한 검증 방법은 Runtime Application에서 Framework
-Configuration을 명시적으로 Import하는 것이다.
+```text
+io.github.microserverlab.microserver
+```
+
+Main Class는 `io.github.microserverlab.microserver.MicroserverApplication`이며, Framework DataSource 클래스는 현재 단일 프로젝트 검증 단계에서 Main Package 하위에 배치한다.
+
+```text
+src/main/java/
+└── io/github/microserverlab/microserver/
+    ├── MicroserverApplication.java
+    └── framework/
+        └── datasource/
+            ├── MicroServerDataSourceProperties.java
+            └── MicroServerDataSourceConfig.java
+```
+
+`@SpringBootApplication`은 선언된 Package를 기준으로 하위 Package를 Component Scan한다. 따라서 `framework.datasource`가 `io.github.microserverlab.microserver` 하위에 있으면 `MicroServerDataSourceConfig`의 `@Configuration`도 자동으로 검색된다.
+
+현재 Main Class는 별도의 `@Import`를 추가하지 않고 그대로 사용한다.
 
 ```java
-package com.microserver.runtime;
+package io.github.microserverlab.microserver;
 
-import com.microserver.framework.datasource.MicroServerDataSourceConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 
 @SpringBootApplication
-@Import(MicroServerDataSourceConfig.class)
-public class RuntimeApplication {
+public class MicroserverApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RuntimeApplication.class, args);
+        SpringApplication.run(MicroserverApplication.class, args);
     }
 }
 ```
 
-접속 검증이 완료된 뒤 Framework 자동설정(Auto Configuration)으로
-전환하면 Runtime에서 `@Import`를 제거할 수 있다.
-
-첫 구현에서는 동작 구조를 명확하게 확인하기 위해 명시적인 `@Import`
-방식으로 시작한다.
+즉 현재 단계에서는 가이드 예제를 위해 별도의 `RuntimeApplication`을 만들지 않는다. 실제 멀티프로젝트 전환 후 Framework가 별도 Module/JAR로 분리되면 Component Scan 범위와 Spring Boot Auto Configuration 적용 방식을 다시 설계한다.
 
 ---
 ## 10. Framework DataSource 접속 테스트
 
-Framework DB 접속을 검증하는 테스트를 작성한다.
+Framework DB 접속을 검증하는 테스트를 `src/test/java/io/github/microserverlab/microserver/` 하위에 작성한다.
 
 이 테스트는 단순히 H2가 실행되는지만 확인하는 것이 아니라 **외부 설정 → Property 바인딩 → Framework DataSource Bean 생성 → 실제 Connection 획득**까지 전체 연결 경로를 검증한다.
 
 ```java
-package com.microserver.runtime;
+package io.github.microserverlab.microserver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -879,12 +888,12 @@ Framework DB URL = jdbc:h2:mem:frameworkdb
 ---
 ## 11. Business DataSource 접속 테스트
 
-Business DB도 독립적으로 검증한다.
+Business DB도 `src/test/java/io/github/microserverlab/microserver/` 하위에서 독립적으로 검증한다.
 
 별도 테스트가 필요한 이유는 두 DataSource Bean이 실수로 같은 설정이나 같은 Database를 바라보는 구성 오류를 확인하기 위해서이다.
 
 ```java
-package com.microserver.runtime;
+package io.github.microserverlab.microserver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -929,10 +938,10 @@ Business DB URL = jdbc:h2:mem:businessdb
 테스트뿐 아니라 실제 Runtime 기동 시 두 DataSource가 정상 생성되는지도
 확인한다.
 
-임시 검증용 `ApplicationRunner`를 Runtime에 작성한다.
+임시 검증용 `ApplicationRunner`는 `io.github.microserverlab.microserver.verify` Package에 작성한다.
 
 ```java
-package com.microserver.runtime.verify;
+package io.github.microserverlab.microserver.verify;
 
 import java.sql.Connection;
 import javax.sql.DataSource;
@@ -1060,7 +1069,7 @@ microserver:
 
 ```mermaid
 flowchart TB
-    EXT["별도 MicroServer Resource<br/>Profile별 application-datasource.yml"]
+    EXT["별도 MicroServer Resource<br/>${spring.profiles.active} 환경의 application-datasource.yml"]
 
     subgraph FRAMEWORK["MicroServer Framework"]
         PROP["MicroServerDataSourceProperties"]

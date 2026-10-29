@@ -222,6 +222,9 @@ nav:
 
   - 멀티프로젝트 프레임워크 구성:
       - 멀티프로젝트 프레임워크 구성: 04_multi_project_framework/multi_project_framework.md
+      - 참고:
+        - Lombok 설치 및 설정: 04_multi_project_framework/lombok_setup.md
+        - VS Code Java User Snippet: 04_multi_project_framework/vscode_java_user_snippet.md
 
       - DataSource 구성:
           - 기존 DataSource 구성 분석: 04_multi_project_framework/01_datasource/legacy_datasource_structure.md
