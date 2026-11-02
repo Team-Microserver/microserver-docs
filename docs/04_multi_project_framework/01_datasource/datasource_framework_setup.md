@@ -879,6 +879,102 @@ class FrameworkDataSourceConnectionTest {
 }
 ```
 
+### 10.1 실행 전 확인
+
+1. 앞 절의 Gradle 의존성, Property 클래스, DataSource Configuration을 저장하고 Gradle 동기화를 완료한다.
+2. 5절의 외부 설정 Import 규칙이 적용되어 있는지 확인한다. `local` Profile로 실행하면 외부 Resource의 `config/application-context/local/application-datasource.yml`을 읽어야 한다.
+3. 해당 외부 YAML에 **Framework / Business 두 DataSource 설정**이 모두 있는지 확인한다. 테스트가 Framework DB만 사용해도 Spring 컨텍스트를 시작할 때 두 DataSource Bean을 모두 생성하기 때문이다.
+4. 현재 예제의 `jdbc:h2:mem:...`는 테스트 JVM 안에서 생성되는 In-Memory DB이므로 별도의 H2 서버를 실행하지 않는다. 외부 DB로 변경했다면 해당 서버에 접속할 수 있어야 한다.
+
+아래 실행 예는 현재 개발환경의 다음 경로를 기준으로 한다. 다른 PC에서는 실제 경로로 변경한다.
+
+| 구분 | 경로 |
+| --- | --- |
+| Java 프로젝트 | `/Users/jangkwankim/local-microserver/workspace/microserver` |
+| 외부 Resource Root | `/Users/jangkwankim/local-microserver/workspace/microserver-resource` |
+| Local DB 설정 | `microserver-resource/config/application-context/local/application-datasource.yml` |
+
+### 10.2 VS Code에서 테스트 실행 설정
+
+**애플리케이션 실행용 `launch.json`과 JUnit 테스트 실행 설정은 별개이다.** `launch.json`에 Profile이나 Resource 경로를 지정했더라도 테스트 실행에 동일하게 전달된다고 가정하지 않는다.
+
+VS Code에서 열어 둔 Workspace의 `.vscode/settings.json`에 다음 항목을 추가한다. 현재 개발환경에서 `workspace` 폴더를 열었다면 `/Users/jangkwankim/local-microserver/workspace/.vscode/settings.json`이다.
+
+기존 설정은 유지하고 최상위 JSON 객체 안에 `java.test.config`와 `java.test.defaultConfig`를 추가한다. 아래 예시의 절대경로는 외부 Resource Root를 가리킨다.
+
+```json
+{
+  "java.test.config": [
+    {
+      "name": "microserver-local",
+      "vmArgs": [
+        "-Dspring.profiles.active=local",
+        "-Dmicroserver.resource-dir=/Users/jangkwankim/local-microserver/workspace/microserver-resource"
+      ]
+    }
+  ],
+  "java.test.defaultConfig": "microserver-local"
+}
+```
+
+- `java.test.config`: Test Runner for Java가 테스트 JVM을 실행할 때 사용할 설정이다.
+- `vmArgs`: 테스트 JVM에 전달할 옵션이다. `-D`로 지정한 값은 Spring이 시스템 Property로 읽는다.
+- `spring.profiles.active=local`: Local 환경을 선택한다.
+- `microserver.resource-dir`: 외부 Resource Root를 지정한다. `config`나 YAML 파일 자체의 경로가 아니다.
+- `java.test.defaultConfig`: 여러 테스트 실행 설정 중 기본으로 사용할 설정 이름이다.
+
+설정은 [VS Code Java 테스트 공식 문서](https://code.visualstudio.com/docs/java/java-testing)의 `java.test.config` 기준이다.
+
+### 10.3 VS Code에서 실행 및 결과 확인
+
+1. `FrameworkDataSourceConnectionTest.java`를 열고 저장한다.
+2. 클래스 또는 `@Test` 메서드 옆의 초록색 실행 아이콘을 누른다. `Run Test` 링크가 표시되는 환경에서는 해당 링크를 눌러도 된다.
+3. 또는 왼쪽 **Testing**(플라스크 아이콘)을 열고 `FrameworkDataSourceConnectionTest`를 찾아 실행한다.
+4. 테스트가 끝나면 Testing 화면에서 성공 표시를 확인한다. 실패하면 해당 테스트를 선택하여 오류와 예외 원인을 확인한다.
+5. 해당 테스트의 출력 화면에서 `Framework DB URL`을 확인한다. 현재 로컬 Java 파일처럼 출력 문구를 `DB URL`로 작성했다면 그 문구로 표시된다.
+
+실행 아이콘이나 테스트가 보이지 않으면 **Test Runner for Java** 확장이 설치·활성화되어 있는지, Java 프로젝트 로딩과 Gradle 동기화가 끝났는지 확인한다. 이 클래스는 `main()` 메서드가 아닌 JUnit 테스트이므로 테스트 실행 기능으로 실행한다.
+
+### 10.4 터미널에서 특정 테스트만 실행
+
+VS Code 테스트 실행과 별도로 Gradle Wrapper로도 실행할 수 있다. 터미널에서 `build.gradle`과 `gradlew`가 있는 Java 프로젝트 디렉터리로 이동한다.
+
+```bash
+cd /Users/jangkwankim/local-microserver/workspace/microserver
+```
+
+다음 명령은 Local Profile과 외부 Resource Root를 환경변수로 전달하고, Framework 테스트 클래스만 선택하여 실행한다. `SPRING_APPLICATION_JSON`은 Spring Boot가 읽는 설정 전달 방식이며, Gradle이 시작하는 테스트 프로세스에도 환경변수가 전달된다.
+
+```bash
+SPRING_APPLICATION_JSON='{"spring":{"profiles":{"active":"local"}},"microserver":{"resource-dir":"/Users/jangkwankim/local-microserver/workspace/microserver-resource"}}' \
+  bash ./gradlew test \
+  --tests 'io.github.microserverlab.microserver.FrameworkDataSourceConnectionTest' \
+  --rerun-tasks --info
+```
+
+- `bash ./gradlew`: Wrapper에 실행 권한이 없는 환경에서도 실행할 수 있다.
+- `--tests`: 실행할 테스트 클래스를 지정한다. 메서드명이 `connectionTest`이든 가이드의 `frameworkDataSourceConnectionTest`이든 해당 클래스의 테스트를 실행한다.
+- `--rerun-tasks`: 이전 결과가 있어도 테스트를 다시 수행한다.
+- `--info`: 테스트의 표준 출력과 상세 실행 정보를 확인한다.
+
+VS Code의 `java.test.config`는 위 터미널 실행에는 적용되지 않으므로 환경 설정을 별도로 전달한다. 현재 프로젝트의 Java Toolchain 기준인 **JDK 25**가 사용 가능해야 하며, 첫 실행에서는 Gradle 및 의존성 다운로드가 필요할 수 있다.
+
+테스트 성공 시 터미널에서 `BUILD SUCCESSFUL`을 확인하고, 상세 결과는 프로젝트의 `build/reports/tests/test/index.html`을 브라우저로 열어 확인한다. `BUILD SUCCESSFUL`과 함께 테스트가 실제 실행되었고 실패가 없는지도 확인한다.
+
+특정 테스트 선택과 보고서는 [Gradle Java 테스트 공식 문서](https://docs.gradle.org/current/userguide/java_testing.html)를 참고한다.
+
+### 10.5 실행 오류 확인
+
+| 증상 | 확인할 내용 |
+| --- | --- |
+| Profile 또는 Resource 경로 Placeholder 해석 실패 | `spring.profiles.active`, `microserver.resource-dir`이 **테스트 실행 환경**에 전달됐는지 확인한다. |
+| 외부 설정파일을 찾지 못함 | Resource Root 아래에 `config/application-context/local/application-datasource.yml`이 존재하는지 확인한다. |
+| `jdbcUrl` 또는 Driver 관련 오류 | 외부 YAML의 `microserver.datasource.framework`와 `business` 설정, JDBC 의존성 및 Gradle 동기화를 확인한다. |
+| `No tests found` 또는 테스트 탐색 실패 | 테스트 경로·Package·클래스명, `@Test` import가 `org.junit.jupiter.api.Test`인지, `useJUnitPlatform()` 설정을 확인한다. |
+| Java Toolchain 관련 오류 | 프로젝트에서 요구하는 JDK 25 설치 및 Gradle의 JDK 인식 여부를 확인한다. |
+
+### 10.6 정상 결과 확인
+
 정상 결과 예:
 
 ```text
