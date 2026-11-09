@@ -229,6 +229,7 @@ nav:
       - DataSource 구성:
           - 기존 DataSource 구성 분석: 04_multi_project_framework/01_datasource/legacy_datasource_structure.md
           - DataSource Framework 구성 및 접속 검증: 04_multi_project_framework/01_datasource/datasource_framework_setup.md
+          - MyBatis 매퍼 설정 및 SQL 실행: 04_multi_project_framework/01_datasource/mybatis_mapper_setup.md
 
 
 
