@@ -1,96 +1,171 @@
 # MyBatis 매퍼 설정 및 SQL 실행
 
-[DataSource Framework 구성 및 접속 검증](datasource_framework_setup.md)에서 만든 두 DataSource에 MyBatis를 연결한다. Local H2에서 Framework와 Business Mapper를 각각 호출해 XML의 SQL이 실행되고, 각 Mapper가 지정된 DataSource를 사용하는지 확인한다.
+MicroServer는 Framework 내부 기능용 DB와 Runtime 업무용 DB에 각각 MyBatis를 연결한다. 이 가이드에서는 두 DB에 같은 이름의 테이블을 만들고, 각 서비스가 자기 DB의 행을 조회하는지 H2 통합 테스트로 검증한다.
 
-## 1. 레거시 설정에서 이어받을 부분
+준비 사항은 JDK 25, 프로젝트의 Gradle Wrapper, 그리고 `MicroServerDataSourceConfig`가 등록하는 두 DataSource와 두 트랜잭션 관리자다. DataSource Bean과 접속 정보의 구성은 [DataSource Framework 구성 및 접속 검증](datasource_framework_setup.md)을 따른다.
 
-| 확인한 파일 | 실제 역할 |
+## 1. MyBatis와 Spring의 역할
+
+MyBatis는 Java 메서드를 SQL 문에 연결하는 데이터 접근 라이브러리다. 개발자가 매퍼 XML에 SQL과 결과 매핑을 작성하면 MyBatis가 JDBC 파라미터를 바인딩하고 조회 결과를 Java 값이나 객체로 변환한다. 서비스는 매퍼 인터페이스를 호출한다. MyBatis-Spring은 그 인터페이스의 프록시를 Spring Bean으로 등록하고, SQL 실행에 사용할 세션을 Spring 트랜잭션과 연동한다. [MyBatis 매퍼 XML](https://mybatis.org/mybatis-3/sqlmap-xml.html) · [MyBatis-Spring 세션 관리](https://mybatis.org/spring/sqlsession.html)
+
+| 구성 요소 | 담당하는 일 |
 | --- | --- |
-| `application-local(1).yml` | `mybatis.config-location`, `config-name`, `mapper-location` 값을 제공한다. 설정 XML은 `${resource-dir}/config/mybatis` 아래에 있고, Mapper 경로는 `classpath:/mybatis/mapper/${PROJECT_NAME}/*/*.xml`이다. |
-| `CommonMyBatisConfig(1).java` | `MyBatisProperties`에서 설정 XML의 디렉터리와 파일명을 읽어 `setConfigLocation()`에 전달한다. 실제 Mapper 등록에는 `classpath:/mybatis/mapper/module-common/*/*.xml`을 직접 사용한다. YAML의 Mapper 경로도 조회하지만 해당 코드는 디버그 출력에 쓰인다. Common DataSource로 Factory, Template, TransactionManager를 만든다. |
-| `AdminMyBatisConfig.java` | `@Value`로 YAML의 세 값을 읽는다. `setConfigLocation()`으로 설정 XML을 지정하고, `setMapperLocations()`로 YAML 패턴에 매칭된 Mapper XML을 지정한다. Admin DataSource로 별도 Factory, Template, TransactionManager를 만든다. |
-| `mybatis-config(1).xml` | `<configuration>`에서 캐시, 생성 키, `REUSE` 실행기, 지연 로딩 동작, Admin 모델 별칭, 클래스패스의 `biz.properties` 등을 지정한다. 첨부 XML에는 SQL 문이나 `<mappers>` 목록이 없다. |
+| `application.yml` | 활성 Profile에 해당하는 외부 YAML을 가져온다. |
+| 외부 `application-context/<profile>/application-*.yml` | DB 접속 정보와 MyBatis 리소스 경로를 Spring 환경의 프로퍼티로 제공한다. |
+| Java `@Configuration` | 프로퍼티와 DataSource Bean으로 DB별 `SqlSessionFactory`, `SqlSessionTemplate`을 생성한다. `@MapperScan`으로 각 인터페이스를 해당 Template에 연결한다. |
+| `mybatis-config.xml` | 각 Factory에 적용할 MyBatis 엔진 옵션을 정의한다. |
+| 매퍼 XML | `select`, `insert`, `update`, `delete`의 SQL, 입력 바인딩, 결과 매핑을 정의한다. |
+| 서비스 | 매퍼를 호출하고 `@Transactional`로 작업 단위와 트랜잭션 관리자를 지정한다. |
 
-두 Java 설정 모두 `SqlSessionFactoryBean.getObject()`를 호출할 때 설정 XML과 지정된 Mapper XML을 읽어 Factory를 만든다. YAML은 경로를 제공한다. 이 가이드에서도 Spring ApplicationContext가 Java 설정으로 Bean을 구성하고, 외부 application-context YAML은 환경별 값을 공급한다.
+**기동 시** Spring Boot가 외부 YAML을 Spring `Environment`에 로딩한다. Spring ApplicationContext가 Java 설정을 실행하면 각 Factory가 설정 XML과 담당 매퍼 XML을 읽어 SQL 문을 등록한다. 매퍼 스캔은 인터페이스별 프록시 Bean을 만들고 연결할 Template을 지정한다. 외부 디렉터리 이름인 `application-context`는 설정값을 모아 두는 경로다. Bean 등록은 실행 중인 Spring ApplicationContext가 Java 설정을 바탕으로 수행한다. [Spring Boot 외부 설정](https://docs.spring.io/spring-boot/reference/features/external-config.html) · [MyBatis-Spring 매퍼 등록](https://mybatis.org/spring/mappers.html)
 
-## 2. Bean 연결과 파일 소유권
+**호출 시** 서비스의 트랜잭션 경계 안에서 매퍼 프록시가 `namespace.id`로 SQL을 찾는다. `SqlSessionTemplate`은 해당 Factory에서 현재 Spring 트랜잭션에 연결된 세션을 사용하고, MyBatis는 JDBC로 SQL을 실행한다. 트랜잭션이 끝나면 Spring이 커밋 또는 롤백을 처리하고 세션과 커넥션을 정리한다. Template은 여러 서비스에서 공유할 수 있다. [MyBatis-Spring 트랜잭션](https://mybatis.org/spring/transactions.html)
+
+## 2. DB별 Bean과 파일 소유권
 
 | 구분 | Framework DB | Business DB |
 | --- | --- | --- |
-| 기존 DataSource | `frameworkDataSource` | `businessDataSource` (`@Primary`) |
-| 기존 TransactionManager | `frameworkTransactionManager` | `businessTransactionManager` (`@Primary`) |
-| 신규 SqlSessionFactory | `frameworkSqlSessionFactory` | `businessSqlSessionFactory` |
-| 신규 SqlSessionTemplate | `frameworkSqlSessionTemplate` | `businessSqlSessionTemplate` |
-| 스캔할 패키지 | `io.github.microserverlab.microserver.framework.mybatis.mapper` | `io.github.microserverlab.microserver.runtime.mapper` |
-| Mapper XML | `mybatis/mapper/framework/` | `mybatis/mapper/business/` |
-| Mapper와 SQL의 소유자 | Framework 자체 기능 | Runtime 도메인 |
+| DataSource | `frameworkDataSource` | `businessDataSource` (`@Primary`) |
+| 트랜잭션 관리자 | `frameworkTransactionManager` | `businessTransactionManager` (`@Primary`) |
+| 세션 Factory | `frameworkSqlSessionFactory` | `businessSqlSessionFactory` |
+| 세션 Template | `frameworkSqlSessionTemplate` | `businessSqlSessionTemplate` |
+| 매퍼 패키지 접미사 | `framework.mybatis.mapper` | `runtime.mapper` |
+| 매퍼 XML 디렉터리 | `mybatis/mapper/framework/` | `mybatis/mapper/business/` |
+| 매퍼와 SQL 소유자 | Framework 내부 기능 | Runtime 업무 도메인 |
 
-- `SqlSessionFactory`는 DataSource, MyBatis 설정, 등록된 SQL 문을 보유하고 세션을 만든다.
-- `SqlSessionTemplate`은 Factory 하나에 연결되고 Spring 트랜잭션에 맞춰 세션을 관리한다. Service는 Mapper 인터페이스를 주입받아 메서드를 호출한다.
-- `@MapperScan`은 지정된 패키지의 인터페이스를 Spring Mapper Bean으로 등록한다. `sqlSessionTemplateRef`가 그 Mapper가 사용할 Template을 결정한다. XML 검색 패턴은 Factory에 어떤 SQL 문을 등록할지 결정한다.
+Framework는 두 DB의 DataSource·트랜잭션 관리자·세션 Bean과 공통 엔진 설정을 제공한다. Framework 내부 기능의 매퍼와 서비스도 Framework에 둔다. Runtime은 업무 매퍼의 스캔, 인터페이스, XML, 서비스를 관리한다. 매퍼 패키지는 해당 DB의 인터페이스 전용으로 둔다.
 
-현재 `settings.gradle`에는 단일 프로젝트만 있다. 이번 단계에서는 Framework와 Runtime을 패키지와 리소스 경로로 나눈다. 멀티프로젝트 전환 시 Factory·Template 구성과 Framework 전용 Mapper는 Framework 모듈에, Business Mapper·XML·Service는 Runtime 모듈에 둔다. 업무 패키지에 대한 `@MapperScan` 선언은 Runtime의 설정 클래스에서 Framework가 공개한 Template 이름을 참조하도록 옮긴다. 이렇게 하면 Framework에서 Runtime 모듈로 향하는 의존성이 생기지 않는다.
+아래 예제는 `io.github.microserverlab.microserver` 아래에서 Framework와 Runtime의 패키지 및 매퍼 리소스를 구분한다. Runtime의 `BusinessMapperConfig`는 Framework가 제공하는 `businessSqlSessionTemplate`을 이름으로 참조한다.
 
-## 3. Gradle 의존성과 버전
+```text
+microserver/
+├── build.gradle
+├── gradlew
+└── src/
+    ├── main/
+    │   ├── java/io/github/microserverlab/microserver/
+    │   │   ├── MicroserverApplication.java
+    │   │   ├── framework/
+    │   │   │   ├── datasource/
+    │   │   │   │   ├── MicroServerDataSourceConfig.java
+    │   │   │   │   └── MicroServerDataSourceProperties.java
+    │   │   │   └── mybatis/
+    │   │   │       ├── MicroServerMyBatisConfig.java
+    │   │   │       ├── mapper/FrameworkLabelMapper.java
+    │   │   │       └── service/FrameworkLabelService.java
+    │   │   └── runtime/
+    │   │       ├── mybatis/BusinessMapperConfig.java
+    │   │       ├── mapper/BusinessLabelMapper.java
+    │   │       └── service/BusinessLabelService.java
+    │   └── resources/
+    │       ├── application.yml
+    │       └── mybatis/
+    │           ├── mybatis-config.xml
+    │           └── mapper/
+    │               ├── framework/FrameworkLabelMapper.xml
+    │               └── business/BusinessLabelMapper.xml
+    └── test/
+        ├── java/io/github/microserverlab/microserver/
+        │   └── MyBatisMapperIntegrationTest.java
+        └── resources/sql/
+            ├── framework-mapper-fixture.sql
+            └── business-mapper-fixture.sql
+```
 
-현재 `build.gradle`의 Spring Boot는 **4.1.1**, Java Toolchain은 **25**다. 기존 MyBatis 의존성 선언은 없으므로 루트 `build.gradle`의 `dependencies`에 다음 한 줄을 추가한다.
+외부 리소스는 실행 환경에서 별도로 제공한다. `local`은 아래 H2 예제를 위한 디렉터리다. `dev`, `prod`를 사용하는 환경도 같은 두 파일을 준비한다.
+
+```text
+microserver-resource/
+└── config/
+    └── application-context/
+        ├── local/
+        │   ├── application-datasource.yml
+        │   └── application-mybatis.yml
+        ├── dev/
+        │   ├── application-datasource.yml
+        │   └── application-mybatis.yml
+        └── prod/
+            ├── application-datasource.yml
+            └── application-mybatis.yml
+```
+
+## 3. MyBatis 의존성 추가
+
+루트 `build.gradle`의 `dependencies`에 MyBatis Starter를 추가한다. 이 가이드의 Spring Boot 4.1.1에서는 4.1.0을 사용한다. Starter는 MyBatis Core와 MyBatis-Spring을 함께 가져온다. [MyBatis Starter 4.1.0 릴리스 POM](https://github.com/mybatis/spring-boot-starter/blob/mybatis-spring-boot-4.1.0/pom.xml)
 
 ```groovy
 implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:4.1.0'
 ```
 
-Starter 4.1.0은 Spring Boot 4.1 계열용이다. 릴리스 POM의 기준 버전은 Spring Boot 4.1.0, MyBatis-Spring 4.1.0, MyBatis Core 3.5.19이며 최소 Java는 17이다. 현재 Boot 4.1.1과 JDK 25는 같은 지원 계열에 해당한다. 실제 해석 버전은 프로젝트의 Boot 의존성 관리와 Gradle 해석 결과에서 확인한다. [MyBatis Starter 호환성 표](https://github.com/mybatis/spring-boot-starter#requirements) · [4.1.0 릴리스 POM](https://github.com/mybatis/spring-boot-starter/blob/mybatis-spring-boot-4.1.0/pom.xml)
+[DataSource Framework 구성 및 접속 검증](datasource_framework_setup.md)에서 설정한 JDBC Starter, H2 런타임 의존성, 테스트 의존성을 사용한다. 다음 단계에서는 Profile별 YAML을 연결하고 MyBatis 자동 구성을 제외해 Framework가 두 DB의 세션을 각각 등록하도록 한다.
 
-기존 JDBC Starter, H2 런타임 의존성, 테스트 의존성을 사용한다. Starter는 통합 라이브러리와 `SpringBootVFS`를 제공하며, 아래 YAML에서 MyBatis 자동 구성만 제외한다. 자동 구성은 단일 후보 DataSource 기준이고, 지금 구조에서는 Business가 `@Primary`이므로 자동 구성 조건을 충족할 수 있다. 명시 구성은 두 Factory의 연결과 스캔 범위를 각각 고정한다. [MyBatis 4.1.0 자동 구성 코드](https://github.com/mybatis/spring-boot-starter/blob/mybatis-spring-boot-4.1.0/mybatis-spring-boot-autoconfigure/src/main/java/org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.java)
+## 4. Profile별 외부 YAML 연결
 
-```bash
-bash ./gradlew dependencyInsight --configuration runtimeClasspath --dependency org.mybatis
-```
-
-## 4. 외부 application-context YAML
-
-현재 Mac의 외부 저장소 폴더명은 `microserver_resource`다. 실행 환경에서 실제 폴더를 `microserver.resource-dir`으로 전달한다. 기존 DataSource import 아래에 MyBatis import를 추가하고, 같은 `spring:` 블록에 자동 구성 제외를 넣는다.
+`src/main/resources/application.yml`에 두 파일의 import를 등록한다. 애플리케이션 이름과 import는 이 파일에서 관리한다. 실행 명령에서 `spring.profiles.active=local`과 `microserver.resource-dir`을 제공하면 Spring Boot가 `config/application-context/local/` 아래의 두 YAML을 읽는다.
 
 ```yaml
-# microserver/src/main/resources/application.yml
 spring:
   application:
     name: microserver
+  config:
+    import:
+      - 'file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-datasource.yml'
+      - 'file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-mybatis.yml'
   autoconfigure:
     exclude:
       - org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
-  config:
-    import:
-      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-datasource.yml
-      - file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-mybatis.yml
+  sql:
+    init:
+      mode: never
 ```
 
+MyBatis 자동 구성은 단일 후보 DataSource를 기준으로 동작하며, DataSource가 여러 개여도 `@Primary` 후보가 있으면 그 조건을 충족할 수 있다. 이 예제의 세션 Bean과 매퍼는 Java 설정이 전담하도록 해당 자동 구성을 제외한다. `spring.sql.init.mode=never`는 Spring Boot의 SQL 스크립트 자동 초기화를 끈다. 아래 H2 픽스처는 테스트가 각 DataSource에 직접 실행한다. [MyBatis 4.1.0 자동 구성 코드](https://github.com/mybatis/spring-boot-starter/blob/mybatis-spring-boot-4.1.0/mybatis-spring-boot-autoconfigure/src/main/java/org/mybatis/spring/boot/autoconfigure/MybatisAutoConfiguration.java)
+
+!!! warning "환경 Profile은 하나만 지정"
+    이 경로는 `spring.profiles.active` 값을 디렉터리명으로 사용한다. `local`, `dev`, `prod` 중 하나를 실행 시 전달한다. 두 import는 필수이므로 설정 경로가 잘못되거나 파일이 누락되면 기동이 실패한다. Gradle 테스트와 IDE 실행에도 각각 Profile과 리소스 루트를 전달한다.
+
+`config/application-context/local/application-datasource.yml`을 작성한다. 메모리 DB 이름이 서로 달라 두 개의 독립된 DB가 생성된다.
+
 ```yaml
-# microserver_resource/config/application-context/local/application-mybatis.yml
+microserver:
+  datasource:
+    framework:
+      driver-class-name: org.h2.Driver
+      jdbc-url: 'jdbc:h2:mem:frameworkdb;DB_CLOSE_DELAY=-1'
+      username: sa
+      password: ''
+      maximum-pool-size: 5
+      minimum-idle: 1
+    business:
+      driver-class-name: org.h2.Driver
+      jdbc-url: 'jdbc:h2:mem:businessdb;DB_CLOSE_DELAY=-1'
+      username: sa
+      password: ''
+      maximum-pool-size: 10
+      minimum-idle: 1
+```
+
+`config/application-context/local/application-mybatis.yml`을 작성한다. 이 예제의 프로퍼티는 Java 설정이 직접 읽는다.
+
+```yaml
 microserver:
   mybatis:
+    config-location: 'classpath:/mybatis/mybatis-config.xml'
     framework:
       mapper-locations: 'classpath*:mybatis/mapper/framework/**/*.xml'
     business:
       mapper-locations: 'classpath*:mybatis/mapper/business/**/*.xml'
 ```
 
-두 YAML은 필수 import다. Local에서는 `spring.profiles.active=local`을 전달하고, Dev와 Prod를 추가할 때도 각각의 디렉터리에 같은 이름의 파일을 배치한다. 이 경로 규칙은 한 번에 단일 환경 Profile을 받는다. `local,extra` 같은 복수 Profile 문자열을 쓰려면 환경 디렉터리 선택 값을 별도로 설계한다. VS Code 실행·테스트에 설정한 값은 터미널의 Gradle 실행과 별도로 전달한다.
+!!! tip "실행 환경과 배포 리소스의 경로"
+    `file:`은 실행 환경의 파일시스템에 있는 YAML을 읽는다. `classpath:`은 배포물에 포함된 설정 XML 한 개를 찾는다. `classpath*:`와 와일드카드는 여러 클래스패스 위치에서 패턴에 맞는 매퍼 XML을 찾는다. Framework JAR과 Runtime JAR로 나누더라도 두 매퍼 경로의 범위를 분리한다. 실제 DB의 계정과 암호는 외부 YAML에서 환경변수나 배포 환경의 Secret으로 주입한다.
 
-`classpath*:`는 클래스패스의 여러 위치를 검색하므로, 향후 Framework JAR과 Runtime 리소스를 분리해도 각 전용 경로를 사용할 수 있다. Framework와 Business 패턴을 서로 겹치지 않게 관리한다. 외부 YAML에 경로를 두더라도 Mapper XML은 `src/main/resources`에 저장하고 애플리케이션과 함께 배포한다.
+## 5. `mybatis-config.xml` 관리
 
-### MyBatis 설정 XML이 필요한 경우
-
-기본 구성은 Java에서 MyBatis 공통 옵션을 지정한다. 환경별로 공통 동작을 바꿀 필요가 생기면 해당 Factory에 `config-location`을 지정한다. 이 값은 `<configuration>` 루트의 **단일 파일**을 가리키고, `mapper-locations`는 `<mapper>` 루트의 **SQL 파일 검색 패턴**을 가리킨다.
-
-예를 들어 외부 Local YAML의 `microserver.mybatis.business` 아래에 다음 값을 추가할 수 있다.
-
-```yaml
-config-location: 'file:${microserver.resource-dir}/config/mybatis/local/business-mybatis-config.xml'
-```
+`src/main/resources/mybatis/mybatis-config.xml`을 작성한다. 두 Factory가 같은 파일을 각자 읽으므로 공통 옵션이 적용되면서도 SQL 등록과 실행 환경은 Factory마다 독립적이다.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
     PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-config.dtd">
@@ -101,16 +176,17 @@ config-location: 'file:${microserver.resource-dir}/config/mybatis/local/business
 </configuration>
 ```
 
-아래 Java는 설정 XML이 지정된 경우 그 파일에서 옵션을 읽는다. `setConfiguration()`과 `setConfigLocation()`은 한 Factory에서 하나만 적용한다. DataSource와 트랜잭션은 Spring Bean에 두고, Mapper 등록은 `setMapperLocations()`로 통일한다. 레거시 XML의 Admin 별칭과 `biz.properties`는 기존 모델 및 리소스에 연결되어 있으므로 새 프로젝트에서 필요한 설정만 옮긴다. [MyBatis-Spring Factory 설정](https://mybatis.org/spring/factorybean.html)
+`mapUnderscoreToCamelCase`는 객체 자동 매핑에서 `display_name` 같은 컬럼을 `displayName` 속성에 연결한다. 아래 조회 예제는 단일 문자열 컬럼을 반환한다. 여러 컬럼의 매핑을 명시하려면 해당 매퍼 XML에서 `<resultMap>`을 선언한다. 공통 엔진 정책이 바뀔 때 이 설정 파일과 양쪽 DB의 매퍼 테스트를 함께 검토한다. [MyBatis 설정 옵션](https://mybatis.org/mybatis-3/configuration.html)
 
-## 5. Framework의 Factory와 Template 구성
+!!! note "설정 XML과 SQL 등록 위치"
+    `mybatis-config.xml`은 엔진 옵션을 담는다. DB 연결과 트랜잭션 관리자는 Spring 설정에서 선택하고, SQL XML 목록은 Factory별 `setMapperLocations()`로 관리한다. 이 구성에서는 설정 XML에 `<environments>`나 `<mappers>`를 추가하지 않는다. 동일 SQL 파일이 중복 등록되면 statement ID 충돌이 발생할 수 있다. [SqlSessionFactoryBean 설정](https://mybatis.org/spring/factorybean.html)
 
-`src/main/java/io/github/microserverlab/microserver/framework/mybatis/MicroServerMyBatisConfig.java`를 만든다. 현재 메인 클래스 `MicroserverApplication`의 하위 패키지이므로 컴포넌트 스캔으로 설정을 읽는다.
+## 6. DB별 세션 Bean과 매퍼 스캔 등록
+
+`framework/mybatis/MicroServerMyBatisConfig.java`에 두 Factory와 두 Template을 등록한다. Java 파일의 경로는 2절의 `src/main/java/io/github/microserverlab/microserver/` 기준이다.
 
 ```java
 package io.github.microserverlab.microserver.framework.mybatis;
-
-import java.io.IOException;
 
 import javax.sql.DataSource;
 
@@ -130,29 +206,26 @@ import org.springframework.core.io.support.ResourcePatternResolver;
 @MapperScan(
         basePackages = "io.github.microserverlab.microserver.framework.mybatis.mapper",
         sqlSessionTemplateRef = "frameworkSqlSessionTemplate")
-@MapperScan(
-        basePackages = "io.github.microserverlab.microserver.runtime.mapper",
-        sqlSessionTemplateRef = "businessSqlSessionTemplate")
 public class MicroServerMyBatisConfig {
 
     @Bean
     SqlSessionFactory frameworkSqlSessionFactory(
             @Qualifier("frameworkDataSource") DataSource dataSource,
             ResourcePatternResolver resources,
-            @Value("${microserver.mybatis.framework.mapper-locations}") String mapperLocations,
-            @Value("${microserver.mybatis.framework.config-location:}") String configLocation)
+            @Value("${microserver.mybatis.config-location}") String configLocation,
+            @Value("${microserver.mybatis.framework.mapper-locations}") String mapperPattern)
             throws Exception {
-        return createFactory(dataSource, resources, mapperLocations, configLocation);
+        return createFactory(dataSource, resources, configLocation, mapperPattern);
     }
 
     @Bean
     SqlSessionFactory businessSqlSessionFactory(
             @Qualifier("businessDataSource") DataSource dataSource,
             ResourcePatternResolver resources,
-            @Value("${microserver.mybatis.business.mapper-locations}") String mapperLocations,
-            @Value("${microserver.mybatis.business.config-location:}") String configLocation)
+            @Value("${microserver.mybatis.config-location}") String configLocation,
+            @Value("${microserver.mybatis.business.mapper-locations}") String mapperPattern)
             throws Exception {
-        return createFactory(dataSource, resources, mapperLocations, configLocation);
+        return createFactory(dataSource, resources, configLocation, mapperPattern);
     }
 
     @Bean
@@ -168,98 +241,209 @@ public class MicroServerMyBatisConfig {
     }
 
     private SqlSessionFactory createFactory(
-            DataSource dataSource, ResourcePatternResolver resources,
-            String mapperLocations, String configLocation) throws Exception {
-        Resource[] mappers = resources.getResources(mapperLocations);
+            DataSource dataSource,
+            ResourcePatternResolver resources,
+            String configLocation,
+            String mapperPattern) throws Exception {
+        Resource config = resources.getResource(configLocation);
+        if (!config.exists()) {
+            throw new IllegalStateException("MyBatis 설정 XML을 찾을 수 없습니다. " + configLocation);
+        }
+
+        Resource[] mappers = resources.getResources(mapperPattern);
         if (mappers.length == 0) {
-            throw new IOException("Mapper XML을 찾을 수 없습니다: " + mapperLocations);
+            throw new IllegalStateException("매퍼 XML을 찾을 수 없습니다. " + mapperPattern);
         }
 
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
         factory.setDataSource(dataSource);
         factory.setVfs(SpringBootVFS.class);
+        factory.setConfigLocation(config);
         factory.setMapperLocations(mappers);
-
-        if (configLocation.isBlank()) {
-            var configuration = new org.apache.ibatis.session.Configuration();
-            configuration.setMapUnderscoreToCamelCase(true);
-            factory.setConfiguration(configuration);
-        } else {
-            factory.setConfigLocation(resources.getResource(configLocation));
-        }
-
         return factory.getObject();
     }
 }
 ```
 
-Spring의 ApplicationContext는 `ResourcePatternResolver`를 제공한다. Factory마다 XML을 적어도 하나씩 요구하므로 다음 절의 Mapper 네 파일까지 작성한 후 기동한다. `@MapperScan`이 패키지 내 인터페이스를 등록하므로 그 패키지에는 Mapper 인터페이스만 둔다. Template과 Factory는 이름으로 선택하고, 별도의 TransactionManager는 생성하지 않는다. [Mapper 스캔](https://mybatis.org/spring/mappers.html) · [SqlSessionTemplate](https://mybatis.org/spring/sqlsession.html)
+`runtime/mybatis/BusinessMapperConfig.java`에서 업무 매퍼의 스캔 범위와 Template을 지정한다.
 
-## 6. Mapper 인터페이스와 XML 작성
+```java
+package io.github.microserverlab.microserver.runtime.mybatis;
 
-검증 SQL은 Local H2에서 테이블을 만들지 않고 정수 파라미터를 조회한다. DBMS가 달라지면 검증 SQL도 해당 DBMS 문법에 맞춘다.
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Configuration;
 
-### Framework Mapper
+@Configuration(proxyBeanMethods = false)
+@MapperScan(
+        basePackages = "io.github.microserverlab.microserver.runtime.mapper",
+        sqlSessionTemplateRef = "businessSqlSessionTemplate")
+public class BusinessMapperConfig {
+}
+```
 
-`src/main/java/io/github/microserverlab/microserver/framework/mybatis/mapper/FrameworkProbeMapper.java`
+루트 패키지의 `MicroserverApplication`에 선언된 `@SpringBootApplication`이 두 설정 클래스를 찾는다. `setMapperLocations()`는 해당 Factory에 XML의 SQL을 등록하고, `@MapperScan`은 Java 인터페이스를 프록시 Bean으로 등록한다. 각 Factory의 DataSource는 서비스가 지정하는 트랜잭션 관리자의 DataSource와 일치해야 한다. 트랜잭션 관리자 Bean은 DataSource 구성 단계에서 등록한 이름으로 참조한다. [MyBatis-Spring 매퍼 스캔](https://mybatis.org/spring/mappers.html) · [트랜잭션과 DataSource](https://mybatis.org/spring/transactions.html)
+
+!!! warning "매퍼 하나에는 스캔 경로 하나"
+    예제는 두 `@MapperScan`으로 모든 매퍼를 등록한다. 루트 패키지 전체를 대상으로 하는 매퍼 스캔이나 별도 `MapperFactoryBean`을 추가하면 등록 범위가 겹칠 수 있다. 두 스캔은 각각 `sqlSessionTemplateRef`를 명시한다. Business DataSource의 `@Primary`는 매퍼의 라우팅을 결정하지 않는다.
+
+## 7. Framework와 Business 매퍼 작성
+
+### Framework 인터페이스와 XML
+
+`framework/mybatis/mapper/FrameworkLabelMapper.java`를 작성한다.
 
 ```java
 package io.github.microserverlab.microserver.framework.mybatis.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-public interface FrameworkProbeMapper {
-    int probe(@Param("value") int value);
+public interface FrameworkLabelMapper {
+
+    String findDisplayName(@Param("code") String code);
 }
 ```
 
-`src/main/resources/mybatis/mapper/framework/FrameworkProbeMapper.xml`
+`src/main/resources/mybatis/mapper/framework/FrameworkLabelMapper.xml`을 작성한다.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkProbeMapper">
-    <select id="probe" resultType="int">
-        SELECT CAST(#{value, jdbcType=INTEGER} AS INTEGER)
+<mapper namespace="io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkLabelMapper">
+    <select id="findDisplayName" resultType="string">
+        SELECT display_name
+        FROM mapper_label
+        WHERE code = #{code, jdbcType=VARCHAR}
     </select>
 </mapper>
 ```
 
-### Business Mapper
+### Business 인터페이스와 XML
 
-`src/main/java/io/github/microserverlab/microserver/runtime/mapper/BusinessProbeMapper.java`
+`runtime/mapper/BusinessLabelMapper.java`를 작성한다.
 
 ```java
 package io.github.microserverlab.microserver.runtime.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
-public interface BusinessProbeMapper {
-    int probe(@Param("value") int value);
+public interface BusinessLabelMapper {
+
+    String findDisplayName(@Param("code") String code);
 }
 ```
 
-`src/main/resources/mybatis/mapper/business/BusinessProbeMapper.xml`
+`src/main/resources/mybatis/mapper/business/BusinessLabelMapper.xml`을 작성한다.
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="io.github.microserverlab.microserver.runtime.mapper.BusinessProbeMapper">
-    <select id="probe" resultType="int">
-        SELECT CAST(#{value, jdbcType=INTEGER} AS INTEGER)
+<mapper namespace="io.github.microserverlab.microserver.runtime.mapper.BusinessLabelMapper">
+    <select id="findDisplayName" resultType="string">
+        SELECT display_name
+        FROM mapper_label
+        WHERE code = #{code, jdbcType=VARCHAR}
     </select>
 </mapper>
 ```
 
-Mapper 메서드를 호출하면 MyBatis는 `namespace + "." + id`로 SQL을 찾는다. `namespace`는 인터페이스의 전체 이름, `id`는 메서드 이름, `#{value}`는 `@Param("value")`에 대응한다. `#{...}`는 JDBC 바인딩을 사용하고, `${...}`는 SQL 문자열 치환이므로 사용자 입력값은 `#{...}`로 전달한다. [MyBatis Mapper XML](https://mybatis.org/mybatis-3/sqlmap-xml.html)
+`namespace`는 인터페이스의 전체 이름이고, `id`는 메서드 이름이다. `@Param("code")`는 `#{code, jdbcType=VARCHAR}`에 연결된다. 조회 결과가 한 행이면 `display_name`을 문자열로 반환하고, 일치하는 행이 없으면 `null`을 반환한다. 예제 테이블의 기본 키는 조회 결과를 최대 한 행으로 제한한다.
 
-## 7. 테스트와 기동 검증
+!!! tip "SQL과 Java 코드를 함께 관리"
+    인터페이스와 XML의 파일명을 맞추고 같은 변경에서 함께 검토한다. 업무 매퍼를 추가할 때는 Runtime의 매퍼 패키지와 `mybatis/mapper/business/` 아래를 사용한다. XML에서 부등호 `<`는 `&lt;`로 쓰거나 필요한 SQL 조각을 CDATA로 감싼다.
 
-`src/test/java/io/github/microserverlab/microserver/MyBatisMapperIntegrationTest.java`를 작성한다. SQL 결과와 Factory의 statement 등록 범위를 확인한다. JDBC 연결 URL을 비교해 Local H2의 두 DB가 서로 구분되는지도 확인한다.
+!!! warning "입력값은 JDBC 파라미터로 바인딩"
+    사용자 입력값에는 `#{...}`를 사용한다. `${...}`는 입력을 SQL 문자열에 그대로 삽입하므로 SQL 주입으로 이어질 수 있다. 컬럼명이나 정렬 방향처럼 바인딩할 수 없는 식별자는 허용 목록에서 고른다. [MyBatis 파라미터 매핑](https://mybatis.org/mybatis-3/sqlmap-xml.html#Parameters)
+
+## 8. 서비스에서 매퍼 호출
+
+`framework/mybatis/service/FrameworkLabelService.java`를 작성한다.
+
+```java
+package io.github.microserverlab.microserver.framework.mybatis.service;
+
+import io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkLabelMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class FrameworkLabelService {
+
+    private final FrameworkLabelMapper mapper;
+
+    public FrameworkLabelService(FrameworkLabelMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    @Transactional(transactionManager = "frameworkTransactionManager", readOnly = true)
+    public String findDisplayName(String code) {
+        return mapper.findDisplayName(code);
+    }
+}
+```
+
+`runtime/service/BusinessLabelService.java`를 작성한다.
+
+```java
+package io.github.microserverlab.microserver.runtime.service;
+
+import io.github.microserverlab.microserver.runtime.mapper.BusinessLabelMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class BusinessLabelService {
+
+    private final BusinessLabelMapper mapper;
+
+    public BusinessLabelService(BusinessLabelMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    @Transactional(transactionManager = "businessTransactionManager", readOnly = true)
+    public String findDisplayName(String code) {
+        return mapper.findDisplayName(code);
+    }
+}
+```
+
+호출자는 Spring이 주입한 서비스 Bean을 통해 public 메서드를 호출한다. 같은 클래스 내부에서 `this`로 호출하면 기본 프록시 방식에서는 해당 메서드의 `@Transactional`이 적용되지 않는다. 조회 메서드의 `readOnly = true`는 트랜잭션 최적화를 위한 힌트다. 쓰기 메서드는 같은 DB의 트랜잭션 관리자를 지정하고 기본 읽기·쓰기 트랜잭션으로 실행한다. [Spring 선언적 트랜잭션](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html)
+
+!!! warning "두 DB의 트랜잭션 범위"
+    각 트랜잭션 관리자는 연결된 DB 하나를 관리한다. 하나의 업무 흐름에서 두 DB를 모두 변경하더라도 두 커밋이나 롤백을 하나의 원자적 작업으로 묶으려면 별도 설계가 필요하다.
+
+## 9. H2에서 매퍼 SQL 실행 검증
+
+두 DB에서 동일한 키 `sample`을 조회하되, DB마다 다른 값을 저장한다. 테스트용 스크립트는 `src/test/resources`에 두고 각 DataSource에 개별 실행한다.
+
+`src/test/resources/sql/framework-mapper-fixture.sql`
+
+```sql
+CREATE TABLE IF NOT EXISTS mapper_label (
+    code VARCHAR(32) PRIMARY KEY,
+    display_name VARCHAR(80) NOT NULL
+);
+
+MERGE INTO mapper_label (code, display_name) KEY (code)
+VALUES ('sample', 'Framework DB');
+```
+
+`src/test/resources/sql/business-mapper-fixture.sql`
+
+```sql
+CREATE TABLE IF NOT EXISTS mapper_label (
+    code VARCHAR(32) PRIMARY KEY,
+    display_name VARCHAR(80) NOT NULL
+);
+
+MERGE INTO mapper_label (code, display_name) KEY (code)
+VALUES ('sample', 'Business DB');
+```
+
+`src/test/java/io/github/microserverlab/microserver/MyBatisMapperIntegrationTest.java`
 
 ```java
 package io.github.microserverlab.microserver;
@@ -267,24 +451,37 @@ package io.github.microserverlab.microserver;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 import javax.sql.DataSource;
 
-import io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkProbeMapper;
-import io.github.microserverlab.microserver.runtime.mapper.BusinessProbeMapper;
+import io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkLabelMapper;
+import io.github.microserverlab.microserver.framework.mybatis.service.FrameworkLabelService;
+import io.github.microserverlab.microserver.runtime.mapper.BusinessLabelMapper;
+import io.github.microserverlab.microserver.runtime.service.BusinessLabelService;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
 class MyBatisMapperIntegrationTest {
 
     @Autowired
-    FrameworkProbeMapper frameworkMapper;
+    FrameworkLabelService frameworkService;
 
     @Autowired
-    BusinessProbeMapper businessMapper;
+    BusinessLabelService businessService;
+
+    @Autowired
+    @Qualifier("frameworkDataSource")
+    DataSource frameworkDataSource;
+
+    @Autowired
+    @Qualifier("businessDataSource")
+    DataSource businessDataSource;
 
     @Autowired
     @Qualifier("frameworkSqlSessionFactory")
@@ -295,60 +492,71 @@ class MyBatisMapperIntegrationTest {
     SqlSessionFactory businessFactory;
 
     @Test
-    void runsBothXmlStatementsWithSeparateDataSources() throws Exception {
-        String frameworkStatement = FrameworkProbeMapper.class.getName() + ".probe";
-        String businessStatement = BusinessProbeMapper.class.getName() + ".probe";
+    void queriesEachDatabaseThroughItsServiceAndMapper() throws SQLException {
+        assertDatabaseUrl(frameworkDataSource, "jdbc:h2:mem:frameworkdb");
+        assertDatabaseUrl(businessDataSource, "jdbc:h2:mem:businessdb");
+        loadFixture(frameworkDataSource, "sql/framework-mapper-fixture.sql");
+        loadFixture(businessDataSource, "sql/business-mapper-fixture.sql");
+
+        assertThat(frameworkService.findDisplayName("sample")).isEqualTo("Framework DB");
+        assertThat(businessService.findDisplayName("sample")).isEqualTo("Business DB");
+        assertThat(businessService.findDisplayName("missing")).isNull();
+    }
+
+    @Test
+    void registersOnlyTheStatementsOwnedByEachFactory() {
+        String frameworkStatement = FrameworkLabelMapper.class.getName() + ".findDisplayName";
+        String businessStatement = BusinessLabelMapper.class.getName() + ".findDisplayName";
 
         assertThat(frameworkFactory.getConfiguration().hasStatement(frameworkStatement)).isTrue();
         assertThat(frameworkFactory.getConfiguration().hasStatement(businessStatement)).isFalse();
         assertThat(businessFactory.getConfiguration().hasStatement(businessStatement)).isTrue();
         assertThat(businessFactory.getConfiguration().hasStatement(frameworkStatement)).isFalse();
+    }
 
-        assertThat(frameworkMapper.probe(11)).isEqualTo(11);
-        assertThat(businessMapper.probe(22)).isEqualTo(22);
-
-        DataSource framework = frameworkFactory.getConfiguration().getEnvironment().getDataSource();
-        DataSource business = businessFactory.getConfiguration().getEnvironment().getDataSource();
-        try (Connection frameworkConnection = framework.getConnection();
-                Connection businessConnection = business.getConnection()) {
-            assertThat(frameworkConnection.getMetaData().getURL())
-                    .startsWith("jdbc:h2:mem:frameworkdb");
-            assertThat(businessConnection.getMetaData().getURL())
-                    .startsWith("jdbc:h2:mem:businessdb");
+    private void assertDatabaseUrl(DataSource dataSource, String expected) throws SQLException {
+        try (Connection connection = dataSource.getConnection()) {
+            assertThat(connection.getMetaData().getURL()).isEqualTo(expected);
         }
+    }
+
+    private void loadFixture(DataSource dataSource, String path) {
+        new ResourceDatabasePopulator(new ClassPathResource(path)).execute(dataSource);
     }
 }
 ```
 
-`gradlew`가 있는 MicroServer 프로젝트 루트에서 실행한다. 저장소 위치가 다르면 외부 Resource 경로를 맞춘다.
+### 테스트 실행
+
+Gradle Wrapper가 있는 프로젝트 루트에서 실행한다. 예시의 `/opt/microserver-resource`를 4절의 Local H2 YAML 두 파일을 저장한 리소스 루트의 실제 절대 경로로 바꾼다.
 
 ```bash
 export SPRING_PROFILES_ACTIVE=local
-export SPRING_APPLICATION_JSON='{"microserver":{"resource-dir":"/Users/jangkwankim/local-microserver/workspace/microserver_resource"}}'
+export SPRING_APPLICATION_JSON='{"microserver":{"resource-dir":"/opt/microserver-resource"}}'
 
 bash ./gradlew test \
   --tests 'io.github.microserverlab.microserver.MyBatisMapperIntegrationTest' \
   --rerun-tasks
-bash ./gradlew bootRun
 ```
 
-- 테스트 보고서 `build/reports/tests/test/index.html`에서 두 Mapper를 호출한 테스트의 성공을 확인한다. 두 Factory 모두 SQL을 실행하며, 반대쪽 XML이 등록되지 않아 잘못된 Template을 연결하면 해당 Mapper 호출이 실패한다.
-- `bootRun` 로그에서 활성 Profile `local`과 `Started MicroserverApplication`을 확인한다. 이 단계에서 외부 YAML 로딩, 두 Factory 초기화, XML 파싱, Mapper Bean 등록이 이뤄진다. SQL 실행은 위 통합 테스트에서 검증한다.
-- 패키징 검증이 필요하면 `bash ./gradlew bootJar` 후 실행 JAR의 `BOOT-INF/classes/mybatis/mapper/`에 두 XML이 포함되는지 확인하고, 같은 환경변수로 `java -jar`를 실행한다.
+`BUILD SUCCESSFUL`과 `build/reports/tests/test/index.html`의 테스트 두 건을 확인한다. 첫 테스트는 실제 서비스 → 매퍼 → JDBC 경로를 실행하고 두 DB의 값이 구분되는지 검증한다. 두 번째 테스트는 상대 DB의 SQL이 각 Factory에 등록되지 않았는지 확인한다.
 
-### 업무 Service에서 사용
+### 애플리케이션 기동과 패키징
 
-업무 Service 생성자에서 `BusinessProbeMapper`와 같은 업무 Mapper를 주입한다. 업무 단위의 읽기·쓰기는 `@Transactional(transactionManager = "businessTransactionManager")`로, Framework DB 작업은 `frameworkTransactionManager`로 지정한다. 같은 작업에서 Mapper와 TransactionManager가 같은 DataSource를 바라봐야 Spring 트랜잭션에 참여한다. 두 로컬 TransactionManager는 각 DB의 트랜잭션을 별도로 관리한다. 쓰기 기능을 추가할 때는 테스트 테이블에서 같은 트랜잭션 내의 여러 쓰기가 예외 발생 후 함께 롤백되는지 검증한다. [MyBatis-Spring 트랜잭션](https://mybatis.org/spring/transactions.html)
+같은 환경변수로 `bash ./gradlew bootRun`을 실행하면 외부 설정, 세션 Bean, 매퍼 XML을 읽어 기동한다. 조회용 테이블과 데이터는 통합 테스트가 테스트 JVM에서 준비한다. `bootRun` 프로세스에서 매퍼를 직접 호출하려면 그 프로세스가 접속하는 DB에도 스키마와 데이터가 있어야 한다. H2 메모리 DB는 프로세스 간에 공유되지 않는다.
 
-## 8. 오류 확인
+`bash ./gradlew bootJar`로 패키징하면 설정 XML과 두 매퍼 XML이 실행 JAR의 `BOOT-INF/classes/mybatis/` 아래에 들어간다. 외부 YAML은 실행 시 별도로 읽는다.
 
-| 증상 | 확인할 내용 |
+## 10. 오류 확인
+
+| 증상 | 확인할 항목 |
 | --- | --- |
-| 외부 YAML을 찾지 못함 | 실행에 전달된 `microserver.resource-dir`, 단일 활성 Profile, 해당 디렉터리의 필수 YAML 두 파일 |
-| `Mapper XML을 찾을 수 없습니다` | `src/main/resources` 아래 실제 경로, YAML의 검색 패턴, 빌드 결과에 포함된 리소스 |
-| `Failed to parse mapping resource` | 오류에 나온 XML의 루트 태그, DTD, SQL 안의 XML 특수 문자, 별칭 또는 결과 타입 |
-| Mapper Bean 주입 실패 | `@MapperScan` 패키지, 애플리케이션의 설정 클래스 스캔 범위, Template Bean 이름 |
-| `Invalid bound statement (not found)` | XML `namespace`, `id`, 해당 Mapper가 사용하는 Template 및 Factory의 XML 검색 패턴 |
-| `Parameter 'value' not found` | `@Param` 이름과 `#{...}` 이름 |
-| 중복 statement 또는 중복 Mapper Bean | Factory별 XML 패턴 중복, 설정 XML의 `<mappers>`, Mapper 스캔 범위와 Bean 이름 충돌 |
-| SQL은 실행되지만 다른 DB가 사용됨 | Factory의 DataSource `@Qualifier`, Mapper의 `sqlSessionTemplateRef`, Service의 TransactionManager, 외부 YAML의 JDBC URL |
+| 외부 설정 import 실패 | 단일 활성 Profile, `microserver.resource-dir`이 가리키는 루트, 해당 Profile의 두 YAML 파일 |
+| 설정 XML 또는 매퍼 XML을 찾지 못함 | `src/main/resources` 아래 경로, `classpath:`와 `classpath*:`의 용도, JAR에 포함된 파일 |
+| 매퍼 XML 파싱 오류 | 예외에 표시된 파일, DTD, XML 특수 문자, 결과 타입 또는 `resultMap` |
+| 매퍼 Bean 주입 실패 | `@MapperScan` 패키지, 설정 클래스의 컴포넌트 스캔 범위, Template Bean 이름 |
+| `Invalid bound statement (not found)` | XML의 `namespace`와 `id`, 매퍼의 Template과 해당 Factory의 XML 패턴 |
+| 중복 statement 또는 Bean 이름 충돌 | 겹치는 XML 패턴, 설정 XML의 `<mappers>`, 중복 매퍼 스캔 또는 같은 이름의 매퍼 |
+| 다른 DB의 행이 반환됨 | Factory의 DataSource `@Qualifier`, 매퍼의 `sqlSessionTemplateRef`, 외부 YAML의 JDBC URL |
+| SQL이 트랜잭션에 참여하지 않음 | 서비스가 Spring Bean으로 호출되는지, 지정한 관리자가 Factory와 같은 DataSource를 사용하는지 |
+| `mapper_label` 테이블이 없음 | 테스트용 SQL이 매퍼 호출과 같은 JVM에서 같은 DataSource로 실행되었는지 |
