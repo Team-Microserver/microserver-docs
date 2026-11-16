@@ -1089,6 +1089,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="8. 서비스에서 매퍼 호출">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        서비스 메서드에 트랜잭션 적용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1104,7 +1121,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         테스트 실행
@@ -1115,7 +1132,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         애플리케이션 기동과 패키징
@@ -1611,6 +1628,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="8. 서비스에서 매퍼 호출">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        서비스 메서드에 트랜잭션 적용하기
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1626,7 +1660,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
         테스트 실행
@@ -1637,7 +1671,7 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       
         애플리케이션 기동과 패키징
@@ -2219,122 +2253,174 @@
 </span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="w">    </span><span class="p">}</span>
 </span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="p">}</span>
 </span></code></pre></div>
-<p>호출자는 Spring이 주입한 서비스 Bean을 통해 public 메서드를 호출한다. 같은 클래스 내부에서 <code>this</code>로 호출하면 기본 프록시 방식에서는 해당 메서드의 <code>@Transactional</code>이 적용되지 않는다. 조회 메서드의 <code>readOnly = true</code>는 트랜잭션 최적화를 위한 힌트다. 쓰기 메서드는 같은 DB의 트랜잭션 관리자를 지정하고 기본 읽기·쓰기 트랜잭션으로 실행한다. <a href="https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html">Spring 선언적 트랜잭션</a></p>
+<h3 id="_3">서비스 메서드에 트랜잭션 적용하기<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p><code>@Transactional</code>은 서비스 메서드에서 실행하는 SQL을 트랜잭션으로 묶는다. <code>transactionManager</code>에는 매퍼가 사용하는 DB의 관리자를 지정한다.</p>
+<table>
+<thead>
+<tr>
+<th>호출 방식</th>
+<th>트랜잭션 동작</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>서비스 클래스 밖에서 Spring이 주입한 서비스의 <code>findDisplayName(code)</code>를 호출</td>
+<td>Spring 프록시를 거친다. 메서드에 선언한 <code>@Transactional</code> 설정이 적용된다.</td>
+</tr>
+<tr>
+<td>같은 클래스에서 <code>this.findDisplayName(code)</code>를 호출</td>
+<td>기본 프록시 방식에서는 호출이 프록시를 우회한다. 호출된 메서드의 <code>@Transactional</code> 설정은 적용되지 않는다. 이미 시작된 트랜잭션이 있다면 그대로 이어진다.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_4">우리가 만든 호출 방식<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<p>9절의 통합 테스트는 Spring이 주입한 <code>FrameworkLabelService</code>를 테스트 클래스에서 호출한다. 이 호출은 Spring 프록시를 거쳐 <code>findDisplayName()</code>에 선언한 트랜잭션 설정을 적용한다.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">// MyBatisMapperIntegrationTest의 필드</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nd">@Autowired</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">FrameworkLabelService</span><span class="w"> </span><span class="n">frameworkService</span><span class="p">;</span>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1">// 테스트 메서드 안에서 호출</span>
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">)).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="s">&quot;Framework DB&quot;</span><span class="p">);</span>
+</span></code></pre></div>
+<h4 id="_5">같은 클래스에서 호출하는 예시<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p><code>this</code>는 지금 메서드를 실행 중인 객체를 가리킨다. 아래는 <code>FrameworkLabelService</code> 안에 다른 메서드가 있다고 가정한 예시다.</p>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// FrameworkLabelService 안에 메서드를 추가한다고 가정한 예시</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">findLabel</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">code</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="n">code</span><span class="p">);</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">같은 SQL인데 트랜잭션 설정이 달라지는 이유</p>
+<p>두 호출 모두 <code>findDisplayName()</code> 본문의 <code>return mapper.findDisplayName(code);</code>까지 실행한다. <strong>Spring은 SQL 실행 전에 프록시로 들어온 서비스 메서드의 <code>@Transactional</code> 설정을 확인한다.</strong></p>
+<ul>
+<li><strong><code>frameworkService.findDisplayName(code)</code></strong> 호출은 Spring 프록시를 거친다. 새 트랜잭션이 필요하면 <code>frameworkTransactionManager</code>가 <code>readOnly = true</code> 설정으로 트랜잭션을 시작한다. 그 안에서 매퍼가 SQL을 실행한다.</li>
+<li><strong><code>frameworkService.findLabel(code)</code></strong> 호출에서 프록시가 받는 메서드는 <code>findLabel()</code>이다. 예제의 <code>findLabel()</code>에는 트랜잭션 선언이 없다. 내부의 <code>this.findDisplayName(code)</code>는 같은 객체의 메서드를 직접 호출하므로 <code>findDisplayName()</code>의 트랜잭션 설정은 새로 적용되지 않는다.</li>
+</ul>
+<p>매퍼는 두 경우 모두 SQL을 실행한다. 해당 DB에 이미 참여할 수 있는 Spring 트랜잭션이 있다면 MyBatis는 그 트랜잭션을 사용한다. <a href="https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html">Spring 선언적 트랜잭션</a> · <a href="https://mybatis.org/spring/sqlsession.html">MyBatis-Spring 세션 관리</a></p>
+</div>
+<h4 id="_6">조회와 쓰기의 트랜잭션 설정<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>조회 메서드</strong>에는 <code>readOnly = true</code>를 지정한다. 조회 작업이라는 힌트를 주며, 트랜잭션 관리자나 DB가 지원하면 이를 최적화에 활용한다. 쓰기 SQL 차단 여부는 실행 환경에 따라 달라진다. <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html#readOnly()">Spring <code>readOnly</code> 설명</a></li>
+<li><strong>쓰기 메서드</strong>에는 같은 DB의 트랜잭션 관리자를 지정한다. <code>readOnly</code>를 생략하면 기본값 <code>false</code>로 읽기·쓰기 트랜잭션을 사용한다.</li>
+</ul>
 <div class="admonition warning">
 <p class="admonition-title">두 DB의 트랜잭션 범위</p>
-<p>각 트랜잭션 관리자는 연결된 DB 하나를 관리한다. 하나의 업무 흐름에서 두 DB를 모두 변경하더라도 두 커밋이나 롤백을 하나의 원자적 작업으로 묶으려면 별도 설계가 필요하다.</p>
+<ul>
+<li>각 트랜잭션 관리자는 담당 DB의 커밋과 롤백을 처리한다.</li>
+<li>두 DB를 모두 변경하는 업무에서 두 변경을 함께 커밋하거나 함께 롤백하려면 별도 설계가 필요하다.</li>
+</ul>
 </div>
 <h2 id="9-h2-sql">9. H2에서 매퍼 SQL 실행 검증<a class="headerlink" href="#9-h2-sql" title="Permanent link">&para;</a></h2>
 <p>두 DB에서 동일한 키 <code>sample</code>을 조회하되, DB마다 다른 값을 저장한다. 테스트용 스크립트는 <code>src/test/resources</code>에 두고 각 DataSource에 개별 실행한다.</p>
 <p><code>src/test/resources/sql/framework-mapper-fixture.sql</code></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="n">code</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="n">display_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">);</span>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">display_name</span><span class="p">)</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
-</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Framework DB&#39;</span><span class="p">);</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">code</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="n">display_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">);</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">display_name</span><span class="p">)</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Framework DB&#39;</span><span class="p">);</span>
 </span></code></pre></div>
 <p><code>src/test/resources/sql/business-mapper-fixture.sql</code></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="n">code</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="n">display_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">);</span>
-</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>
-</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">display_name</span><span class="p">)</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
-</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Business DB&#39;</span><span class="p">);</span>
+<div class="language-sql highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="n">code</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="n">display_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">);</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">display_name</span><span class="p">)</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Business DB&#39;</span><span class="p">);</span>
 </span></code></pre></div>
 <p><code>src/test/java/io/github/microserverlab/microserver/MyBatisMapperIntegrationTest.java</code></p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver</span><span class="p">;</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">org.assertj.core.api.Assertions.assertThat</span><span class="p">;</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span><span class="p">;</span>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span><span class="p">;</span>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.sql.DataSource</span><span class="p">;</span>
-</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>
-</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkLabelMapper</span><span class="p">;</span>
-</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.service.FrameworkLabelService</span><span class="p">;</span>
-</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.mapper.BusinessLabelMapper</span><span class="p">;</span>
-</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.service.BusinessLabelService</span><span class="p">;</span>
-</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.ibatis.session.SqlSessionFactory</span><span class="p">;</span>
-</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
-</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Qualifier</span><span class="p">;</span>
-</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="p">;</span>
-</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.io.ClassPathResource</span><span class="p">;</span>
-</span><span id="__span-16-19"><a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.jdbc.datasource.init.ResourceDatabasePopulator</span><span class="p">;</span>
-</span><span id="__span-16-20"><a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>
-</span><span id="__span-16-21"><a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="nd">@SpringBootTest</span><span class="p">(</span><span class="n">webEnvironment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpringBootTest</span><span class="p">.</span><span class="na">WebEnvironment</span><span class="p">.</span><span class="na">NONE</span><span class="p">)</span>
-</span><span id="__span-16-22"><a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="kd">class</span> <span class="nc">MyBatisMapperIntegrationTest</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-23"><a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>
-</span><span id="__span-16-24"><a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-16-25"><a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="w">    </span><span class="n">FrameworkLabelService</span><span class="w"> </span><span class="n">frameworkService</span><span class="p">;</span>
-</span><span id="__span-16-26"><a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a>
-</span><span id="__span-16-27"><a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-16-28"><a id="__codelineno-16-28" name="__codelineno-16-28" href="#__codelineno-16-28"></a><span class="w">    </span><span class="n">BusinessLabelService</span><span class="w"> </span><span class="n">businessService</span><span class="p">;</span>
-</span><span id="__span-16-29"><a id="__codelineno-16-29" name="__codelineno-16-29" href="#__codelineno-16-29"></a>
-</span><span id="__span-16-30"><a id="__codelineno-16-30" name="__codelineno-16-30" href="#__codelineno-16-30"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-16-31"><a id="__codelineno-16-31" name="__codelineno-16-31" href="#__codelineno-16-31"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span>
-</span><span id="__span-16-32"><a id="__codelineno-16-32" name="__codelineno-16-32" href="#__codelineno-16-32"></a><span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">frameworkDataSource</span><span class="p">;</span>
-</span><span id="__span-16-33"><a id="__codelineno-16-33" name="__codelineno-16-33" href="#__codelineno-16-33"></a>
-</span><span id="__span-16-34"><a id="__codelineno-16-34" name="__codelineno-16-34" href="#__codelineno-16-34"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-16-35"><a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessDataSource&quot;</span><span class="p">)</span>
-</span><span id="__span-16-36"><a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a><span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">businessDataSource</span><span class="p">;</span>
-</span><span id="__span-16-37"><a id="__codelineno-16-37" name="__codelineno-16-37" href="#__codelineno-16-37"></a>
-</span><span id="__span-16-38"><a id="__codelineno-16-38" name="__codelineno-16-38" href="#__codelineno-16-38"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-16-39"><a id="__codelineno-16-39" name="__codelineno-16-39" href="#__codelineno-16-39"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkSqlSessionFactory&quot;</span><span class="p">)</span>
-</span><span id="__span-16-40"><a id="__codelineno-16-40" name="__codelineno-16-40" href="#__codelineno-16-40"></a><span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="n">frameworkFactory</span><span class="p">;</span>
-</span><span id="__span-16-41"><a id="__codelineno-16-41" name="__codelineno-16-41" href="#__codelineno-16-41"></a>
-</span><span id="__span-16-42"><a id="__codelineno-16-42" name="__codelineno-16-42" href="#__codelineno-16-42"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-16-43"><a id="__codelineno-16-43" name="__codelineno-16-43" href="#__codelineno-16-43"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessSqlSessionFactory&quot;</span><span class="p">)</span>
-</span><span id="__span-16-44"><a id="__codelineno-16-44" name="__codelineno-16-44" href="#__codelineno-16-44"></a><span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="n">businessFactory</span><span class="p">;</span>
-</span><span id="__span-16-45"><a id="__codelineno-16-45" name="__codelineno-16-45" href="#__codelineno-16-45"></a>
-</span><span id="__span-16-46"><a id="__codelineno-16-46" name="__codelineno-16-46" href="#__codelineno-16-46"></a><span class="w">    </span><span class="nd">@Test</span>
-</span><span id="__span-16-47"><a id="__codelineno-16-47" name="__codelineno-16-47" href="#__codelineno-16-47"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">queriesEachDatabaseThroughItsServiceAndMapper</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SQLException</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-48"><a id="__codelineno-16-48" name="__codelineno-16-48" href="#__codelineno-16-48"></a><span class="w">        </span><span class="n">assertDatabaseUrl</span><span class="p">(</span><span class="n">frameworkDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:h2:mem:frameworkdb&quot;</span><span class="p">);</span>
-</span><span id="__span-16-49"><a id="__codelineno-16-49" name="__codelineno-16-49" href="#__codelineno-16-49"></a><span class="w">        </span><span class="n">assertDatabaseUrl</span><span class="p">(</span><span class="n">businessDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:h2:mem:businessdb&quot;</span><span class="p">);</span>
-</span><span id="__span-16-50"><a id="__codelineno-16-50" name="__codelineno-16-50" href="#__codelineno-16-50"></a><span class="w">        </span><span class="n">loadFixture</span><span class="p">(</span><span class="n">frameworkDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sql/framework-mapper-fixture.sql&quot;</span><span class="p">);</span>
-</span><span id="__span-16-51"><a id="__codelineno-16-51" name="__codelineno-16-51" href="#__codelineno-16-51"></a><span class="w">        </span><span class="n">loadFixture</span><span class="p">(</span><span class="n">businessDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sql/business-mapper-fixture.sql&quot;</span><span class="p">);</span>
-</span><span id="__span-16-52"><a id="__codelineno-16-52" name="__codelineno-16-52" href="#__codelineno-16-52"></a>
-</span><span id="__span-16-53"><a id="__codelineno-16-53" name="__codelineno-16-53" href="#__codelineno-16-53"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">)).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="s">&quot;Framework DB&quot;</span><span class="p">);</span>
-</span><span id="__span-16-54"><a id="__codelineno-16-54" name="__codelineno-16-54" href="#__codelineno-16-54"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">)).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="s">&quot;Business DB&quot;</span><span class="p">);</span>
-</span><span id="__span-16-55"><a id="__codelineno-16-55" name="__codelineno-16-55" href="#__codelineno-16-55"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;missing&quot;</span><span class="p">)).</span><span class="na">isNull</span><span class="p">();</span>
-</span><span id="__span-16-56"><a id="__codelineno-16-56" name="__codelineno-16-56" href="#__codelineno-16-56"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-16-57"><a id="__codelineno-16-57" name="__codelineno-16-57" href="#__codelineno-16-57"></a>
-</span><span id="__span-16-58"><a id="__codelineno-16-58" name="__codelineno-16-58" href="#__codelineno-16-58"></a><span class="w">    </span><span class="nd">@Test</span>
-</span><span id="__span-16-59"><a id="__codelineno-16-59" name="__codelineno-16-59" href="#__codelineno-16-59"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">registersOnlyTheStatementsOwnedByEachFactory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-60"><a id="__codelineno-16-60" name="__codelineno-16-60" href="#__codelineno-16-60"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">frameworkStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FrameworkLabelMapper</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.findDisplayName&quot;</span><span class="p">;</span>
-</span><span id="__span-16-61"><a id="__codelineno-16-61" name="__codelineno-16-61" href="#__codelineno-16-61"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">businessStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BusinessLabelMapper</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.findDisplayName&quot;</span><span class="p">;</span>
-</span><span id="__span-16-62"><a id="__codelineno-16-62" name="__codelineno-16-62" href="#__codelineno-16-62"></a>
-</span><span id="__span-16-63"><a id="__codelineno-16-63" name="__codelineno-16-63" href="#__codelineno-16-63"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">frameworkStatement</span><span class="p">)).</span><span class="na">isTrue</span><span class="p">();</span>
-</span><span id="__span-16-64"><a id="__codelineno-16-64" name="__codelineno-16-64" href="#__codelineno-16-64"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">businessStatement</span><span class="p">)).</span><span class="na">isFalse</span><span class="p">();</span>
-</span><span id="__span-16-65"><a id="__codelineno-16-65" name="__codelineno-16-65" href="#__codelineno-16-65"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">businessStatement</span><span class="p">)).</span><span class="na">isTrue</span><span class="p">();</span>
-</span><span id="__span-16-66"><a id="__codelineno-16-66" name="__codelineno-16-66" href="#__codelineno-16-66"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">frameworkStatement</span><span class="p">)).</span><span class="na">isFalse</span><span class="p">();</span>
-</span><span id="__span-16-67"><a id="__codelineno-16-67" name="__codelineno-16-67" href="#__codelineno-16-67"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-16-68"><a id="__codelineno-16-68" name="__codelineno-16-68" href="#__codelineno-16-68"></a>
-</span><span id="__span-16-69"><a id="__codelineno-16-69" name="__codelineno-16-69" href="#__codelineno-16-69"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">assertDatabaseUrl</span><span class="p">(</span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">expected</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SQLException</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-70"><a id="__codelineno-16-70" name="__codelineno-16-70" href="#__codelineno-16-70"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataSource</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-71"><a id="__codelineno-16-71" name="__codelineno-16-71" href="#__codelineno-16-71"></a><span class="w">            </span><span class="n">assertThat</span><span class="p">(</span><span class="n">connection</span><span class="p">.</span><span class="na">getMetaData</span><span class="p">().</span><span class="na">getURL</span><span class="p">()).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="n">expected</span><span class="p">);</span>
-</span><span id="__span-16-72"><a id="__codelineno-16-72" name="__codelineno-16-72" href="#__codelineno-16-72"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-16-73"><a id="__codelineno-16-73" name="__codelineno-16-73" href="#__codelineno-16-73"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-16-74"><a id="__codelineno-16-74" name="__codelineno-16-74" href="#__codelineno-16-74"></a>
-</span><span id="__span-16-75"><a id="__codelineno-16-75" name="__codelineno-16-75" href="#__codelineno-16-75"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">loadFixture</span><span class="p">(</span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-16-76"><a id="__codelineno-16-76" name="__codelineno-16-76" href="#__codelineno-16-76"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceDatabasePopulator</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ClassPathResource</span><span class="p">(</span><span class="n">path</span><span class="p">)).</span><span class="na">execute</span><span class="p">(</span><span class="n">dataSource</span><span class="p">);</span>
-</span><span id="__span-16-77"><a id="__codelineno-16-77" name="__codelineno-16-77" href="#__codelineno-16-77"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-16-78"><a id="__codelineno-16-78" name="__codelineno-16-78" href="#__codelineno-16-78"></a><span class="p">}</span>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver</span><span class="p">;</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">org.assertj.core.api.Assertions.assertThat</span><span class="p">;</span>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span><span class="p">;</span>
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span><span class="p">;</span>
+</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.sql.DataSource</span><span class="p">;</span>
+</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
+</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkLabelMapper</span><span class="p">;</span>
+</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.service.FrameworkLabelService</span><span class="p">;</span>
+</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.mapper.BusinessLabelMapper</span><span class="p">;</span>
+</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.service.BusinessLabelService</span><span class="p">;</span>
+</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.ibatis.session.SqlSessionFactory</span><span class="p">;</span>
+</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
+</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
+</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Qualifier</span><span class="p">;</span>
+</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="p">;</span>
+</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.io.ClassPathResource</span><span class="p">;</span>
+</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.jdbc.datasource.init.ResourceDatabasePopulator</span><span class="p">;</span>
+</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>
+</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="nd">@SpringBootTest</span><span class="p">(</span><span class="n">webEnvironment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpringBootTest</span><span class="p">.</span><span class="na">WebEnvironment</span><span class="p">.</span><span class="na">NONE</span><span class="p">)</span>
+</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="kd">class</span> <span class="nc">MyBatisMapperIntegrationTest</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>
+</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">    </span><span class="nd">@Autowired</span>
+</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">    </span><span class="n">FrameworkLabelService</span><span class="w"> </span><span class="n">frameworkService</span><span class="p">;</span>
+</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>
+</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">    </span><span class="nd">@Autowired</span>
+</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="w">    </span><span class="n">BusinessLabelService</span><span class="w"> </span><span class="n">businessService</span><span class="p">;</span>
+</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a>
+</span><span id="__span-18-30"><a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="w">    </span><span class="nd">@Autowired</span>
+</span><span id="__span-18-31"><a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span>
+</span><span id="__span-18-32"><a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a><span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">frameworkDataSource</span><span class="p">;</span>
+</span><span id="__span-18-33"><a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a>
+</span><span id="__span-18-34"><a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="w">    </span><span class="nd">@Autowired</span>
+</span><span id="__span-18-35"><a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessDataSource&quot;</span><span class="p">)</span>
+</span><span id="__span-18-36"><a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">businessDataSource</span><span class="p">;</span>
+</span><span id="__span-18-37"><a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a>
+</span><span id="__span-18-38"><a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a><span class="w">    </span><span class="nd">@Autowired</span>
+</span><span id="__span-18-39"><a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkSqlSessionFactory&quot;</span><span class="p">)</span>
+</span><span id="__span-18-40"><a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="n">frameworkFactory</span><span class="p">;</span>
+</span><span id="__span-18-41"><a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a>
+</span><span id="__span-18-42"><a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a><span class="w">    </span><span class="nd">@Autowired</span>
+</span><span id="__span-18-43"><a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessSqlSessionFactory&quot;</span><span class="p">)</span>
+</span><span id="__span-18-44"><a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a><span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="n">businessFactory</span><span class="p">;</span>
+</span><span id="__span-18-45"><a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a>
+</span><span id="__span-18-46"><a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a><span class="w">    </span><span class="nd">@Test</span>
+</span><span id="__span-18-47"><a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">queriesEachDatabaseThroughItsServiceAndMapper</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SQLException</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-48"><a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a><span class="w">        </span><span class="n">assertDatabaseUrl</span><span class="p">(</span><span class="n">frameworkDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:h2:mem:frameworkdb&quot;</span><span class="p">);</span>
+</span><span id="__span-18-49"><a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a><span class="w">        </span><span class="n">assertDatabaseUrl</span><span class="p">(</span><span class="n">businessDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:h2:mem:businessdb&quot;</span><span class="p">);</span>
+</span><span id="__span-18-50"><a id="__codelineno-18-50" name="__codelineno-18-50" href="#__codelineno-18-50"></a><span class="w">        </span><span class="n">loadFixture</span><span class="p">(</span><span class="n">frameworkDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sql/framework-mapper-fixture.sql&quot;</span><span class="p">);</span>
+</span><span id="__span-18-51"><a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a><span class="w">        </span><span class="n">loadFixture</span><span class="p">(</span><span class="n">businessDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sql/business-mapper-fixture.sql&quot;</span><span class="p">);</span>
+</span><span id="__span-18-52"><a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a>
+</span><span id="__span-18-53"><a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">)).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="s">&quot;Framework DB&quot;</span><span class="p">);</span>
+</span><span id="__span-18-54"><a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">)).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="s">&quot;Business DB&quot;</span><span class="p">);</span>
+</span><span id="__span-18-55"><a id="__codelineno-18-55" name="__codelineno-18-55" href="#__codelineno-18-55"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;missing&quot;</span><span class="p">)).</span><span class="na">isNull</span><span class="p">();</span>
+</span><span id="__span-18-56"><a id="__codelineno-18-56" name="__codelineno-18-56" href="#__codelineno-18-56"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-18-57"><a id="__codelineno-18-57" name="__codelineno-18-57" href="#__codelineno-18-57"></a>
+</span><span id="__span-18-58"><a id="__codelineno-18-58" name="__codelineno-18-58" href="#__codelineno-18-58"></a><span class="w">    </span><span class="nd">@Test</span>
+</span><span id="__span-18-59"><a id="__codelineno-18-59" name="__codelineno-18-59" href="#__codelineno-18-59"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">registersOnlyTheStatementsOwnedByEachFactory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-60"><a id="__codelineno-18-60" name="__codelineno-18-60" href="#__codelineno-18-60"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">frameworkStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FrameworkLabelMapper</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.findDisplayName&quot;</span><span class="p">;</span>
+</span><span id="__span-18-61"><a id="__codelineno-18-61" name="__codelineno-18-61" href="#__codelineno-18-61"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">businessStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BusinessLabelMapper</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.findDisplayName&quot;</span><span class="p">;</span>
+</span><span id="__span-18-62"><a id="__codelineno-18-62" name="__codelineno-18-62" href="#__codelineno-18-62"></a>
+</span><span id="__span-18-63"><a id="__codelineno-18-63" name="__codelineno-18-63" href="#__codelineno-18-63"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">frameworkStatement</span><span class="p">)).</span><span class="na">isTrue</span><span class="p">();</span>
+</span><span id="__span-18-64"><a id="__codelineno-18-64" name="__codelineno-18-64" href="#__codelineno-18-64"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">businessStatement</span><span class="p">)).</span><span class="na">isFalse</span><span class="p">();</span>
+</span><span id="__span-18-65"><a id="__codelineno-18-65" name="__codelineno-18-65" href="#__codelineno-18-65"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">businessStatement</span><span class="p">)).</span><span class="na">isTrue</span><span class="p">();</span>
+</span><span id="__span-18-66"><a id="__codelineno-18-66" name="__codelineno-18-66" href="#__codelineno-18-66"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">frameworkStatement</span><span class="p">)).</span><span class="na">isFalse</span><span class="p">();</span>
+</span><span id="__span-18-67"><a id="__codelineno-18-67" name="__codelineno-18-67" href="#__codelineno-18-67"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-18-68"><a id="__codelineno-18-68" name="__codelineno-18-68" href="#__codelineno-18-68"></a>
+</span><span id="__span-18-69"><a id="__codelineno-18-69" name="__codelineno-18-69" href="#__codelineno-18-69"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">assertDatabaseUrl</span><span class="p">(</span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">expected</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SQLException</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-70"><a id="__codelineno-18-70" name="__codelineno-18-70" href="#__codelineno-18-70"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataSource</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-71"><a id="__codelineno-18-71" name="__codelineno-18-71" href="#__codelineno-18-71"></a><span class="w">            </span><span class="n">assertThat</span><span class="p">(</span><span class="n">connection</span><span class="p">.</span><span class="na">getMetaData</span><span class="p">().</span><span class="na">getURL</span><span class="p">()).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="n">expected</span><span class="p">);</span>
+</span><span id="__span-18-72"><a id="__codelineno-18-72" name="__codelineno-18-72" href="#__codelineno-18-72"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-18-73"><a id="__codelineno-18-73" name="__codelineno-18-73" href="#__codelineno-18-73"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-18-74"><a id="__codelineno-18-74" name="__codelineno-18-74" href="#__codelineno-18-74"></a>
+</span><span id="__span-18-75"><a id="__codelineno-18-75" name="__codelineno-18-75" href="#__codelineno-18-75"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">loadFixture</span><span class="p">(</span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-18-76"><a id="__codelineno-18-76" name="__codelineno-18-76" href="#__codelineno-18-76"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceDatabasePopulator</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ClassPathResource</span><span class="p">(</span><span class="n">path</span><span class="p">)).</span><span class="na">execute</span><span class="p">(</span><span class="n">dataSource</span><span class="p">);</span>
+</span><span id="__span-18-77"><a id="__codelineno-18-77" name="__codelineno-18-77" href="#__codelineno-18-77"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-18-78"><a id="__codelineno-18-78" name="__codelineno-18-78" href="#__codelineno-18-78"></a><span class="p">}</span>
 </span></code></pre></div>
-<h3 id="_3">테스트 실행<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h3 id="_7">테스트 실행<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <p>Gradle Wrapper가 있는 프로젝트 루트에서 실행한다. 예시의 <code>/opt/microserver-resource</code>를 4절의 Local H2 YAML 두 파일을 저장한 리소스 루트의 실제 절대 경로로 바꾼다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_PROFILES_ACTIVE</span><span class="o">=</span><span class="nb">local</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_APPLICATION_JSON</span><span class="o">=</span><span class="s1">&#39;{&quot;microserver&quot;:{&quot;resource-dir&quot;:&quot;/opt/microserver-resource&quot;}}&#39;</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">  </span>--tests<span class="w"> </span><span class="s1">&#39;io.github.microserverlab.microserver.MyBatisMapperIntegrationTest&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">  </span>--rerun-tasks
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_PROFILES_ACTIVE</span><span class="o">=</span><span class="nb">local</span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_APPLICATION_JSON</span><span class="o">=</span><span class="s1">&#39;{&quot;microserver&quot;:{&quot;resource-dir&quot;:&quot;/opt/microserver-resource&quot;}}&#39;</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">  </span>--tests<span class="w"> </span><span class="s1">&#39;io.github.microserverlab.microserver.MyBatisMapperIntegrationTest&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">  </span>--rerun-tasks
 </span></code></pre></div>
 <p><code>BUILD SUCCESSFUL</code>과 <code>build/reports/tests/test/index.html</code>의 테스트 두 건을 확인한다. 첫 테스트는 실제 서비스 → 매퍼 → JDBC 경로를 실행하고 두 DB의 값이 구분되는지 검증한다. 두 번째 테스트는 상대 DB의 SQL이 각 Factory에 등록되지 않았는지 확인한다.</p>
-<h3 id="_4">애플리케이션 기동과 패키징<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h3 id="_8">애플리케이션 기동과 패키징<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <p>같은 환경변수로 <code>bash ./gradlew bootRun</code>을 실행하면 외부 설정, 세션 Bean, 매퍼 XML을 읽어 기동한다. 조회용 테이블과 데이터는 통합 테스트가 테스트 JVM에서 준비한다. <code>bootRun</code> 프로세스에서 매퍼를 직접 호출하려면 그 프로세스가 접속하는 DB에도 스키마와 데이터가 있어야 한다. H2 메모리 DB는 프로세스 간에 공유되지 않는다.</p>
 <p><code>bash ./gradlew bootJar</code>로 패키징하면 설정 XML과 두 매퍼 XML이 실행 JAR의 <code>BOOT-INF/classes/mybatis/</code> 아래에 들어간다. 외부 YAML은 실행 시 별도로 읽는다.</p>
 <h2 id="10">10. 오류 확인<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
