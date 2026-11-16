@@ -490,10 +490,55 @@ public class BusinessLabelService {
 }
 ```
 
-호출자는 Spring이 주입한 서비스 Bean을 통해 public 메서드를 호출한다. 같은 클래스 내부에서 `this`로 호출하면 기본 프록시 방식에서는 해당 메서드의 `@Transactional`이 적용되지 않는다. 조회 메서드의 `readOnly = true`는 트랜잭션 최적화를 위한 힌트다. 쓰기 메서드는 같은 DB의 트랜잭션 관리자를 지정하고 기본 읽기·쓰기 트랜잭션으로 실행한다. [Spring 선언적 트랜잭션](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html)
+### 서비스 메서드에 트랜잭션 적용하기
+
+`@Transactional`은 서비스 메서드에서 실행하는 SQL을 트랜잭션으로 묶는다. `transactionManager`에는 매퍼가 사용하는 DB의 관리자를 지정한다.
+
+| 호출 방식 | 트랜잭션 동작 |
+| --- | --- |
+| 서비스 클래스 밖에서 Spring이 주입한 서비스의 `findDisplayName(code)`를 호출 | Spring 프록시를 거친다. 메서드에 선언한 `@Transactional` 설정이 적용된다. |
+| 같은 클래스에서 `this.findDisplayName(code)`를 호출 | 기본 프록시 방식에서는 호출이 프록시를 우회한다. 호출된 메서드의 `@Transactional` 설정은 적용되지 않는다. 이미 시작된 트랜잭션이 있다면 그대로 이어진다. |
+
+#### 우리가 만든 호출 방식
+
+9절의 통합 테스트는 Spring이 주입한 `FrameworkLabelService`를 테스트 클래스에서 호출한다. 이 호출은 Spring 프록시를 거쳐 `findDisplayName()`에 선언한 트랜잭션 설정을 적용한다.
+
+```java
+// MyBatisMapperIntegrationTest의 필드
+@Autowired
+FrameworkLabelService frameworkService;
+
+// 테스트 메서드 안에서 호출
+assertThat(frameworkService.findDisplayName("sample")).isEqualTo("Framework DB");
+```
+
+#### 같은 클래스에서 호출하는 예시
+
+`this`는 지금 메서드를 실행 중인 객체를 가리킨다. 아래는 `FrameworkLabelService` 안에 다른 메서드가 있다고 가정한 예시다.
+
+```java
+// FrameworkLabelService 안에 메서드를 추가한다고 가정한 예시
+public String findLabel(String code) {
+    return this.findDisplayName(code);
+}
+```
+
+!!! tip "같은 SQL인데 트랜잭션 설정이 달라지는 이유"
+    두 호출 모두 `findDisplayName()` 본문의 `return mapper.findDisplayName(code);`까지 실행한다. **Spring은 SQL 실행 전에 프록시로 들어온 서비스 메서드의 `@Transactional` 설정을 확인한다.**
+
+    - **`frameworkService.findDisplayName(code)`** 호출은 Spring 프록시를 거친다. 새 트랜잭션이 필요하면 `frameworkTransactionManager`가 `readOnly = true` 설정으로 트랜잭션을 시작한다. 그 안에서 매퍼가 SQL을 실행한다.
+    - **`frameworkService.findLabel(code)`** 호출에서 프록시가 받는 메서드는 `findLabel()`이다. 예제의 `findLabel()`에는 트랜잭션 선언이 없다. 내부의 `this.findDisplayName(code)`는 같은 객체의 메서드를 직접 호출하므로 `findDisplayName()`의 트랜잭션 설정은 새로 적용되지 않는다.
+
+    매퍼는 두 경우 모두 SQL을 실행한다. 해당 DB에 이미 참여할 수 있는 Spring 트랜잭션이 있다면 MyBatis는 그 트랜잭션을 사용한다. [Spring 선언적 트랜잭션](https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html) · [MyBatis-Spring 세션 관리](https://mybatis.org/spring/sqlsession.html)
+
+#### 조회와 쓰기의 트랜잭션 설정
+
+- **조회 메서드**에는 `readOnly = true`를 지정한다. 조회 작업이라는 힌트를 주며, 트랜잭션 관리자나 DB가 지원하면 이를 최적화에 활용한다. 쓰기 SQL 차단 여부는 실행 환경에 따라 달라진다. [Spring `readOnly` 설명](https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html#readOnly())
+- **쓰기 메서드**에는 같은 DB의 트랜잭션 관리자를 지정한다. `readOnly`를 생략하면 기본값 `false`로 읽기·쓰기 트랜잭션을 사용한다.
 
 !!! warning "두 DB의 트랜잭션 범위"
-    각 트랜잭션 관리자는 연결된 DB 하나를 관리한다. 하나의 업무 흐름에서 두 DB를 모두 변경하더라도 두 커밋이나 롤백을 하나의 원자적 작업으로 묶으려면 별도 설계가 필요하다.
+    - 각 트랜잭션 관리자는 담당 DB의 커밋과 롤백을 처리한다.
+    - 두 DB를 모두 변경하는 업무에서 두 변경을 함께 커밋하거나 함께 롤백하려면 별도 설계가 필요하다.
 
 ## 9. H2에서 매퍼 SQL 실행 검증
 
