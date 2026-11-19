@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../datasource_framework_setup/">
+        <link rel="prev" href="../datasource_connection_verification/">
       
       
-        <link rel="next" href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/">
+        <link rel="next" href="../mybatis_session_mapper_setup/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>MyBatis 매퍼 설정 및 SQL 실행 - MicroServer 구축 가이드</title>
+        <title>구성 원칙과 공통 설정 - MicroServer 구축 가이드</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#mybatis-sql" class="md-skip">
+        <a href="#mybatis" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              MyBatis 매퍼 설정 및 SQL 실행
+              구성 원칙과 공통 설정
             
           </span>
         </div>
@@ -775,15 +775,33 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../legacy_datasource_structure/" class="md-nav__link">
+    
+    
+    
+    
+      
+      
+    
+    
+      
         
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../datasource_framework_setup/" class="md-nav__link">
+      
   
   
   <span class="md-ellipsis">
     
   
-    기존 DataSource 구성 분석
+    DataSource
   
 
     
@@ -791,7 +809,13 @@
   
   
 
-      </a>
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -801,17 +825,35 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../datasource_framework_setup/" class="md-nav__link">
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
     
   
-    DataSource Framework 구성 및 접속 검증
+    MyBatis 매퍼
   
 
     
@@ -819,11 +861,19 @@
   
   
 
-      </a>
-    </li>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    MyBatis 매퍼
   
 
-              
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
                 
@@ -848,7 +898,7 @@
   <span class="md-ellipsis">
     
   
-    MyBatis 매퍼 설정 및 SQL 실행
+    구성 원칙과 공통 설정
   
 
     
@@ -866,7 +916,7 @@
   <span class="md-ellipsis">
     
   
-    MyBatis 매퍼 설정 및 SQL 실행
+    구성 원칙과 공통 설정
   
 
     
@@ -937,7 +987,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#mybatis" class="md-nav__link">
+  <a href="#mybatis_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         MyBatis 설정 파일 작성
@@ -991,176 +1041,125 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#6-db-bean" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. DB별 세션 Bean과 매퍼 스캔 등록
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. DB별 세션 Bean과 매퍼 스캔 등록">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        두 설정 클래스의 역할
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#db-framework" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DB별 세션 등록과 Framework 매퍼 연결
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        업무 매퍼 연결
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-framework-business" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. Framework와 Business 매퍼 작성
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7. Framework와 Business 매퍼 작성">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#framework-xml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Framework 인터페이스와 XML
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#business-xml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Business 인터페이스와 XML
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. 서비스에서 매퍼 호출
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. 서비스에서 매퍼 호출">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        서비스 메서드에 트랜잭션 적용하기
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-h2-sql" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        9. H2에서 매퍼 SQL 실행 검증
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. H2에서 매퍼 SQL 실행 검증">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        테스트 실행
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        애플리케이션 기동과 패키징
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10. 오류 확인
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mybatis_session_mapper_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    세션·매퍼·서비스 구현
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mybatis_integration_verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    통합 테스트와 실행 검증
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../legacy_datasource_structure/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    참고
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
       
     </li>
   
@@ -1476,7 +1475,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#mybatis" class="md-nav__link">
+  <a href="#mybatis_1" class="md-nav__link">
     <span class="md-ellipsis">
       
         MyBatis 설정 파일 작성
@@ -1530,173 +1529,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#6-db-bean" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. DB별 세션 Bean과 매퍼 스캔 등록
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. DB별 세션 Bean과 매퍼 스캔 등록">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        두 설정 클래스의 역할
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#db-framework" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        DB별 세션 등록과 Framework 매퍼 연결
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        업무 매퍼 연결
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-framework-business" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. Framework와 Business 매퍼 작성
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="7. Framework와 Business 매퍼 작성">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#framework-xml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Framework 인터페이스와 XML
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#business-xml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Business 인터페이스와 XML
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. 서비스에서 매퍼 호출
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. 서비스에서 매퍼 호출">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        서비스 메서드에 트랜잭션 적용하기
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-h2-sql" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        9. H2에서 매퍼 SQL 실행 검증
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="9. H2에서 매퍼 SQL 실행 검증">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        테스트 실행
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        애플리케이션 기동과 패키징
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10. 오류 확인
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1714,9 +1546,15 @@
 
 
 
-<h1 id="mybatis-sql">MyBatis 매퍼 설정 및 SQL 실행<a class="headerlink" href="#mybatis-sql" title="Permanent link">&para;</a></h1>
+<h1 id="mybatis">MyBatis 구성 원칙과 공통 설정<a class="headerlink" href="#mybatis" title="Permanent link">&para;</a></h1>
+<p>MyBatis의 역할과 파일 소유권을 정하고 외부 YAML 및 공통 설정 XML을 준비한다.</p>
+<ol>
+<li><a href="./">MyBatis 구성 원칙과 공통 설정</a></li>
+<li><a href="../mybatis_session_mapper_setup/">MyBatis 세션·매퍼·서비스 구현</a></li>
+<li><a href="../mybatis_integration_verification/">MyBatis 통합 테스트와 실행 검증</a></li>
+</ol>
 <p>MicroServer는 Framework 내부 기능용 DB와 Runtime 업무용 DB에 각각 MyBatis를 연결한다. 이 가이드에서는 두 DB에 같은 이름의 테이블을 만들고, 각 서비스가 자기 DB의 행을 조회하는지 H2 통합 테스트로 검증한다.</p>
-<p>준비 사항은 JDK 25, 프로젝트의 Gradle Wrapper, 그리고 <code>MicroServerDataSourceConfig</code>가 등록하는 두 DataSource와 두 트랜잭션 관리자다. DataSource Bean과 접속 정보의 구성은 <a href="../datasource_framework_setup/">DataSource Framework 구성 및 접속 검증</a>을 따른다.</p>
+<p>준비 사항은 JDK 25, 프로젝트의 Gradle Wrapper, 그리고 <code>MicroServerDataSourceConfig</code>가 등록하는 두 DataSource와 두 트랜잭션 관리자다. DataSource Bean과 접속 정보의 구성은 <a href="../datasource_framework_setup/">DataSource 구성 원칙과 외부 설정</a>과 <a href="../datasource_bean_setup/">DataSource Bean 구현과 등록</a>을 따른다.</p>
 <h2 id="1-mybatis-spring">1. MyBatis와 Spring의 역할<a class="headerlink" href="#1-mybatis-spring" title="Permanent link">&para;</a></h2>
 <p>MyBatis는 Java 메서드를 SQL 문에 연결하는 데이터 접근 라이브러리다. 개발자가 매퍼 XML에 SQL과 결과 매핑을 작성하면 MyBatis가 JDBC 파라미터를 바인딩하고 조회 결과를 Java 값이나 객체로 변환한다. 서비스는 매퍼 인터페이스를 호출한다. MyBatis-Spring은 그 인터페이스의 프록시를 Spring Bean으로 등록하고, SQL 실행에 사용할 세션을 Spring 트랜잭션과 연동한다.</p>
 <div class="admonition tip">
@@ -1856,7 +1694,7 @@
 </span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    │               └── business/BusinessLabelMapper.xml
 </span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    └── test/
 </span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a>        ├── java/io/github/microserverlab/microserver/
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        │   └── MyBatisMapperIntegrationTest.java
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a>        │   └── mybatis/MyBatisMapperIntegrationTest.java
 </span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>        └── resources/sql/
 </span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a>            ├── framework-mapper-fixture.sql
 </span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a>            └── business-mapper-fixture.sql
@@ -1896,7 +1734,7 @@
 </span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="c1">// 나머지 의존성</span>
 </span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="o">}</span>
 </span></code></pre></div>
-<p><a href="../datasource_framework_setup/">DataSource Framework 구성 및 접속 검증</a>에서 설정한 JDBC Starter, H2 런타임 의존성, 테스트 의존성을 사용한다. 다음 단계에서는 Profile별 YAML을 연결하고 MyBatis 자동 구성을 제외해 Framework가 두 DB의 세션을 각각 등록하도록 한다.</p>
+<p><a href="../datasource_bean_setup/#6-datasource">DataSource Bean 구현과 등록</a>에서 설정한 JDBC Starter, H2 런타임 의존성, 테스트 의존성을 사용한다. 다음 단계에서는 Profile별 YAML을 연결하고 MyBatis 자동 구성을 제외해 Framework가 두 DB의 세션을 각각 등록하도록 한다.</p>
 <h2 id="4-profile-yaml">4. Profile별 외부 YAML 연결<a class="headerlink" href="#4-profile-yaml" title="Permanent link">&para;</a></h2>
 <p><code>src/main/resources/application.yml</code>에 두 파일의 import를 등록한다. 애플리케이션 이름과 import는 이 파일에서 관리한다. 실행 명령에서 <code>spring.profiles.active=local</code>과 <code>microserver.resource-dir</code>을 제공하면 Spring Boot가 <code>config/application-context/local/</code> 아래의 두 YAML을 읽는다.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nt">spring</span><span class="p">:</span>
@@ -1934,7 +1772,7 @@
 <p class="admonition-title">참고 팁 — 이전 장의 DataSource 설정</p>
 <p><code>config/application-context/local/application-datasource.yml</code>은 이전 장에서 작성한 파일을 그대로 사용한다. <a href="../datasource_framework_setup/#4-datasource">외부 DataSource 설정파일 작성</a></p>
 </div>
-<h3 id="mybatis">MyBatis 설정 파일 작성<a class="headerlink" href="#mybatis" title="Permanent link">&para;</a></h3>
+<h3 id="mybatis_1">MyBatis 설정 파일 작성<a class="headerlink" href="#mybatis_1" title="Permanent link">&para;</a></h3>
 <p>외부 리소스 루트의 <code>config/application-context/local/application-mybatis.yml</code>을 작성한다. <strong>공통 설정 XML과 DB별 매퍼 XML 경로</strong>를 지정하면 Java 설정이 이 값을 읽는다.</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">microserver</span><span class="p">:</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">mybatis</span><span class="p">:</span>
@@ -1990,8 +1828,8 @@
 <p>두 <code>SqlSessionFactory</code>는 같은 XML에서 공통 옵션을 읽는다. 접속할 DB와 등록할 매퍼는 Factory별로 지정한다.</p>
 <ul>
 <li><strong>공통 동작 옵션</strong>은 <code>mybatis-config.xml</code>의 <code>&lt;settings&gt;</code>에 둔다. 아래 예제에서는 컬럼 이름을 Java 속성에 매핑하는 옵션을 설정한다.</li>
-<li><strong>DB 연결과 트랜잭션</strong>은 Spring이 맡는다. 6절에서 각 Factory에 담당 <code>DataSource</code>를 연결한다. 8절에서는 서비스의 <code>@Transactional</code>에 같은 DB의 트랜잭션 관리자를 지정한다. 이 구성에서는 XML의 <code>&lt;environments&gt;</code>를 생략한다.</li>
-<li><strong>매퍼 SQL 등록</strong>은 4절의 <code>mapper-locations</code>에서 시작한다. 6절의 Java 설정이 이 경로에서 매퍼 XML을 찾아 Factory의 <code>setMapperLocations()</code>에 전달한다. 매퍼 목록은 이 경로로 관리하므로 공통 XML의 <code>&lt;mappers&gt;</code>는 생략한다. 같은 Factory에 같은 <code>namespace.id</code>가 중복 등록되면 충돌할 수 있다. <a href="https://mybatis.org/spring/factorybean.html">SqlSessionFactoryBean 설정</a></li>
+<li><strong>DB 연결과 트랜잭션</strong>은 Spring이 맡는다. <a href="../mybatis_session_mapper_setup/#6-db-bean">6절</a>에서 각 Factory에 담당 <code>DataSource</code>를 연결한다. <a href="../mybatis_session_mapper_setup/#8">8절</a>에서는 서비스의 <code>@Transactional</code>에 같은 DB의 트랜잭션 관리자를 지정한다. 이 구성에서는 XML의 <code>&lt;environments&gt;</code>를 생략한다.</li>
+<li><strong>매퍼 SQL 등록</strong>은 <a href="./#4-profile-yaml">4절</a>의 <code>mapper-locations</code>에서 시작한다. <a href="../mybatis_session_mapper_setup/#6-db-bean">6절</a>의 Java 설정이 이 경로에서 매퍼 XML을 찾아 Factory의 <code>setMapperLocations()</code>에 전달한다. 매퍼 목록은 이 경로로 관리하므로 공통 XML의 <code>&lt;mappers&gt;</code>는 생략한다. 같은 Factory에 같은 <code>namespace.id</code>가 중복 등록되면 충돌할 수 있다. <a href="https://mybatis.org/spring/factorybean.html">SqlSessionFactoryBean 설정</a></li>
 </ul>
 <div class="admonition tip">
 <p class="admonition-title">환경별로 설정 XML을 관리하는 경우</p>
@@ -2013,577 +1851,6 @@
 <p class="admonition-title">참고 팁 — <code>mapUnderscoreToCamelCase</code></p>
 <p><code>true</code>로 설정하면 객체 자동 매핑 시 <code>display_name</code> 컬럼을 <code>displayName</code> 속성에 연결한다. 이 가이드의 조회 예제는 문자열 하나를 반환하므로 이 옵션에 의존하지 않는다. <a href="https://mybatis.org/mybatis-3/configuration.html">MyBatis 설정 옵션</a></p>
 </div>
-<h2 id="6-db-bean">6. DB별 세션 Bean과 매퍼 스캔 등록<a class="headerlink" href="#6-db-bean" title="Permanent link">&para;</a></h2>
-<p>이 단계에서는 <strong>Framework 매퍼와 업무 매퍼가 각각 담당 DB에서 SQL을 실행하도록 연결한다.</strong> DB마다 <code>SqlSessionFactory</code>와 <code>SqlSessionTemplate</code>을 만들고, 각 매퍼 패키지를 사용할 Template에 연결한다.</p>
-<h3 id="_1">두 설정 클래스의 역할<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
-<p>Framework에서 두 DB의 세션 Bean을 제공한다. 업무 쪽에서는 이 중 Business DB용 Template을 골라 업무 매퍼를 연결한다. 이 역할 차이 때문에 두 클래스의 코드 분량이 다르다.</p>
-<table>
-<thead>
-<tr>
-<th>설정 클래스</th>
-<th>세션 Bean 구성</th>
-<th>매퍼 연결</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>MicroServerMyBatisConfig</code></td>
-<td>두 DB의 <code>SqlSessionFactory</code>와 <code>SqlSessionTemplate</code>을 만든다. 각 Factory에 담당 DataSource와 매퍼 XML을 설정한다.</td>
-<td>Framework 매퍼를 <code>frameworkSqlSessionTemplate</code>에 연결한다.</td>
-</tr>
-<tr>
-<td><code>BusinessMapperConfig</code></td>
-<td>앞에서 만든 <code>businessSqlSessionTemplate</code>을 참조한다.</td>
-<td>업무 매퍼를 스캔하고 해당 Template에 연결한다.</td>
-</tr>
-</tbody>
-</table>
-<p>아래 두 파일의 경로는 <code>src/main/java/io/github/microserverlab/microserver/</code> 기준이다.</p>
-<h3 id="db-framework">DB별 세션 등록과 Framework 매퍼 연결<a class="headerlink" href="#db-framework" title="Permanent link">&para;</a></h3>
-<p><strong>파일</strong> <code>framework/mybatis/MicroServerMyBatisConfig.java</code></p>
-<ul>
-<li><strong><code>SqlSessionFactory</code></strong>는 담당 <code>DataSource</code>에 연결된다. 공통 MyBatis 설정과 해당 DB의 매퍼 XML을 읽어 SQL을 등록한다.</li>
-<li><strong><code>SqlSessionTemplate</code></strong>은 DB별 Factory를 사용해 Spring 트랜잭션 안에서 매퍼가 사용할 세션을 관리한다.</li>
-<li><strong><code>@MapperScan</code></strong>은 Framework 매퍼 인터페이스를 Spring Bean으로 등록하고 <code>frameworkSqlSessionTemplate</code>에 연결한다.</li>
-</ul>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis</span><span class="p">;</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.sql.DataSource</span><span class="p">;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.ibatis.session.SqlSessionFactory</span><span class="p">;</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.mybatis.spring.SqlSessionFactoryBean</span><span class="p">;</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.mybatis.spring.SqlSessionTemplate</span><span class="p">;</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.mybatis.spring.annotation.MapperScan</span><span class="p">;</span>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.mybatis.spring.boot.autoconfigure.SpringBootVFS</span><span class="p">;</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Qualifier</span><span class="p">;</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Value</span><span class="p">;</span>
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.io.Resource</span><span class="p">;</span>
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.io.support.ResourcePatternResolver</span><span class="p">;</span>
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="nd">@Configuration</span><span class="p">(</span><span class="n">proxyBeanMethods</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
-</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="nd">@MapperScan</span><span class="p">(</span>
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">        </span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;io.github.microserverlab.microserver.framework.mybatis.mapper&quot;</span><span class="p">,</span>
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">        </span><span class="n">sqlSessionTemplateRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;frameworkSqlSessionTemplate&quot;</span><span class="p">)</span>
-</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MicroServerMyBatisConfig</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>
-</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="w">    </span><span class="nd">@Bean</span>
-</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="nf">frameworkSqlSessionFactory</span><span class="p">(</span>
-</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a><span class="w">            </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span>
-</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="w">            </span><span class="n">ResourcePatternResolver</span><span class="w"> </span><span class="n">resources</span><span class="p">,</span>
-</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="w">            </span><span class="nd">@Value</span><span class="p">(</span><span class="s">&quot;${microserver.mybatis.config-location}&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">configLocation</span><span class="p">,</span>
-</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="w">            </span><span class="nd">@Value</span><span class="p">(</span><span class="s">&quot;${microserver.mybatis.framework.mapper-locations}&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">mapperPattern</span><span class="p">)</span>
-</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a><span class="w">            </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">createFactory</span><span class="p">(</span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">resources</span><span class="p">,</span><span class="w"> </span><span class="n">configLocation</span><span class="p">,</span><span class="w"> </span><span class="n">mapperPattern</span><span class="p">);</span>
-</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>
-</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="w">    </span><span class="nd">@Bean</span>
-</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="nf">businessSqlSessionFactory</span><span class="p">(</span>
-</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="w">            </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessDataSource&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span>
-</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="w">            </span><span class="n">ResourcePatternResolver</span><span class="w"> </span><span class="n">resources</span><span class="p">,</span>
-</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a><span class="w">            </span><span class="nd">@Value</span><span class="p">(</span><span class="s">&quot;${microserver.mybatis.config-location}&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">configLocation</span><span class="p">,</span>
-</span><span id="__span-6-38"><a id="__codelineno-6-38" name="__codelineno-6-38" href="#__codelineno-6-38"></a><span class="w">            </span><span class="nd">@Value</span><span class="p">(</span><span class="s">&quot;${microserver.mybatis.business.mapper-locations}&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">mapperPattern</span><span class="p">)</span>
-</span><span id="__span-6-39"><a id="__codelineno-6-39" name="__codelineno-6-39" href="#__codelineno-6-39"></a><span class="w">            </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-40"><a id="__codelineno-6-40" name="__codelineno-6-40" href="#__codelineno-6-40"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">createFactory</span><span class="p">(</span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">resources</span><span class="p">,</span><span class="w"> </span><span class="n">configLocation</span><span class="p">,</span><span class="w"> </span><span class="n">mapperPattern</span><span class="p">);</span>
-</span><span id="__span-6-41"><a id="__codelineno-6-41" name="__codelineno-6-41" href="#__codelineno-6-41"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-6-42"><a id="__codelineno-6-42" name="__codelineno-6-42" href="#__codelineno-6-42"></a>
-</span><span id="__span-6-43"><a id="__codelineno-6-43" name="__codelineno-6-43" href="#__codelineno-6-43"></a><span class="w">    </span><span class="nd">@Bean</span>
-</span><span id="__span-6-44"><a id="__codelineno-6-44" name="__codelineno-6-44" href="#__codelineno-6-44"></a><span class="w">    </span><span class="n">SqlSessionTemplate</span><span class="w"> </span><span class="nf">frameworkSqlSessionTemplate</span><span class="p">(</span>
-</span><span id="__span-6-45"><a id="__codelineno-6-45" name="__codelineno-6-45" href="#__codelineno-6-45"></a><span class="w">            </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkSqlSessionFactory&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="n">factory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-46"><a id="__codelineno-6-46" name="__codelineno-6-46" href="#__codelineno-6-46"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlSessionTemplate</span><span class="p">(</span><span class="n">factory</span><span class="p">);</span>
-</span><span id="__span-6-47"><a id="__codelineno-6-47" name="__codelineno-6-47" href="#__codelineno-6-47"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-6-48"><a id="__codelineno-6-48" name="__codelineno-6-48" href="#__codelineno-6-48"></a>
-</span><span id="__span-6-49"><a id="__codelineno-6-49" name="__codelineno-6-49" href="#__codelineno-6-49"></a><span class="w">    </span><span class="nd">@Bean</span>
-</span><span id="__span-6-50"><a id="__codelineno-6-50" name="__codelineno-6-50" href="#__codelineno-6-50"></a><span class="w">    </span><span class="n">SqlSessionTemplate</span><span class="w"> </span><span class="nf">businessSqlSessionTemplate</span><span class="p">(</span>
-</span><span id="__span-6-51"><a id="__codelineno-6-51" name="__codelineno-6-51" href="#__codelineno-6-51"></a><span class="w">            </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessSqlSessionFactory&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="n">factory</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-52"><a id="__codelineno-6-52" name="__codelineno-6-52" href="#__codelineno-6-52"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlSessionTemplate</span><span class="p">(</span><span class="n">factory</span><span class="p">);</span>
-</span><span id="__span-6-53"><a id="__codelineno-6-53" name="__codelineno-6-53" href="#__codelineno-6-53"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-6-54"><a id="__codelineno-6-54" name="__codelineno-6-54" href="#__codelineno-6-54"></a>
-</span><span id="__span-6-55"><a id="__codelineno-6-55" name="__codelineno-6-55" href="#__codelineno-6-55"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="nf">createFactory</span><span class="p">(</span>
-</span><span id="__span-6-56"><a id="__codelineno-6-56" name="__codelineno-6-56" href="#__codelineno-6-56"></a><span class="w">            </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span>
-</span><span id="__span-6-57"><a id="__codelineno-6-57" name="__codelineno-6-57" href="#__codelineno-6-57"></a><span class="w">            </span><span class="n">ResourcePatternResolver</span><span class="w"> </span><span class="n">resources</span><span class="p">,</span>
-</span><span id="__span-6-58"><a id="__codelineno-6-58" name="__codelineno-6-58" href="#__codelineno-6-58"></a><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">configLocation</span><span class="p">,</span>
-</span><span id="__span-6-59"><a id="__codelineno-6-59" name="__codelineno-6-59" href="#__codelineno-6-59"></a><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">mapperPattern</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-60"><a id="__codelineno-6-60" name="__codelineno-6-60" href="#__codelineno-6-60"></a><span class="w">        </span><span class="n">Resource</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resources</span><span class="p">.</span><span class="na">getResource</span><span class="p">(</span><span class="n">configLocation</span><span class="p">);</span>
-</span><span id="__span-6-61"><a id="__codelineno-6-61" name="__codelineno-6-61" href="#__codelineno-6-61"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">config</span><span class="p">.</span><span class="na">exists</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-62"><a id="__codelineno-6-62" name="__codelineno-6-62" href="#__codelineno-6-62"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">&quot;MyBatis 설정 XML을 찾을 수 없습니다. &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">configLocation</span><span class="p">);</span>
-</span><span id="__span-6-63"><a id="__codelineno-6-63" name="__codelineno-6-63" href="#__codelineno-6-63"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-6-64"><a id="__codelineno-6-64" name="__codelineno-6-64" href="#__codelineno-6-64"></a>
-</span><span id="__span-6-65"><a id="__codelineno-6-65" name="__codelineno-6-65" href="#__codelineno-6-65"></a><span class="w">        </span><span class="n">Resource</span><span class="o">[]</span><span class="w"> </span><span class="n">mappers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">resources</span><span class="p">.</span><span class="na">getResources</span><span class="p">(</span><span class="n">mapperPattern</span><span class="p">);</span>
-</span><span id="__span-6-66"><a id="__codelineno-6-66" name="__codelineno-6-66" href="#__codelineno-6-66"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mappers</span><span class="p">.</span><span class="na">length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-6-67"><a id="__codelineno-6-67" name="__codelineno-6-67" href="#__codelineno-6-67"></a><span class="w">            </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IllegalStateException</span><span class="p">(</span><span class="s">&quot;매퍼 XML을 찾을 수 없습니다. &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">mapperPattern</span><span class="p">);</span>
-</span><span id="__span-6-68"><a id="__codelineno-6-68" name="__codelineno-6-68" href="#__codelineno-6-68"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-6-69"><a id="__codelineno-6-69" name="__codelineno-6-69" href="#__codelineno-6-69"></a>
-</span><span id="__span-6-70"><a id="__codelineno-6-70" name="__codelineno-6-70" href="#__codelineno-6-70"></a><span class="w">        </span><span class="n">SqlSessionFactoryBean</span><span class="w"> </span><span class="n">factory</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">SqlSessionFactoryBean</span><span class="p">();</span>
-</span><span id="__span-6-71"><a id="__codelineno-6-71" name="__codelineno-6-71" href="#__codelineno-6-71"></a><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setDataSource</span><span class="p">(</span><span class="n">dataSource</span><span class="p">);</span>
-</span><span id="__span-6-72"><a id="__codelineno-6-72" name="__codelineno-6-72" href="#__codelineno-6-72"></a><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setVfs</span><span class="p">(</span><span class="n">SpringBootVFS</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
-</span><span id="__span-6-73"><a id="__codelineno-6-73" name="__codelineno-6-73" href="#__codelineno-6-73"></a><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setConfigLocation</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
-</span><span id="__span-6-74"><a id="__codelineno-6-74" name="__codelineno-6-74" href="#__codelineno-6-74"></a><span class="w">        </span><span class="n">factory</span><span class="p">.</span><span class="na">setMapperLocations</span><span class="p">(</span><span class="n">mappers</span><span class="p">);</span>
-</span><span id="__span-6-75"><a id="__codelineno-6-75" name="__codelineno-6-75" href="#__codelineno-6-75"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">factory</span><span class="p">.</span><span class="na">getObject</span><span class="p">();</span>
-</span><span id="__span-6-76"><a id="__codelineno-6-76" name="__codelineno-6-76" href="#__codelineno-6-76"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-6-77"><a id="__codelineno-6-77" name="__codelineno-6-77" href="#__codelineno-6-77"></a><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="_2">업무 매퍼 연결<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<p><strong>파일</strong> <code>business/mybatis/BusinessMapperConfig.java</code></p>
-<ul>
-<li><strong>스캔 범위</strong>는 <code>business.mybatis.mapper</code>다. 이 패키지의 매퍼 인터페이스를 Spring Bean으로 등록한다.</li>
-<li><strong>세션 연결</strong>에는 앞 파일에서 만든 <code>businessSqlSessionTemplate</code>을 사용한다. 업무 매퍼를 호출하면 이 Template을 통해 Business DB에서 SQL을 실행한다.</li>
-</ul>
-<p>클래스 본문이 비어 있어도 Spring이 설정 클래스를 읽을 때 <code>@MapperScan</code>이 매퍼 Bean을 등록한다. <code>sqlSessionTemplateRef</code>에는 사용할 Template의 Bean 이름을 지정한다. <a href="https://mybatis.org/spring/mappers.html">MyBatis-Spring 매퍼 스캔</a></p>
-<p><strong>업무 매퍼 호출 흐름</strong></p>
-<p>업무 매퍼 → <code>businessSqlSessionTemplate</code> → <code>businessSqlSessionFactory</code> → Business DB</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis</span><span class="p">;</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.mybatis.spring.annotation.MapperScan</span><span class="p">;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
-</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nd">@Configuration</span><span class="p">(</span><span class="n">proxyBeanMethods</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span><span class="p">)</span>
-</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="nd">@MapperScan</span><span class="p">(</span>
-</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">        </span><span class="n">basePackages</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;io.github.microserverlab.microserver.business.mybatis.mapper&quot;</span><span class="p">,</span>
-</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">        </span><span class="n">sqlSessionTemplateRef</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;businessSqlSessionTemplate&quot;</span><span class="p">)</span>
-</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BusinessMapperConfig</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>루트 패키지의 <code>MicroserverApplication</code>에 선언된 <code>@SpringBootApplication</code>이 두 설정 클래스를 찾는다. <code>setMapperLocations()</code>는 해당 Factory에 XML의 SQL을 등록하고, <code>@MapperScan</code>은 Java 인터페이스를 프록시 Bean으로 등록한다. 각 Factory의 DataSource는 서비스가 지정하는 트랜잭션 관리자의 DataSource와 일치해야 한다. 트랜잭션 관리자 Bean은 DataSource 구성 단계에서 등록한 이름으로 참조한다. <a href="https://mybatis.org/spring/mappers.html">MyBatis-Spring 매퍼 스캔</a> · <a href="https://mybatis.org/spring/transactions.html">트랜잭션과 DataSource</a></p>
-<div class="admonition warning">
-<p class="admonition-title">매퍼 하나에는 스캔 경로 하나</p>
-<p>예제는 두 <code>@MapperScan</code>으로 모든 매퍼를 등록한다. 루트 패키지 전체를 대상으로 하는 매퍼 스캔이나 별도 <code>MapperFactoryBean</code>을 추가하면 등록 범위가 겹칠 수 있다. 두 스캔은 각각 <code>sqlSessionTemplateRef</code>를 명시한다. Business DataSource의 <code>@Primary</code>는 매퍼의 라우팅을 결정하지 않는다.</p>
-</div>
-<h2 id="7-framework-business">7. Framework와 Business 매퍼 작성<a class="headerlink" href="#7-framework-business" title="Permanent link">&para;</a></h2>
-<h3 id="framework-xml">Framework 인터페이스와 XML<a class="headerlink" href="#framework-xml" title="Permanent link">&para;</a></h3>
-<p><code>framework/mybatis/mapper/FrameworkLabelMapper.java</code>를 작성한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.mapper</span><span class="p">;</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.ibatis.annotations.Param</span><span class="p">;</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">FrameworkLabelMapper</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">findDisplayName</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;code&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">code</span><span class="p">);</span>
-</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><code>src/main/resources/mybatis/mapper/framework/FrameworkLabelMapper.xml</code>을 작성한다.</p>
-<div class="language-xml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="cp">&lt;!DOCTYPE mapper</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="cp">    PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span>
-</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="cp">    &quot;https://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
-</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nt">&lt;mapper</span><span class="w"> </span><span class="na">namespace=</span><span class="s">&quot;io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkLabelMapper&quot;</span><span class="nt">&gt;</span>
-</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nt">&lt;select</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;findDisplayName&quot;</span><span class="w"> </span><span class="na">resultType=</span><span class="s">&quot;string&quot;</span><span class="nt">&gt;</span>
-</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span>SELECT<span class="w"> </span>display_name
-</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">        </span>FROM<span class="w"> </span>mapper_label
-</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">        </span>WHERE<span class="w"> </span>code<span class="w"> </span>=<span class="w"> </span>#{code,<span class="w"> </span>jdbcType=VARCHAR}
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="nt">&lt;/select&gt;</span>
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="nt">&lt;/mapper&gt;</span>
-</span></code></pre></div>
-<h3 id="business-xml">Business 인터페이스와 XML<a class="headerlink" href="#business-xml" title="Permanent link">&para;</a></h3>
-<p><code>business/mybatis/mapper/BusinessLabelMapper.java</code>를 작성한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.mapper</span><span class="p">;</span>
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
-</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.ibatis.annotations.Param</span><span class="p">;</span>
-</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="kd">public</span><span class="w"> </span><span class="kd">interface</span> <span class="nc">BusinessLabelMapper</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
-</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="n">String</span><span class="w"> </span><span class="nf">findDisplayName</span><span class="p">(</span><span class="nd">@Param</span><span class="p">(</span><span class="s">&quot;code&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">code</span><span class="p">);</span>
-</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><code>src/main/resources/mybatis/mapper/business/BusinessLabelMapper.xml</code>을 작성한다.</p>
-<div class="language-xml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
-</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="cp">&lt;!DOCTYPE mapper</span>
-</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="cp">    PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span>
-</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="cp">    &quot;https://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;</span>
-</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="nt">&lt;mapper</span><span class="w"> </span><span class="na">namespace=</span><span class="s">&quot;io.github.microserverlab.microserver.business.mybatis.mapper.BusinessLabelMapper&quot;</span><span class="nt">&gt;</span>
-</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="nt">&lt;select</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;findDisplayName&quot;</span><span class="w"> </span><span class="na">resultType=</span><span class="s">&quot;string&quot;</span><span class="nt">&gt;</span>
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">        </span>SELECT<span class="w"> </span>display_name
-</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">        </span>FROM<span class="w"> </span>mapper_label
-</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span>WHERE<span class="w"> </span>code<span class="w"> </span>=<span class="w"> </span>#{code,<span class="w"> </span>jdbcType=VARCHAR}
-</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="nt">&lt;/select&gt;</span>
-</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="nt">&lt;/mapper&gt;</span>
-</span></code></pre></div>
-<p><code>namespace</code>는 인터페이스의 전체 이름이고, <code>id</code>는 메서드 이름이다. <code>@Param("code")</code>는 <code>#{code, jdbcType=VARCHAR}</code>에 연결된다. 조회 결과가 한 행이면 <code>display_name</code>을 문자열로 반환하고, 일치하는 행이 없으면 <code>null</code>을 반환한다. 예제 테이블의 기본 키는 조회 결과를 최대 한 행으로 제한한다.</p>
-<div class="admonition tip">
-<p class="admonition-title">SQL과 Java 코드를 함께 관리</p>
-<p>인터페이스와 XML의 파일명을 맞추고 같은 변경에서 함께 검토한다. 업무 매퍼를 추가할 때는 <code>business.mybatis.mapper</code> 패키지와 <code>mybatis/mapper/business/</code> 아래를 사용한다. XML에서 부등호 <code>&lt;</code>는 <code>&amp;lt;</code>로 쓰거나 필요한 SQL 조각을 CDATA로 감싼다.</p>
-</div>
-<div class="admonition warning">
-<p class="admonition-title">입력값은 JDBC 파라미터로 바인딩</p>
-<p>사용자 입력값에는 <code>#{...}</code>를 사용한다. <code>${...}</code>는 입력을 SQL 문자열에 그대로 삽입하므로 SQL 주입으로 이어질 수 있다. 컬럼명이나 정렬 방향처럼 바인딩할 수 없는 식별자는 허용 목록에서 고른다. <a href="https://mybatis.org/mybatis-3/sqlmap-xml.html#Parameters">MyBatis 파라미터 매핑</a></p>
-</div>
-<h2 id="8">8. 서비스에서 매퍼 호출<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
-<p><code>framework/mybatis/service/FrameworkLabelService.java</code>를 작성한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.service</span><span class="p">;</span>
-</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
-</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkLabelMapper</span><span class="p">;</span>
-</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
-</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.transaction.annotation.Transactional</span><span class="p">;</span>
-</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
-</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="nd">@Service</span>
-</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FrameworkLabelService</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
-</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">FrameworkLabelMapper</span><span class="w"> </span><span class="n">mapper</span><span class="p">;</span>
-</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
-</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">FrameworkLabelService</span><span class="p">(</span><span class="n">FrameworkLabelMapper</span><span class="w"> </span><span class="n">mapper</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">mapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapper</span><span class="p">;</span>
-</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
-</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">    </span><span class="nd">@Transactional</span><span class="p">(</span><span class="n">transactionManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;frameworkTransactionManager&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">readOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span>
-</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">findDisplayName</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">code</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">mapper</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="n">code</span><span class="p">);</span>
-</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><code>business/mybatis/service/BusinessLabelService.java</code>를 작성한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.service</span><span class="p">;</span>
-</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
-</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.mapper.BusinessLabelMapper</span><span class="p">;</span>
-</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Service</span><span class="p">;</span>
-</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.transaction.annotation.Transactional</span><span class="p">;</span>
-</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
-</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="nd">@Service</span>
-</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">BusinessLabelService</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-13-9"><a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
-</span><span id="__span-13-10"><a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">BusinessLabelMapper</span><span class="w"> </span><span class="n">mapper</span><span class="p">;</span>
-</span><span id="__span-13-11"><a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>
-</span><span id="__span-13-12"><a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">BusinessLabelService</span><span class="p">(</span><span class="n">BusinessLabelMapper</span><span class="w"> </span><span class="n">mapper</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-13-13"><a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">mapper</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mapper</span><span class="p">;</span>
-</span><span id="__span-13-14"><a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-13-15"><a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>
-</span><span id="__span-13-16"><a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="w">    </span><span class="nd">@Transactional</span><span class="p">(</span><span class="n">transactionManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;businessTransactionManager&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">readOnly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span><span class="p">)</span>
-</span><span id="__span-13-17"><a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">findDisplayName</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">code</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-13-18"><a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">mapper</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="n">code</span><span class="p">);</span>
-</span><span id="__span-13-19"><a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-13-20"><a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="_3">서비스 메서드에 트랜잭션 적용하기<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<p><code>@Transactional</code>은 서비스 메서드에서 실행하는 SQL을 트랜잭션으로 묶는다. <code>transactionManager</code>에는 매퍼가 사용하는 DB의 관리자를 지정한다.</p>
-<table>
-<thead>
-<tr>
-<th>호출 방식</th>
-<th>트랜잭션 동작</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>서비스 클래스 밖에서 Spring이 주입한 서비스의 <code>findDisplayName(code)</code>를 호출</td>
-<td>Spring 프록시를 거친다. 메서드에 선언한 <code>@Transactional</code> 설정이 적용된다.</td>
-</tr>
-<tr>
-<td>같은 클래스에서 <code>this.findDisplayName(code)</code>를 호출</td>
-<td>기본 프록시 방식에서는 호출이 프록시를 우회한다. 호출된 메서드의 <code>@Transactional</code> 설정은 적용되지 않는다. 이미 시작된 트랜잭션이 있다면 그대로 이어진다.</td>
-</tr>
-</tbody>
-</table>
-<h4 id="_4">우리가 만든 호출 방식<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
-<p>9절의 통합 테스트는 Spring이 주입한 <code>FrameworkLabelService</code>를 테스트 클래스에서 호출한다. 이 호출은 Spring 프록시를 거쳐 <code>findDisplayName()</code>에 선언한 트랜잭션 설정을 적용한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1">// MyBatisMapperIntegrationTest의 필드</span>
-</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nd">@Autowired</span>
-</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">FrameworkLabelService</span><span class="w"> </span><span class="n">frameworkService</span><span class="p">;</span>
-</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
-</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1">// 테스트 메서드 안에서 호출</span>
-</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">)).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="s">&quot;Framework DB&quot;</span><span class="p">);</span>
-</span></code></pre></div>
-<h4 id="_5">같은 클래스에서 호출하는 예시<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
-<p><code>this</code>는 지금 메서드를 실행 중인 객체를 가리킨다. 아래는 <code>FrameworkLabelService</code> 안에 다른 메서드가 있다고 가정한 예시다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">// FrameworkLabelService 안에 메서드를 추가한다고 가정한 예시</span>
-</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">findLabel</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">code</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="n">code</span><span class="p">);</span>
-</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="p">}</span>
-</span></code></pre></div>
-<div class="admonition tip">
-<p class="admonition-title">같은 SQL인데 트랜잭션 설정이 달라지는 이유</p>
-<p>두 호출 모두 <code>findDisplayName()</code> 본문의 <code>return mapper.findDisplayName(code);</code>까지 실행한다. <strong>Spring은 SQL 실행 전에 프록시로 들어온 서비스 메서드의 <code>@Transactional</code> 설정을 확인한다.</strong></p>
-<ul>
-<li><strong><code>frameworkService.findDisplayName(code)</code></strong> 호출은 Spring 프록시를 거친다. 새 트랜잭션이 필요하면 <code>frameworkTransactionManager</code>가 <code>readOnly = true</code> 설정으로 트랜잭션을 시작한다. 그 안에서 매퍼가 SQL을 실행한다.</li>
-<li><strong><code>frameworkService.findLabel(code)</code></strong> 호출에서 프록시가 받는 메서드는 <code>findLabel()</code>이다. 예제의 <code>findLabel()</code>에는 트랜잭션 선언이 없다. 내부의 <code>this.findDisplayName(code)</code>는 같은 객체의 메서드를 직접 호출하므로 <code>findDisplayName()</code>의 트랜잭션 설정은 새로 적용되지 않는다.</li>
-</ul>
-<p>매퍼는 두 경우 모두 SQL을 실행한다. 해당 DB에 이미 참여할 수 있는 Spring 트랜잭션이 있다면 MyBatis는 그 트랜잭션을 사용한다. <a href="https://docs.spring.io/spring-framework/reference/data-access/transaction/declarative/annotations.html">Spring 선언적 트랜잭션</a> · <a href="https://mybatis.org/spring/sqlsession.html">MyBatis-Spring 세션 관리</a></p>
-</div>
-<h4 id="_6">조회와 쓰기의 트랜잭션 설정<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong>조회 메서드</strong>에는 <code>readOnly = true</code>를 지정한다. 조회 작업이라는 힌트를 주며, 트랜잭션 관리자나 DB가 지원하면 이를 최적화에 활용한다. 쓰기 SQL 차단 여부는 실행 환경에 따라 달라진다. <a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/transaction/annotation/Transactional.html#readOnly()">Spring <code>readOnly</code> 설명</a></li>
-<li><strong>쓰기 메서드</strong>에는 같은 DB의 트랜잭션 관리자를 지정한다. <code>readOnly</code>를 생략하면 기본값 <code>false</code>로 읽기·쓰기 트랜잭션을 사용한다.</li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">두 DB의 트랜잭션 범위</p>
-<ul>
-<li>각 트랜잭션 관리자는 담당 DB의 커밋과 롤백을 처리한다.</li>
-<li>두 DB를 모두 변경하는 업무에서 두 변경을 함께 커밋하거나 함께 롤백하려면 별도 설계가 필요하다.</li>
-</ul>
-</div>
-<h2 id="9-h2-sql">9. H2에서 매퍼 SQL 실행 검증<a class="headerlink" href="#9-h2-sql" title="Permanent link">&para;</a></h2>
-<p>두 DB에서 동일한 키 <code>sample</code>을 조회하되, DB마다 다른 값을 저장한다. 테스트용 스크립트는 <code>src/test/resources</code>에 두고 각 DataSource에 개별 실행한다.</p>
-<p><code>src/test/resources/sql/framework-mapper-fixture.sql</code></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span>
-</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">code</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="n">display_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
-</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">);</span>
-</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
-</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">display_name</span><span class="p">)</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
-</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Framework DB&#39;</span><span class="p">);</span>
-</span></code></pre></div>
-<p><code>src/test/resources/sql/business-mapper-fixture.sql</code></p>
-<div class="language-sql highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="k">IF</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span>
-</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="n">code</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="p">,</span>
-</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="n">display_name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
-</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">);</span>
-</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
-</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="n">MERGE</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">mapper_label</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">display_name</span><span class="p">)</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
-</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;sample&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Business DB&#39;</span><span class="p">);</span>
-</span></code></pre></div>
-<p><code>src/test/java/io/github/microserverlab/microserver/MyBatisMapperIntegrationTest.java</code></p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver</span><span class="p">;</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">org.assertj.core.api.Assertions.assertThat</span><span class="p">;</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span><span class="p">;</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.SQLException</span><span class="p">;</span>
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.sql.DataSource</span><span class="p">;</span>
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.mapper.FrameworkLabelMapper</span><span class="p">;</span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.mybatis.service.FrameworkLabelService</span><span class="p">;</span>
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.mapper.BusinessLabelMapper</span><span class="p">;</span>
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.business.mybatis.service.BusinessLabelService</span><span class="p">;</span>
-</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.apache.ibatis.session.SqlSessionFactory</span><span class="p">;</span>
-</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
-</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Qualifier</span><span class="p">;</span>
-</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="p">;</span>
-</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.core.io.ClassPathResource</span><span class="p">;</span>
-</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.jdbc.datasource.init.ResourceDatabasePopulator</span><span class="p">;</span>
-</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>
-</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="nd">@SpringBootTest</span><span class="p">(</span><span class="n">webEnvironment</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">SpringBootTest</span><span class="p">.</span><span class="na">WebEnvironment</span><span class="p">.</span><span class="na">NONE</span><span class="p">)</span>
-</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="kd">class</span> <span class="nc">MyBatisMapperIntegrationTest</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a>
-</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">    </span><span class="n">FrameworkLabelService</span><span class="w"> </span><span class="n">frameworkService</span><span class="p">;</span>
-</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a>
-</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="w">    </span><span class="n">BusinessLabelService</span><span class="w"> </span><span class="n">businessService</span><span class="p">;</span>
-</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a>
-</span><span id="__span-18-30"><a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-18-31"><a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span>
-</span><span id="__span-18-32"><a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a><span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">frameworkDataSource</span><span class="p">;</span>
-</span><span id="__span-18-33"><a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a>
-</span><span id="__span-18-34"><a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-18-35"><a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessDataSource&quot;</span><span class="p">)</span>
-</span><span id="__span-18-36"><a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="w">    </span><span class="n">DataSource</span><span class="w"> </span><span class="n">businessDataSource</span><span class="p">;</span>
-</span><span id="__span-18-37"><a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a>
-</span><span id="__span-18-38"><a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-18-39"><a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkSqlSessionFactory&quot;</span><span class="p">)</span>
-</span><span id="__span-18-40"><a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="n">frameworkFactory</span><span class="p">;</span>
-</span><span id="__span-18-41"><a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a>
-</span><span id="__span-18-42"><a id="__codelineno-18-42" name="__codelineno-18-42" href="#__codelineno-18-42"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-18-43"><a id="__codelineno-18-43" name="__codelineno-18-43" href="#__codelineno-18-43"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessSqlSessionFactory&quot;</span><span class="p">)</span>
-</span><span id="__span-18-44"><a id="__codelineno-18-44" name="__codelineno-18-44" href="#__codelineno-18-44"></a><span class="w">    </span><span class="n">SqlSessionFactory</span><span class="w"> </span><span class="n">businessFactory</span><span class="p">;</span>
-</span><span id="__span-18-45"><a id="__codelineno-18-45" name="__codelineno-18-45" href="#__codelineno-18-45"></a>
-</span><span id="__span-18-46"><a id="__codelineno-18-46" name="__codelineno-18-46" href="#__codelineno-18-46"></a><span class="w">    </span><span class="nd">@Test</span>
-</span><span id="__span-18-47"><a id="__codelineno-18-47" name="__codelineno-18-47" href="#__codelineno-18-47"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">queriesEachDatabaseThroughItsServiceAndMapper</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SQLException</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-48"><a id="__codelineno-18-48" name="__codelineno-18-48" href="#__codelineno-18-48"></a><span class="w">        </span><span class="n">assertDatabaseUrl</span><span class="p">(</span><span class="n">frameworkDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:h2:mem:frameworkdb&quot;</span><span class="p">);</span>
-</span><span id="__span-18-49"><a id="__codelineno-18-49" name="__codelineno-18-49" href="#__codelineno-18-49"></a><span class="w">        </span><span class="n">assertDatabaseUrl</span><span class="p">(</span><span class="n">businessDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;jdbc:h2:mem:businessdb&quot;</span><span class="p">);</span>
-</span><span id="__span-18-50"><a id="__codelineno-18-50" name="__codelineno-18-50" href="#__codelineno-18-50"></a><span class="w">        </span><span class="n">loadFixture</span><span class="p">(</span><span class="n">frameworkDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sql/framework-mapper-fixture.sql&quot;</span><span class="p">);</span>
-</span><span id="__span-18-51"><a id="__codelineno-18-51" name="__codelineno-18-51" href="#__codelineno-18-51"></a><span class="w">        </span><span class="n">loadFixture</span><span class="p">(</span><span class="n">businessDataSource</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;sql/business-mapper-fixture.sql&quot;</span><span class="p">);</span>
-</span><span id="__span-18-52"><a id="__codelineno-18-52" name="__codelineno-18-52" href="#__codelineno-18-52"></a>
-</span><span id="__span-18-53"><a id="__codelineno-18-53" name="__codelineno-18-53" href="#__codelineno-18-53"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">)).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="s">&quot;Framework DB&quot;</span><span class="p">);</span>
-</span><span id="__span-18-54"><a id="__codelineno-18-54" name="__codelineno-18-54" href="#__codelineno-18-54"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;sample&quot;</span><span class="p">)).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="s">&quot;Business DB&quot;</span><span class="p">);</span>
-</span><span id="__span-18-55"><a id="__codelineno-18-55" name="__codelineno-18-55" href="#__codelineno-18-55"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessService</span><span class="p">.</span><span class="na">findDisplayName</span><span class="p">(</span><span class="s">&quot;missing&quot;</span><span class="p">)).</span><span class="na">isNull</span><span class="p">();</span>
-</span><span id="__span-18-56"><a id="__codelineno-18-56" name="__codelineno-18-56" href="#__codelineno-18-56"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-18-57"><a id="__codelineno-18-57" name="__codelineno-18-57" href="#__codelineno-18-57"></a>
-</span><span id="__span-18-58"><a id="__codelineno-18-58" name="__codelineno-18-58" href="#__codelineno-18-58"></a><span class="w">    </span><span class="nd">@Test</span>
-</span><span id="__span-18-59"><a id="__codelineno-18-59" name="__codelineno-18-59" href="#__codelineno-18-59"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">registersOnlyTheStatementsOwnedByEachFactory</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-60"><a id="__codelineno-18-60" name="__codelineno-18-60" href="#__codelineno-18-60"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">frameworkStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FrameworkLabelMapper</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.findDisplayName&quot;</span><span class="p">;</span>
-</span><span id="__span-18-61"><a id="__codelineno-18-61" name="__codelineno-18-61" href="#__codelineno-18-61"></a><span class="w">        </span><span class="n">String</span><span class="w"> </span><span class="n">businessStatement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">BusinessLabelMapper</span><span class="p">.</span><span class="na">class</span><span class="p">.</span><span class="na">getName</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">&quot;.findDisplayName&quot;</span><span class="p">;</span>
-</span><span id="__span-18-62"><a id="__codelineno-18-62" name="__codelineno-18-62" href="#__codelineno-18-62"></a>
-</span><span id="__span-18-63"><a id="__codelineno-18-63" name="__codelineno-18-63" href="#__codelineno-18-63"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">frameworkStatement</span><span class="p">)).</span><span class="na">isTrue</span><span class="p">();</span>
-</span><span id="__span-18-64"><a id="__codelineno-18-64" name="__codelineno-18-64" href="#__codelineno-18-64"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">frameworkFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">businessStatement</span><span class="p">)).</span><span class="na">isFalse</span><span class="p">();</span>
-</span><span id="__span-18-65"><a id="__codelineno-18-65" name="__codelineno-18-65" href="#__codelineno-18-65"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">businessStatement</span><span class="p">)).</span><span class="na">isTrue</span><span class="p">();</span>
-</span><span id="__span-18-66"><a id="__codelineno-18-66" name="__codelineno-18-66" href="#__codelineno-18-66"></a><span class="w">        </span><span class="n">assertThat</span><span class="p">(</span><span class="n">businessFactory</span><span class="p">.</span><span class="na">getConfiguration</span><span class="p">().</span><span class="na">hasStatement</span><span class="p">(</span><span class="n">frameworkStatement</span><span class="p">)).</span><span class="na">isFalse</span><span class="p">();</span>
-</span><span id="__span-18-67"><a id="__codelineno-18-67" name="__codelineno-18-67" href="#__codelineno-18-67"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-18-68"><a id="__codelineno-18-68" name="__codelineno-18-68" href="#__codelineno-18-68"></a>
-</span><span id="__span-18-69"><a id="__codelineno-18-69" name="__codelineno-18-69" href="#__codelineno-18-69"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">assertDatabaseUrl</span><span class="p">(</span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">expected</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">SQLException</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-70"><a id="__codelineno-18-70" name="__codelineno-18-70" href="#__codelineno-18-70"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataSource</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-71"><a id="__codelineno-18-71" name="__codelineno-18-71" href="#__codelineno-18-71"></a><span class="w">            </span><span class="n">assertThat</span><span class="p">(</span><span class="n">connection</span><span class="p">.</span><span class="na">getMetaData</span><span class="p">().</span><span class="na">getURL</span><span class="p">()).</span><span class="na">isEqualTo</span><span class="p">(</span><span class="n">expected</span><span class="p">);</span>
-</span><span id="__span-18-72"><a id="__codelineno-18-72" name="__codelineno-18-72" href="#__codelineno-18-72"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-18-73"><a id="__codelineno-18-73" name="__codelineno-18-73" href="#__codelineno-18-73"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-18-74"><a id="__codelineno-18-74" name="__codelineno-18-74" href="#__codelineno-18-74"></a>
-</span><span id="__span-18-75"><a id="__codelineno-18-75" name="__codelineno-18-75" href="#__codelineno-18-75"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">loadFixture</span><span class="p">(</span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-18-76"><a id="__codelineno-18-76" name="__codelineno-18-76" href="#__codelineno-18-76"></a><span class="w">        </span><span class="k">new</span><span class="w"> </span><span class="n">ResourceDatabasePopulator</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ClassPathResource</span><span class="p">(</span><span class="n">path</span><span class="p">)).</span><span class="na">execute</span><span class="p">(</span><span class="n">dataSource</span><span class="p">);</span>
-</span><span id="__span-18-77"><a id="__codelineno-18-77" name="__codelineno-18-77" href="#__codelineno-18-77"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-18-78"><a id="__codelineno-18-78" name="__codelineno-18-78" href="#__codelineno-18-78"></a><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="_7">테스트 실행<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
-<p>두 DB에 테스트 데이터를 넣고 서비스를 호출한다. 각 매퍼가 담당 DB의 값을 조회하는지, 각 Factory에 담당 SQL만 등록되는지 확인한다. 아래 순서로 파일을 준비한 뒤 VS Code에서 테스트를 실행한다.</p>
-<ol>
-<li>
-<p><strong>테스트 파일을 프로젝트에 작성한다.</strong></p>
-<p>위 SQL 예제 두 개와 Java 테스트 예제를 다음 위치에 저장한다. 경로는 프로젝트 루트 기준이다.</p>
-<table>
-<thead>
-<tr>
-<th>파일 위치</th>
-<th>역할</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>src/test/resources/sql/framework-mapper-fixture.sql</code></td>
-<td>Framework DB의 테스트 테이블과 데이터를 준비한다.</td>
-</tr>
-<tr>
-<td><code>src/test/resources/sql/business-mapper-fixture.sql</code></td>
-<td>Business DB의 테스트 테이블과 데이터를 준비한다.</td>
-</tr>
-<tr>
-<td><code>src/test/java/io/github/microserverlab/microserver/MyBatisMapperIntegrationTest.java</code></td>
-<td>SQL 파일을 각 DB에 실행하고 서비스 조회와 SQL 등록 범위를 검증한다.</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>
-<p><strong>외부 Local 설정 파일을 준비한다.</strong></p>
-<p>4절의 설정에 따라 외부 리소스 루트 아래에 두 파일을 둔다. DataSource YAML은 이전 장에서 작성한 파일을 사용한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>&lt;외부 리소스 루트&gt;/
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>└── config/application-context/local/
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    ├── application-datasource.yml
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    └── application-mybatis.yml
-</span></code></pre></div>
-<p>DataSource YAML의 H2 DB 이름은 <code>frameworkdb</code>와 <code>businessdb</code>로 설정한다. 테스트 코드가 이 이름으로 접속 여부를 확인한다.</p>
-</li>
-<li>
-<p><strong>VS Code의 테스트 실행 설정을 확인한다.</strong></p>
-<p><code>microserver</code>와 <code>microserver_resource</code>가 함께 있는 <code>workspace</code> 폴더를 VS Code에서 연다. 이 폴더의 <code>.vscode/settings.json</code>에 테스트용 JVM 옵션을 설정한다. 이미 아래 항목이 있으면 현재 값을 확인한다. 다른 설정이 있으면 필요한 항목을 기존 JSON에 합친다.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">{</span>
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">    </span><span class="nt">&quot;java.test.config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">        </span><span class="p">{</span>
-</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-local&quot;</span><span class="p">,</span>
-</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">            </span><span class="nt">&quot;vmArgs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">                </span><span class="s2">&quot;-Dspring.profiles.active=local&quot;</span><span class="p">,</span>
-</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">                </span><span class="s2">&quot;-Dmicroserver.resource-dir=${workspaceFolder}/microserver_resource&quot;</span>
-</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">            </span><span class="p">]</span>
-</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">    </span><span class="p">],</span>
-</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">    </span><span class="nt">&quot;java.test.defaultConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-local&quot;</span>
-</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="p">}</span>
-</span></code></pre></div>
-<p><code>${workspaceFolder}</code>는 VS Code에서 연 폴더다. 위 설정은 그 아래의 <code>microserver_resource</code>를 외부 리소스 루트로 사용한다. 실제 폴더 구조에 맞게 경로를 지정한다.</p>
-<p><strong>Run Test는 이 JVM 옵션으로 Profile과 리소스 경로를 전달한다.</strong> 터미널에서 별도로 <code>export</code>할 필요가 없다. 애플리케이션 기동용 <code>launch.json</code>과 테스트용 <code>java.test.config</code>는 각각 설정한다.</p>
-</li>
-<li>
-<p><strong>VS Code에서 MyBatis 통합 테스트를 실행한다.</strong></p>
-<p><code>MyBatisMapperIntegrationTest.java</code>를 연다. 클래스 이름 위의 <strong>Run Test</strong> 또는 옆의 초록색 ▶ 버튼을 눌러 클래스의 테스트 두 건을 실행한다. Test Runner for Java 확장이 필요하다.</p>
-<p>테스트가 Spring 컨텍스트를 띄우고 각 DataSource에 SQL 파일을 실행한다. 준비한 데이터를 서비스와 매퍼를 통해 조회한다. 중단점에서 실행 흐름을 보려면 <strong>Debug Test</strong>를 선택한다.</p>
-</li>
-<li>
-<p><strong>Testing 창에서 결과를 확인한다.</strong></p>
-<p>왼쪽 활동 표시줄의 시험관 아이콘으로 <strong>Testing</strong> 창을 연다. <code>MyBatisMapperIntegrationTest</code> 아래의 테스트 두 건이 모두 통과했는지 확인한다. 실패한 항목을 선택하면 오류 메시지와 실행 결과를 볼 수 있다. <a href="https://code.visualstudio.com/docs/java/java-testing">VS Code Java 테스트 실행</a></p>
-<table>
-<thead>
-<tr>
-<th>테스트 메서드</th>
-<th>확인하는 내용</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>queriesEachDatabaseThroughItsServiceAndMapper</code></td>
-<td>서비스 → 매퍼 → JDBC 호출로 각 DB의 값을 조회한다. Framework DB는 <code>Framework DB</code>, Business DB는 <code>Business DB</code>를 반환해야 한다.</td>
-</tr>
-<tr>
-<td><code>registersOnlyTheStatementsOwnedByEachFactory</code></td>
-<td>각 Factory에 담당 매퍼의 SQL이 등록되어 있고, 상대 DB의 매퍼 SQL은 등록되어 있지 않은지 확인한다.</td>
-</tr>
-</tbody>
-</table>
-</li>
-</ol>
-<div class="admonition tip">
-<p class="admonition-title">참고 팁 — 터미널에서 Gradle로 테스트 실행</p>
-<p>macOS 또는 Linux 터미널에서는 아래 명령으로 같은 테스트를 실행할 수 있다. <code>cd</code>의 경로는 <code>build.gradle</code>과 <code>gradlew</code>가 있는 프로젝트 루트로 바꾼다. JSON의 <code>/opt/microserver-resource</code>는 외부 YAML을 저장한 리소스 루트의 실제 절대 경로로 바꾼다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">cd</span><span class="w"> </span>/프로젝트/절대경로/microserver
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_PROFILES_ACTIVE</span><span class="o">=</span><span class="nb">local</span>
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_APPLICATION_JSON</span><span class="o">=</span><span class="s1">&#39;{&quot;microserver&quot;:{&quot;resource-dir&quot;:&quot;/opt/microserver-resource&quot;}}&#39;</span>
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
-</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">  </span>--tests<span class="w"> </span><span class="s1">&#39;io.github.microserverlab.microserver.MyBatisMapperIntegrationTest&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">  </span>--rerun-tasks
-</span></code></pre></div>
-<p>필요한 Spring 환경변수가 현재 터미널에 이미 같은 값으로 지정되어 있으면 <code>export</code>는 생략한다. <code>java.test.config</code>의 JVM 옵션은 터미널의 Gradle 명령에 자동으로 전달되지 않는다.</p>
-<p><code>--tests</code>는 테스트 클래스를 선택한다. <code>--rerun-tasks</code>는 이전 실행 결과가 있어도 테스트를 다시 수행한다. <code>BUILD SUCCESSFUL</code>을 확인하고, 프로젝트 루트의 <code>build/reports/tests/test/index.html</code>을 브라우저로 열어 결과를 확인한다.</p>
-</div>
-<h3 id="_8">애플리케이션 기동과 패키징<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
-<p>통합 테스트를 마친 뒤에는 애플리케이션을 직접 기동하거나 배포용 실행 JAR을 만들 수 있다. <strong>기동은 설정을 읽어 실행하는 작업이고, 패키징은 배포할 파일을 만드는 작업이다.</strong> 아래 명령은 <code>build.gradle</code>과 <code>gradlew</code>가 있는 프로젝트 루트에서 실행한다.</p>
-<ol>
-<li>
-<p><strong>애플리케이션 기동 — <code>bootRun</code></strong></p>
-<p>외부 YAML과 MyBatis 설정을 읽어 실제 애플리케이션을 실행한다. DB별 세션 Bean을 만들고 매퍼 XML의 SQL을 등록하는지 확인할 때 사용한다.</p>
-<p>위 터미널 참고 팁처럼 <code>local</code> Profile과 외부 리소스 루트를 지정한 뒤 실행한다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span>bootRun
-</span></code></pre></div>
-<p>기동 로그에서 애플리케이션 시작과 두 DB 연결을 확인한다. 실행을 종료하려면 터미널에서 <code>Ctrl+C</code>를 누른다.</p>
-<div class="admonition note">
-<p class="admonition-title">H2 조회 데이터 준비</p>
-<p>통합 테스트의 SQL 파일은 테스트가 실행되는 JVM의 DB에 데이터를 만든다. <code>bootRun</code>은 별도 JVM에서 실행하므로 자체 H2 메모리 DB를 사용한다. 이 애플리케이션에서 매퍼를 호출하려면 해당 DB에도 테이블과 데이터를 준비해야 한다.</p>
-</div>
-</li>
-<li>
-<p><strong>배포용 실행 JAR 생성 — <code>bootJar</code></strong></p>
-<p>컴파일한 코드, 리소스, 실행에 필요한 라이브러리를 하나의 Spring Boot 실행 JAR로 묶는다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span>bootJar
-</span></code></pre></div>
-<ul>
-<li><strong>결과물</strong>은 프로젝트의 <code>build/libs/</code>에 생성된다.</li>
-<li><strong>현재 단일 프로젝트의 MyBatis XML</strong>은 JAR의 <code>BOOT-INF/classes/mybatis/</code> 아래에 포함된다.</li>
-<li><strong>외부 YAML</strong>은 배포 환경에서 별도로 준비한다. JAR을 실행할 때 Profile과 외부 리소스 루트를 지정하면 해당 파일을 읽는다.</li>
-</ul>
-</li>
-</ol>
-<h2 id="10">10. 오류 확인<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>증상</th>
-<th>확인할 항목</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>외부 설정 import 실패</td>
-<td>단일 활성 Profile, <code>microserver.resource-dir</code>이 가리키는 루트, 해당 Profile의 두 YAML 파일</td>
-</tr>
-<tr>
-<td>설정 XML 또는 매퍼 XML을 찾지 못함</td>
-<td><code>src/main/resources</code> 아래 경로, <code>classpath:</code>와 <code>classpath*:</code>의 용도, JAR에 포함된 파일</td>
-</tr>
-<tr>
-<td>매퍼 XML 파싱 오류</td>
-<td>예외에 표시된 파일, DTD, XML 특수 문자, 결과 타입 또는 <code>resultMap</code></td>
-</tr>
-<tr>
-<td>매퍼 Bean 주입 실패</td>
-<td><code>@MapperScan</code> 패키지, 설정 클래스의 컴포넌트 스캔 범위, Template Bean 이름</td>
-</tr>
-<tr>
-<td><code>Invalid bound statement (not found)</code></td>
-<td>XML의 <code>namespace</code>와 <code>id</code>, 매퍼의 Template과 해당 Factory의 XML 패턴</td>
-</tr>
-<tr>
-<td>중복 statement 또는 Bean 이름 충돌</td>
-<td>겹치는 XML 패턴, 설정 XML의 <code>&lt;mappers&gt;</code>, 중복 매퍼 스캔 또는 같은 이름의 매퍼</td>
-</tr>
-<tr>
-<td>다른 DB의 행이 반환됨</td>
-<td>Factory의 DataSource <code>@Qualifier</code>, 매퍼의 <code>sqlSessionTemplateRef</code>, 외부 YAML의 JDBC URL</td>
-</tr>
-<tr>
-<td>SQL이 트랜잭션에 참여하지 않음</td>
-<td>서비스가 Spring Bean으로 호출되는지, 지정한 관리자가 Factory와 같은 DataSource를 사용하는지</td>
-</tr>
-<tr>
-<td><code>mapper_label</code> 테이블이 없음</td>
-<td>테스트용 SQL이 매퍼 호출과 같은 JVM에서 같은 DataSource로 실행되었는지</td>
-</tr>
-</tbody>
-</table>
 
 
 

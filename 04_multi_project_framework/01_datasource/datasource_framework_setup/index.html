@@ -13,10 +13,10 @@
       
       
       
-        <link rel="prev" href="../legacy_datasource_structure/">
+        <link rel="prev" href="../../vscode_java_user_snippet/">
       
       
-        <link rel="next" href="../mybatis_mapper_setup/">
+        <link rel="next" href="../datasource_bean_setup/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>DataSource Framework 구성 및 접속 검증 - MicroServer 구축 가이드</title>
+        <title>구성 원칙과 외부 설정 - MicroServer 구축 가이드</title>
       
     
     
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#datasource-framework" class="md-skip">
+        <a href="#datasource" class="md-skip">
           콘텐츠로 이동
         </a>
       
@@ -112,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              DataSource Framework 구성 및 접속 검증
+              구성 원칙과 외부 설정
             
           </span>
         </div>
@@ -773,17 +773,35 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../legacy_datasource_structure/" class="md-nav__link">
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_1" id="__nav_4_3_1_label" tabindex="0">
+            
   
   
   <span class="md-ellipsis">
     
   
-    기존 DataSource 구성 분석
+    DataSource
   
 
     
@@ -791,11 +809,19 @@
   
   
 
-      </a>
-    </li>
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    DataSource
   
 
-              
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
             
               
                 
@@ -820,7 +846,7 @@
   <span class="md-ellipsis">
     
   
-    DataSource Framework 구성 및 접속 검증
+    구성 원칙과 외부 설정
   
 
     
@@ -838,7 +864,7 @@
   <span class="md-ellipsis">
     
   
-    DataSource Framework 구성 및 접속 검증
+    구성 원칙과 외부 설정
   
 
     
@@ -1112,305 +1138,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#6-datasource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. DataSource 구현을 위한 의존성 추가
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. DataSource 구현을 위한 의존성 추가">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        각 의존성의 역할
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#buildgradle-gradle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        build.gradle 변경 후 Gradle 동기화
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#db-driver" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        실제 DB Driver
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        멀티프로젝트 전환 후 의존성 재정리
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-datasource-property" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. DataSource Property 클래스 작성
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-framework-datasource-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. Framework DataSource Configuration 작성
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. Framework DataSource Configuration 작성">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#business-datasource-primary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        왜 Business DataSource를 @Primary로 지정하는가
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-microserverapplication-framework-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        9. 현재 MicroserverApplication에서 Framework Configuration 인식
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-framework-datasource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10. Framework DataSource 접속 테스트
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Framework DataSource 접속 테스트">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#101" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.1 실행 전 확인
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#102-vs-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.2 VS Code에서 테스트 실행 설정
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#103-vs-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.3 VS Code에서 실행 및 결과 확인
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#104" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.4 터미널에서 특정 테스트만 실행
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#105" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.5 실행 오류 확인
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#106" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.6 정상 결과 확인
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#11-business-datasource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11. Business DataSource 접속 테스트
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-application-datasource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        12. Application 기동 시 두 DataSource 동시 확인
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#13-transaction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        13. Transaction 사용 기준
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="13. Transaction 사용 기준">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#transaction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        일반 업무 Transaction
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#framework-db-transaction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Framework DB Transaction
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        주의
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#14-db" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        14. 실제 DB로 변경
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#15" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        15. 최종 구조
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#16" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        16. 다음 단계
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -1427,14 +1154,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../mybatis_mapper_setup/" class="md-nav__link">
+      <a href="../datasource_bean_setup/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    MyBatis 매퍼 설정 및 SQL 실행
+    Bean 구현과 등록
   
 
     
@@ -1443,6 +1170,146 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../datasource_connection_verification/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    접속 검증과 운영 기준
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../mybatis_mapper_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MyBatis 매퍼
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../legacy_datasource_structure/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    참고
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
     </li>
   
 
@@ -1960,305 +1827,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#6-datasource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6. DataSource 구현을 위한 의존성 추가
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6. DataSource 구현을 위한 의존성 추가">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        각 의존성의 역할
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#buildgradle-gradle" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        build.gradle 변경 후 Gradle 동기화
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#db-driver" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        실제 DB Driver
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        멀티프로젝트 전환 후 의존성 재정리
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#7-datasource-property" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        7. DataSource Property 클래스 작성
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#8-framework-datasource-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        8. Framework DataSource Configuration 작성
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="8. Framework DataSource Configuration 작성">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#business-datasource-primary" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        왜 Business DataSource를 @Primary로 지정하는가
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#9-microserverapplication-framework-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        9. 현재 MicroserverApplication에서 Framework Configuration 인식
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#10-framework-datasource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10. Framework DataSource 접속 테스트
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="10. Framework DataSource 접속 테스트">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#101" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.1 실행 전 확인
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#102-vs-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.2 VS Code에서 테스트 실행 설정
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#103-vs-code" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.3 VS Code에서 실행 및 결과 확인
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#104" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.4 터미널에서 특정 테스트만 실행
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#105" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.5 실행 오류 확인
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#106" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        10.6 정상 결과 확인
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#11-business-datasource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        11. Business DataSource 접속 테스트
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#12-application-datasource" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        12. Application 기동 시 두 DataSource 동시 확인
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#13-transaction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        13. Transaction 사용 기준
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="13. Transaction 사용 기준">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#transaction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        일반 업무 Transaction
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#framework-db-transaction" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Framework DB Transaction
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        주의
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#14-db" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        14. 실제 DB로 변경
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#15" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        15. 최종 구조
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#16" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        16. 다음 단계
-      
-    </span>
-  </a>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -2276,7 +1844,13 @@
 
 
 
-<h1 id="datasource-framework">DataSource Framework 구성 및 접속 검증<a class="headerlink" href="#datasource-framework" title="Permanent link">&para;</a></h1>
+<h1 id="datasource">DataSource 구성 원칙과 외부 설정<a class="headerlink" href="#datasource" title="Permanent link">&para;</a></h1>
+<p>두 DB의 역할과 외부 리소스 구조를 정하고, Profile별 접속 설정을 연결한다.</p>
+<ol>
+<li><a href="./">DataSource 구성 원칙과 외부 설정</a></li>
+<li><a href="../datasource_bean_setup/">DataSource Bean 구현과 등록</a></li>
+<li><a href="../datasource_connection_verification/">DataSource 접속 검증과 운영 기준</a></li>
+</ol>
 <h2 id="1">1. 구성 목표<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>MicroServer Framework에서 Database 연결을 공통 기능으로 제공한다.</p>
 <p>기본적으로 다음 두 DataSource를 구성한다.</p>
@@ -2632,668 +2206,6 @@ Framework가 제공하는 Bean을 사용한다.</p>
 <p>새 구조에서는 외부 Resource를 끝까지 외부에 유지하고 Spring Boot의 Externalized Configuration으로 실행 시 직접 읽는다.</p>
 <p>이를 통해 <strong>환경별 설정 분리라는 기존 장점은 유지하면서, 환경별 Application 설정파일에 반복되던 Import 정의와 Classpath 복사 Build 작업을 제거</strong>한다.</p>
 <hr />
-<h2 id="6-datasource">6. DataSource 구현을 위한 의존성 추가<a class="headerlink" href="#6-datasource" title="Permanent link">&para;</a></h2>
-<p>DataSource Framework를 구현하려면 JDBC, Connection Pool, 테스트용
-Database와 Configuration Property 처리를 위한 의존성이 필요하다.</p>
-<p>현재는 아직 Framework와 Runtime을 실제 Gradle Sub Project로 분리하기
-전이므로 <strong>현재 MicroServer 프로젝트의 Root <code>build.gradle</code>에 필요한
-의존성을 추가하여 DataSource 구성을 먼저 검증한다.</strong></p>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w">    </span><span class="c1">// Spring MVC 기반 Web Application</span>
-</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc&#39;</span>
-</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
-</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="c1">// DataSource / JDBC / Transaction</span>
-</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">    </span><span class="c1">// HikariCP가 기본 Connection Pool 구현체로 함께 제공된다.</span>
-</span><span id="__span-18-7"><a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-jdbc&#39;</span>
-</span><span id="__span-18-8"><a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>
-</span><span id="__span-18-9"><a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">    </span><span class="c1">// Spring Boot 사용자 정의 설정(Configuration Properties) Metadata 생성</span>
-</span><span id="__span-18-10"><a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">    </span><span class="c1">// @ConfigurationProperties로 정의한 microserver.datasource 등의 설정정보를</span>
-</span><span id="__span-18-11"><a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">    </span><span class="c1">// 빌드 시 META-INF/spring-configuration-metadata.json으로 생성한다.</span>
-</span><span id="__span-18-12"><a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">    </span><span class="c1">// VS Code / IDE에서 사용자 정의 YAML Property의 자동완성, 설명 및 검증을 지원한다.</span>
-</span><span id="__span-18-13"><a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">    </span><span class="c1">// 애플리케이션 실행 기능이 아니라 개발도구 지원을 위한 Annotation Processor이다.</span>
-</span><span id="__span-18-14"><a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">    </span><span class="n">annotationProcessor</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-configuration-processor&#39;</span>
-</span><span id="__span-18-15"><a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a>
-</span><span id="__span-18-16"><a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">    </span><span class="c1">// Lombok Annotation을 Java 소스 컴파일 시 사용할 수 있게 한다.</span>
-</span><span id="__span-18-17"><a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a><span class="w">    </span><span class="c1">// @Getter, @Setter 등의 Annotation을 코드에서 사용할 수 있게 하며,</span>
-</span><span id="__span-18-18"><a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">    </span><span class="c1">// Lombok은 컴파일 과정에서 코드를 생성하므로 Runtime 의존성에는 포함하지 않는다.</span>
-</span><span id="__span-18-19"><a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">    </span><span class="n">compileOnly</span><span class="w"> </span><span class="s1">&#39;org.projectlombok:lombok&#39;</span>
-</span><span id="__span-18-20"><a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>
-</span><span id="__span-18-21"><a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">    </span><span class="c1">// Java 컴파일 시 Lombok Annotation Processor를 실행한다.</span>
-</span><span id="__span-18-22"><a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">    </span><span class="c1">// @Getter, @Setter 등의 Annotation을 분석하여 실제 Getter / Setter 코드를 생성한다.</span>
-</span><span id="__span-18-23"><a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">    </span><span class="n">annotationProcessor</span><span class="w"> </span><span class="s1">&#39;org.projectlombok:lombok&#39;</span>
-</span><span id="__span-18-24"><a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a>
-</span><span id="__span-18-25"><a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a><span class="w">    </span><span class="c1">// 테스트 소스(src/test/java)에서도 Lombok Annotation을 사용할 수 있게 한다.</span>
-</span><span id="__span-18-26"><a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="w">    </span><span class="c1">// 테스트용 클래스에서 @Getter, @Setter 등을 사용할 때 필요하다.</span>
-</span><span id="__span-18-27"><a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">    </span><span class="n">testCompileOnly</span><span class="w"> </span><span class="s1">&#39;org.projectlombok:lombok&#39;</span>
-</span><span id="__span-18-28"><a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a>
-</span><span id="__span-18-29"><a id="__codelineno-18-29" name="__codelineno-18-29" href="#__codelineno-18-29"></a><span class="w">    </span><span class="c1">// 테스트 Java 소스를 컴파일할 때도 Lombok Annotation Processor를 실행한다.</span>
-</span><span id="__span-18-30"><a id="__codelineno-18-30" name="__codelineno-18-30" href="#__codelineno-18-30"></a><span class="w">    </span><span class="c1">// 테스트 코드에 선언된 Lombok Annotation을 실제 코드로 생성한다.</span>
-</span><span id="__span-18-31"><a id="__codelineno-18-31" name="__codelineno-18-31" href="#__codelineno-18-31"></a><span class="w">    </span><span class="n">testAnnotationProcessor</span><span class="w"> </span><span class="s1">&#39;org.projectlombok:lombok&#39;</span>
-</span><span id="__span-18-32"><a id="__codelineno-18-32" name="__codelineno-18-32" href="#__codelineno-18-32"></a>
-</span><span id="__span-18-33"><a id="__codelineno-18-33" name="__codelineno-18-33" href="#__codelineno-18-33"></a><span class="w">    </span><span class="c1">// 초기 DataSource 구성 및 접속 검증용 In-Memory Database</span>
-</span><span id="__span-18-34"><a id="__codelineno-18-34" name="__codelineno-18-34" href="#__codelineno-18-34"></a><span class="w">    </span><span class="n">runtimeOnly</span><span class="w"> </span><span class="s1">&#39;com.h2database:h2&#39;</span>
-</span><span id="__span-18-35"><a id="__codelineno-18-35" name="__codelineno-18-35" href="#__codelineno-18-35"></a>
-</span><span id="__span-18-36"><a id="__codelineno-18-36" name="__codelineno-18-36" href="#__codelineno-18-36"></a><span class="w">    </span><span class="c1">// Spring MVC Test</span>
-</span><span id="__span-18-37"><a id="__codelineno-18-37" name="__codelineno-18-37" href="#__codelineno-18-37"></a><span class="w">    </span><span class="n">testImplementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc-test&#39;</span>
-</span><span id="__span-18-38"><a id="__codelineno-18-38" name="__codelineno-18-38" href="#__codelineno-18-38"></a>
-</span><span id="__span-18-39"><a id="__codelineno-18-39" name="__codelineno-18-39" href="#__codelineno-18-39"></a><span class="w">    </span><span class="c1">// JUnit Platform Test Runtime</span>
-</span><span id="__span-18-40"><a id="__codelineno-18-40" name="__codelineno-18-40" href="#__codelineno-18-40"></a><span class="w">    </span><span class="n">testRuntimeOnly</span><span class="w"> </span><span class="s1">&#39;org.junit.platform:junit-platform-launcher&#39;</span>
-</span><span id="__span-18-41"><a id="__codelineno-18-41" name="__codelineno-18-41" href="#__codelineno-18-41"></a><span class="o">}</span>
-</span></code></pre></div>
-<h3 id="_1">각 의존성의 역할<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
-<h4 id="spring-boot-starter-jdbc"><code>spring-boot-starter-jdbc</code><a class="headerlink" href="#spring-boot-starter-jdbc" title="Permanent link">&para;</a></h4>
-<p>DataSource와 JDBC 기반 Database 처리를 위한 Spring Boot Starter이다.</p>
-<p>이번 DataSource Framework에서 사용하는 주요 기능은 다음과 같다.</p>
-<ul>
-<li><code>DataSource</code></li>
-<li>JDBC 기반 Database 연결</li>
-<li><code>DataSourceTransactionManager</code></li>
-<li>Spring Transaction 기반</li>
-<li>HikariCP Connection Pool</li>
-</ul>
-<p>Spring Boot JDBC Starter를 사용하면 HikariCP가 기본 Connection Pool
-구현체로 포함되므로 HikariCP를 별도의 라이브러리로 추가하지 않는다.</p>
-<h4 id="spring-boot-configuration-processor"><code>spring-boot-configuration-processor</code><a class="headerlink" href="#spring-boot-configuration-processor" title="Permanent link">&para;</a></h4>
-<p>MicroServer에서는 Spring Boot 기본 Property가 아닌 Framework 전용
-Property를 사용한다.</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nt">microserver</span><span class="p">:</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">  </span><span class="nt">datasource</span><span class="p">:</span>
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="nt">framework</span><span class="p">:</span>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="nt">business</span><span class="p">:</span>
-</span></code></pre></div>
-<p><code>microserver.datasource</code>는 MicroServer가 정의한 사용자 Property이므로
-<code>@ConfigurationProperties</code>와 Configuration Processor를 이용하여
-Metadata를 생성한다.</p>
-<p>이 Metadata를 통해 VS Code와 IDE가 MicroServer Framework의 Property
-구조를 인식하고 자동완성 및 Property 검증을 지원할 수 있다.</p>
-<blockquote>
-<p><code>annotationProcessor</code>는 DataSource 실행을 위한 JDBC Driver가 아니다.
-Framework에서 정의한 Configuration Property 정보를 Build 시점에
-생성하기 위한 개발 지원 의존성이다.</p>
-</blockquote>
-<h4 id="lombok"><code>lombok</code><a class="headerlink" href="#lombok" title="Permanent link">&para;</a></h4>
-<p>Lombok은 Getter / Setter처럼 반복적으로 작성되는 Java 코드를 Annotation으로 생성하기 위해 사용한다.</p>
-<p>DataSource Property 클래스는 외부 YAML 값을 바인딩하기 위해 여러 Property 필드의 Getter / Setter가 필요하다. 이를 직접 작성하면 설정 항목이 늘어날수록 반복 코드가 많아지므로 <code>@Getter</code>, <code>@Setter</code>를 사용하여 Property 클래스의 핵심 설정 구조가 더 잘 보이도록 한다.</p>
-<p>Gradle에서는 Lombok Annotation을 소스에서 참조하기 위한 <code>compileOnly</code>와 컴파일 과정에서 실제 코드를 생성하기 위한 <code>annotationProcessor</code>를 함께 사용한다. 테스트 코드에서 Lombok을 사용할 수 있도록 <code>testCompileOnly</code>, <code>testAnnotationProcessor</code>도 함께 구성한다.</p>
-<blockquote>
-<p>Lombok은 Runtime에서 Getter / Setter를 동적으로 만드는 라이브러리가 아니다.
-Java 컴파일 과정에서 Annotation Processor가 필요한 코드를 생성하므로 Runtime 의존성으로 포함하지 않는다.</p>
-</blockquote>
-<h4 id="h2"><code>h2</code><a class="headerlink" href="#h2" title="Permanent link">&para;</a></h4>
-<p>H2는 실제 운영 Database가 아니라 <strong>DataSource Framework의 초기 구성과
-접속을 검증하기 위한 In-Memory Database</strong>로 사용한다.</p>
-<p>Framework DB와 Business DB를 각각 별도의 H2 Database로 생성하여 다음
-사항을 먼저 검증한다.</p>
-<ul>
-<li>두 DataSource Bean이 정상 생성되는가</li>
-<li>Framework / Business DataSource가 서로 분리되는가</li>
-<li>각각 독립적인 Connection을 얻을 수 있는가</li>
-<li>두 TransactionManager가 정상 구성되는가</li>
-</ul>
-<p>이 검증이 완료되면 H2 설정을 Oracle 등 실제 Database 접속정보로
-변경한다.</p>
-<h3 id="buildgradle-gradle"><code>build.gradle</code> 변경 후 Gradle 동기화<a class="headerlink" href="#buildgradle-gradle" title="Permanent link">&para;</a></h3>
-<p><code>build.gradle</code>을 저장하면 VS Code Java Extension에서 다음과 같은
-메시지가 나타날 수 있다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>A build file was modified.
-</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>Do you want to synchronize the Java classpath/configuration?
-</span></code></pre></div>
-<p>이 경우 <strong>Yes</strong>를 선택하여 변경된 Gradle 의존성을 Java Classpath와
-프로젝트 설정에 반영한다.</p>
-<h3 id="db-driver">실제 DB Driver<a class="headerlink" href="#db-driver" title="Permanent link">&para;</a></h3>
-<p>H2 검증 후 Oracle 등 실제 DB를 사용할 때는 해당 JDBC Driver를 프로젝트
-정책에 맞게 추가한다.</p>
-<p>Database Driver는 실제 접속 대상 DBMS가 결정되는 시점에 적용한다.</p>
-<h3 id="_2">멀티프로젝트 전환 후 의존성 재정리<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<p>현재 Root <code>build.gradle</code>에 의존성을 추가하는 것은 <strong>DataSource
-Framework의 구조와 접속을 먼저 검증하기 위한 초기 구성</strong>이다.</p>
-<p>Framework와 Runtime을 Gradle Sub Project로 분리한 뒤에는 각 의존성을
-실제 사용하는 모듈에 배치한다.</p>
-<pre class="mermaid"><code>flowchart LR
-    ROOT["Root Project&lt;br/&gt;공통 Build 기준"]
-    FW["Framework&lt;br/&gt;JDBC / HikariCP&lt;br/&gt;Configuration Processor"]
-    RT["Runtime&lt;br/&gt;Framework 의존&lt;br/&gt;업무 기능"]
-    TEST["개발 / Test&lt;br/&gt;H2 등 검증 의존성"]
-
-    ROOT --&gt; FW
-    ROOT --&gt; RT
-    FW --&gt; RT
-    TEST -.-&gt; FW
-    TEST -.-&gt; RT</code></pre>
-<p>최종적으로는 다음 원칙으로 의존성을 다시 검토한다.</p>
-<ul>
-<li>Framework 구현에 필요한 기술 의존성은 Framework 모듈이 관리한다.</li>
-<li>Runtime은 Framework를 의존하여 공통 DataSource 기능을 사용한다.</li>
-<li>업무 구현에만 필요한 라이브러리는 Runtime이 관리한다.</li>
-<li>H2와 같은 검증용 의존성은 실제 운영 Runtime에 불필요하게 포함되지
-    않도록 범위를 조정한다.</li>
-<li>JDBC Driver의 위치와 노출 범위는 Framework와 Runtime의 실행·배포
-    구조가 확정된 후 결정한다.</li>
-<li>Root Project에는 모든 라이브러리를 몰아넣지 않고 공통 Build 기준과
-    버전 관리 중심으로 구성한다.</li>
-</ul>
-<div class="admonition note">
-<p class="admonition-title">현재 단계와 최종 구조를 구분한다</p>
-<p>지금은 DataSource 기능 자체를 검증하기 위해 현재 프로젝트의 <code>build.gradle</code>에 필요한 의존성을 먼저 추가한다.</p>
-<p><strong>DataSource 검증이 완료되고 실제 멀티프로젝트 구조를 구성할 때 Framework / Runtime의 책임에 맞춰 의존성을 다시 분리한다.</strong></p>
-</div>
-<hr />
-<h2 id="7-datasource-property">7. DataSource Property 클래스 작성<a class="headerlink" href="#7-datasource-property" title="Permanent link">&para;</a></h2>
-<p>Framework에 다음 클래스를 생성한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>src/main/java
-</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>└── io/github/microserverlab/microserver
-</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    └── framework/datasource
-</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>        └── MicroServerDataSourceProperties.java
-</span></code></pre></div>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.datasource</span><span class="p">;</span>
-</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
-</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">lombok.Getter</span><span class="p">;</span>
-</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">lombok.Setter</span><span class="p">;</span>
-</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
-</span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.context.properties.ConfigurationProperties</span><span class="p">;</span>
-</span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
-</span><span id="__span-22-8"><a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="nd">@Getter</span>
-</span><span id="__span-22-9"><a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="nd">@ConfigurationProperties</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;microserver.datasource&quot;</span><span class="p">)</span>
-</span><span id="__span-22-10"><a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MicroServerDataSourceProperties</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-22-11"><a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>
-</span><span id="__span-22-12"><a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DataSourceProperty</span><span class="w"> </span><span class="n">framework</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataSourceProperty</span><span class="p">();</span>
-</span><span id="__span-22-13"><a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DataSourceProperty</span><span class="w"> </span><span class="n">business</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataSourceProperty</span><span class="p">();</span>
-</span><span id="__span-22-14"><a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>
-</span><span id="__span-22-15"><a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="w">    </span><span class="nd">@Getter</span>
-</span><span id="__span-22-16"><a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="w">    </span><span class="nd">@Setter</span>
-</span><span id="__span-22-17"><a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DataSourceProperty</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-22-18"><a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a>
-</span><span id="__span-22-19"><a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a><span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">driverClassName</span><span class="p">;</span>
-</span><span id="__span-22-20"><a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a><span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">jdbcUrl</span><span class="p">;</span>
-</span><span id="__span-22-21"><a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a><span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">username</span><span class="p">;</span>
-</span><span id="__span-22-22"><a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a><span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">password</span><span class="p">;</span>
-</span><span id="__span-22-23"><a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a><span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">maximumPoolSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
-</span><span id="__span-22-24"><a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a><span class="w">        </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">minimumIdle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
-</span><span id="__span-22-25"><a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-22-26"><a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>이 클래스는 외부 YAML의 <code>microserver.datasource</code> 설정을 Java 객체로 바인딩하여 Framework의 DataSource 생성 코드가 사용하게 한다.</p>
-<p>최상위 <code>framework</code>, <code>business</code> 객체는 생성 후 교체하지 않으므로 <code>final</code>로 유지하고 <code>@Getter</code>만 적용한다. 실제 YAML 값이 바인딩되는 내부 <code>DataSourceProperty</code>에는 <code>@Getter</code>, <code>@Setter</code>를 적용하여 Spring Boot가 각 설정값을 주입할 수 있게 한다.</p>
-<p>Lombok을 사용함으로써 <code>driverClassName</code>, <code>jdbcUrl</code>, <code>username</code>, <code>password</code>, Connection Pool 설정마다 반복되는 Getter / Setter를 직접 작성하지 않아도 된다. 이 클래스에서는 <code>equals</code>, <code>hashCode</code>, <code>toString</code>까지 자동 생성하는 <code>@Data</code>보다 필요한 기능만 명시하는 <code>@Getter</code>, <code>@Setter</code>를 사용한다.</p>
-<p>문자열 Key로 설정을 직접 읽지 않고 <code>@ConfigurationProperties</code>를 사용하는 이유는 <strong>설정 구조를 하나의 타입으로 정의하고 IDE 자동완성 및 검증을 받을 수 있게 하기 위해서</strong>이다.</p>
-<p>설정 구조는 다음과 같다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>microserver.datasource
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>├── framework
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>│   ├── jdbc-url
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>│   ├── username
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>│   └── ...
-</span><span id="__span-23-6"><a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>└── business
-</span><span id="__span-23-7"><a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a>    ├── jdbc-url
-</span><span id="__span-23-8"><a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a>    ├── username
-</span><span id="__span-23-9"><a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a>    └── ...
-</span></code></pre></div>
-<hr />
-<h2 id="8-framework-datasource-configuration">8. Framework DataSource Configuration 작성<a class="headerlink" href="#8-framework-datasource-configuration" title="Permanent link">&para;</a></h2>
-<p>다음 클래스를 생성한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>src/main/java
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>└── io/github/microserverlab/microserver
-</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    └── framework/datasource
-</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>        └── MicroServerDataSourceConfig.java
-</span></code></pre></div>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.framework.datasource</span><span class="p">;</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">com.zaxxer.hikari.HikariConfig</span><span class="p">;</span>
-</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">com.zaxxer.hikari.HikariDataSource</span><span class="p">;</span>
-</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.sql.DataSource</span><span class="p">;</span>
-</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
-</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Qualifier</span><span class="p">;</span>
-</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.context.properties.EnableConfigurationProperties</span><span class="p">;</span>
-</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Bean</span><span class="p">;</span>
-</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Configuration</span><span class="p">;</span>
-</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.context.annotation.Primary</span><span class="p">;</span>
-</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.jdbc.datasource.DataSourceTransactionManager</span><span class="p">;</span>
-</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.transaction.PlatformTransactionManager</span><span class="p">;</span>
-</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a>
-</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="nd">@Configuration</span>
-</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="nd">@EnableConfigurationProperties</span><span class="p">(</span><span class="n">MicroServerDataSourceProperties</span><span class="p">.</span><span class="na">class</span><span class="p">)</span>
-</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MicroServerDataSourceConfig</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a>
-</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span>
-</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="nf">frameworkDataSource</span><span class="p">(</span>
-</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="w">            </span><span class="n">MicroServerDataSourceProperties</span><span class="w"> </span><span class="n">properties</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a>
-</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">createDataSource</span><span class="p">(</span>
-</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a><span class="w">                </span><span class="s">&quot;microserver-framework-pool&quot;</span><span class="p">,</span>
-</span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a><span class="w">                </span><span class="n">properties</span><span class="p">.</span><span class="na">getFramework</span><span class="p">());</span>
-</span><span id="__span-25-26"><a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-25-27"><a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a>
-</span><span id="__span-25-28"><a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a><span class="w">    </span><span class="nd">@Primary</span>
-</span><span id="__span-25-29"><a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;businessDataSource&quot;</span><span class="p">)</span>
-</span><span id="__span-25-30"><a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="nf">businessDataSource</span><span class="p">(</span>
-</span><span id="__span-25-31"><a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a><span class="w">            </span><span class="n">MicroServerDataSourceProperties</span><span class="w"> </span><span class="n">properties</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-25-32"><a id="__codelineno-25-32" name="__codelineno-25-32" href="#__codelineno-25-32"></a>
-</span><span id="__span-25-33"><a id="__codelineno-25-33" name="__codelineno-25-33" href="#__codelineno-25-33"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">createDataSource</span><span class="p">(</span>
-</span><span id="__span-25-34"><a id="__codelineno-25-34" name="__codelineno-25-34" href="#__codelineno-25-34"></a><span class="w">                </span><span class="s">&quot;microserver-business-pool&quot;</span><span class="p">,</span>
-</span><span id="__span-25-35"><a id="__codelineno-25-35" name="__codelineno-25-35" href="#__codelineno-25-35"></a><span class="w">                </span><span class="n">properties</span><span class="p">.</span><span class="na">getBusiness</span><span class="p">());</span>
-</span><span id="__span-25-36"><a id="__codelineno-25-36" name="__codelineno-25-36" href="#__codelineno-25-36"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-25-37"><a id="__codelineno-25-37" name="__codelineno-25-37" href="#__codelineno-25-37"></a>
-</span><span id="__span-25-38"><a id="__codelineno-25-38" name="__codelineno-25-38" href="#__codelineno-25-38"></a><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;frameworkTransactionManager&quot;</span><span class="p">)</span>
-</span><span id="__span-25-39"><a id="__codelineno-25-39" name="__codelineno-25-39" href="#__codelineno-25-39"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">PlatformTransactionManager</span><span class="w"> </span><span class="nf">frameworkTransactionManager</span><span class="p">(</span>
-</span><span id="__span-25-40"><a id="__codelineno-25-40" name="__codelineno-25-40" href="#__codelineno-25-40"></a><span class="w">            </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-25-41"><a id="__codelineno-25-41" name="__codelineno-25-41" href="#__codelineno-25-41"></a>
-</span><span id="__span-25-42"><a id="__codelineno-25-42" name="__codelineno-25-42" href="#__codelineno-25-42"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataSourceTransactionManager</span><span class="p">(</span><span class="n">dataSource</span><span class="p">);</span>
-</span><span id="__span-25-43"><a id="__codelineno-25-43" name="__codelineno-25-43" href="#__codelineno-25-43"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-25-44"><a id="__codelineno-25-44" name="__codelineno-25-44" href="#__codelineno-25-44"></a>
-</span><span id="__span-25-45"><a id="__codelineno-25-45" name="__codelineno-25-45" href="#__codelineno-25-45"></a><span class="w">    </span><span class="nd">@Primary</span>
-</span><span id="__span-25-46"><a id="__codelineno-25-46" name="__codelineno-25-46" href="#__codelineno-25-46"></a><span class="w">    </span><span class="nd">@Bean</span><span class="p">(</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;businessTransactionManager&quot;</span><span class="p">)</span>
-</span><span id="__span-25-47"><a id="__codelineno-25-47" name="__codelineno-25-47" href="#__codelineno-25-47"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">PlatformTransactionManager</span><span class="w"> </span><span class="nf">businessTransactionManager</span><span class="p">(</span>
-</span><span id="__span-25-48"><a id="__codelineno-25-48" name="__codelineno-25-48" href="#__codelineno-25-48"></a><span class="w">            </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessDataSource&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-25-49"><a id="__codelineno-25-49" name="__codelineno-25-49" href="#__codelineno-25-49"></a>
-</span><span id="__span-25-50"><a id="__codelineno-25-50" name="__codelineno-25-50" href="#__codelineno-25-50"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">DataSourceTransactionManager</span><span class="p">(</span><span class="n">dataSource</span><span class="p">);</span>
-</span><span id="__span-25-51"><a id="__codelineno-25-51" name="__codelineno-25-51" href="#__codelineno-25-51"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-25-52"><a id="__codelineno-25-52" name="__codelineno-25-52" href="#__codelineno-25-52"></a>
-</span><span id="__span-25-53"><a id="__codelineno-25-53" name="__codelineno-25-53" href="#__codelineno-25-53"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="nf">createDataSource</span><span class="p">(</span>
-</span><span id="__span-25-54"><a id="__codelineno-25-54" name="__codelineno-25-54" href="#__codelineno-25-54"></a><span class="w">            </span><span class="n">String</span><span class="w"> </span><span class="n">poolName</span><span class="p">,</span>
-</span><span id="__span-25-55"><a id="__codelineno-25-55" name="__codelineno-25-55" href="#__codelineno-25-55"></a><span class="w">            </span><span class="n">MicroServerDataSourceProperties</span><span class="p">.</span><span class="na">DataSourceProperty</span><span class="w"> </span><span class="n">property</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-25-56"><a id="__codelineno-25-56" name="__codelineno-25-56" href="#__codelineno-25-56"></a>
-</span><span id="__span-25-57"><a id="__codelineno-25-57" name="__codelineno-25-57" href="#__codelineno-25-57"></a><span class="w">        </span><span class="n">HikariConfig</span><span class="w"> </span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HikariConfig</span><span class="p">();</span>
-</span><span id="__span-25-58"><a id="__codelineno-25-58" name="__codelineno-25-58" href="#__codelineno-25-58"></a>
-</span><span id="__span-25-59"><a id="__codelineno-25-59" name="__codelineno-25-59" href="#__codelineno-25-59"></a><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setPoolName</span><span class="p">(</span><span class="n">poolName</span><span class="p">);</span>
-</span><span id="__span-25-60"><a id="__codelineno-25-60" name="__codelineno-25-60" href="#__codelineno-25-60"></a><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setDriverClassName</span><span class="p">(</span><span class="n">property</span><span class="p">.</span><span class="na">getDriverClassName</span><span class="p">());</span>
-</span><span id="__span-25-61"><a id="__codelineno-25-61" name="__codelineno-25-61" href="#__codelineno-25-61"></a><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setJdbcUrl</span><span class="p">(</span><span class="n">property</span><span class="p">.</span><span class="na">getJdbcUrl</span><span class="p">());</span>
-</span><span id="__span-25-62"><a id="__codelineno-25-62" name="__codelineno-25-62" href="#__codelineno-25-62"></a><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setUsername</span><span class="p">(</span><span class="n">property</span><span class="p">.</span><span class="na">getUsername</span><span class="p">());</span>
-</span><span id="__span-25-63"><a id="__codelineno-25-63" name="__codelineno-25-63" href="#__codelineno-25-63"></a><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setPassword</span><span class="p">(</span><span class="n">property</span><span class="p">.</span><span class="na">getPassword</span><span class="p">());</span>
-</span><span id="__span-25-64"><a id="__codelineno-25-64" name="__codelineno-25-64" href="#__codelineno-25-64"></a><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setMaximumPoolSize</span><span class="p">(</span><span class="n">property</span><span class="p">.</span><span class="na">getMaximumPoolSize</span><span class="p">());</span>
-</span><span id="__span-25-65"><a id="__codelineno-25-65" name="__codelineno-25-65" href="#__codelineno-25-65"></a><span class="w">        </span><span class="n">config</span><span class="p">.</span><span class="na">setMinimumIdle</span><span class="p">(</span><span class="n">property</span><span class="p">.</span><span class="na">getMinimumIdle</span><span class="p">());</span>
-</span><span id="__span-25-66"><a id="__codelineno-25-66" name="__codelineno-25-66" href="#__codelineno-25-66"></a>
-</span><span id="__span-25-67"><a id="__codelineno-25-67" name="__codelineno-25-67" href="#__codelineno-25-67"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HikariDataSource</span><span class="p">(</span><span class="n">config</span><span class="p">);</span>
-</span><span id="__span-25-68"><a id="__codelineno-25-68" name="__codelineno-25-68" href="#__codelineno-25-68"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-25-69"><a id="__codelineno-25-69" name="__codelineno-25-69" href="#__codelineno-25-69"></a><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="business-datasource-primary">왜 Business DataSource를 <code>@Primary</code>로 지정하는가<a class="headerlink" href="#business-datasource-primary" title="Permanent link">&para;</a></h3>
-<p>Runtime의 대부분 Database 작업은 업무 DB를 사용한다.</p>
-<p>따라서 DataSource 또는 TransactionManager를 별도 Qualifier 없이 주입할
-때 Business DataSource가 기본으로 선택되도록 한다.</p>
-<p>Framework DB를 사용하는 Framework 기능은 다음처럼 Bean 이름을 명시한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span>
-</span></code></pre></div>
-<p>이 기준을 사용하면 업무 개발자가 일반적인 업무 코드에서 Framework DB를
-실수로 사용하는 가능성을 줄일 수 있다.</p>
-<hr />
-<h2 id="9-microserverapplication-framework-configuration">9. 현재 MicroserverApplication에서 Framework Configuration 인식<a class="headerlink" href="#9-microserverapplication-framework-configuration" title="Permanent link">&para;</a></h2>
-<p>현재 프로젝트의 실제 Main Class는 다음 Package를 사용한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>io.github.microserverlab.microserver
-</span></code></pre></div>
-<p>Main Class는 <code>io.github.microserverlab.microserver.MicroserverApplication</code>이며, Framework DataSource 클래스는 현재 단일 프로젝트 검증 단계에서 Main Package 하위에 배치한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>src/main/java/
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>└── io/github/microserverlab/microserver/
-</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a>    ├── MicroserverApplication.java
-</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>    └── framework/
-</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>        └── datasource/
-</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>            ├── MicroServerDataSourceProperties.java
-</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>            └── MicroServerDataSourceConfig.java
-</span></code></pre></div>
-<p><code>@SpringBootApplication</code>은 선언된 Package를 기준으로 하위 Package를 Component Scan한다. 따라서 <code>framework.datasource</code>가 <code>io.github.microserverlab.microserver</code> 하위에 있으면 <code>MicroServerDataSourceConfig</code>의 <code>@Configuration</code>도 자동으로 검색된다.</p>
-<p>현재 Main Class는 별도의 <code>@Import</code>를 추가하지 않고 그대로 사용한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver</span><span class="p">;</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
-</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
-</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a>
-</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="nd">@SpringBootApplication</span>
-</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MicroserverApplication</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a>
-</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a><span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">MicroserverApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
-</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>즉 현재 단계에서는 가이드 예제를 위해 별도의 <code>RuntimeApplication</code>을 만들지 않는다. 실제 멀티프로젝트 전환 후 Framework가 별도 Module/JAR로 분리되면 Component Scan 범위와 Spring Boot Auto Configuration 적용 방식을 다시 설계한다.</p>
-<hr />
-<h2 id="10-framework-datasource">10. Framework DataSource 접속 테스트<a class="headerlink" href="#10-framework-datasource" title="Permanent link">&para;</a></h2>
-<p>Framework DB 접속을 검증하는 테스트를 <code>src/test/java/io/github/microserverlab/microserver/</code> 하위에 작성한다.</p>
-<p>이 테스트는 단순히 H2가 실행되는지만 확인하는 것이 아니라 <strong>외부 설정 → Property 바인딩 → Framework DataSource Bean 생성 → 실제 Connection 획득</strong>까지 전체 연결 경로를 검증한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver</span><span class="p">;</span>
-</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>
-</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">org.assertj.core.api.Assertions.assertThat</span><span class="p">;</span>
-</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
-</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span><span class="p">;</span>
-</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.sql.DataSource</span><span class="p">;</span>
-</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>
-</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
-</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Qualifier</span><span class="p">;</span>
-</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="p">;</span>
-</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a>
-</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="nd">@SpringBootTest</span>
-</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="kd">class</span> <span class="nc">FrameworkDataSourceConnectionTest</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a>
-</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-30-17"><a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span>
-</span><span id="__span-30-18"><a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">;</span>
-</span><span id="__span-30-19"><a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a>
-</span><span id="__span-30-20"><a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a><span class="w">    </span><span class="nd">@Test</span>
-</span><span id="__span-30-21"><a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">frameworkDataSourceConnectionTest</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-30-22"><a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataSource</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-30-23"><a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a><span class="w">            </span><span class="n">assertThat</span><span class="p">(</span><span class="n">connection</span><span class="p">.</span><span class="na">isClosed</span><span class="p">()).</span><span class="na">isFalse</span><span class="p">();</span>
-</span><span id="__span-30-24"><a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span>
-</span><span id="__span-30-25"><a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a><span class="w">                    </span><span class="s">&quot;Framework DB URL = &quot;</span>
-</span><span id="__span-30-26"><a id="__codelineno-30-26" name="__codelineno-30-26" href="#__codelineno-30-26"></a><span class="w">                    </span><span class="o">+</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">getMetaData</span><span class="p">().</span><span class="na">getURL</span><span class="p">());</span>
-</span><span id="__span-30-27"><a id="__codelineno-30-27" name="__codelineno-30-27" href="#__codelineno-30-27"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-30-28"><a id="__codelineno-30-28" name="__codelineno-30-28" href="#__codelineno-30-28"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-30-29"><a id="__codelineno-30-29" name="__codelineno-30-29" href="#__codelineno-30-29"></a><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="101">10.1 실행 전 확인<a class="headerlink" href="#101" title="Permanent link">&para;</a></h3>
-<ol>
-<li>앞 절의 Gradle 의존성, Property 클래스, DataSource Configuration을 저장하고 Gradle 동기화를 완료한다.</li>
-<li>5절의 외부 설정 Import 규칙이 적용되어 있는지 확인한다. <code>local</code> Profile로 실행하면 외부 Resource의 <code>config/application-context/local/application-datasource.yml</code>을 읽어야 한다.</li>
-<li>해당 외부 YAML에 <strong>Framework / Business 두 DataSource 설정</strong>이 모두 있는지 확인한다. 테스트가 Framework DB만 사용해도 Spring 컨텍스트를 시작할 때 두 DataSource Bean을 모두 생성하기 때문이다.</li>
-<li>현재 예제의 <code>jdbc:h2:mem:...</code>는 테스트 JVM 안에서 생성되는 In-Memory DB이므로 별도의 H2 서버를 실행하지 않는다. 외부 DB로 변경했다면 해당 서버에 접속할 수 있어야 한다.</li>
-</ol>
-<p>아래 실행 예는 현재 개발환경의 다음 경로를 기준으로 한다. 다른 PC에서는 실제 경로로 변경한다.</p>
-<table>
-<thead>
-<tr>
-<th>구분</th>
-<th>경로</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Java 프로젝트</td>
-<td><code>/Users/jangkwankim/local-microserver/workspace/microserver</code></td>
-</tr>
-<tr>
-<td>외부 Resource Root</td>
-<td><code>/Users/jangkwankim/local-microserver/workspace/microserver-resource</code></td>
-</tr>
-<tr>
-<td>Local DB 설정</td>
-<td><code>microserver-resource/config/application-context/local/application-datasource.yml</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id="102-vs-code">10.2 VS Code에서 테스트 실행 설정<a class="headerlink" href="#102-vs-code" title="Permanent link">&para;</a></h3>
-<p><strong>애플리케이션 실행용 <code>launch.json</code>과 JUnit 테스트 실행 설정은 별개이다.</strong> <code>launch.json</code>에 Profile이나 Resource 경로를 지정했더라도 테스트 실행에 동일하게 전달된다고 가정하지 않는다.</p>
-<p>VS Code에서 열어 둔 Workspace의 <code>.vscode/settings.json</code>에 다음 항목을 추가한다. 현재 개발환경에서 <code>workspace</code> 폴더를 열었다면 <code>/Users/jangkwankim/local-microserver/workspace/.vscode/settings.json</code>이다.</p>
-<p>기존 설정은 유지하고 최상위 JSON 객체 안에 <code>java.test.config</code>와 <code>java.test.defaultConfig</code>를 추가한다. 아래 예시의 절대경로는 외부 Resource Root를 가리킨다.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;java.test.config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-local&quot;</span><span class="p">,</span>
-</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="w">      </span><span class="nt">&quot;vmArgs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="w">        </span><span class="s2">&quot;-Dspring.profiles.active=local&quot;</span><span class="p">,</span>
-</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">        </span><span class="s2">&quot;-Dmicroserver.resource-dir=/Users/jangkwankim/local-microserver/workspace/microserver-resource&quot;</span>
-</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="w">      </span><span class="p">]</span>
-</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="w">  </span><span class="nt">&quot;java.test.defaultConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-local&quot;</span>
-</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="p">}</span>
-</span></code></pre></div>
-<ul>
-<li><code>java.test.config</code>: Test Runner for Java가 테스트 JVM을 실행할 때 사용할 설정이다.</li>
-<li><code>vmArgs</code>: 테스트 JVM에 전달할 옵션이다. <code>-D</code>로 지정한 값은 Spring이 시스템 Property로 읽는다.</li>
-<li><code>spring.profiles.active=local</code>: Local 환경을 선택한다.</li>
-<li><code>microserver.resource-dir</code>: 외부 Resource Root를 지정한다. <code>config</code>나 YAML 파일 자체의 경로가 아니다.</li>
-<li><code>java.test.defaultConfig</code>: 여러 테스트 실행 설정 중 기본으로 사용할 설정 이름이다.</li>
-</ul>
-<p>설정은 <a href="https://code.visualstudio.com/docs/java/java-testing">VS Code Java 테스트 공식 문서</a>의 <code>java.test.config</code> 기준이다.</p>
-<h3 id="103-vs-code">10.3 VS Code에서 실행 및 결과 확인<a class="headerlink" href="#103-vs-code" title="Permanent link">&para;</a></h3>
-<ol>
-<li><code>FrameworkDataSourceConnectionTest.java</code>를 열고 저장한다.</li>
-<li>클래스 또는 <code>@Test</code> 메서드 옆의 초록색 실행 아이콘을 누른다. <code>Run Test</code> 링크가 표시되는 환경에서는 해당 링크를 눌러도 된다.</li>
-<li>또는 왼쪽 <strong>Testing</strong>(플라스크 아이콘)을 열고 <code>FrameworkDataSourceConnectionTest</code>를 찾아 실행한다.</li>
-<li>테스트가 끝나면 Testing 화면에서 성공 표시를 확인한다. 실패하면 해당 테스트를 선택하여 오류와 예외 원인을 확인한다.</li>
-<li>해당 테스트의 출력 화면에서 <code>Framework DB URL</code>을 확인한다. 현재 로컬 Java 파일처럼 출력 문구를 <code>DB URL</code>로 작성했다면 그 문구로 표시된다.</li>
-</ol>
-<p>실행 아이콘이나 테스트가 보이지 않으면 <strong>Test Runner for Java</strong> 확장이 설치·활성화되어 있는지, Java 프로젝트 로딩과 Gradle 동기화가 끝났는지 확인한다. 이 클래스는 <code>main()</code> 메서드가 아닌 JUnit 테스트이므로 테스트 실행 기능으로 실행한다.</p>
-<h3 id="104">10.4 터미널에서 특정 테스트만 실행<a class="headerlink" href="#104" title="Permanent link">&para;</a></h3>
-<p>VS Code 테스트 실행과 별도로 Gradle Wrapper로도 실행할 수 있다. 터미널에서 <code>build.gradle</code>과 <code>gradlew</code>가 있는 Java 프로젝트 디렉터리로 이동한다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nb">cd</span><span class="w"> </span>/Users/jangkwankim/local-microserver/workspace/microserver
-</span></code></pre></div>
-<p>다음 명령은 Local Profile과 외부 Resource Root를 환경변수로 전달하고, Framework 테스트 클래스만 선택하여 실행한다. <code>SPRING_APPLICATION_JSON</code>은 Spring Boot가 읽는 설정 전달 방식이며, Gradle이 시작하는 테스트 프로세스에도 환경변수가 전달된다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nv">SPRING_APPLICATION_JSON</span><span class="o">=</span><span class="s1">&#39;{&quot;spring&quot;:{&quot;profiles&quot;:{&quot;active&quot;:&quot;local&quot;}},&quot;microserver&quot;:{&quot;resource-dir&quot;:&quot;/Users/jangkwankim/local-microserver/workspace/microserver-resource&quot;}}&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">  </span>bash<span class="w"> </span>./gradlew<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="w">  </span>--tests<span class="w"> </span><span class="s1">&#39;io.github.microserverlab.microserver.FrameworkDataSourceConnectionTest&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="w">  </span>--rerun-tasks<span class="w"> </span>--info
-</span></code></pre></div>
-<ul>
-<li><code>bash ./gradlew</code>: Wrapper에 실행 권한이 없는 환경에서도 실행할 수 있다.</li>
-<li><code>--tests</code>: 실행할 테스트 클래스를 지정한다. 메서드명이 <code>connectionTest</code>이든 가이드의 <code>frameworkDataSourceConnectionTest</code>이든 해당 클래스의 테스트를 실행한다.</li>
-<li><code>--rerun-tasks</code>: 이전 결과가 있어도 테스트를 다시 수행한다.</li>
-<li><code>--info</code>: 테스트의 표준 출력과 상세 실행 정보를 확인한다.</li>
-</ul>
-<p>VS Code의 <code>java.test.config</code>는 위 터미널 실행에는 적용되지 않으므로 환경 설정을 별도로 전달한다. 현재 프로젝트의 Java Toolchain 기준인 <strong>JDK 25</strong>가 사용 가능해야 하며, 첫 실행에서는 Gradle 및 의존성 다운로드가 필요할 수 있다.</p>
-<p>테스트 성공 시 터미널에서 <code>BUILD SUCCESSFUL</code>을 확인하고, 상세 결과는 프로젝트의 <code>build/reports/tests/test/index.html</code>을 브라우저로 열어 확인한다. <code>BUILD SUCCESSFUL</code>과 함께 테스트가 실제 실행되었고 실패가 없는지도 확인한다.</p>
-<p>특정 테스트 선택과 보고서는 <a href="https://docs.gradle.org/current/userguide/java_testing.html">Gradle Java 테스트 공식 문서</a>를 참고한다.</p>
-<h3 id="105">10.5 실행 오류 확인<a class="headerlink" href="#105" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th>증상</th>
-<th>확인할 내용</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Profile 또는 Resource 경로 Placeholder 해석 실패</td>
-<td><code>spring.profiles.active</code>, <code>microserver.resource-dir</code>이 <strong>테스트 실행 환경</strong>에 전달됐는지 확인한다.</td>
-</tr>
-<tr>
-<td>외부 설정파일을 찾지 못함</td>
-<td>Resource Root 아래에 <code>config/application-context/local/application-datasource.yml</code>이 존재하는지 확인한다.</td>
-</tr>
-<tr>
-<td><code>jdbcUrl</code> 또는 Driver 관련 오류</td>
-<td>외부 YAML의 <code>microserver.datasource.framework</code>와 <code>business</code> 설정, JDBC 의존성 및 Gradle 동기화를 확인한다.</td>
-</tr>
-<tr>
-<td><code>No tests found</code> 또는 테스트 탐색 실패</td>
-<td>테스트 경로·Package·클래스명, <code>@Test</code> import가 <code>org.junit.jupiter.api.Test</code>인지, <code>useJUnitPlatform()</code> 설정을 확인한다.</td>
-</tr>
-<tr>
-<td>Java Toolchain 관련 오류</td>
-<td>프로젝트에서 요구하는 JDK 25 설치 및 Gradle의 JDK 인식 여부를 확인한다.</td>
-</tr>
-</tbody>
-</table>
-<h3 id="106">10.6 정상 결과 확인<a class="headerlink" href="#106" title="Permanent link">&para;</a></h3>
-<p>정상 결과 예:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>Framework DB URL = jdbc:h2:mem:frameworkdb
-</span></code></pre></div>
-<hr />
-<h2 id="11-business-datasource">11. Business DataSource 접속 테스트<a class="headerlink" href="#11-business-datasource" title="Permanent link">&para;</a></h2>
-<p>Business DB도 <code>src/test/java/io/github/microserverlab/microserver/</code> 하위에서 독립적으로 검증한다.</p>
-<p>별도 테스트가 필요한 이유는 두 DataSource Bean이 실수로 같은 설정이나 같은 Database를 바라보는 구성 오류를 확인하기 위해서이다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver</span><span class="p">;</span>
-</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>
-</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="kn">import static</span><span class="w"> </span><span class="nn">org.assertj.core.api.Assertions.assertThat</span><span class="p">;</span>
-</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a>
-</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span><span class="p">;</span>
-</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.sql.DataSource</span><span class="p">;</span>
-</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a>
-</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.junit.jupiter.api.Test</span><span class="p">;</span>
-</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Autowired</span><span class="p">;</span>
-</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Qualifier</span><span class="p">;</span>
-</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.test.context.SpringBootTest</span><span class="p">;</span>
-</span><span id="__span-35-12"><a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a>
-</span><span id="__span-35-13"><a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a><span class="nd">@SpringBootTest</span>
-</span><span id="__span-35-14"><a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a><span class="kd">class</span> <span class="nc">BusinessDataSourceConnectionTest</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-35-15"><a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a>
-</span><span id="__span-35-16"><a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a><span class="w">    </span><span class="nd">@Autowired</span>
-</span><span id="__span-35-17"><a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a><span class="w">    </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessDataSource&quot;</span><span class="p">)</span>
-</span><span id="__span-35-18"><a id="__codelineno-35-18" name="__codelineno-35-18" href="#__codelineno-35-18"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">;</span>
-</span><span id="__span-35-19"><a id="__codelineno-35-19" name="__codelineno-35-19" href="#__codelineno-35-19"></a>
-</span><span id="__span-35-20"><a id="__codelineno-35-20" name="__codelineno-35-20" href="#__codelineno-35-20"></a><span class="w">    </span><span class="nd">@Test</span>
-</span><span id="__span-35-21"><a id="__codelineno-35-21" name="__codelineno-35-21" href="#__codelineno-35-21"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">businessDataSourceConnectionTest</span><span class="p">()</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-35-22"><a id="__codelineno-35-22" name="__codelineno-35-22" href="#__codelineno-35-22"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataSource</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-35-23"><a id="__codelineno-35-23" name="__codelineno-35-23" href="#__codelineno-35-23"></a><span class="w">            </span><span class="n">assertThat</span><span class="p">(</span><span class="n">connection</span><span class="p">.</span><span class="na">isClosed</span><span class="p">()).</span><span class="na">isFalse</span><span class="p">();</span>
-</span><span id="__span-35-24"><a id="__codelineno-35-24" name="__codelineno-35-24" href="#__codelineno-35-24"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span>
-</span><span id="__span-35-25"><a id="__codelineno-35-25" name="__codelineno-35-25" href="#__codelineno-35-25"></a><span class="w">                    </span><span class="s">&quot;Business DB URL = &quot;</span>
-</span><span id="__span-35-26"><a id="__codelineno-35-26" name="__codelineno-35-26" href="#__codelineno-35-26"></a><span class="w">                    </span><span class="o">+</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">getMetaData</span><span class="p">().</span><span class="na">getURL</span><span class="p">());</span>
-</span><span id="__span-35-27"><a id="__codelineno-35-27" name="__codelineno-35-27" href="#__codelineno-35-27"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-35-28"><a id="__codelineno-35-28" name="__codelineno-35-28" href="#__codelineno-35-28"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-35-29"><a id="__codelineno-35-29" name="__codelineno-35-29" href="#__codelineno-35-29"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>정상 결과 예:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>Business DB URL = jdbc:h2:mem:businessdb
-</span></code></pre></div>
-<p>두 테스트가 각각 다른 URL을 출력해야 한다.</p>
-<hr />
-<h2 id="12-application-datasource">12. Application 기동 시 두 DataSource 동시 확인<a class="headerlink" href="#12-application-datasource" title="Permanent link">&para;</a></h2>
-<p>테스트뿐 아니라 실제 Runtime 기동 시 두 DataSource가 정상 생성되는지도
-확인한다.</p>
-<p>임시 검증용 <code>ApplicationRunner</code>는 <code>io.github.microserverlab.microserver.verify</code> Package에 작성한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.verify</span><span class="p">;</span>
-</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>
-</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.sql.Connection</span><span class="p">;</span>
-</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">javax.sql.DataSource</span><span class="p">;</span>
-</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>
-</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.beans.factory.annotation.Qualifier</span><span class="p">;</span>
-</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.ApplicationArguments</span><span class="p">;</span>
-</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.ApplicationRunner</span><span class="p">;</span>
-</span><span id="__span-37-9"><a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.stereotype.Component</span><span class="p">;</span>
-</span><span id="__span-37-10"><a id="__codelineno-37-10" name="__codelineno-37-10" href="#__codelineno-37-10"></a>
-</span><span id="__span-37-11"><a id="__codelineno-37-11" name="__codelineno-37-11" href="#__codelineno-37-11"></a><span class="nd">@Component</span>
-</span><span id="__span-37-12"><a id="__codelineno-37-12" name="__codelineno-37-12" href="#__codelineno-37-12"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">DataSourceConnectionVerifier</span><span class="w"> </span><span class="kd">implements</span><span class="w"> </span><span class="n">ApplicationRunner</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-37-13"><a id="__codelineno-37-13" name="__codelineno-37-13" href="#__codelineno-37-13"></a>
-</span><span id="__span-37-14"><a id="__codelineno-37-14" name="__codelineno-37-14" href="#__codelineno-37-14"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">frameworkDataSource</span><span class="p">;</span>
-</span><span id="__span-37-15"><a id="__codelineno-37-15" name="__codelineno-37-15" href="#__codelineno-37-15"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kd">final</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">businessDataSource</span><span class="p">;</span>
-</span><span id="__span-37-16"><a id="__codelineno-37-16" name="__codelineno-37-16" href="#__codelineno-37-16"></a>
-</span><span id="__span-37-17"><a id="__codelineno-37-17" name="__codelineno-37-17" href="#__codelineno-37-17"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">DataSourceConnectionVerifier</span><span class="p">(</span>
-</span><span id="__span-37-18"><a id="__codelineno-37-18" name="__codelineno-37-18" href="#__codelineno-37-18"></a><span class="w">            </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;frameworkDataSource&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">frameworkDataSource</span><span class="p">,</span>
-</span><span id="__span-37-19"><a id="__codelineno-37-19" name="__codelineno-37-19" href="#__codelineno-37-19"></a><span class="w">            </span><span class="nd">@Qualifier</span><span class="p">(</span><span class="s">&quot;businessDataSource&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">businessDataSource</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-37-20"><a id="__codelineno-37-20" name="__codelineno-37-20" href="#__codelineno-37-20"></a>
-</span><span id="__span-37-21"><a id="__codelineno-37-21" name="__codelineno-37-21" href="#__codelineno-37-21"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">frameworkDataSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">frameworkDataSource</span><span class="p">;</span>
-</span><span id="__span-37-22"><a id="__codelineno-37-22" name="__codelineno-37-22" href="#__codelineno-37-22"></a><span class="w">        </span><span class="k">this</span><span class="p">.</span><span class="na">businessDataSource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">businessDataSource</span><span class="p">;</span>
-</span><span id="__span-37-23"><a id="__codelineno-37-23" name="__codelineno-37-23" href="#__codelineno-37-23"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-37-24"><a id="__codelineno-37-24" name="__codelineno-37-24" href="#__codelineno-37-24"></a>
-</span><span id="__span-37-25"><a id="__codelineno-37-25" name="__codelineno-37-25" href="#__codelineno-37-25"></a><span class="w">    </span><span class="nd">@Override</span>
-</span><span id="__span-37-26"><a id="__codelineno-37-26" name="__codelineno-37-26" href="#__codelineno-37-26"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="n">ApplicationArguments</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-37-27"><a id="__codelineno-37-27" name="__codelineno-37-27" href="#__codelineno-37-27"></a><span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="s">&quot;Framework&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">frameworkDataSource</span><span class="p">);</span>
-</span><span id="__span-37-28"><a id="__codelineno-37-28" name="__codelineno-37-28" href="#__codelineno-37-28"></a><span class="w">        </span><span class="n">verify</span><span class="p">(</span><span class="s">&quot;Business&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">businessDataSource</span><span class="p">);</span>
-</span><span id="__span-37-29"><a id="__codelineno-37-29" name="__codelineno-37-29" href="#__codelineno-37-29"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-37-30"><a id="__codelineno-37-30" name="__codelineno-37-30" href="#__codelineno-37-30"></a>
-</span><span id="__span-37-31"><a id="__codelineno-37-31" name="__codelineno-37-31" href="#__codelineno-37-31"></a><span class="w">    </span><span class="kd">private</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">verify</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">DataSource</span><span class="w"> </span><span class="n">dataSource</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">Exception</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-37-32"><a id="__codelineno-37-32" name="__codelineno-37-32" href="#__codelineno-37-32"></a><span class="w">        </span><span class="k">try</span><span class="w"> </span><span class="p">(</span><span class="n">Connection</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">dataSource</span><span class="p">.</span><span class="na">getConnection</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-37-33"><a id="__codelineno-37-33" name="__codelineno-37-33" href="#__codelineno-37-33"></a><span class="w">            </span><span class="n">System</span><span class="p">.</span><span class="na">out</span><span class="p">.</span><span class="na">println</span><span class="p">(</span>
-</span><span id="__span-37-34"><a id="__codelineno-37-34" name="__codelineno-37-34" href="#__codelineno-37-34"></a><span class="w">                    </span><span class="s">&quot;[DataSource OK] &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">name</span>
-</span><span id="__span-37-35"><a id="__codelineno-37-35" name="__codelineno-37-35" href="#__codelineno-37-35"></a><span class="w">                    </span><span class="o">+</span><span class="w"> </span><span class="s">&quot; : &quot;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">connection</span><span class="p">.</span><span class="na">getMetaData</span><span class="p">().</span><span class="na">getURL</span><span class="p">());</span>
-</span><span id="__span-37-36"><a id="__codelineno-37-36" name="__codelineno-37-36" href="#__codelineno-37-36"></a><span class="w">        </span><span class="p">}</span>
-</span><span id="__span-37-37"><a id="__codelineno-37-37" name="__codelineno-37-37" href="#__codelineno-37-37"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-37-38"><a id="__codelineno-37-38" name="__codelineno-37-38" href="#__codelineno-37-38"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>Application 기동 로그에서 다음과 같이 확인한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>[DataSource OK] Framework : jdbc:h2:mem:frameworkdb
-</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>[DataSource OK] Business  : jdbc:h2:mem:businessdb
-</span></code></pre></div>
-<p>접속 검증이 끝나면 이 임시 클래스는 제거한다. 운영용 Health Check는 이후
-Actuator와 Framework 관리기능을 설계할 때 별도로 구성한다.</p>
-<hr />
-<h2 id="13-transaction">13. Transaction 사용 기준<a class="headerlink" href="#13-transaction" title="Permanent link">&para;</a></h2>
-<p>두 개의 TransactionManager가 존재하므로 어느 DB의 Transaction인지
-명확해야 한다.</p>
-<h3 id="transaction">일반 업무 Transaction<a class="headerlink" href="#transaction" title="Permanent link">&para;</a></h3>
-<p>Business TransactionManager를 <code>@Primary</code>로 지정했으므로 일반적인
-업무에서는 다음처럼 사용할 수 있다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="nd">@Transactional</span>
-</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">processBusiness</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">    </span><span class="c1">// Business DB 처리</span>
-</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="framework-db-transaction">Framework DB Transaction<a class="headerlink" href="#framework-db-transaction" title="Permanent link">&para;</a></h3>
-<p>Framework DB를 사용하는 기능에서는 TransactionManager를 명시한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="nd">@Transactional</span><span class="p">(</span><span class="n">transactionManager</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;frameworkTransactionManager&quot;</span><span class="p">)</span>
-</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">updateFrameworkData</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">    </span><span class="c1">// Framework DB 처리</span>
-</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="p">}</span>
-</span></code></pre></div>
-<h3 id="_3">주의<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<p>Framework DB와 Business DB를 하나의 메서드에서 동시에 변경한다고 해서 두
-Database의 Transaction이 자동으로 하나의 Transaction이 되는 것은 아니다.</p>
-<p>두 DB를 하나의 원자적 Transaction으로 묶어야 하는 요구사항이 생기면 분산
-Transaction 또는 업무 보상 방식 등을 별도로 설계한다.</p>
-<p>초기 Framework에서는 두 DataSource의 Transaction을 독립적으로 관리한다.</p>
-<hr />
-<h2 id="14-db">14. 실제 DB로 변경<a class="headerlink" href="#14-db" title="Permanent link">&para;</a></h2>
-<p>H2 검증이 완료되면 각 실행환경의 <code>application-datasource.yml</code> 접속정보를 실제 환경에 맞게 변경한다.</p>
-<p>예시:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="nt">microserver</span><span class="p">:</span>
-</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="nt">datasource</span><span class="p">:</span>
-</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a>
-</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a><span class="w">    </span><span class="nt">framework</span><span class="p">:</span>
-</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">      </span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oracle.jdbc.OracleDriver</span>
-</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="w">      </span><span class="nt">jdbc-url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jdbc:oracle:thin:@//framework-db-host:1521/SERVICE</span>
-</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">      </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FRAMEWORK_DB_USERNAME}</span>
-</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">      </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${FRAMEWORK_DB_PASSWORD}</span>
-</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">      </span><span class="nt">maximum-pool-size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
-</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">      </span><span class="nt">minimum-idle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2</span>
-</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a>
-</span><span id="__span-41-12"><a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a><span class="w">    </span><span class="nt">business</span><span class="p">:</span>
-</span><span id="__span-41-13"><a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="w">      </span><span class="nt">driver-class-name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">oracle.jdbc.OracleDriver</span>
-</span><span id="__span-41-14"><a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a><span class="w">      </span><span class="nt">jdbc-url</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">jdbc:oracle:thin:@//business-db-host:1521/SERVICE</span>
-</span><span id="__span-41-15"><a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a><span class="w">      </span><span class="nt">username</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${BUSINESS_DB_USERNAME}</span>
-</span><span id="__span-41-16"><a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a><span class="w">      </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${BUSINESS_DB_PASSWORD}</span>
-</span><span id="__span-41-17"><a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">      </span><span class="nt">maximum-pool-size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
-</span><span id="__span-41-18"><a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">      </span><span class="nt">minimum-idle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
-</span></code></pre></div>
-<p>외부 Resource로 분리해도 Password를 YAML에 평문으로 저장하면 해당 파일의 읽기 권한을 가진 사용자는 값을 확인할 수 있다.</p>
-<p>따라서 실제 환경에서는 <code>${FRAMEWORK_DB_PASSWORD}</code>, <code>${BUSINESS_DB_PASSWORD}</code>처럼 환경변수 또는 향후 Secret 관리 기능으로 값을 주입한다.</p>
-<p>외부 Resource 분리는 <strong>Source/JAR과 환경설정을 분리하는 구조적 장치</strong>이고, Secret 보호는 <strong>접근권한과 Secret 전달방식을 별도로 설계해야 하는 보안 영역</strong>이다.</p>
-<hr />
-<h2 id="15">15. 최종 구조<a class="headerlink" href="#15" title="Permanent link">&para;</a></h2>
-<pre class="mermaid"><code>flowchart TB
-    EXT["별도 MicroServer Resource&lt;br/&gt;${spring.profiles.active} 환경의 application-datasource.yml"]
-
-    subgraph FRAMEWORK["MicroServer Framework"]
-        PROP["MicroServerDataSourceProperties"]
-
-        subgraph FDB["Framework DB 영역"]
-            FDS["frameworkDataSource"]
-            FTX["frameworkTransactionManager"]
-        end
-
-        subgraph BDB["Business DB 영역"]
-            BDS["businessDataSource&lt;br/&gt;@Primary"]
-            BTX["businessTransactionManager&lt;br/&gt;@Primary"]
-        end
-    end
-
-    subgraph RUNTIME["Runtime Application"]
-        FS["Framework 기능"]
-        BS["Business Service"]
-        MAP["Mapper / Repository"]
-    end
-
-    EXT --&gt; PROP
-    PROP --&gt; FDS
-    PROP --&gt; BDS
-
-    FDS --&gt; FTX
-    BDS --&gt; BTX
-
-    FDS --&gt; FS
-    BDS --&gt; MAP
-    BS --&gt; MAP</code></pre>
-<p>이 구조에서 Framework는 <strong>두 DataSource를 생성하고 사용할 수 있는 기술
-기반</strong>을 제공한다.</p>
-<p>Runtime은 Framework 내부의 DataSource 생성 방법을 알 필요가 없으며, 업무
-Database 접근에 필요한 Mapper / Repository와 업무 Transaction 범위에
-집중한다.</p>
-<hr />
-<h2 id="16">16. 다음 단계<a class="headerlink" href="#16" title="Permanent link">&para;</a></h2>
-<p>두 DataSource의 생성과 접속 검증이 완료되면 Data Access 계층을 확장한다.</p>
-<p>MyBatis 공통기능을 Framework에 둔다는 것은 업무 Mapper와 SQL을 Framework로 이동한다는 뜻이 아니다. <strong>SqlSessionFactory, SqlSessionTemplate, Mapper Scan 기준 등 공통 기술 기반은 Framework가 제공하고 실제 Mapper Interface / XML / SQL은 Runtime이 소유</strong>하는 방향으로 구성한다.</p>
-<p>다음 순서로 확장한다.</p>
-<ol>
-<li>Business DataSource와 MyBatis 연결</li>
-<li>Runtime Mapper Interface / Mapper XML 작성</li>
-<li>Business <code>SqlSessionFactory</code> / <code>SqlSessionTemplate</code> 구성</li>
-<li>Framework DB 전용 MyBatis 구성이 필요한지 검토</li>
-<li>Transaction 동작 검증</li>
-<li>DataSource Health Check 구성</li>
-<li>Framework Auto Configuration 전환</li>
-<li>Gradle 멀티프로젝트 전환 후 Framework / Runtime 의존성 재배치</li>
-<li>H2, JDBC Driver 등 개발·테스트·운영 의존성 범위 최종 정리</li>
-</ol>
-<p>DataSource 기반이 검증되기 전에는 MyBatis Mapper 구조를 먼저 확장하지
-않는다. 먼저 <strong>두 DataSource가 Framework에서 생성되고 Runtime에서
-정확하게 구분되어 사용되는 것</strong>을 확인한다.</p>
 
 
 
