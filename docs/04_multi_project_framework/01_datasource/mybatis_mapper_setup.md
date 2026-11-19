@@ -653,24 +653,116 @@ class MyBatisMapperIntegrationTest {
 
 ### 테스트 실행
 
-Gradle Wrapper가 있는 프로젝트 루트에서 실행한다. 예시의 `/opt/microserver-resource`를 4절의 Local H2 YAML 두 파일을 저장한 리소스 루트의 실제 절대 경로로 바꾼다.
+두 DB에 테스트 데이터를 넣고 서비스를 호출한다. 각 매퍼가 담당 DB의 값을 조회하는지, 각 Factory에 담당 SQL만 등록되는지 확인한다. 아래 순서로 파일을 준비한 뒤 VS Code에서 테스트를 실행한다.
 
-```bash
-export SPRING_PROFILES_ACTIVE=local
-export SPRING_APPLICATION_JSON='{"microserver":{"resource-dir":"/opt/microserver-resource"}}'
+1. **테스트 파일을 프로젝트에 작성한다.**
 
-bash ./gradlew test \
-  --tests 'io.github.microserverlab.microserver.MyBatisMapperIntegrationTest' \
-  --rerun-tasks
-```
+    위 SQL 예제 두 개와 Java 테스트 예제를 다음 위치에 저장한다. 경로는 프로젝트 루트 기준이다.
 
-`BUILD SUCCESSFUL`과 `build/reports/tests/test/index.html`의 테스트 두 건을 확인한다. 첫 테스트는 실제 서비스 → 매퍼 → JDBC 경로를 실행하고 두 DB의 값이 구분되는지 검증한다. 두 번째 테스트는 상대 DB의 SQL이 각 Factory에 등록되지 않았는지 확인한다.
+    | 파일 위치 | 역할 |
+    | --- | --- |
+    | `src/test/resources/sql/framework-mapper-fixture.sql` | Framework DB의 테스트 테이블과 데이터를 준비한다. |
+    | `src/test/resources/sql/business-mapper-fixture.sql` | Business DB의 테스트 테이블과 데이터를 준비한다. |
+    | `src/test/java/io/github/microserverlab/microserver/MyBatisMapperIntegrationTest.java` | SQL 파일을 각 DB에 실행하고 서비스 조회와 SQL 등록 범위를 검증한다. |
+
+2. **외부 Local 설정 파일을 준비한다.**
+
+    4절의 설정에 따라 외부 리소스 루트 아래에 두 파일을 둔다. DataSource YAML은 이전 장에서 작성한 파일을 사용한다.
+
+    ```text
+    <외부 리소스 루트>/
+    └── config/application-context/local/
+        ├── application-datasource.yml
+        └── application-mybatis.yml
+    ```
+
+    DataSource YAML의 H2 DB 이름은 `frameworkdb`와 `businessdb`로 설정한다. 테스트 코드가 이 이름으로 접속 여부를 확인한다.
+
+3. **VS Code의 테스트 실행 설정을 확인한다.**
+
+    `microserver`와 `microserver_resource`가 함께 있는 `workspace` 폴더를 VS Code에서 연다. 이 폴더의 `.vscode/settings.json`에 테스트용 JVM 옵션을 설정한다. 이미 아래 항목이 있으면 현재 값을 확인한다. 다른 설정이 있으면 필요한 항목을 기존 JSON에 합친다.
+
+    ```json
+    {
+        "java.test.config": [
+            {
+                "name": "microserver-local",
+                "vmArgs": [
+                    "-Dspring.profiles.active=local",
+                    "-Dmicroserver.resource-dir=${workspaceFolder}/microserver_resource"
+                ]
+            }
+        ],
+        "java.test.defaultConfig": "microserver-local"
+    }
+    ```
+
+    `${workspaceFolder}`는 VS Code에서 연 폴더다. 위 설정은 그 아래의 `microserver_resource`를 외부 리소스 루트로 사용한다. 실제 폴더 구조에 맞게 경로를 지정한다.
+
+    **Run Test는 이 JVM 옵션으로 Profile과 리소스 경로를 전달한다.** 터미널에서 별도로 `export`할 필요가 없다. 애플리케이션 기동용 `launch.json`과 테스트용 `java.test.config`는 각각 설정한다.
+
+4. **VS Code에서 MyBatis 통합 테스트를 실행한다.**
+
+    `MyBatisMapperIntegrationTest.java`를 연다. 클래스 이름 위의 **Run Test** 또는 옆의 초록색 ▶ 버튼을 눌러 클래스의 테스트 두 건을 실행한다. Test Runner for Java 확장이 필요하다.
+
+    테스트가 Spring 컨텍스트를 띄우고 각 DataSource에 SQL 파일을 실행한다. 준비한 데이터를 서비스와 매퍼를 통해 조회한다. 중단점에서 실행 흐름을 보려면 **Debug Test**를 선택한다.
+
+5. **Testing 창에서 결과를 확인한다.**
+
+    왼쪽 활동 표시줄의 시험관 아이콘으로 **Testing** 창을 연다. `MyBatisMapperIntegrationTest` 아래의 테스트 두 건이 모두 통과했는지 확인한다. 실패한 항목을 선택하면 오류 메시지와 실행 결과를 볼 수 있다. [VS Code Java 테스트 실행](https://code.visualstudio.com/docs/java/java-testing)
+
+    | 테스트 메서드 | 확인하는 내용 |
+    | --- | --- |
+    | `queriesEachDatabaseThroughItsServiceAndMapper` | 서비스 → 매퍼 → JDBC 호출로 각 DB의 값을 조회한다. Framework DB는 `Framework DB`, Business DB는 `Business DB`를 반환해야 한다. |
+    | `registersOnlyTheStatementsOwnedByEachFactory` | 각 Factory에 담당 매퍼의 SQL이 등록되어 있고, 상대 DB의 매퍼 SQL은 등록되어 있지 않은지 확인한다. |
+
+!!! tip "참고 팁 — 터미널에서 Gradle로 테스트 실행"
+    macOS 또는 Linux 터미널에서는 아래 명령으로 같은 테스트를 실행할 수 있다. `cd`의 경로는 `build.gradle`과 `gradlew`가 있는 프로젝트 루트로 바꾼다. JSON의 `/opt/microserver-resource`는 외부 YAML을 저장한 리소스 루트의 실제 절대 경로로 바꾼다.
+
+    ```bash
+    cd /프로젝트/절대경로/microserver
+    export SPRING_PROFILES_ACTIVE=local
+    export SPRING_APPLICATION_JSON='{"microserver":{"resource-dir":"/opt/microserver-resource"}}'
+
+    bash ./gradlew test \
+      --tests 'io.github.microserverlab.microserver.MyBatisMapperIntegrationTest' \
+      --rerun-tasks
+    ```
+
+    필요한 Spring 환경변수가 현재 터미널에 이미 같은 값으로 지정되어 있으면 `export`는 생략한다. `java.test.config`의 JVM 옵션은 터미널의 Gradle 명령에 자동으로 전달되지 않는다.
+
+    `--tests`는 테스트 클래스를 선택한다. `--rerun-tasks`는 이전 실행 결과가 있어도 테스트를 다시 수행한다. `BUILD SUCCESSFUL`을 확인하고, 프로젝트 루트의 `build/reports/tests/test/index.html`을 브라우저로 열어 결과를 확인한다.
 
 ### 애플리케이션 기동과 패키징
 
-같은 환경변수로 `bash ./gradlew bootRun`을 실행하면 외부 설정, 세션 Bean, 매퍼 XML을 읽어 기동한다. 조회용 테이블과 데이터는 통합 테스트가 테스트 JVM에서 준비한다. `bootRun` 프로세스에서 매퍼를 직접 호출하려면 그 프로세스가 접속하는 DB에도 스키마와 데이터가 있어야 한다. H2 메모리 DB는 프로세스 간에 공유되지 않는다.
+통합 테스트를 마친 뒤에는 애플리케이션을 직접 기동하거나 배포용 실행 JAR을 만들 수 있다. **기동은 설정을 읽어 실행하는 작업이고, 패키징은 배포할 파일을 만드는 작업이다.** 아래 명령은 `build.gradle`과 `gradlew`가 있는 프로젝트 루트에서 실행한다.
 
-`bash ./gradlew bootJar`로 패키징하면 설정 XML과 두 매퍼 XML이 실행 JAR의 `BOOT-INF/classes/mybatis/` 아래에 들어간다. 외부 YAML은 실행 시 별도로 읽는다.
+1. **애플리케이션 기동 — `bootRun`**
+
+    외부 YAML과 MyBatis 설정을 읽어 실제 애플리케이션을 실행한다. DB별 세션 Bean을 만들고 매퍼 XML의 SQL을 등록하는지 확인할 때 사용한다.
+
+    위 터미널 참고 팁처럼 `local` Profile과 외부 리소스 루트를 지정한 뒤 실행한다.
+
+    ```bash
+    bash ./gradlew bootRun
+    ```
+
+    기동 로그에서 애플리케이션 시작과 두 DB 연결을 확인한다. 실행을 종료하려면 터미널에서 `Ctrl+C`를 누른다.
+
+    !!! note "H2 조회 데이터 준비"
+        통합 테스트의 SQL 파일은 테스트가 실행되는 JVM의 DB에 데이터를 만든다. `bootRun`은 별도 JVM에서 실행하므로 자체 H2 메모리 DB를 사용한다. 이 애플리케이션에서 매퍼를 호출하려면 해당 DB에도 테이블과 데이터를 준비해야 한다.
+
+2. **배포용 실행 JAR 생성 — `bootJar`**
+
+    컴파일한 코드, 리소스, 실행에 필요한 라이브러리를 하나의 Spring Boot 실행 JAR로 묶는다.
+
+    ```bash
+    bash ./gradlew bootJar
+    ```
+
+    - **결과물**은 프로젝트의 `build/libs/`에 생성된다.
+    - **현재 단일 프로젝트의 MyBatis XML**은 JAR의 `BOOT-INF/classes/mybatis/` 아래에 포함된다.
+    - **외부 YAML**은 배포 환경에서 별도로 준비한다. JAR을 실행할 때 Profile과 외부 리소스 루트를 지정하면 해당 파일을 읽는다.
 
 ## 10. 오류 확인
 
