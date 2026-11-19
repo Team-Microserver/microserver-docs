@@ -198,7 +198,7 @@ tools\gradle
     `C:\local-microserver` 전체 Directory 구조와 JDK, Gradle, VS Code Workspace,
     Git Repository를 한곳에서 관리하는 기준은 다음 가이드에서 자세히 설명한다.
 
-    **[프로젝트 로컬 개발환경 구성](../../01_foundation/project_local_environment_setup.md)**
+    **[프로젝트 로컬 개발환경 구성](../01_local/project_local_environment_setup.md)**
 
     현재 문서에서는 그 기준 구조 안에서 **Gradle을 실제로 설치하고 실행환경을 확인하는 방법**에 집중한다.
 

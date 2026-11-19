@@ -199,7 +199,7 @@ Workspace Settings:
 - [VS Code 설치](vscode_install.md)
 - [VS Code Portable 설정](vscode_portable_setup.md)
 - [VS Code User Settings](vscode_user_settings.md)
-- [프로젝트 JDK / VS Code Workspace 설정](../../03_project_creation_verification/02_project_environment/project_jdk_vscode_setup.md)
+- [프로젝트 JDK / VS Code Workspace 설정](../../../03_project_creation_verification/02_project_environment/project_jdk_vscode_setup.md)
 
 
 ## 4. MicroServer의 JDK 운영 방향
@@ -621,7 +621,7 @@ flowchart TB
 
 다음 단계에서는 **Spring Boot 프로젝트를 실제로 생성**한다.
 
-**[Spring Boot 프로젝트 생성](../../03_project_creation_verification/01_project_creation/spring_boot_project_create.md)**
+**[Spring Boot 프로젝트 생성](../../../03_project_creation_verification/01_project_creation/spring_boot_project_create.md)**
 
 ```text
 JDK 설치 및 설정

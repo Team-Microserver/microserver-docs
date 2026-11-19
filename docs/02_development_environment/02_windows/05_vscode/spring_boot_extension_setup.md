@@ -373,7 +373,7 @@ Spring Initializr Extension이 설치되었다고 여기서 바로 프로젝트�
 따라서 현재는 Spring Boot 개발에 필요한 Extension을 준비하고 역할을 이해하는 데까지만 진행한다.
 Spring Initializr를 이용한 실제 프로젝트 생성은 다음 **Spring Boot 프로젝트 생성 가이드**에서 수행한다.
 
-**[Spring Boot 프로젝트 생성](../../03_project_creation_verification/01_project_creation/spring_boot_project_create.md)**
+**[Spring Boot 프로젝트 생성](../../../03_project_creation_verification/01_project_creation/spring_boot_project_create.md)**
 
 ---
 

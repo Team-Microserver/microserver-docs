@@ -7,7 +7,7 @@
 
 OS별 최초 설치는 다음 문서를 먼저 진행한다.
 
-- [macOS JDK 설치 및 검증](windows_jdk_setup.md)
+- [macOS JDK 설치 및 검증](../../02_windows/03_jdk/windows_jdk_setup.md)
 - [macOS JDK 설치 및 검증](macos_jdk_setup.md)
 
 ---

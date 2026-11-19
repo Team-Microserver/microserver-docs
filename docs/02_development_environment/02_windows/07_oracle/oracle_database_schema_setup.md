@@ -782,7 +782,7 @@ Application DB 연결 검증
 ## 25. 관련 문서
 
 - [Oracle Database Free 설치 및 접속](oracle_database_free_setup.md)
-- [Docker Desktop 개요 및 공통 환경](docker_desktop_setup.md)
-- [Windows Docker Desktop 설치](docker_desktop_windows_setup.md)
-- [macOS Docker Desktop 설치](docker_desktop_macos_setup.md)
-- [Apple Silicon Oracle Docker 지원 및 검증](oracle_docker_apple_silicon_support.md)
+- [Docker Desktop 개요 및 공통 환경](../06_docker/docker_desktop_setup.md)
+- [Windows Docker Desktop 설치](../06_docker/docker_desktop_windows_setup.md)
+- [macOS Docker Desktop 설치](../../03_macos/06_docker/docker_desktop_macos_setup.md)
+- [Apple Silicon Oracle Docker 지원 및 검증](../../03_macos/07_oracle/oracle_docker_apple_silicon_support.md)

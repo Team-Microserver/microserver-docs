@@ -371,7 +371,7 @@ Spring Boot Project 생성
 Project 개발환경 설정
 ```
 
-**[Spring Boot Project 생성](../../03_project_creation_verification/01_project_creation/spring_boot_project_create.md)**
+**[Spring Boot Project 생성](../../../03_project_creation_verification/01_project_creation/spring_boot_project_create.md)**
 
 ## 참고
 

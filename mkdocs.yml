@@ -227,9 +227,16 @@ nav:
         - VS Code Java User Snippet: 04_multi_project_framework/vscode_java_user_snippet.md
 
       - DataSource 구성:
-          - 기존 DataSource 구성 분석: 04_multi_project_framework/01_datasource/legacy_datasource_structure.md
-          - DataSource Framework 구성 및 접속 검증: 04_multi_project_framework/01_datasource/datasource_framework_setup.md
-          - MyBatis 매퍼 설정 및 SQL 실행: 04_multi_project_framework/01_datasource/mybatis_mapper_setup.md
+          - DataSource:
+              - 구성 원칙과 외부 설정: 04_multi_project_framework/01_datasource/datasource_framework_setup.md
+              - Bean 구현과 등록: 04_multi_project_framework/01_datasource/datasource_bean_setup.md
+              - 접속 검증과 운영 기준: 04_multi_project_framework/01_datasource/datasource_connection_verification.md
+          - MyBatis 매퍼:
+              - 구성 원칙과 공통 설정: 04_multi_project_framework/01_datasource/mybatis_mapper_setup.md
+              - 세션·매퍼·서비스 구현: 04_multi_project_framework/01_datasource/mybatis_session_mapper_setup.md
+              - 통합 테스트와 실행 검증: 04_multi_project_framework/01_datasource/mybatis_integration_verification.md
+          - 참고:
+              - 기존 DataSource 구성 분석: 04_multi_project_framework/01_datasource/legacy_datasource_structure.md
 
 
 

@@ -179,7 +179,7 @@ C:\local-microserver
 !!! tip "JDK 상세 설정은 다음 가이드에서 진행"
     JDK 설치 및 실제 개발환경 설정은 다음 문서에서 자세히 설명한다.
 
-    **[JDK 설치 및 설정](../02_jdk/jdk_setup.md)**
+    **[JDK 설치 및 설정](../03_jdk/jdk_setup.md)**
 
     해당 문서에서는 프로젝트 표준 JDK 준비, 설치 위치, 버전 확인 및 Java 실행환경 구성을 단계별로 진행한다.
 
@@ -225,7 +225,7 @@ C:\local-microserver\gradle-home
     Gradle 자체의 설치 방식, 전역 Gradle과 프로젝트 Gradle의 차이,
     Gradle 실행 확인 및 기본 환경 구성은 다음 문서에서 자세히 설명한다.
 
-    **[Gradle 설치 및 기본 환경 구성](../03_build_tool/gradle/gradle_setup.md)**
+    **[Gradle 설치 및 기본 환경 구성](../04_gradle/gradle_setup.md)**
 
     현재 문서에서는 Gradle 관련 데이터를 `C:\local-microserver` 내부에서 관리할 수 있도록
     디렉터리 구조만 정의한다.
@@ -252,7 +252,7 @@ Wrapper를 사용하면 개발자 PC에 설치된 전역 Gradle보다 **프로�
 !!! tip "프로젝트 Gradle 설정은 프로젝트 생성 이후 진행"
     Spring Boot 프로젝트 생성 이후의 Gradle Wrapper 설정은 다음 문서에서 진행한다.
 
-    **[Gradle Wrapper 및 프로젝트 Gradle 설정](../../03_project_creation_verification/02_project_environment/project_gradle_setup.md)**
+    **[Gradle Wrapper 및 프로젝트 Gradle 설정](../../../03_project_creation_verification/02_project_environment/project_gradle_setup.md)**
 
     해당 단계에서는 Wrapper 버전 고정, 프로젝트 Gradle 실행, Build 설정 등을 실제 프로젝트를 대상으로 구성한다.
 
@@ -334,7 +334,7 @@ C:\local-microserver\workspace
 !!! tip "Git / GitHub 상세 구성"
     Git 설치, GitHub 연결, Clone / Commit / Push, Repository별 `.gitignore` 정책은 다음 가이드에서 진행한다.
 
-    **[Git / GitHub 환경 구성](git_github_setup.md)**
+    **[Git / GitHub 환경 구성](../02_git/git_github_setup.md)**
 
 ---
 
@@ -383,9 +383,9 @@ Workspace 파일에서는 상대경로로 각 Repository를 연결할 수 있다
     ```
 
 !!! tip "VS Code 상세 구성은 다음 가이드에서 진행"
-    **[VS Code 개발환경 구성 개요](../04_vscode/vscode_setup.md)**
+    **[VS Code 개발환경 구성 개요](../05_vscode/vscode_setup.md)**
 
-    **[JDK 연계 및 개발환경 운영](../04_vscode/jdk_workspace_environment_setup.md)**
+    **[JDK 연계 및 개발환경 운영](../05_vscode/jdk_workspace_environment_setup.md)**
 
 ---
 
@@ -853,12 +853,12 @@ C:\local-microserver
 
 현재 문서 이후에는 다음 순서로 개발환경을 구성한다.
 
-1. **[Git / GitHub 환경 구성](git_github_setup.md)**
-2. **[JDK 설치 및 설정](../02_jdk/jdk_setup.md)**
-3. **[Gradle 설치 및 기본 환경 구성](../03_build_tool/gradle/gradle_setup.md)**
-4. **[VS Code 개발환경 구성 개요](../04_vscode/vscode_setup.md)**
-5. **[JDK 연계 및 개발환경 운영](../04_vscode/jdk_workspace_environment_setup.md)**
-6. **[Gradle Wrapper 및 프로젝트 Gradle 설정](../../03_project_creation_verification/02_project_environment/project_gradle_setup.md)**
+1. **[Git / GitHub 환경 구성](../02_git/git_github_setup.md)**
+2. **[JDK 설치 및 설정](../03_jdk/jdk_setup.md)**
+3. **[Gradle 설치 및 기본 환경 구성](../04_gradle/gradle_setup.md)**
+4. **[VS Code 개발환경 구성 개요](../05_vscode/vscode_setup.md)**
+5. **[JDK 연계 및 개발환경 운영](../05_vscode/jdk_workspace_environment_setup.md)**
+6. **[Gradle Wrapper 및 프로젝트 Gradle 설정](../../../03_project_creation_verification/02_project_environment/project_gradle_setup.md)**
 
 각 가이드에서는 현재 문서에서 정의한 `C:\local-microserver` 디렉터리 구조를 기준으로 실제 설치와 설정을 진행한다.
 

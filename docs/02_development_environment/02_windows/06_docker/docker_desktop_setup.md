@@ -19,7 +19,7 @@ Oracle Database Free 로컬 개발환경 구성
 
 !!! info "운영체제별 설치 문서"
     - [Windows Docker Desktop 설치 가이드](docker_desktop_windows_setup.md)
-    - [macOS Docker Desktop 설치 가이드](docker_desktop_macos_setup.md)
+    - [macOS Docker Desktop 설치 가이드](../../03_macos/06_docker/docker_desktop_macos_setup.md)
 
 ---
 

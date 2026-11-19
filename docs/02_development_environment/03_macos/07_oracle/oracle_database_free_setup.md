@@ -21,8 +21,8 @@ Docker Desktop 위에 구성하고, 관리자 계정 `SYSTEM`으로 `FREEPDB1`�
 
 선행 문서:
 
-- [Docker Desktop 개요 및 공통 환경](docker_desktop_setup.md)
-- [macOS Docker Desktop 설치](docker_desktop_macos_setup.md)
+- [Docker Desktop 개요 및 공통 환경](../06_docker/docker_desktop_setup.md)
+- [macOS Docker Desktop 설치](../06_docker/docker_desktop_macos_setup.md)
 
 ---
 

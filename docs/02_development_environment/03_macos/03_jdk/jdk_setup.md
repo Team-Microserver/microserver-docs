@@ -53,7 +53,7 @@ JDK의 기본 배치 위치는 다음과 같다.
     JDK뿐 아니라 Gradle, VS Code Workspace, Git Repository, 환경 초기화 Script를
     하나의 기준 경로에서 관리하는 전체 구조는 다음 가이드에서 설명한다.
 
-    **[프로젝트 로컬 개발환경 구성](../01_foundation/project_local_environment_setup.md)**
+    **[프로젝트 로컬 개발환경 구성](../01_local/project_local_environment_setup.md)**
 
 ---
 
@@ -349,7 +349,7 @@ MicroServer 프로젝트의 JDK 개발환경 기준은 다음과 같다.
 
 OS별 실제 JDK 설치 및 검증은 다음 문서에서 진행한다.
 
-- **[macOS JDK 설치 및 검증](windows_jdk_setup.md)**
+- **[macOS JDK 설치 및 검증](../../02_windows/03_jdk/windows_jdk_setup.md)**
 - **[macOS JDK 설치 및 검증](macos_jdk_setup.md)**
 
 JDK Version 관리 및 문제 해결은 다음 문서를 참고한다.

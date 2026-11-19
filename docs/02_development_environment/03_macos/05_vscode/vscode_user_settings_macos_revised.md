@@ -285,4 +285,4 @@ Project Git 관리 대상이 아니다.
 
 다음 문서:
 
-→ [VS Code Workspace Settings](../../03_project_creation_verification/02_project_environment/vscode_workspace_settings.md)
+→ [VS Code Workspace Settings](../../../03_project_creation_verification/02_project_environment/vscode_workspace_settings.md)

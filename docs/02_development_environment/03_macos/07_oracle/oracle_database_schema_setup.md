@@ -625,6 +625,6 @@ Transaction
 ## 관련 문서
 
 - [Oracle Database Free 설치 및 접속](oracle_database_free_setup.md)
-- [Docker Desktop 개요 및 공통 환경](docker_desktop_setup.md)
-- [macOS Docker Desktop 설치](docker_desktop_macos_setup.md)
+- [Docker Desktop 개요 및 공통 환경](../06_docker/docker_desktop_setup.md)
+- [macOS Docker Desktop 설치](../06_docker/docker_desktop_macos_setup.md)
 - [Apple Silicon Oracle Docker 지원 및 검증](oracle_docker_apple_silicon_support.md)

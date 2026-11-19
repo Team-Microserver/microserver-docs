@@ -34,9 +34,9 @@ Docker Desktop 위에 구성하고, Oracle 관리자 계정인 `SYSTEM`으로 `F
 
     먼저 다음 문서를 완료한다.
 
-    - [Docker Desktop 개요 및 공통 환경](docker_desktop_setup.md)
-    - [Windows Docker Desktop 설치](docker_desktop_windows_setup.md)
-    - [macOS Docker Desktop 설치](docker_desktop_macos_setup.md)
+    - [Docker Desktop 개요 및 공통 환경](../06_docker/docker_desktop_setup.md)
+    - [Windows Docker Desktop 설치](../06_docker/docker_desktop_windows_setup.md)
+    - [macOS Docker Desktop 설치](../../03_macos/06_docker/docker_desktop_macos_setup.md)
 
 ---
 
@@ -753,5 +753,5 @@ MICROSERVER 접속 검증
 
 - [Oracle AI Database Free - Get Started](https://www.oracle.com/database/free/get-started/)
 - [Oracle Container Registry](https://container-registry.oracle.com/)
-- [Docker Desktop 개요 및 공통 환경](docker_desktop_setup.md)
-- [Apple Silicon Oracle Docker 지원 및 검증](oracle_docker_apple_silicon_support.md)
+- [Docker Desktop 개요 및 공통 환경](../06_docker/docker_desktop_setup.md)
+- [Apple Silicon Oracle Docker 지원 및 검증](../../03_macos/07_oracle/oracle_docker_apple_silicon_support.md)
