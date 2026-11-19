@@ -937,4 +937,4 @@ Git Repository Clone
 
 다음 문서:
 
-**[생성 프로젝트 구조 확인 및 초기 정리](spring_boot_project_initial_review.md)**
+**[생성 프로젝트 구조 확인](spring_boot_project_structure_review.md)**

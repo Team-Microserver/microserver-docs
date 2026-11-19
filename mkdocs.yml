@@ -70,7 +70,6 @@ markdown_extensions:
 
 
 nav:
-#  - Home: index.md
 
   - MicroServer 소개:
     - 마이크로서버란?: 01_microserver_introduction/01_what_is_microserver.md
@@ -125,7 +124,6 @@ nav:
           - Spring Boot Extension 구성: 02_development_environment/02_windows/05_vscode/spring_boot_extension_setup.md
           - 개발 지원 Extension 및 Profile 구성: 02_development_environment/02_windows/05_vscode/support_extension_profile_setup.md
           - JDK 연계 및 개발환경 운영: 02_development_environment/02_windows/05_vscode/jdk_workspace_environment_setup.md
-#            - 설치 및 기본 설정 통합 문서 (기존): 02_development_environment/02_windows/05_vscode/vscode_install_basic_setup_legacy.md
 
 
 
@@ -190,7 +188,6 @@ nav:
       - 프로젝트 생성:
           - Spring Boot 프로젝트 생성: 03_project_creation_verification/01_project_creation/spring_boot_project_create.md
           - Git Repository 초기화 및 연결: 03_project_creation_verification/01_project_creation/spring_boot_git_init.md
-          #- 생성 프로젝트 구조 확인 및 초기 정리: 03_project_creation_verification/01_project_creation/spring_boot_project_initial_review.md
           - 생성 프로젝트 확인:
             - 생성된 파일 / Directory 구조 확인: 03_project_creation_verification/01_project_creation/spring_boot_project_structure_review.md
             - 생성된 Gradle / Spring 설정값 확인: 03_project_creation_verification/01_project_creation/spring_boot_project_config_review.md
