@@ -2411,18 +2411,132 @@
 </span><span id="__span-18-78"><a id="__codelineno-18-78" name="__codelineno-18-78" href="#__codelineno-18-78"></a><span class="p">}</span>
 </span></code></pre></div>
 <h3 id="_7">테스트 실행<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
-<p>Gradle Wrapper가 있는 프로젝트 루트에서 실행한다. 예시의 <code>/opt/microserver-resource</code>를 4절의 Local H2 YAML 두 파일을 저장한 리소스 루트의 실제 절대 경로로 바꾼다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_PROFILES_ACTIVE</span><span class="o">=</span><span class="nb">local</span>
-</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_APPLICATION_JSON</span><span class="o">=</span><span class="s1">&#39;{&quot;microserver&quot;:{&quot;resource-dir&quot;:&quot;/opt/microserver-resource&quot;}}&#39;</span>
-</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>
-</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="w">  </span>--tests<span class="w"> </span><span class="s1">&#39;io.github.microserverlab.microserver.MyBatisMapperIntegrationTest&#39;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">  </span>--rerun-tasks
+<p>두 DB에 테스트 데이터를 넣고 서비스를 호출한다. 각 매퍼가 담당 DB의 값을 조회하는지, 각 Factory에 담당 SQL만 등록되는지 확인한다. 아래 순서로 파일을 준비한 뒤 VS Code에서 테스트를 실행한다.</p>
+<ol>
+<li>
+<p><strong>테스트 파일을 프로젝트에 작성한다.</strong></p>
+<p>위 SQL 예제 두 개와 Java 테스트 예제를 다음 위치에 저장한다. 경로는 프로젝트 루트 기준이다.</p>
+<table>
+<thead>
+<tr>
+<th>파일 위치</th>
+<th>역할</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src/test/resources/sql/framework-mapper-fixture.sql</code></td>
+<td>Framework DB의 테스트 테이블과 데이터를 준비한다.</td>
+</tr>
+<tr>
+<td><code>src/test/resources/sql/business-mapper-fixture.sql</code></td>
+<td>Business DB의 테스트 테이블과 데이터를 준비한다.</td>
+</tr>
+<tr>
+<td><code>src/test/java/io/github/microserverlab/microserver/MyBatisMapperIntegrationTest.java</code></td>
+<td>SQL 파일을 각 DB에 실행하고 서비스 조회와 SQL 등록 범위를 검증한다.</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>외부 Local 설정 파일을 준비한다.</strong></p>
+<p>4절의 설정에 따라 외부 리소스 루트 아래에 두 파일을 둔다. DataSource YAML은 이전 장에서 작성한 파일을 사용한다.</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>&lt;외부 리소스 루트&gt;/
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>└── config/application-context/local/
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    ├── application-datasource.yml
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>    └── application-mybatis.yml
 </span></code></pre></div>
-<p><code>BUILD SUCCESSFUL</code>과 <code>build/reports/tests/test/index.html</code>의 테스트 두 건을 확인한다. 첫 테스트는 실제 서비스 → 매퍼 → JDBC 경로를 실행하고 두 DB의 값이 구분되는지 검증한다. 두 번째 테스트는 상대 DB의 SQL이 각 Factory에 등록되지 않았는지 확인한다.</p>
+<p>DataSource YAML의 H2 DB 이름은 <code>frameworkdb</code>와 <code>businessdb</code>로 설정한다. 테스트 코드가 이 이름으로 접속 여부를 확인한다.</p>
+</li>
+<li>
+<p><strong>VS Code의 테스트 실행 설정을 확인한다.</strong></p>
+<p><code>microserver</code>와 <code>microserver_resource</code>가 함께 있는 <code>workspace</code> 폴더를 VS Code에서 연다. 이 폴더의 <code>.vscode/settings.json</code>에 테스트용 JVM 옵션을 설정한다. 이미 아래 항목이 있으면 현재 값을 확인한다. 다른 설정이 있으면 필요한 항목을 기존 JSON에 합친다.</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="p">{</span>
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="w">    </span><span class="nt">&quot;java.test.config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">        </span><span class="p">{</span>
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">            </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-local&quot;</span><span class="p">,</span>
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">            </span><span class="nt">&quot;vmArgs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">                </span><span class="s2">&quot;-Dspring.profiles.active=local&quot;</span><span class="p">,</span>
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">                </span><span class="s2">&quot;-Dmicroserver.resource-dir=${workspaceFolder}/microserver_resource&quot;</span>
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">            </span><span class="p">]</span>
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">        </span><span class="p">}</span>
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">    </span><span class="p">],</span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">    </span><span class="nt">&quot;java.test.defaultConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-local&quot;</span>
+</span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><code>${workspaceFolder}</code>는 VS Code에서 연 폴더다. 위 설정은 그 아래의 <code>microserver_resource</code>를 외부 리소스 루트로 사용한다. 실제 폴더 구조에 맞게 경로를 지정한다.</p>
+<p><strong>Run Test는 이 JVM 옵션으로 Profile과 리소스 경로를 전달한다.</strong> 터미널에서 별도로 <code>export</code>할 필요가 없다. 애플리케이션 기동용 <code>launch.json</code>과 테스트용 <code>java.test.config</code>는 각각 설정한다.</p>
+</li>
+<li>
+<p><strong>VS Code에서 MyBatis 통합 테스트를 실행한다.</strong></p>
+<p><code>MyBatisMapperIntegrationTest.java</code>를 연다. 클래스 이름 위의 <strong>Run Test</strong> 또는 옆의 초록색 ▶ 버튼을 눌러 클래스의 테스트 두 건을 실행한다. Test Runner for Java 확장이 필요하다.</p>
+<p>테스트가 Spring 컨텍스트를 띄우고 각 DataSource에 SQL 파일을 실행한다. 준비한 데이터를 서비스와 매퍼를 통해 조회한다. 중단점에서 실행 흐름을 보려면 <strong>Debug Test</strong>를 선택한다.</p>
+</li>
+<li>
+<p><strong>Testing 창에서 결과를 확인한다.</strong></p>
+<p>왼쪽 활동 표시줄의 시험관 아이콘으로 <strong>Testing</strong> 창을 연다. <code>MyBatisMapperIntegrationTest</code> 아래의 테스트 두 건이 모두 통과했는지 확인한다. 실패한 항목을 선택하면 오류 메시지와 실행 결과를 볼 수 있다. <a href="https://code.visualstudio.com/docs/java/java-testing">VS Code Java 테스트 실행</a></p>
+<table>
+<thead>
+<tr>
+<th>테스트 메서드</th>
+<th>확인하는 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>queriesEachDatabaseThroughItsServiceAndMapper</code></td>
+<td>서비스 → 매퍼 → JDBC 호출로 각 DB의 값을 조회한다. Framework DB는 <code>Framework DB</code>, Business DB는 <code>Business DB</code>를 반환해야 한다.</td>
+</tr>
+<tr>
+<td><code>registersOnlyTheStatementsOwnedByEachFactory</code></td>
+<td>각 Factory에 담당 매퍼의 SQL이 등록되어 있고, 상대 DB의 매퍼 SQL은 등록되어 있지 않은지 확인한다.</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+<div class="admonition tip">
+<p class="admonition-title">참고 팁 — 터미널에서 Gradle로 테스트 실행</p>
+<p>macOS 또는 Linux 터미널에서는 아래 명령으로 같은 테스트를 실행할 수 있다. <code>cd</code>의 경로는 <code>build.gradle</code>과 <code>gradlew</code>가 있는 프로젝트 루트로 바꾼다. JSON의 <code>/opt/microserver-resource</code>는 외부 YAML을 저장한 리소스 루트의 실제 절대 경로로 바꾼다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="nb">cd</span><span class="w"> </span>/프로젝트/절대경로/microserver
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_PROFILES_ACTIVE</span><span class="o">=</span><span class="nb">local</span>
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SPRING_APPLICATION_JSON</span><span class="o">=</span><span class="s1">&#39;{&quot;microserver&quot;:{&quot;resource-dir&quot;:&quot;/opt/microserver-resource&quot;}}&#39;</span>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span><span class="nb">test</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="w">  </span>--tests<span class="w"> </span><span class="s1">&#39;io.github.microserverlab.microserver.MyBatisMapperIntegrationTest&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-21-7"><a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">  </span>--rerun-tasks
+</span></code></pre></div>
+<p>필요한 Spring 환경변수가 현재 터미널에 이미 같은 값으로 지정되어 있으면 <code>export</code>는 생략한다. <code>java.test.config</code>의 JVM 옵션은 터미널의 Gradle 명령에 자동으로 전달되지 않는다.</p>
+<p><code>--tests</code>는 테스트 클래스를 선택한다. <code>--rerun-tasks</code>는 이전 실행 결과가 있어도 테스트를 다시 수행한다. <code>BUILD SUCCESSFUL</code>을 확인하고, 프로젝트 루트의 <code>build/reports/tests/test/index.html</code>을 브라우저로 열어 결과를 확인한다.</p>
+</div>
 <h3 id="_8">애플리케이션 기동과 패키징<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
-<p>같은 환경변수로 <code>bash ./gradlew bootRun</code>을 실행하면 외부 설정, 세션 Bean, 매퍼 XML을 읽어 기동한다. 조회용 테이블과 데이터는 통합 테스트가 테스트 JVM에서 준비한다. <code>bootRun</code> 프로세스에서 매퍼를 직접 호출하려면 그 프로세스가 접속하는 DB에도 스키마와 데이터가 있어야 한다. H2 메모리 DB는 프로세스 간에 공유되지 않는다.</p>
-<p><code>bash ./gradlew bootJar</code>로 패키징하면 설정 XML과 두 매퍼 XML이 실행 JAR의 <code>BOOT-INF/classes/mybatis/</code> 아래에 들어간다. 외부 YAML은 실행 시 별도로 읽는다.</p>
+<p>통합 테스트를 마친 뒤에는 애플리케이션을 직접 기동하거나 배포용 실행 JAR을 만들 수 있다. <strong>기동은 설정을 읽어 실행하는 작업이고, 패키징은 배포할 파일을 만드는 작업이다.</strong> 아래 명령은 <code>build.gradle</code>과 <code>gradlew</code>가 있는 프로젝트 루트에서 실행한다.</p>
+<ol>
+<li>
+<p><strong>애플리케이션 기동 — <code>bootRun</code></strong></p>
+<p>외부 YAML과 MyBatis 설정을 읽어 실제 애플리케이션을 실행한다. DB별 세션 Bean을 만들고 매퍼 XML의 SQL을 등록하는지 확인할 때 사용한다.</p>
+<p>위 터미널 참고 팁처럼 <code>local</code> Profile과 외부 리소스 루트를 지정한 뒤 실행한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span>bootRun
+</span></code></pre></div>
+<p>기동 로그에서 애플리케이션 시작과 두 DB 연결을 확인한다. 실행을 종료하려면 터미널에서 <code>Ctrl+C</code>를 누른다.</p>
+<div class="admonition note">
+<p class="admonition-title">H2 조회 데이터 준비</p>
+<p>통합 테스트의 SQL 파일은 테스트가 실행되는 JVM의 DB에 데이터를 만든다. <code>bootRun</code>은 별도 JVM에서 실행하므로 자체 H2 메모리 DB를 사용한다. 이 애플리케이션에서 매퍼를 호출하려면 해당 DB에도 테이블과 데이터를 준비해야 한다.</p>
+</div>
+</li>
+<li>
+<p><strong>배포용 실행 JAR 생성 — <code>bootJar</code></strong></p>
+<p>컴파일한 코드, 리소스, 실행에 필요한 라이브러리를 하나의 Spring Boot 실행 JAR로 묶는다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>bash<span class="w"> </span>./gradlew<span class="w"> </span>bootJar
+</span></code></pre></div>
+<ul>
+<li><strong>결과물</strong>은 프로젝트의 <code>build/libs/</code>에 생성된다.</li>
+<li><strong>현재 단일 프로젝트의 MyBatis XML</strong>은 JAR의 <code>BOOT-INF/classes/mybatis/</code> 아래에 포함된다.</li>
+<li><strong>외부 YAML</strong>은 배포 환경에서 별도로 준비한다. JAR을 실행할 때 Profile과 외부 리소스 루트를 지정하면 해당 파일을 읽는다.</li>
+</ul>
+</li>
+</ol>
 <h2 id="10">10. 오류 확인<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
