@@ -1,0 +1,1910 @@
+
+<!doctype html>
+<html lang="ko" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="금융 SI 프로젝트를 위한 Spring Boot 기반 MicroServer 표준 Framework 구축 및 운영 가이드">
+      
+      
+        <meta name="author" content="Team MicroServer">
+      
+      
+      
+        <link rel="prev" href="../gradle_api_dependency/">
+      
+      
+        <link rel="next" href="../../01_datasource/datasource_framework_setup/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>로컬 Framework 연결 - MicroServer 구축 가이드</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#gradle-framework" class="md-skip">
+          콘텐츠로 이동
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="상단/헤더">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-header__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MicroServer 구축 가이드
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              로컬 Framework 연결
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="검색" placeholder="검색" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="검색">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="공유" aria-label="공유" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="지우기" aria-label="지우기" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            검색 초기화
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="탭" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../01_microserver_introduction/01_what_is_microserver/" class="md-tabs__link">
+          
+  
+  
+  MicroServer 소개
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../02_development_environment/01_principles/development_environment_principles/" class="md-tabs__link">
+          
+  
+  
+  개발 환경 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-tabs__link">
+          
+  
+  
+  프로젝트 생성 및 검증
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../multi_project_framework/" class="md-tabs__link">
+          
+  
+  
+  멀티프로젝트 프레임워크 구성
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-tabs__link">
+          
+  
+  
+  멀티 프로젝트 전환(백업)
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-tabs__link">
+          
+  
+  
+  기능 개발
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../06_server_devops/01_overview/server_devops_overview/" class="md-tabs__link">
+          
+  
+  
+  서버 및 DevOps 환경
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-tabs__link">
+          
+  
+  
+  부록 / 문서 환경
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="네비게이션" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MicroServer 구축 가이드" class="md-nav__button md-logo" aria-label="MicroServer 구축 가이드" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MicroServer 구축 가이드
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../01_microserver_introduction/01_what_is_microserver/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MicroServer 소개
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../02_development_environment/01_principles/development_environment_principles/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    개발 환경 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../03_project_creation_verification/01_project_creation/spring_boot_project_create/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    프로젝트 생성 및 검증
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티프로젝트 프레임워크 구성
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    멀티프로젝트 프레임워크 구성
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../multi_project_framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티프로젝트 프레임워크 구성
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    참고
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    참고
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lombok_setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lombok 설치 및 설정
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../vscode_java_user_snippet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    VS Code Java User Snippet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_3" id="__nav_4_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gradle 문법
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Gradle 문법
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gradle_api_dependency/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    api 의존성 선언
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로컬 Framework 연결
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    로컬 Framework 연결
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Runtime 프로젝트 이름 지정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 로컬 Framework 사용 여부 읽기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 사용 방식에 따라 로컬 연결 실행
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Framework 소스 위치 지정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Framework 빌드 존재 확인과 오류 처리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-framework-includebuild" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 독립 Framework 빌드 연결 — includeBuild
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 라이브러리 의존성을 로컬 프로젝트로 치환
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-pc-gradleproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 개발 PC의 기본 선택 저장 — gradle.properties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 명령행에서 일시적으로 전환 — -P
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 사용 방식 확인과 최초 구성 시 주의점
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../01_datasource/datasource_framework_setup/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    DataSource 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../02_multi_project/multi_project_concepts/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티프로젝트 구성
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../04_multi_project_transition/01_overview/multi_project_transition_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    멀티 프로젝트 전환(백업)
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../05_feature_development/01_framework_configuration/framework_feature_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    기능 개발
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../../06_server_devops/01_overview/server_devops_overview/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    서버 및 DevOps 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    
+  
+  
+  
+    <a href="../../../99_appendix/01_guide_management/git_commit_convention/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    부록 / 문서 환경
+  
+
+    
+  </span>
+  
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+  
+
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="목차">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      목차
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-runtime" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Runtime 프로젝트 이름 지정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 로컬 Framework 사용 여부 읽기
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 사용 방식에 따라 로컬 연결 실행
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Framework 소스 위치 지정
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Framework 빌드 존재 확인과 오류 처리
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-framework-includebuild" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 독립 Framework 빌드 연결 — includeBuild
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 라이브러리 의존성을 로컬 프로젝트로 치환
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-pc-gradleproperties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 개발 PC의 기본 선택 저장 — gradle.properties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-p" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 명령행에서 일시적으로 전환 — -P
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. 사용 방식 확인과 최초 구성 시 주의점
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="gradle-framework">Gradle 로컬 Framework 연결<a class="headerlink" href="#gradle-framework" title="Permanent link">&para;</a></h1>
+<p>이 문서는 Runtime의 <code>settings.gradle</code>에서 로컬 Framework를 연결하는 목적과 코드 문법을 설명한다.</p>
+<p>Framework와 Runtime을 함께 개발할 때는 <strong>Framework 코드를 수정할 때마다 공통 JAR을 저장소에 게시하고 Runtime에서 다시 내려받는 절차를 줄이기 위해</strong> 로컬 소스를 연결한다. Composite Build를 사용하면 Runtime의 라이브러리 요청을 개발 PC의 Framework 프로젝트로 치환하고, Runtime 빌드·실행에 필요한 Framework 빌드 작업도 Gradle이 함께 처리한다.</p>
+<p>Framework 코드를 수정한 뒤 Runtime을 다시 빌드·실행하여 변경 결과를 확인한다. 필요한 로컬 JAR은 빌드 과정에서 생성될 수 있지만, 변경 확인을 위한 별도 JAR 게시·다운로드 절차는 필요하지 않다. 외부 라이브러리는 필요한 경우 저장소에서 내려받는다.</p>
+<div class="admonition note">
+<p class="admonition-title">변경 반영 시점</p>
+<p>이 연결은 실행 중인 서버의 자동 갱신 기능이 아니다. Gradle로 Runtime을 다시 빌드·실행하여 변경을 확인하고, VS Code 실행 시에도 Gradle 프로젝트 연결과 변경된 코드의 빌드가 반영됐는지 확인한다.</p>
+</div>
+<h2 id="1-runtime">1. Runtime 프로젝트 이름 지정<a class="headerlink" href="#1-runtime" title="Permanent link">&para;</a></h2>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">rootProject</span><span class="o">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;microserver-runtime&#39;</span>
+</span></code></pre></div>
+<p>Runtime의 Gradle 루트 프로젝트 이름을 지정한다. Framework의 하위 프로젝트가 아니라 자체 <code>settings.gradle</code>과 <code>build.gradle</code>을 가진 독립 빌드다. 이 이름은 VS Code 실행 설정의 <code>projectName</code>과도 맞춘다.</p>
+<h2 id="2-framework">2. 로컬 Framework 사용 여부 읽기<a class="headerlink" href="#2-framework" title="Permanent link">&para;</a></h2>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">def</span><span class="w"> </span><span class="n">useLocalFramework</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">providers</span><span class="o">.</span><span class="na">gradleProperty</span><span class="o">(</span><span class="s1">&#39;useLocalFramework&#39;</span><span class="o">)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">        </span><span class="o">.</span><span class="na">map</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">it</span><span class="o">.</span><span class="na">toBoolean</span><span class="o">()</span><span class="w"> </span><span class="o">}</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">        </span><span class="o">.</span><span class="na">getOrElse</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+</span></code></pre></div>
+<p>배포된 공통 라이브러리를 사용할지, 개발 PC의 Framework 소스를 사용할지 선택하는 사용자 정의 설정이다. <code>useLocalFramework</code>는 Gradle의 내장 옵션이 아니라 이 가이드에서 정한 이름이다.</p>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>기능</th>
+<th>값의 예</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>def useLocalFramework</code></td>
+<td>처리 결과를 저장할 Groovy 변수 선언</td>
+<td>최종 Boolean 값</td>
+</tr>
+<tr>
+<td><code>providers.gradleProperty('useLocalFramework')</code></td>
+<td>Gradle 프로젝트 속성을 Provider로 읽음</td>
+<td>문자열 <code>true</code> 또는 <code>false</code></td>
+</tr>
+<tr>
+<td><code>.map { it.toBoolean() }</code></td>
+<td>속성이 있으면 문자열을 Boolean으로 변환</td>
+<td><code>true</code> → 참, <code>false</code> → 거짓</td>
+</tr>
+<tr>
+<td><code>.getOrElse(false)</code></td>
+<td>속성이 없으면 기본값 사용</td>
+<td>거짓</td>
+</tr>
+</tbody>
+</table>
+<p>Provider는 외부에서 전달한 값을 읽고 변환할 수 있는 Gradle의 값 제공 객체다. <code>it</code>은 <code>map</code> 블록에 전달되는 속성 문자열을 가리킨다. 마지막에는 Boolean 값을 얻어 아래 <code>if</code> 조건에 사용한다.</p>
+<p>설정값은 혼동을 피하도록 정확히 <code>true</code> 또는 <code>false</code>로 작성한다. <code>getOrElse(false)</code>는 속성이 없을 때의 기본값이다. 로컬 폴더가 없거나 빌드가 실패했을 때 배포 라이브러리로 자동 전환하는 예외 처리 기능이 아니다.</p>
+<h2 id="3">3. 사용 방식에 따라 로컬 연결 실행<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">useLocalFramework</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span><span class="c1">// 로컬 Framework 위치 확인 및 빌드 연결</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>최종 값</th>
+<th>settings.gradle 동작</th>
+<th>Runtime이 사용하는 Framework</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>true</code></td>
+<td>폴더를 검사하고 <code>includeBuild</code> 실행</td>
+<td>개발 PC의 Framework 프로젝트</td>
+</tr>
+<tr>
+<td><code>false</code></td>
+<td>로컬 연결 블록을 건너뜀</td>
+<td>설정된 저장소에서 해석한 라이브러리</td>
+</tr>
+<tr>
+<td>값 미지정</td>
+<td>기본값 <code>false</code></td>
+<td>설정된 저장소에서 해석한 라이브러리</td>
+</tr>
+</tbody>
+</table>
+<p>이 값은 Gradle의 빌드·의존성 연결 설정이다. Spring의 <code>local</code>·<code>dev</code>·<code>prod</code> 실행 프로파일과는 별개다. <code>spring.profiles.active=local</code>만 전달해도 로컬 Framework 소스가 연결되는 것은 아니다.</p>
+<h2 id="4-framework">4. Framework 소스 위치 지정<a class="headerlink" href="#4-framework" title="Permanent link">&para;</a></h2>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">def</span><span class="w"> </span><span class="n">frameworkDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="s1">&#39;../microserver-framework&#39;</span><span class="o">)</span>
+</span></code></pre></div>
+<p>Runtime의 <code>settings.gradle</code>이 있는 디렉터리를 기준으로 Framework 경로를 해석한다. <code>..</code>는 상위 디렉터리이며, 그 아래 <code>microserver-framework</code> 폴더를 선택한다.</p>
+<table>
+<thead>
+<tr>
+<th>환경</th>
+<th>Runtime 빌드 루트</th>
+<th>위 상대 경로의 결과</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Windows</td>
+<td><code>C:\local-microserver\workspace\microserver-runtime</code></td>
+<td><code>C:\local-microserver\workspace\microserver-framework</code></td>
+</tr>
+<tr>
+<td>macOS</td>
+<td><code>~/local-microserver/workspace/microserver-runtime</code></td>
+<td><code>~/local-microserver/workspace/microserver-framework</code></td>
+</tr>
+</tbody>
+</table>
+<p>두 프로젝트가 같은 작업 공간의 이웃 디렉터리에 있어야 이 경로를 그대로 사용할 수 있다. <code>file(...)</code>은 파일 경로를 나타내는 객체를 만들 뿐 폴더 생성·저장소 복제·파일 복사를 수행하지 않는다.</p>
+<h2 id="5-framework">5. Framework 빌드 존재 확인과 오류 처리<a class="headerlink" href="#5-framework" title="Permanent link">&para;</a></h2>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">if</span><span class="w"> </span><span class="o">(!</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="o">(</span><span class="n">frameworkDir</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;settings.gradle&#39;</span><span class="o">).</span><span class="na">isFile</span><span class="o">())</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GradleException</span><span class="o">(</span><span class="s2">&quot;로컬 Framework 빌드를 찾을 수 없습니다: ${frameworkDir}&quot;</span><span class="o">)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>표현</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>new File(frameworkDir, 'settings.gradle')</code></td>
+<td>Framework 디렉터리 안의 설정 파일 경로 생성</td>
+</tr>
+<tr>
+<td><code>.isFile()</code></td>
+<td>해당 경로에 일반 파일이 존재하는지 확인</td>
+</tr>
+<tr>
+<td><code>!</code></td>
+<td>조건 반전. 파일이 없으면 참</td>
+</tr>
+<tr>
+<td><code>throw new GradleException(...)</code></td>
+<td>오류 메시지를 표시하고 빌드 설정 처리를 중단</td>
+</tr>
+<tr>
+<td><code>${frameworkDir}</code></td>
+<td>오류 메시지에 실제 검사한 경로 삽입</td>
+</tr>
+</tbody>
+</table>
+<p>로컬 사용을 선택했는데 Framework를 준비하지 않은 경우, 원인을 초기에 알려주는 검사다. 로컬 빌드 파일의 존재만 확인하므로 소스의 정상 컴파일이나 의존성 다운로드 성공까지 보장하지는 않는다. 이 가이드는 Groovy DSL의 <code>settings.gradle</code>을 사용한다. Kotlin DSL의 <code>settings.gradle.kts</code>로 변경한다면 검사 대상도 조정해야 한다.</p>
+<h2 id="6-framework-includebuild">6. 독립 Framework 빌드 연결 — includeBuild<a class="headerlink" href="#6-framework-includebuild" title="Permanent link">&para;</a></h2>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">includeBuild</span><span class="o">(</span><span class="n">frameworkDir</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="c1">// 의존성 치환 규칙</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>별도의 Framework 빌드를 Runtime과 함께 빌드할 수 있도록 연결한다. 독립된 빌드들을 함께 구성하는 방식을 Composite Build라고 한다.</p>
+<table>
+<thead>
+<tr>
+<th>구분</th>
+<th>사용하는 설정</th>
+<th>적용 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>하나의 Framework 빌드에 하위 프로젝트 포함</td>
+<td><code>include 'microserver-framework-datasource'</code></td>
+<td>Framework의 <code>settings.gradle</code></td>
+</tr>
+<tr>
+<td>같은 빌드 안의 하위 프로젝트 의존성 선언</td>
+<td><code>implementation project(':microserver-framework-datasource')</code> 등</td>
+<td>Framework 하위 모듈의 <code>build.gradle</code></td>
+</tr>
+<tr>
+<td>독립 Framework 빌드를 Runtime의 로컬 개발에 연결</td>
+<td><code>includeBuild(frameworkDir)</code></td>
+<td>Runtime의 <code>settings.gradle</code></td>
+</tr>
+</tbody>
+</table>
+<p>연결 후 Runtime을 빌드·실행하면 필요한 Framework 프로젝트의 빌드 작업도 의존성에 따라 수행된다. Framework 소스를 변경한 뒤 Runtime을 다시 빌드·실행할 때, 먼저 공통 JAR을 저장소에 게시하지 않고 변경 내용을 확인할 수 있다.</p>
+<p>소스가 Runtime 폴더로 복사되거나 두 Git 저장소가 합쳐지는 것은 아니다. Framework와 Runtime의 루트 빌드 설정, 플러그인, 저장소 설정은 각각 관리한다. 실행 중인 애플리케이션에 소스 변경이 자동으로 반영되는 Hot Reload 기능도 아니므로 필요한 재빌드·재실행을 수행한다.</p>
+<h2 id="7">7. 라이브러리 의존성을 로컬 프로젝트로 치환<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">dependencySubstitution</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">substitute</span><span class="w"> </span><span class="n">module</span><span class="o">(</span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter&#39;</span><span class="o">)</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-starter&#39;</span><span class="o">)</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>Runtime이 요청한 Starter 라이브러리를 로컬 Framework의 Starter 프로젝트로 바꿔 연결하는 규칙이다.</p>
+<table>
+<thead>
+<tr>
+<th>코드</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dependencySubstitution</code></td>
+<td>의존성 대상을 다른 대상으로 치환하는 규칙 선언</td>
+</tr>
+<tr>
+<td><code>module('io.github.microserverlab:microserver-framework-starter')</code></td>
+<td>바꿀 대상인 외부 라이브러리의 그룹·이름 지정</td>
+</tr>
+<tr>
+<td><code>using project(':microserver-framework-starter')</code></td>
+<td>대체할 대상으로 포함된 Framework 빌드의 Starter 하위 프로젝트 지정</td>
+</tr>
+</tbody>
+</table>
+<p>여기서 <code>project(...)</code>는 <code>includeBuild</code>의 치환 규칙 안에 있으므로 포함된 Framework 빌드의 프로젝트를 가리킨다. Runtime 안에 Starter 하위 프로젝트가 있다는 뜻이 아니다.</p>
+<p>Runtime의 <code>build.gradle</code>은 두 사용 방식 모두 다음 선언을 유지한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter:0.0.1-SNAPSHOT&#39;</span>
+</span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>사용 방식</th>
+<th>위 선언의 실제 해석</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>로컬 연결 켬</td>
+<td>Framework 빌드의 <code>:microserver-framework-starter</code> 프로젝트로 치환</td>
+</tr>
+<tr>
+<td>로컬 연결 끔</td>
+<td>선언한 라이브러리 좌표와 버전을 설정된 저장소에서 해석</td>
+</tr>
+</tbody>
+</table>
+<p>Starter가 의존하는 DataSource·MyBatis 공통 모듈도 Framework의 프로젝트 의존성으로 함께 연결된다. 외부 의존성 좌표를 유지하므로 로컬 소스 사용과 배포 라이브러리 사용을 전환할 때 Runtime의 의존성 선언을 바꿀 필요가 없다.</p>
+<p>현재처럼 라이브러리 그룹·이름과 로컬 프로젝트 식별자가 일치하면 Gradle의 기본 치환 규칙으로도 연결할 수 있다. 본 가이드에서는 어떤 Starter를 어떤 프로젝트로 연결하는지 드러내기 위해 명시적인 치환 규칙을 작성했다.</p>
+<p>위 <code>module(...)</code>에는 버전이 없으므로 같은 그룹·이름의 요청을 로컬 프로젝트로 치환한다. 따라서 로컬 연결을 켠 상태에서는 선언된 <code>0.0.1-SNAPSHOT</code> 배포물과 로컬 소스가 동일하다고 보장되지 않는다. 배포 버전 자체를 검증할 때는 로컬 연결을 끈다.</p>
+<h2 id="8-pc-gradleproperties">8. 개발 PC의 기본 선택 저장 — gradle.properties<a class="headerlink" href="#8-pc-gradleproperties" title="Permanent link">&para;</a></h2>
+<p><code>workspace/microserver-runtime/gradle.properties</code>:</p>
+<div class="language-properties highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="na">useLocalFramework</span><span class="o">=</span><span class="s">true</span>
+</span></code></pre></div>
+<p>Runtime 루트에 이 파일을 두면 매번 <code>-P</code> 옵션을 입력하지 않아도 로컬 연결을 사용한다. VS Code가 Runtime의 Gradle 프로젝트를 가져올 때도 이 설정을 읽을 수 있다.</p>
+<p>이 가이드에서는 로컬 소스를 함께 내려받은 개발 PC의 선택으로 관리하므로 해당 파일을 <code>.gitignore</code>에서 제외한다. 파일이 Git에 포함되지 않기 때문에 신규 PC에서는 직접 만들거나 실행 명령에 속성을 전달해야 한다. CI도 다른 곳에서 이 속성을 주입하지 않는 한 기본값 <code>false</code>로 동작한다.</p>
+<p>설정 파일을 Git에서 제외한다는 것은 개발 PC에 파일을 만들지 말라는 뜻이 아니다. 이 파일을 생성해 사용하되 저장소에는 올리지 않는다는 의미다. 공용 Gradle 설정까지 항상 모두 제외해야 한다는 일반 규칙도 아니다.</p>
+<p>또한 Gradle 사용자 홈의 <code>gradle.properties</code> 등에 같은 속성이 있다면 값 선택에 영향을 줄 수 있다. 본 가이드에서는 Runtime별 파일로 관리하고, 의도와 다른 동작이 나오면 사용자 홈의 동명 속성도 확인한다.</p>
+<h2 id="9-p">9. 명령행에서 일시적으로 전환 — -P<a class="headerlink" href="#9-p" title="Permanent link">&para;</a></h2>
+<p><code>-P</code>는 Gradle 프로젝트 속성을 전달하는 옵션이다. 명령행 값이 파일의 같은 속성보다 우선한다.</p>
+<p>Windows PowerShell — Runtime 루트:</p>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c"># 이번 명령에서는 로컬 Framework 사용</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">classes</span> <span class="n">-PuseLocalFramework</span><span class="p">=</span><span class="n">true</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c"># 이번 명령에서는 배포 라이브러리 사용</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">classes</span> <span class="n">-PuseLocalFramework</span><span class="p">=</span><span class="n">false</span>
+</span></code></pre></div>
+<p>macOS — Runtime 루트:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># 이번 명령에서는 로컬 Framework 사용</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>./gradlew<span class="w"> </span>classes<span class="w"> </span>-PuseLocalFramework<span class="o">=</span><span class="nb">true</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># 이번 명령에서는 배포 라이브러리 사용</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>./gradlew<span class="w"> </span>classes<span class="w"> </span>-PuseLocalFramework<span class="o">=</span><span class="nb">false</span>
+</span></code></pre></div>
+<p>위 명령은 <code>gradle.properties</code> 파일을 수정하지 않는다. 파일이 <code>true</code>인 상태에서 명령행에 <code>false</code>를 지정하면 해당 실행만 배포 라이브러리를 사용하고, 다음 명령에서 옵션을 생략하면 다시 파일의 <code>true</code>를 사용한다.</p>
+<p><code>useLocalFramework</code>는 빌드 구성을 선택하는 값이므로 <code>bootRun --args</code>의 애플리케이션 인수로 전달하지 않는다. 예를 들어 <code>bootRun -PuseLocalFramework=true</code>는 Gradle 설정이고, <code>bootRun --args='--spring.profiles.active=local'</code>은 Spring 애플리케이션 설정이다.</p>
+<h2 id="10">10. 사용 방식 확인과 최초 구성 시 주의점<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>확인 상황</th>
+<th>확인할 내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Framework 소스도 함께 개발</td>
+<td>속성 <code>true</code>, 이웃 Framework 폴더 존재, 의존성이 로컬 프로젝트로 치환되는지 확인</td>
+</tr>
+<tr>
+<td>배포된 버전만 사용</td>
+<td>속성 <code>false</code>, Framework가 게시된 저장소 설정과 대상 버전 존재 확인</td>
+</tr>
+<tr>
+<td>로컬 연결은 켰지만 폴더가 없음</td>
+<td>설정 파일 검사에서 즉시 실패. 배포 라이브러리로 자동 전환하지 않음</td>
+</tr>
+<tr>
+<td>속성 없이 신규 PC에서 실행</td>
+<td>기본값 <code>false</code>. 아직 배포하지 않았다면 Starter 의존성 해석 실패 가능</td>
+</tr>
+</tbody>
+</table>
+<p>현재 가이드의 Runtime은 <code>mavenCentral()</code>만 선언한다. 회사 공통 Framework가 그곳에 게시되어 있지 않다면 로컬 연결을 끈 상태에서 사용할 수 없다. 배포 단계에서 실제 라이브러리 저장소를 추가하고 필요한 버전을 게시해야 한다. 이 설정에 <code>mavenLocal()</code>이 없으므로 로컬 Maven 저장소에 게시하는 것만으로 해석되지도 않는다.</p>
+<p>최초 구성에서는 반드시 <code>gradle.properties</code>를 만들거나 <code>-PuseLocalFramework=true</code>를 전달한다. 이후 배포 라이브러리 사용 검증은 실제 게시와 저장소 설정을 마친 다음 진행한다.</p>
+<p>예를 들어 macOS에서는 다음으로 Starter 연결 결과를 확인한다. Windows에서는 <code>./gradlew</code> 대신 <code>.\gradlew.bat</code>을 사용한다.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>./gradlew<span class="w"> </span>dependencyInsight<span class="w"> </span>--dependency<span class="w"> </span>microserver-framework-starter<span class="w"> </span>--configuration<span class="w"> </span>runtimeClasspath<span class="w"> </span>-PuseLocalFramework<span class="o">=</span><span class="nb">true</span>
+</span></code></pre></div>
+<p>결과에서 Starter의 라이브러리 요청이 포함된 Framework 빌드의 프로젝트로 선택되는지 확인한다. <code>useLocalFramework=false</code> 검증에서는 같은 명령의 속성을 <code>false</code>로 바꾸어 저장소의 배포 버전이 선택되는지 확인한다.</p>
+<p>참고: <a href="https://docs.gradle.org/current/userguide/composite_builds.html">Gradle Composite Builds</a> · <a href="https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties">Gradle 프로젝트 속성</a></p>
+<p><a href="../../02_multi_project/multi_project_setup/#51-runtime-settingsgradle">프로젝트 생성과 개발 환경 구성으로 돌아가기</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  맨위로
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tabs", "navigation.top", "navigation.prune", "content.code.copy", "content.code.annotate", "content.tabs.link", "search.highlight", "search.share"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\ud074\ub9bd\ubcf4\ub4dc\uc5d0 \ubcf5\uc0ac\ub428", "clipboard.copy": "\ud074\ub9bd\ubcf4\ub4dc\ub85c \ubcf5\uc0ac", "search.result.more.one": "\uc774 \ubb38\uc11c\uc5d0\uc11c 1\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.more.other": "\uc774 \ubb38\uc11c\uc5d0\uc11c #\uac1c\uc758 \uac80\uc0c9 \uacb0\uacfc \ub354 \ubcf4\uae30", "search.result.none": "\uac80\uc0c9\uc5b4\uc640 \uc77c\uce58\ud558\ub294 \ubb38\uc11c\uac00 \uc5c6\uc2b5\ub2c8\ub2e4", "search.result.one": "1\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.other": "#\uac1c\uc758 \uc77c\uce58\ud558\ub294 \ubb38\uc11c", "search.result.placeholder": "\uac80\uc0c9\uc5b4\ub97c \uc785\ub825\ud558\uc138\uc694", "search.result.term.missing": "\ud3ec\ud568\ub418\uc9c0 \uc54a\uc740 \uac80\uc0c9\uc5b4", "select.version": "\ubc84\uc804 \uc120\ud0dd"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../assets/js/toc-toggle.js"></script>
+      
+    
+  </body>
+</html>

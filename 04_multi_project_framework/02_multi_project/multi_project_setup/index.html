@@ -2760,578 +2760,185 @@
 </span><span id="__span-22-6"><a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="w">    </span><span class="n">api</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-mybatis&#39;</span><span class="o">)</span>
 </span><span id="__span-22-7"><a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="o">}</span>
 </span></code></pre></div>
-<h4 id="451">4.5.1 의존성 선언이 하는 일<a class="headerlink" href="#451" title="Permanent link">&para;</a></h4>
-<p><code>api</code>와 <code>implementation</code>은 다른 모듈·라이브러리에 대한 의존성을 선언하는 방식이다. 둘 다 선언한 프로젝트에서는 해당 라이브러리를 컴파일과 실행에 사용할 수 있다. 차이는 <strong>그 프로젝트를 사용하는 다른 프로젝트에도 의존성을 컴파일 시점에 전달하는가</strong>이다.</p>
-<p>컴파일 클래스패스는 소스에서 import한 클래스와 메서드의 존재·타입을 검사할 때 사용하는 라이브러리 목록이고, 실행 클래스패스는 애플리케이션을 실제 실행할 때 필요한 라이브러리 목록이다.</p>
-<p>아래 표는 B 프로젝트가 C를 의존하고, A 프로젝트는 B만 의존하는 경우다. A가 C를 별도로 선언하거나 다른 의존성 경로로 받는 경우는 제외한다.</p>
-<table>
-<thead>
-<tr>
-<th>B에서 C를 선언하는 방법</th>
-<th>B에서 C 사용</th>
-<th>A의 컴파일 클래스패스에 C 포함</th>
-<th>A의 실행 클래스패스에 C 포함</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>api(C)</code></td>
-<td>컴파일·실행 가능</td>
-<td>포함</td>
-<td>포함</td>
-</tr>
-<tr>
-<td><code>implementation(C)</code></td>
-<td>컴파일·실행 가능</td>
-<td>포함하지 않음</td>
-<td>포함</td>
-</tr>
-</tbody>
-</table>
-<p><code>implementation</code>이라고 해서 C가 A의 실행에 전달되지 않는 것은 아니다. 또한 Java 클래스의 <code>public</code>·<code>private</code> 접근 제어를 바꾸거나 보안상 접근을 차단하는 기능도 아니다.</p>
-<h4 id="452-starter-api">4.5.2 Starter에서 api를 사용하는 이유<a class="headerlink" href="#452-starter-api" title="Permanent link">&para;</a></h4>
-<p>이 가이드의 Starter는 Runtime에 공통 모듈을 묶어서 제공한다.</p>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1">// microserver-framework-starter/build.gradle</span>
-</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="n">api</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-datasource&#39;</span><span class="o">)</span>
-</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="n">api</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-mybatis&#39;</span><span class="o">)</span>
-</span><span id="__span-23-5"><a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="o">}</span>
-</span></code></pre></div>
-<p>Runtime은 Starter 하나를 선언한다.</p>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">// microserver-runtime/build.gradle</span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter:0.0.1-SNAPSHOT&#39;</span>
-</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="o">}</span>
-</span></code></pre></div>
-<p>그러면 Runtime의 컴파일·실행 클래스패스에 Starter뿐 아니라 DataSource·MyBatis 공통 모듈도 연결된다. Runtime 소스는 두 모듈에 공개된 클래스를 직접 import하여 사용할 수 있다. 단, 다음 예제 클래스가 실제로 구현되어 있다는 전제다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1">// Runtime에서 사용할 수 있는 공개 타입의 예시</span>
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="c1">// import io.github.microserverlab.microserver.framework.datasource.FrameworkDatabaseInfo;</span>
-</span></code></pre></div>
-<p>Starter에서 두 의존성을 <code>implementation</code>으로 바꾸면 Runtime 실행에는 두 모듈이 전달되지만, Runtime 소스에서 해당 모듈의 클래스를 직접 import해 컴파일할 수는 없다. Runtime이 별도로 의존성을 선언했다면 그 별도 경로로는 사용할 수 있다.</p>
-<p>Runtime이 Starter를 <code>implementation</code>으로 선언해도 Runtime 자신의 컴파일에는 Starter와 그 api 의존성이 포함된다. 이때의 <code>implementation</code>은 Runtime을 또 다른 프로젝트가 사용하는 경우의 전파 범위를 정하는 것으로, Runtime 자신에게 Starter의 공개 의존성이 전달되지 않는다는 의미가 아니다.</p>
-<h4 id="453-mybatis-datasource">4.5.3 MyBatis 내부에서만 DataSource 타입을 사용하는 경우<a class="headerlink" href="#453-mybatis-datasource" title="Permanent link">&para;</a></h4>
-<p>다음은 의존성 차이를 설명하기 위한 가상 예제다. 실제 설정 클래스와 메서드를 이 예제대로 작성하라는 뜻은 아니다.</p>
-<p>DataSource 모듈에 다음 클래스가 있다고 가정한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">FrameworkDatabaseInfo</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">name</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="s">&quot;framework&quot;</span><span class="p">;</span>
-</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>MyBatis 모듈이 메서드 내부에서만 그 클래스를 사용하고, 외부에는 <code>String</code>을 반환한다면 다음과 같다. 각 예제는 별도 파일이며 import는 생략했다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MapperDatabaseService</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">databaseName</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">        </span><span class="n">FrameworkDatabaseInfo</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FrameworkDatabaseInfo</span><span class="p">();</span>
-</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">info</span><span class="p">.</span><span class="na">name</span><span class="p">();</span>
-</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>이 경우 MyBatis는 DataSource를 내부 구현 의존성으로 선언할 수 있다.</p>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="c1">// microserver-framework-mybatis/build.gradle</span>
-</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-datasource&#39;</span><span class="o">)</span>
-</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="o">}</span>
-</span></code></pre></div>
-<p>MyBatis만 의존하는 사용자는 <code>MapperDatabaseService</code>와 <code>String</code> 타입만 알면 메서드를 호출할 수 있다. 내부에서 사용하는 <code>FrameworkDatabaseInfo</code> 타입을 자신의 소스에서 사용할 필요가 없다. 실행 시에는 내부 코드가 동작해야 하므로 DataSource 모듈도 실행 의존성으로 전달된다.</p>
-<h4 id="454">4.5.4 공개 메서드에 다른 모듈의 타입이 나타나는 경우<a class="headerlink" href="#454" title="Permanent link">&para;</a></h4>
-<p>MyBatis 모듈이 앞의 메서드를 다음처럼 변경했다고 가정한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MapperDatabaseService</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="n">FrameworkDatabaseInfo</span><span class="w"> </span><span class="nf">databaseInfo</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FrameworkDatabaseInfo</span><span class="p">();</span>
-</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="p">}</span>
-</span></code></pre></div>
-<p>반환 타입이 DataSource 모듈의 <code>FrameworkDatabaseInfo</code>다. 사용자는 다음 코드를 컴파일할 때 해당 타입을 알아야 한다.</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">FrameworkDatabaseInfo</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">service</span><span class="p">.</span><span class="na">databaseInfo</span><span class="p">();</span>
-</span></code></pre></div>
-<p>이 공개 기능을 제공하려면 MyBatis는 DataSource 의존성을 <code>api</code>로 선언하는 것이 적절하다.</p>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1">// microserver-framework-mybatis/build.gradle</span>
-</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">    </span><span class="n">api</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-datasource&#39;</span><span class="o">)</span>
-</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="o">}</span>
-</span></code></pre></div>
-<p>이것이 “공개 API에 다른 모듈의 타입이 노출되면 계약에 맞게 선언을 조정한다”는 의미다. 여기서 API는 HTTP API가 아니라 다른 Java 프로젝트가 호출·사용하는 공개 클래스와 메서드다. 메서드 반환 타입·매개변수, 공개 생성자 매개변수, 상속 클래스·구현 인터페이스 등에 다른 모듈의 타입이 사용되는지 확인한다.</p>
-<p>이 예시에서 FrameworkDatabaseInfo는 직접 작성한 가상 타입이다. 실제 코드에서 쓰는 <code>javax.sql.DataSource</code>는 JDK 제공 타입이므로, 이름에 DataSource가 있다는 이유만으로 Framework DataSource 모듈을 <code>api</code>로 바꿀 필요는 없다. 타입이 어느 라이브러리에 소속되는지가 판단 기준이다.</p>
-<p>현재 Starter는 DataSource 모듈을 직접 <code>api</code>로 공개한다. 따라서 Starter를 사용하는 Runtime에서는 MyBatis의 선언과 관계없이 그 직접 경로로 DataSource 모듈이 보일 수 있다. MyBatis 모듈의 의존성 계약을 확인할 때는 MyBatis만 사용하는 프로젝트에서도 공개 메서드를 컴파일할 수 있는지 검토한다.</p>
-<h4 id="455">4.5.5 선언 선택 기준과 확인 방법<a class="headerlink" href="#455" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>사용 상황</th>
-<th>선언 기준</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>메서드 본문 등 해당 모듈 내부 구현에서만 사용</td>
-<td><code>implementation</code></td>
-</tr>
-<tr>
-<td>사용자가 호출할 공개 기능의 타입에 포함</td>
-<td><code>api</code> 검토</td>
-</tr>
-<tr>
-<td>Starter처럼 다른 모듈을 사용자에게 묶어 제공</td>
-<td><code>api</code></td>
-</tr>
-<tr>
-<td>Runtime이 별도 기능의 클래스를 직접 사용하지만 Starter가 공개하지 않음</td>
-<td>Runtime에 해당 라이브러리를 직접 선언</td>
-</tr>
-</tbody>
-</table>
-<p>Java의 <code>import</code> 문이 있다는 사실만으로 결정하지 않는다. 가져온 타입이 내부 처리에만 쓰이는지, 다른 프로젝트도 컴파일할 때 알아야 하는 공개 계약에 포함되는지 확인한다. Gradle이 소스를 분석하여 <code>implementation</code>을 <code>api</code>로 자동 변경해주지는 않는다.</p>
-<p>Runtime 루트에서 다음 두 결과를 비교하면 컴파일·실행 의존성 차이를 확인할 수 있다. macOS는 <code>./gradlew</code>, Windows PowerShell은 <code>.\gradlew.bat</code>을 사용한다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>./gradlew<span class="w"> </span>dependencies<span class="w"> </span>--configuration<span class="w"> </span>compileClasspath
-</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>./gradlew<span class="w"> </span>dependencies<span class="w"> </span>--configuration<span class="w"> </span>runtimeClasspath
-</span></code></pre></div>
-<p><code>api</code>를 사용해도 대상 모듈의 클래스가 Starter JAR 안으로 합쳐지는 것은 아니다. 각 모듈 JAR은 별도로 존재하고, Gradle이 의존성 관계를 통해 필요한 클래스패스에 연결한다. 배포 시에도 이 관계가 전달되도록 JAR과 의존성 메타데이터를 함께 게시한다.</p>
-<p>참고: <a href="https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation">Gradle Java Library Plugin — API와 implementation 구분</a></p>
+<div class="admonition tip">
+<p class="admonition-title">Starter에서 api를 사용하는 이유</p>
+<p><code>api</code>는 Starter를 사용하는 Runtime에서도 공통 모듈의 공개 타입을 컴파일·실행에 사용할 수 있도록 의존성을 전달한다. </p>
+<p><strong>Gradle 문법의 <code>api</code> 선언에 대한 자세한 내용은 아래 링크를 클릭해 확인할 수 있습니다.</strong></p>
+<p>→ <a href="../../gradle/gradle_api_dependency/">Gradle api 의존성 선언 자세히 보기</a></p>
+</div>
 <h3 id="46-framework">4.6 Framework 인식 확인<a class="headerlink" href="#46-framework" title="Permanent link">&para;</a></h3>
 <p>Windows PowerShell:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">local-microserver</span><span class="p">\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-framework</span>
-</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">projects</span>
-</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="p">:</span><span class="n">microserver-framework-starter</span><span class="p">:</span><span class="n">jar</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">local-microserver</span><span class="p">\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-framework</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">projects</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="p">:</span><span class="n">microserver-framework-starter</span><span class="p">:</span><span class="n">jar</span>
 </span></code></pre></div>
 <p>macOS:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="nb">cd</span><span class="w"> </span>~/local-microserver/workspace/microserver-framework
-</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>./gradlew<span class="w"> </span>projects
-</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>./gradlew<span class="w"> </span>:microserver-framework-starter:jar
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="nb">cd</span><span class="w"> </span>~/local-microserver/workspace/microserver-framework
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>./gradlew<span class="w"> </span>projects
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>./gradlew<span class="w"> </span>:microserver-framework-starter:jar
 </span></code></pre></div>
 <p><code>projects</code> 결과에서 루트와 세 하위 프로젝트를 확인하고, Starter의 <code>build/libs</code> 아래 일반 JAR이 생성되는지 확인한다. 소스가 없어서 <code>compileJava</code>가 <code>NO-SOURCE</code>로 표시되는 것은 이 단계에서 정상이다. Starter JAR이 생성되었다는 사실만으로 다른 모듈 JAR이 그 안에 합쳐진 것은 아니다. 공통 모듈은 각자의 JAR과 의존성 관계를 가진다.</p>
 <h2 id="5-runtime-framework">5. 신규 Runtime 생성과 로컬 Framework 연결<a class="headerlink" href="#5-runtime-framework" title="Permanent link">&para;</a></h2>
 <h3 id="51-runtime-settingsgradle">5.1 Runtime settings.gradle<a class="headerlink" href="#51-runtime-settingsgradle" title="Permanent link">&para;</a></h3>
-<p>Runtime에서 배포된 Framework 라이브러리와 개발 PC의 Framework 소스 중 어느 것을 사용할지 선택한다. 먼저 전체 설정 항목을 확인하고, 코드 아래의 항목별 설명을 순서대로 읽는다.</p>
+<p>Framework와 Runtime을 함께 개발할 때는 <strong>Framework 코드를 변경할 때마다 JAR을 저장소에 게시하고 Runtime에서 다시 내려받는 절차 없이 변경 결과를 확인할 수 있도록</strong> 로컬 Framework를 연결한다.</p>
+<p>Runtime의 Starter 의존성을 개발 PC의 Framework 프로젝트로 치환하면, Runtime을 다시 빌드·실행할 때 필요한 Framework 빌드 작업도 Gradle이 함께 처리한다. 이 방식을 Composite Build라고 한다. 빌드 과정에서 로컬 JAR은 생성될 수 있으며, 실행 중인 서버에 변경이 자동으로 반영되는 기능은 아니므로 변경 후 다시 빌드·실행한다.</p>
+<p><code>workspace/microserver-runtime/settings.gradle</code>에 다음을 작성한다.</p>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="c1">// Runtime은 Framework와 별도의 settings.gradle을 갖는 독립 빌드다.</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="n">rootProject</span><span class="o">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;microserver-runtime&#39;</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1">// 개발 PC에서 Framework 소스를 함께 개발할 때 true로 설정한다.</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="c1">// Runtime 루트의 gradle.properties 또는 명령행 -P 옵션에서 값을 읽는다.</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="c1">// 속성 문자열을 Boolean으로 변환하고, 미지정이면 false(배포 라이브러리)를 사용한다.</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="kt">def</span><span class="w"> </span><span class="n">useLocalFramework</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">providers</span><span class="o">.</span><span class="na">gradleProperty</span><span class="o">(</span><span class="s1">&#39;useLocalFramework&#39;</span><span class="o">)</span>
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">        </span><span class="o">.</span><span class="na">map</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">it</span><span class="o">.</span><span class="na">toBoolean</span><span class="o">()</span><span class="w"> </span><span class="o">}</span>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">        </span><span class="o">.</span><span class="na">getOrElse</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="c1">// 로컬 사용을 선택한 경우에만 Framework 빌드를 연결한다.</span>
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">useLocalFramework</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">    </span><span class="c1">// 현재 settings.gradle 위치를 기준으로 이웃 Framework 폴더를 찾는다.</span>
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="n">frameworkDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="s1">&#39;../microserver-framework&#39;</span><span class="o">)</span>
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="w">    </span><span class="c1">// Framework의 Gradle 설정 파일이 없으면 원인을 표시하고 즉시 중단한다.</span>
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="w">    </span><span class="c1">// 로컬 연결 실패 시 배포 라이브러리로 자동 전환하지 않는다.</span>
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">(!</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="o">(</span><span class="n">frameworkDir</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;settings.gradle&#39;</span><span class="o">).</span><span class="na">isFile</span><span class="o">())</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GradleException</span><span class="o">(</span><span class="s2">&quot;로컬 Framework 빌드를 찾을 수 없습니다: ${frameworkDir}&quot;</span><span class="o">)</span>
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a><span class="w">    </span><span class="o">}</span>
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a>
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a><span class="w">    </span><span class="c1">// 독립 Framework 빌드를 포함하여 Runtime과 함께 빌드할 수 있게 한다.</span>
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a><span class="w">    </span><span class="n">includeBuild</span><span class="o">(</span><span class="n">frameworkDir</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a><span class="w">        </span><span class="n">dependencySubstitution</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a><span class="w">            </span><span class="c1">// Runtime build.gradle의 Starter 라이브러리 요청을</span>
+</span><span id="__span-25-26"><a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a><span class="w">            </span><span class="c1">// 포함된 Framework 빌드의 Starter 프로젝트로 치환한다.</span>
+</span><span id="__span-25-27"><a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a><span class="w">            </span><span class="c1">// Runtime의 의존성 좌표는 바꾸지 않고 로컬 소스를 사용할 수 있다.</span>
+</span><span id="__span-25-28"><a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a><span class="w">            </span><span class="n">substitute</span><span class="w"> </span><span class="n">module</span><span class="o">(</span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter&#39;</span><span class="o">)</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-starter&#39;</span><span class="o">)</span>
+</span><span id="__span-25-29"><a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a><span class="w">        </span><span class="o">}</span>
+</span><span id="__span-25-30"><a id="__codelineno-25-30" name="__codelineno-25-30" href="#__codelineno-25-30"></a><span class="w">    </span><span class="o">}</span>
+</span><span id="__span-25-31"><a id="__codelineno-25-31" name="__codelineno-25-31" href="#__codelineno-25-31"></a><span class="o">}</span>
+</span></code></pre></div>
+<p>로컬 Framework를 함께 개발하는 PC에서는 <code>workspace/microserver-runtime/gradle.properties</code>를 생성한다. 이 파일은 개발 PC 전용 설정으로 Git 관리에서 제외한다.</p>
+<div class="language-properties highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># Runtime 빌드와 VS Code의 Gradle 가져오기에서 로컬 Framework 사용</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="na">useLocalFramework</span><span class="o">=</span><span class="s">true</span>
+</span></code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">로컬 Framework 연결 코드 요약</p>
 <table>
 <thead>
 <tr>
-<th>항목</th>
+<th>주요 코드</th>
 <th>하는 일</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Runtime 프로젝트 이름</td>
+<td><code>rootProject.name</code></td>
 <td>독립 Runtime 빌드의 이름 지정</td>
 </tr>
 <tr>
-<td><code>useLocalFramework</code> 속성</td>
-<td>로컬 소스 연결 사용 여부 선택</td>
+<td><code>providers.gradleProperty</code> → <code>map</code> → <code>getOrElse</code></td>
+<td>속성을 읽어 Boolean으로 변환하고 미지정이면 <code>false</code> 사용</td>
 </tr>
 <tr>
-<td><code>providers.gradleProperty</code>·<code>map</code>·<code>getOrElse</code></td>
-<td>속성 읽기, Boolean 변환, 미지정 기본값 처리</td>
-</tr>
-<tr>
-<td>Framework 경로</td>
-<td>Runtime과 함께 개발할 Framework 빌드 위치 지정</td>
-</tr>
-<tr>
-<td>설정 파일 검사</td>
-<td>Framework 빌드가 있는지 확인하고 없으면 오류 표시</td>
+<td><code>file</code>·<code>isFile</code></td>
+<td>이웃 Framework 경로 지정 및 설정 파일 존재 확인</td>
 </tr>
 <tr>
 <td><code>includeBuild</code></td>
-<td>독립 Framework 빌드를 Runtime 빌드에 연결</td>
+<td>독립 Framework 빌드를 Runtime과 함께 연결</td>
 </tr>
 <tr>
 <td><code>dependencySubstitution</code></td>
 <td>Starter 라이브러리 요청을 로컬 Starter 프로젝트로 치환</td>
 </tr>
 <tr>
-<td><code>gradle.properties</code></td>
-<td>개발 PC에서 사용할 기본 선택 저장</td>
-</tr>
-<tr>
-<td>명령행 <code>-P</code></td>
-<td>이번 Gradle 실행의 선택을 명시적으로 지정</td>
+<td><code>gradle.properties</code>·<code>-P</code></td>
+<td>개발 PC의 기본 선택 저장 및 이번 명령의 선택 지정</td>
 </tr>
 </tbody>
 </table>
-<p><code>workspace/microserver-runtime/settings.gradle</code>:</p>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="n">rootProject</span><span class="o">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;microserver-runtime&#39;</span>
-</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>
-</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="c1">// 기본값은 배포 라이브러리 사용이다.</span>
-</span><span id="__span-35-4"><a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="c1">// 로컬 공동 개발 환경에서 -PuseLocalFramework=true로 소스 연결을 켠다.</span>
-</span><span id="__span-35-5"><a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a><span class="kt">def</span><span class="w"> </span><span class="n">useLocalFramework</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">providers</span><span class="o">.</span><span class="na">gradleProperty</span><span class="o">(</span><span class="s1">&#39;useLocalFramework&#39;</span><span class="o">)</span>
-</span><span id="__span-35-6"><a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a><span class="w">        </span><span class="o">.</span><span class="na">map</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">it</span><span class="o">.</span><span class="na">toBoolean</span><span class="o">()</span><span class="w"> </span><span class="o">}</span>
-</span><span id="__span-35-7"><a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="w">        </span><span class="o">.</span><span class="na">getOrElse</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
-</span><span id="__span-35-8"><a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a>
-</span><span id="__span-35-9"><a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a><span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">useLocalFramework</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-35-10"><a id="__codelineno-35-10" name="__codelineno-35-10" href="#__codelineno-35-10"></a><span class="w">    </span><span class="kt">def</span><span class="w"> </span><span class="n">frameworkDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="s1">&#39;../microserver-framework&#39;</span><span class="o">)</span>
-</span><span id="__span-35-11"><a id="__codelineno-35-11" name="__codelineno-35-11" href="#__codelineno-35-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="o">(!</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="o">(</span><span class="n">frameworkDir</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;settings.gradle&#39;</span><span class="o">).</span><span class="na">isFile</span><span class="o">())</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-35-12"><a id="__codelineno-35-12" name="__codelineno-35-12" href="#__codelineno-35-12"></a><span class="w">        </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GradleException</span><span class="o">(</span><span class="s2">&quot;로컬 Framework 빌드를 찾을 수 없습니다: ${frameworkDir}&quot;</span><span class="o">)</span>
-</span><span id="__span-35-13"><a id="__codelineno-35-13" name="__codelineno-35-13" href="#__codelineno-35-13"></a><span class="w">    </span><span class="o">}</span>
-</span><span id="__span-35-14"><a id="__codelineno-35-14" name="__codelineno-35-14" href="#__codelineno-35-14"></a>
-</span><span id="__span-35-15"><a id="__codelineno-35-15" name="__codelineno-35-15" href="#__codelineno-35-15"></a><span class="w">    </span><span class="n">includeBuild</span><span class="o">(</span><span class="n">frameworkDir</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-35-16"><a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a><span class="w">        </span><span class="n">dependencySubstitution</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-35-17"><a id="__codelineno-35-17" name="__codelineno-35-17" href="#__codelineno-35-17"></a><span class="w">            </span><span class="c1">// 외부 라이브러리 좌표를 포함된 빌드의 Starter 프로젝트로 연결한다.</span>
-</span><span id="__span-35-18"><a id="__codelineno-35-18" name="__codelineno-35-18" href="#__codelineno-35-18"></a><span class="w">            </span><span class="n">substitute</span><span class="w"> </span><span class="n">module</span><span class="o">(</span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter&#39;</span><span class="o">)</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-starter&#39;</span><span class="o">)</span>
-</span><span id="__span-35-19"><a id="__codelineno-35-19" name="__codelineno-35-19" href="#__codelineno-35-19"></a><span class="w">        </span><span class="o">}</span>
-</span><span id="__span-35-20"><a id="__codelineno-35-20" name="__codelineno-35-20" href="#__codelineno-35-20"></a><span class="w">    </span><span class="o">}</span>
-</span><span id="__span-35-21"><a id="__codelineno-35-21" name="__codelineno-35-21" href="#__codelineno-35-21"></a><span class="o">}</span>
-</span></code></pre></div>
-<h4 id="511-runtime">5.1.1 Runtime 프로젝트 이름 지정<a class="headerlink" href="#511-runtime" title="Permanent link">&para;</a></h4>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="n">rootProject</span><span class="o">.</span><span class="na">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;microserver-runtime&#39;</span>
-</span></code></pre></div>
-<p>Runtime의 Gradle 루트 프로젝트 이름을 지정한다. Framework의 하위 프로젝트가 아니라 자체 <code>settings.gradle</code>과 <code>build.gradle</code>을 가진 독립 빌드다. 이 이름은 VS Code 실행 설정의 <code>projectName</code>과도 맞춘다.</p>
-<h4 id="512-framework">5.1.2 로컬 Framework 사용 여부 읽기<a class="headerlink" href="#512-framework" title="Permanent link">&para;</a></h4>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a><span class="kt">def</span><span class="w"> </span><span class="n">useLocalFramework</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">providers</span><span class="o">.</span><span class="na">gradleProperty</span><span class="o">(</span><span class="s1">&#39;useLocalFramework&#39;</span><span class="o">)</span>
-</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a><span class="w">        </span><span class="o">.</span><span class="na">map</span><span class="w"> </span><span class="o">{</span><span class="w"> </span><span class="n">it</span><span class="o">.</span><span class="na">toBoolean</span><span class="o">()</span><span class="w"> </span><span class="o">}</span>
-</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="w">        </span><span class="o">.</span><span class="na">getOrElse</span><span class="o">(</span><span class="kc">false</span><span class="o">)</span>
-</span></code></pre></div>
-<p>배포된 공통 라이브러리를 사용할지, 개발 PC의 Framework 소스를 사용할지 선택하는 사용자 정의 설정이다. <code>useLocalFramework</code>는 Gradle의 내장 옵션이 아니라 이 가이드에서 정한 이름이다.</p>
-<table>
-<thead>
-<tr>
-<th>코드</th>
-<th>기능</th>
-<th>값의 예</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>def useLocalFramework</code></td>
-<td>처리 결과를 저장할 Groovy 변수 선언</td>
-<td>최종 Boolean 값</td>
-</tr>
-<tr>
-<td><code>providers.gradleProperty('useLocalFramework')</code></td>
-<td>Gradle 프로젝트 속성을 Provider로 읽음</td>
-<td>문자열 <code>true</code> 또는 <code>false</code></td>
-</tr>
-<tr>
-<td><code>.map { it.toBoolean() }</code></td>
-<td>속성이 있으면 문자열을 Boolean으로 변환</td>
-<td><code>true</code> → 참, <code>false</code> → 거짓</td>
-</tr>
-<tr>
-<td><code>.getOrElse(false)</code></td>
-<td>속성이 없으면 기본값 사용</td>
-<td>거짓</td>
-</tr>
-</tbody>
-</table>
-<p>Provider는 외부에서 전달한 값을 읽고 변환할 수 있는 Gradle의 값 제공 객체다. <code>it</code>은 <code>map</code> 블록에 전달되는 속성 문자열을 가리킨다. 마지막에는 Boolean 값을 얻어 아래 <code>if</code> 조건에 사용한다.</p>
-<p>설정값은 혼동을 피하도록 정확히 <code>true</code> 또는 <code>false</code>로 작성한다. <code>getOrElse(false)</code>는 속성이 없을 때의 기본값이다. 로컬 폴더가 없거나 빌드가 실패했을 때 배포 라이브러리로 자동 전환하는 예외 처리 기능이 아니다.</p>
-<h4 id="513">5.1.3 사용 방식에 따라 로컬 연결 실행<a class="headerlink" href="#513" title="Permanent link">&para;</a></h4>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a><span class="k">if</span><span class="w"> </span><span class="o">(</span><span class="n">useLocalFramework</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a><span class="w">    </span><span class="c1">// 로컬 Framework 위치 확인 및 빌드 연결</span>
-</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="o">}</span>
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>최종 값</th>
-<th>settings.gradle 동작</th>
-<th>Runtime이 사용하는 Framework</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>true</code></td>
-<td>폴더를 검사하고 <code>includeBuild</code> 실행</td>
-<td>개발 PC의 Framework 프로젝트</td>
-</tr>
-<tr>
-<td><code>false</code></td>
-<td>로컬 연결 블록을 건너뜀</td>
-<td>설정된 저장소에서 해석한 라이브러리</td>
-</tr>
-<tr>
-<td>값 미지정</td>
-<td>기본값 <code>false</code></td>
-<td>설정된 저장소에서 해석한 라이브러리</td>
-</tr>
-</tbody>
-</table>
-<p>이 값은 Gradle의 빌드·의존성 연결 설정이다. Spring의 <code>local</code>·<code>dev</code>·<code>prod</code> 실행 프로파일과는 별개다. <code>spring.profiles.active=local</code>만 전달해도 로컬 Framework 소스가 연결되는 것은 아니다.</p>
-<h4 id="514-framework">5.1.4 Framework 소스 위치 지정<a class="headerlink" href="#514-framework" title="Permanent link">&para;</a></h4>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a><span class="kt">def</span><span class="w"> </span><span class="n">frameworkDir</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="o">(</span><span class="s1">&#39;../microserver-framework&#39;</span><span class="o">)</span>
-</span></code></pre></div>
-<p>Runtime의 <code>settings.gradle</code>이 있는 디렉터리를 기준으로 Framework 경로를 해석한다. <code>..</code>는 상위 디렉터리이며, 그 아래 <code>microserver-framework</code> 폴더를 선택한다.</p>
-<table>
-<thead>
-<tr>
-<th>환경</th>
-<th>Runtime 빌드 루트</th>
-<th>위 상대 경로의 결과</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Windows</td>
-<td><code>C:\local-microserver\workspace\microserver-runtime</code></td>
-<td><code>C:\local-microserver\workspace\microserver-framework</code></td>
-</tr>
-<tr>
-<td>macOS</td>
-<td><code>~/local-microserver/workspace/microserver-runtime</code></td>
-<td><code>~/local-microserver/workspace/microserver-framework</code></td>
-</tr>
-</tbody>
-</table>
-<p>두 프로젝트가 같은 작업 공간의 이웃 디렉터리에 있어야 이 경로를 그대로 사용할 수 있다. <code>file(...)</code>은 파일 경로를 나타내는 객체를 만들 뿐 폴더 생성·저장소 복제·파일 복사를 수행하지 않는다.</p>
-<h4 id="515-framework">5.1.5 Framework 빌드 존재 확인과 오류 처리<a class="headerlink" href="#515-framework" title="Permanent link">&para;</a></h4>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a><span class="k">if</span><span class="w"> </span><span class="o">(!</span><span class="k">new</span><span class="w"> </span><span class="n">File</span><span class="o">(</span><span class="n">frameworkDir</span><span class="o">,</span><span class="w"> </span><span class="s1">&#39;settings.gradle&#39;</span><span class="o">).</span><span class="na">isFile</span><span class="o">())</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a><span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">GradleException</span><span class="o">(</span><span class="s2">&quot;로컬 Framework 빌드를 찾을 수 없습니다: ${frameworkDir}&quot;</span><span class="o">)</span>
-</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="o">}</span>
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>표현</th>
-<th>의미</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>new File(frameworkDir, 'settings.gradle')</code></td>
-<td>Framework 디렉터리 안의 설정 파일 경로 생성</td>
-</tr>
-<tr>
-<td><code>.isFile()</code></td>
-<td>해당 경로에 일반 파일이 존재하는지 확인</td>
-</tr>
-<tr>
-<td><code>!</code></td>
-<td>조건 반전. 파일이 없으면 참</td>
-</tr>
-<tr>
-<td><code>throw new GradleException(...)</code></td>
-<td>오류 메시지를 표시하고 빌드 설정 처리를 중단</td>
-</tr>
-<tr>
-<td><code>${frameworkDir}</code></td>
-<td>오류 메시지에 실제 검사한 경로 삽입</td>
-</tr>
-</tbody>
-</table>
-<p>로컬 사용을 선택했는데 Framework를 준비하지 않은 경우, 원인을 초기에 알려주는 검사다. 로컬 빌드 파일의 존재만 확인하므로 소스의 정상 컴파일이나 의존성 다운로드 성공까지 보장하지는 않는다. 이 가이드는 Groovy DSL의 <code>settings.gradle</code>을 사용한다. Kotlin DSL의 <code>settings.gradle.kts</code>로 변경한다면 검사 대상도 조정해야 한다.</p>
-<h4 id="516-framework-includebuild">5.1.6 독립 Framework 빌드 연결 — includeBuild<a class="headerlink" href="#516-framework-includebuild" title="Permanent link">&para;</a></h4>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a><span class="n">includeBuild</span><span class="o">(</span><span class="n">frameworkDir</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">    </span><span class="c1">// 의존성 치환 규칙</span>
-</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="o">}</span>
-</span></code></pre></div>
-<p>별도의 Framework 빌드를 Runtime과 함께 빌드할 수 있도록 연결한다. 독립된 빌드들을 함께 구성하는 방식을 Composite Build라고 한다.</p>
-<table>
-<thead>
-<tr>
-<th>구분</th>
-<th>사용하는 설정</th>
-<th>적용 위치</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>하나의 Framework 빌드에 하위 프로젝트 포함</td>
-<td><code>include 'microserver-framework-datasource'</code></td>
-<td>Framework의 <code>settings.gradle</code></td>
-</tr>
-<tr>
-<td>같은 빌드 안의 하위 프로젝트 의존성 선언</td>
-<td><code>implementation project(':microserver-framework-datasource')</code> 등</td>
-<td>Framework 하위 모듈의 <code>build.gradle</code></td>
-</tr>
-<tr>
-<td>독립 Framework 빌드를 Runtime의 로컬 개발에 연결</td>
-<td><code>includeBuild(frameworkDir)</code></td>
-<td>Runtime의 <code>settings.gradle</code></td>
-</tr>
-</tbody>
-</table>
-<p>연결 후 Runtime을 빌드·실행하면 필요한 Framework 프로젝트의 빌드 작업도 의존성에 따라 수행된다. Framework 소스를 변경한 뒤 Runtime을 다시 빌드·실행할 때, 먼저 공통 JAR을 저장소에 게시하지 않고 변경 내용을 확인할 수 있다.</p>
-<p>소스가 Runtime 폴더로 복사되거나 두 Git 저장소가 합쳐지는 것은 아니다. Framework와 Runtime의 루트 빌드 설정, 플러그인, 저장소 설정은 각각 관리한다. 실행 중인 애플리케이션에 소스 변경이 자동으로 반영되는 Hot Reload 기능도 아니므로 필요한 재빌드·재실행을 수행한다.</p>
-<h4 id="517">5.1.7 라이브러리 의존성을 로컬 프로젝트로 치환<a class="headerlink" href="#517" title="Permanent link">&para;</a></h4>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="n">dependencySubstitution</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="w">    </span><span class="n">substitute</span><span class="w"> </span><span class="n">module</span><span class="o">(</span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter&#39;</span><span class="o">)</span><span class="w"> </span><span class="n">using</span><span class="w"> </span><span class="n">project</span><span class="o">(</span><span class="s1">&#39;:microserver-framework-starter&#39;</span><span class="o">)</span>
-</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a><span class="o">}</span>
-</span></code></pre></div>
-<p>Runtime이 요청한 Starter 라이브러리를 로컬 Framework의 Starter 프로젝트로 바꿔 연결하는 규칙이다.</p>
-<table>
-<thead>
-<tr>
-<th>코드</th>
-<th>의미</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>dependencySubstitution</code></td>
-<td>의존성 대상을 다른 대상으로 치환하는 규칙 선언</td>
-</tr>
-<tr>
-<td><code>module('io.github.microserverlab:microserver-framework-starter')</code></td>
-<td>바꿀 대상인 외부 라이브러리의 그룹·이름 지정</td>
-</tr>
-<tr>
-<td><code>using project(':microserver-framework-starter')</code></td>
-<td>대체할 대상으로 포함된 Framework 빌드의 Starter 하위 프로젝트 지정</td>
-</tr>
-</tbody>
-</table>
-<p>여기서 <code>project(...)</code>는 <code>includeBuild</code>의 치환 규칙 안에 있으므로 포함된 Framework 빌드의 프로젝트를 가리킨다. Runtime 안에 Starter 하위 프로젝트가 있다는 뜻이 아니다.</p>
-<p>Runtime의 <code>build.gradle</code>은 두 사용 방식 모두 다음 선언을 유지한다.</p>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter:0.0.1-SNAPSHOT&#39;</span>
-</span></code></pre></div>
-<table>
-<thead>
-<tr>
-<th>사용 방식</th>
-<th>위 선언의 실제 해석</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>로컬 연결 켬</td>
-<td>Framework 빌드의 <code>:microserver-framework-starter</code> 프로젝트로 치환</td>
-</tr>
-<tr>
-<td>로컬 연결 끔</td>
-<td>선언한 라이브러리 좌표와 버전을 설정된 저장소에서 해석</td>
-</tr>
-</tbody>
-</table>
-<p>Starter가 의존하는 DataSource·MyBatis 공통 모듈도 Framework의 프로젝트 의존성으로 함께 연결된다. 외부 의존성 좌표를 유지하므로 로컬 소스 사용과 배포 라이브러리 사용을 전환할 때 Runtime의 의존성 선언을 바꿀 필요가 없다.</p>
-<p>현재처럼 라이브러리 그룹·이름과 로컬 프로젝트 식별자가 일치하면 Gradle의 기본 치환 규칙으로도 연결할 수 있다. 본 가이드에서는 어떤 Starter를 어떤 프로젝트로 연결하는지 드러내기 위해 명시적인 치환 규칙을 작성했다.</p>
-<p>위 <code>module(...)</code>에는 버전이 없으므로 같은 그룹·이름의 요청을 로컬 프로젝트로 치환한다. 따라서 로컬 연결을 켠 상태에서는 선언된 <code>0.0.1-SNAPSHOT</code> 배포물과 로컬 소스가 동일하다고 보장되지 않는다. 배포 버전 자체를 검증할 때는 로컬 연결을 끈다.</p>
-<h4 id="518-pc-gradleproperties">5.1.8 개발 PC의 기본 선택 저장 — gradle.properties<a class="headerlink" href="#518-pc-gradleproperties" title="Permanent link">&para;</a></h4>
-<p><code>workspace/microserver-runtime/gradle.properties</code>:</p>
-<div class="language-properties highlight"><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a><span class="na">useLocalFramework</span><span class="o">=</span><span class="s">true</span>
-</span></code></pre></div>
-<p>Runtime 루트에 이 파일을 두면 매번 <code>-P</code> 옵션을 입력하지 않아도 로컬 연결을 사용한다. VS Code가 Runtime의 Gradle 프로젝트를 가져올 때도 이 설정을 읽을 수 있다.</p>
-<p>이 가이드에서는 로컬 소스를 함께 내려받은 개발 PC의 선택으로 관리하므로 해당 파일을 <code>.gitignore</code>에서 제외한다. 파일이 Git에 포함되지 않기 때문에 신규 PC에서는 직접 만들거나 실행 명령에 속성을 전달해야 한다. CI도 다른 곳에서 이 속성을 주입하지 않는 한 기본값 <code>false</code>로 동작한다.</p>
-<p>설정 파일을 Git에서 제외한다는 것은 개발 PC에 파일을 만들지 말라는 뜻이 아니다. 이 파일을 생성해 사용하되 저장소에는 올리지 않는다는 의미다. 공용 Gradle 설정까지 항상 모두 제외해야 한다는 일반 규칙도 아니다.</p>
-<p>또한 Gradle 사용자 홈의 <code>gradle.properties</code> 등에 같은 속성이 있다면 값 선택에 영향을 줄 수 있다. 본 가이드에서는 Runtime별 파일로 관리하고, 의도와 다른 동작이 나오면 사용자 홈의 동명 속성도 확인한다.</p>
-<h4 id="519-p">5.1.9 명령행에서 일시적으로 전환 — -P<a class="headerlink" href="#519-p" title="Permanent link">&para;</a></h4>
-<p><code>-P</code>는 Gradle 프로젝트 속성을 전달하는 옵션이다. 명령행 값이 파일의 같은 속성보다 우선한다.</p>
-<p>Windows PowerShell — Runtime 루트:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a><span class="c"># 이번 명령에서는 로컬 Framework 사용</span>
-</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">classes</span> <span class="n">-PuseLocalFramework</span><span class="p">=</span><span class="n">true</span>
-</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>
-</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4" href="#__codelineno-45-4"></a><span class="c"># 이번 명령에서는 배포 라이브러리 사용</span>
-</span><span id="__span-45-5"><a id="__codelineno-45-5" name="__codelineno-45-5" href="#__codelineno-45-5"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">classes</span> <span class="n">-PuseLocalFramework</span><span class="p">=</span><span class="n">false</span>
-</span></code></pre></div>
-<p>macOS — Runtime 루트:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="c1"># 이번 명령에서는 로컬 Framework 사용</span>
-</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a>./gradlew<span class="w"> </span>classes<span class="w"> </span>-PuseLocalFramework<span class="o">=</span><span class="nb">true</span>
-</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a>
-</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="c1"># 이번 명령에서는 배포 라이브러리 사용</span>
-</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a>./gradlew<span class="w"> </span>classes<span class="w"> </span>-PuseLocalFramework<span class="o">=</span><span class="nb">false</span>
-</span></code></pre></div>
-<p>위 명령은 <code>gradle.properties</code> 파일을 수정하지 않는다. 파일이 <code>true</code>인 상태에서 명령행에 <code>false</code>를 지정하면 해당 실행만 배포 라이브러리를 사용하고, 다음 명령에서 옵션을 생략하면 다시 파일의 <code>true</code>를 사용한다.</p>
-<p><code>useLocalFramework</code>는 빌드 구성을 선택하는 값이므로 <code>bootRun --args</code>의 애플리케이션 인수로 전달하지 않는다. 예를 들어 <code>bootRun -PuseLocalFramework=true</code>는 Gradle 설정이고, <code>bootRun --args='--spring.profiles.active=local'</code>은 Spring 애플리케이션 설정이다.</p>
-<h4 id="5110">5.1.10 사용 방식 확인과 최초 구성 시 주의점<a class="headerlink" href="#5110" title="Permanent link">&para;</a></h4>
-<table>
-<thead>
-<tr>
-<th>확인 상황</th>
-<th>확인할 내용</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Framework 소스도 함께 개발</td>
-<td>속성 <code>true</code>, 이웃 Framework 폴더 존재, 의존성이 로컬 프로젝트로 치환되는지 확인</td>
-</tr>
-<tr>
-<td>배포된 버전만 사용</td>
-<td>속성 <code>false</code>, Framework가 게시된 저장소 설정과 대상 버전 존재 확인</td>
-</tr>
-<tr>
-<td>로컬 연결은 켰지만 폴더가 없음</td>
-<td>설정 파일 검사에서 즉시 실패. 배포 라이브러리로 자동 전환하지 않음</td>
-</tr>
-<tr>
-<td>속성 없이 신규 PC에서 실행</td>
-<td>기본값 <code>false</code>. 아직 배포하지 않았다면 Starter 의존성 해석 실패 가능</td>
-</tr>
-</tbody>
-</table>
-<p>현재 가이드의 Runtime은 <code>mavenCentral()</code>만 선언한다. 회사 공통 Framework가 그곳에 게시되어 있지 않다면 로컬 연결을 끈 상태에서 사용할 수 없다. 배포 단계에서 실제 라이브러리 저장소를 추가하고 필요한 버전을 게시해야 한다. 이 설정에 <code>mavenLocal()</code>이 없으므로 로컬 Maven 저장소에 게시하는 것만으로 해석되지도 않는다.</p>
-<p>최초 구성에서는 반드시 <code>gradle.properties</code>를 만들거나 <code>-PuseLocalFramework=true</code>를 전달한다. 이후 배포 라이브러리 사용 검증은 실제 게시와 저장소 설정을 마친 다음 진행한다.</p>
-<p>예를 들어 macOS에서는 다음으로 Starter 연결 결과를 확인한다. Windows에서는 <code>./gradlew</code> 대신 <code>.\gradlew.bat</code>을 사용한다.</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a>./gradlew<span class="w"> </span>dependencyInsight<span class="w"> </span>--dependency<span class="w"> </span>microserver-framework-starter<span class="w"> </span>--configuration<span class="w"> </span>runtimeClasspath<span class="w"> </span>-PuseLocalFramework<span class="o">=</span><span class="nb">true</span>
-</span></code></pre></div>
-<p>결과에서 Starter의 라이브러리 요청이 포함된 Framework 빌드의 프로젝트로 선택되는지 확인한다. <code>useLocalFramework=false</code> 검증에서는 같은 명령의 속성을 <code>false</code>로 바꾸어 저장소의 배포 버전이 선택되는지 확인한다.</p>
-<p>참고: <a href="https://docs.gradle.org/current/userguide/composite_builds.html">Gradle Composite Builds</a> · <a href="https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties">Gradle 프로젝트 속성</a></p>
+<p><strong>Gradle 문법과 로컬 Framework 연결 설정에 대한 자세한 내용은 아래 링크를 클릭해 확인할 수 있습니다.</strong></p>
+<p>→ <a href="../../gradle/gradle_local_framework_connection/">Gradle 로컬 Framework 연결 자세히 보기</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">최초 실행과 배포 라이브러리 사용</p>
+<p>최초 구성에서는 <code>useLocalFramework=true</code>로 실행한다. <code>false</code>로 실행하려면 Framework가 게시된 저장소 설정과 해당 배포 버전이 준비되어 있어야 한다. 이 값은 Spring의 <code>local</code> 실행 프로파일과 별도로 설정한다.</p>
+</div>
 <h3 id="52-runtime-buildgradle">5.2 Runtime build.gradle<a class="headerlink" href="#52-runtime-buildgradle" title="Permanent link">&para;</a></h3>
 <p><code>workspace/microserver-runtime/build.gradle</code>:</p>
-<div class="language-groovy highlight"><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="n">plugins</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;java&#39;</span>
-</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;4.1.1&#39;</span>
-</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="o">}</span>
-</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a>
-</span><span id="__span-48-6"><a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab&#39;</span>
-</span><span id="__span-48-7"><a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0.0.1-SNAPSHOT&#39;</span>
-</span><span id="__span-48-8"><a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a>
-</span><span id="__span-48-9"><a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a><span class="n">java</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-48-10"><a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a><span class="w">    </span><span class="n">toolchain</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-48-11"><a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a><span class="w">        </span><span class="n">languageVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JavaLanguageVersion</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">25</span><span class="o">)</span>
-</span><span id="__span-48-12"><a id="__codelineno-48-12" name="__codelineno-48-12" href="#__codelineno-48-12"></a><span class="w">    </span><span class="o">}</span>
-</span><span id="__span-48-13"><a id="__codelineno-48-13" name="__codelineno-48-13" href="#__codelineno-48-13"></a><span class="o">}</span>
-</span><span id="__span-48-14"><a id="__codelineno-48-14" name="__codelineno-48-14" href="#__codelineno-48-14"></a>
-</span><span id="__span-48-15"><a id="__codelineno-48-15" name="__codelineno-48-15" href="#__codelineno-48-15"></a><span class="n">repositories</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-48-16"><a id="__codelineno-48-16" name="__codelineno-48-16" href="#__codelineno-48-16"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="o">()</span>
-</span><span id="__span-48-17"><a id="__codelineno-48-17" name="__codelineno-48-17" href="#__codelineno-48-17"></a><span class="w">    </span><span class="c1">// Framework 배포 단계에서 공통 라이브러리 저장소를 추가한다.</span>
-</span><span id="__span-48-18"><a id="__codelineno-48-18" name="__codelineno-48-18" href="#__codelineno-48-18"></a><span class="o">}</span>
-</span><span id="__span-48-19"><a id="__codelineno-48-19" name="__codelineno-48-19" href="#__codelineno-48-19"></a>
-</span><span id="__span-48-20"><a id="__codelineno-48-20" name="__codelineno-48-20" href="#__codelineno-48-20"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-48-21"><a id="__codelineno-48-21" name="__codelineno-48-21" href="#__codelineno-48-21"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="n">platform</span><span class="o">(</span><span class="s1">&#39;org.springframework.boot:spring-boot-dependencies:4.1.1&#39;</span><span class="o">)</span>
-</span><span id="__span-48-22"><a id="__codelineno-48-22" name="__codelineno-48-22" href="#__codelineno-48-22"></a>
-</span><span id="__span-48-23"><a id="__codelineno-48-23" name="__codelineno-48-23" href="#__codelineno-48-23"></a><span class="w">    </span><span class="c1">// 프로젝트 경로 대신 배포 시에도 사용할 라이브러리 좌표로 선언한다.</span>
-</span><span id="__span-48-24"><a id="__codelineno-48-24" name="__codelineno-48-24" href="#__codelineno-48-24"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter:0.0.1-SNAPSHOT&#39;</span>
-</span><span id="__span-48-25"><a id="__codelineno-48-25" name="__codelineno-48-25" href="#__codelineno-48-25"></a>
-</span><span id="__span-48-26"><a id="__codelineno-48-26" name="__codelineno-48-26" href="#__codelineno-48-26"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc&#39;</span>
-</span><span id="__span-48-27"><a id="__codelineno-48-27" name="__codelineno-48-27" href="#__codelineno-48-27"></a><span class="w">    </span><span class="n">testImplementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc-test&#39;</span>
-</span><span id="__span-48-28"><a id="__codelineno-48-28" name="__codelineno-48-28" href="#__codelineno-48-28"></a><span class="w">    </span><span class="n">testRuntimeOnly</span><span class="w"> </span><span class="s1">&#39;org.junit.platform:junit-platform-launcher&#39;</span>
-</span><span id="__span-48-29"><a id="__codelineno-48-29" name="__codelineno-48-29" href="#__codelineno-48-29"></a><span class="o">}</span>
-</span><span id="__span-48-30"><a id="__codelineno-48-30" name="__codelineno-48-30" href="#__codelineno-48-30"></a>
-</span><span id="__span-48-31"><a id="__codelineno-48-31" name="__codelineno-48-31" href="#__codelineno-48-31"></a><span class="n">tasks</span><span class="o">.</span><span class="na">withType</span><span class="o">(</span><span class="n">JavaCompile</span><span class="o">).</span><span class="na">configureEach</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-48-32"><a id="__codelineno-48-32" name="__codelineno-48-32" href="#__codelineno-48-32"></a><span class="w">    </span><span class="n">options</span><span class="o">.</span><span class="na">encoding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;UTF-8&#39;</span>
-</span><span id="__span-48-33"><a id="__codelineno-48-33" name="__codelineno-48-33" href="#__codelineno-48-33"></a><span class="o">}</span>
-</span><span id="__span-48-34"><a id="__codelineno-48-34" name="__codelineno-48-34" href="#__codelineno-48-34"></a>
-</span><span id="__span-48-35"><a id="__codelineno-48-35" name="__codelineno-48-35" href="#__codelineno-48-35"></a><span class="n">tasks</span><span class="o">.</span><span class="na">named</span><span class="o">(</span><span class="s1">&#39;test&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
-</span><span id="__span-48-36"><a id="__codelineno-48-36" name="__codelineno-48-36" href="#__codelineno-48-36"></a><span class="w">    </span><span class="n">useJUnitPlatform</span><span class="o">()</span>
-</span><span id="__span-48-37"><a id="__codelineno-48-37" name="__codelineno-48-37" href="#__codelineno-48-37"></a><span class="o">}</span>
+<div class="language-groovy highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">plugins</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;java&#39;</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span><span class="n">id</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot&#39;</span><span class="w"> </span><span class="n">version</span><span class="w"> </span><span class="s1">&#39;4.1.1&#39;</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="o">}</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="n">group</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab&#39;</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="n">version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;0.0.1-SNAPSHOT&#39;</span>
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="n">java</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="w">    </span><span class="n">toolchain</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-11"><a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="w">        </span><span class="n">languageVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">JavaLanguageVersion</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="mi">25</span><span class="o">)</span>
+</span><span id="__span-27-12"><a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="w">    </span><span class="o">}</span>
+</span><span id="__span-27-13"><a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="o">}</span>
+</span><span id="__span-27-14"><a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a>
+</span><span id="__span-27-15"><a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="n">repositories</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-16"><a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a><span class="w">    </span><span class="n">mavenCentral</span><span class="o">()</span>
+</span><span id="__span-27-17"><a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a><span class="w">    </span><span class="c1">// Framework 배포 단계에서 공통 라이브러리 저장소를 추가한다.</span>
+</span><span id="__span-27-18"><a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a><span class="o">}</span>
+</span><span id="__span-27-19"><a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a>
+</span><span id="__span-27-20"><a id="__codelineno-27-20" name="__codelineno-27-20" href="#__codelineno-27-20"></a><span class="n">dependencies</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-21"><a id="__codelineno-27-21" name="__codelineno-27-21" href="#__codelineno-27-21"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="n">platform</span><span class="o">(</span><span class="s1">&#39;org.springframework.boot:spring-boot-dependencies:4.1.1&#39;</span><span class="o">)</span>
+</span><span id="__span-27-22"><a id="__codelineno-27-22" name="__codelineno-27-22" href="#__codelineno-27-22"></a>
+</span><span id="__span-27-23"><a id="__codelineno-27-23" name="__codelineno-27-23" href="#__codelineno-27-23"></a><span class="w">    </span><span class="c1">// 프로젝트 경로 대신 배포 시에도 사용할 라이브러리 좌표로 선언한다.</span>
+</span><span id="__span-27-24"><a id="__codelineno-27-24" name="__codelineno-27-24" href="#__codelineno-27-24"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;io.github.microserverlab:microserver-framework-starter:0.0.1-SNAPSHOT&#39;</span>
+</span><span id="__span-27-25"><a id="__codelineno-27-25" name="__codelineno-27-25" href="#__codelineno-27-25"></a>
+</span><span id="__span-27-26"><a id="__codelineno-27-26" name="__codelineno-27-26" href="#__codelineno-27-26"></a><span class="w">    </span><span class="n">implementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc&#39;</span>
+</span><span id="__span-27-27"><a id="__codelineno-27-27" name="__codelineno-27-27" href="#__codelineno-27-27"></a><span class="w">    </span><span class="n">testImplementation</span><span class="w"> </span><span class="s1">&#39;org.springframework.boot:spring-boot-starter-webmvc-test&#39;</span>
+</span><span id="__span-27-28"><a id="__codelineno-27-28" name="__codelineno-27-28" href="#__codelineno-27-28"></a><span class="w">    </span><span class="n">testRuntimeOnly</span><span class="w"> </span><span class="s1">&#39;org.junit.platform:junit-platform-launcher&#39;</span>
+</span><span id="__span-27-29"><a id="__codelineno-27-29" name="__codelineno-27-29" href="#__codelineno-27-29"></a><span class="o">}</span>
+</span><span id="__span-27-30"><a id="__codelineno-27-30" name="__codelineno-27-30" href="#__codelineno-27-30"></a>
+</span><span id="__span-27-31"><a id="__codelineno-27-31" name="__codelineno-27-31" href="#__codelineno-27-31"></a><span class="n">tasks</span><span class="o">.</span><span class="na">withType</span><span class="o">(</span><span class="n">JavaCompile</span><span class="o">).</span><span class="na">configureEach</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-32"><a id="__codelineno-27-32" name="__codelineno-27-32" href="#__codelineno-27-32"></a><span class="w">    </span><span class="n">options</span><span class="o">.</span><span class="na">encoding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;UTF-8&#39;</span>
+</span><span id="__span-27-33"><a id="__codelineno-27-33" name="__codelineno-27-33" href="#__codelineno-27-33"></a><span class="o">}</span>
+</span><span id="__span-27-34"><a id="__codelineno-27-34" name="__codelineno-27-34" href="#__codelineno-27-34"></a>
+</span><span id="__span-27-35"><a id="__codelineno-27-35" name="__codelineno-27-35" href="#__codelineno-27-35"></a><span class="n">tasks</span><span class="o">.</span><span class="na">named</span><span class="o">(</span><span class="s1">&#39;test&#39;</span><span class="o">)</span><span class="w"> </span><span class="o">{</span>
+</span><span id="__span-27-36"><a id="__codelineno-27-36" name="__codelineno-27-36" href="#__codelineno-27-36"></a><span class="w">    </span><span class="n">useJUnitPlatform</span><span class="o">()</span>
+</span><span id="__span-27-37"><a id="__codelineno-27-37" name="__codelineno-27-37" href="#__codelineno-27-37"></a><span class="o">}</span>
 </span></code></pre></div>
 <p>독립 빌드들은 버전 설정과 저장소를 자동 공유하지 않는다. Framework와 Runtime에 BOM·Toolchain·저장소를 각각 지정한 이유다. 현재는 Runtime의 BOM과 Framework의 BOM을 같은 버전으로 유지한다.</p>
 <p>JDBC·MyBatis·H2·Lombok 의존성은 실제 구현을 옮기는 다음 단계에서 필요한 프로젝트에 추가한다. 소스가 없는 모듈에 의존성을 먼저 넣어 DB 자동 구성이 시작되게 하지 않는다.</p>
 <h3 id="53">5.3 애플리케이션 진입점<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
 <p>다음 패키지 경로에 파일을 만든다.</p>
 <p><code>workspace/microserver-runtime/src/main/java/io/github/microserverlab/microserver/runtime/MicroserverRuntimeApplication.java</code>:</p>
-<div class="language-java highlight"><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.runtime</span><span class="p">;</span>
-</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a>
-</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
-</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
-</span><span id="__span-49-5"><a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a>
-</span><span id="__span-49-6"><a id="__codelineno-49-6" name="__codelineno-49-6" href="#__codelineno-49-6"></a><span class="nd">@SpringBootApplication</span>
-</span><span id="__span-49-7"><a id="__codelineno-49-7" name="__codelineno-49-7" href="#__codelineno-49-7"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MicroserverRuntimeApplication</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-49-8"><a id="__codelineno-49-8" name="__codelineno-49-8" href="#__codelineno-49-8"></a>
-</span><span id="__span-49-9"><a id="__codelineno-49-9" name="__codelineno-49-9" href="#__codelineno-49-9"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-</span><span id="__span-49-10"><a id="__codelineno-49-10" name="__codelineno-49-10" href="#__codelineno-49-10"></a><span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">MicroserverRuntimeApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
-</span><span id="__span-49-11"><a id="__codelineno-49-11" name="__codelineno-49-11" href="#__codelineno-49-11"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-49-12"><a id="__codelineno-49-12" name="__codelineno-49-12" href="#__codelineno-49-12"></a><span class="p">}</span>
+<div class="language-java highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="kn">package</span><span class="w"> </span><span class="nn">io.github.microserverlab.microserver.runtime</span><span class="p">;</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.SpringApplication</span><span class="p">;</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">org.springframework.boot.autoconfigure.SpringBootApplication</span><span class="p">;</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="nd">@SpringBootApplication</span>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">MicroserverRuntimeApplication</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kd">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">String</span><span class="o">[]</span><span class="w"> </span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="w">        </span><span class="n">SpringApplication</span><span class="p">.</span><span class="na">run</span><span class="p">(</span><span class="n">MicroserverRuntimeApplication</span><span class="p">.</span><span class="na">class</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>Runtime의 업무 코드는 <code>io.github.microserverlab.microserver.runtime</code> 아래에 배치한다. Framework는 별도 패키지에서 자동 구성으로 등록할 예정이므로, 여기서 전체 <code>io.github.microserverlab</code> 패키지를 넓게 컴포넌트 스캔하지 않는다.</p>
 <p>기존 예제의 Business Mapper와 Service를 이관할 때는 새 업무 패키지에 맞추어 Java 패키지, Mapper XML의 <code>namespace</code>, 매퍼 스캔 범위를 함께 정리한다. 해당 작업은 다음 가이드에서 진행한다.</p>
 <h2 id="6">6. 외부 설정 연결<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <h3 id="61-runtime-applicationyml">6.1 Runtime application.yml<a class="headerlink" href="#61-runtime-applicationyml" title="Permanent link">&para;</a></h3>
 <p><code>workspace/microserver-runtime/src/main/resources/application.yml</code>:</p>
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a><span class="nt">spring</span><span class="p">:</span>
-</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2" href="#__codelineno-50-2"></a><span class="w">  </span><span class="nt">application</span><span class="p">:</span>
-</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3" href="#__codelineno-50-3"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">microserver-runtime</span>
-</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4" href="#__codelineno-50-4"></a>
-</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5" href="#__codelineno-50-5"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
-</span><span id="__span-50-6"><a id="__codelineno-50-6" name="__codelineno-50-6" href="#__codelineno-50-6"></a><span class="w">    </span><span class="nt">import</span><span class="p">:</span>
-</span><span id="__span-50-7"><a id="__codelineno-50-7" name="__codelineno-50-7" href="#__codelineno-50-7"></a><span class="w">      </span><span class="c1"># Runtime 실행 환경에서 지정한 외부 설정을 읽는다.</span>
-</span><span id="__span-50-8"><a id="__codelineno-50-8" name="__codelineno-50-8" href="#__codelineno-50-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-datasource.yml&#39;</span>
-</span><span id="__span-50-9"><a id="__codelineno-50-9" name="__codelineno-50-9" href="#__codelineno-50-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-mybatis.yml&#39;</span>
-</span><span id="__span-50-10"><a id="__codelineno-50-10" name="__codelineno-50-10" href="#__codelineno-50-10"></a>
-</span><span id="__span-50-11"><a id="__codelineno-50-11" name="__codelineno-50-11" href="#__codelineno-50-11"></a><span class="w">  </span><span class="nt">sql</span><span class="p">:</span>
-</span><span id="__span-50-12"><a id="__codelineno-50-12" name="__codelineno-50-12" href="#__codelineno-50-12"></a><span class="w">    </span><span class="nt">init</span><span class="p">:</span>
-</span><span id="__span-50-13"><a id="__codelineno-50-13" name="__codelineno-50-13" href="#__codelineno-50-13"></a><span class="w">      </span><span class="c1"># SQL 초기화 정책은 명시하고, 검증용 데이터는 후속 테스트에서 준비한다.</span>
-</span><span id="__span-50-14"><a id="__codelineno-50-14" name="__codelineno-50-14" href="#__codelineno-50-14"></a><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">never</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="nt">spring</span><span class="p">:</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">  </span><span class="nt">application</span><span class="p">:</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">microserver-runtime</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">  </span><span class="nt">config</span><span class="p">:</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="w">    </span><span class="nt">import</span><span class="p">:</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7" href="#__codelineno-29-7"></a><span class="w">      </span><span class="c1"># Runtime 실행 환경에서 지정한 외부 설정을 읽는다.</span>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8" href="#__codelineno-29-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-datasource.yml&#39;</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9" href="#__codelineno-29-9"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;file:${microserver.resource-dir}/config/application-context/${spring.profiles.active}/application-mybatis.yml&#39;</span>
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10" href="#__codelineno-29-10"></a>
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11" href="#__codelineno-29-11"></a><span class="w">  </span><span class="nt">sql</span><span class="p">:</span>
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12" href="#__codelineno-29-12"></a><span class="w">    </span><span class="nt">init</span><span class="p">:</span>
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13" href="#__codelineno-29-13"></a><span class="w">      </span><span class="c1"># SQL 초기화 정책은 명시하고, 검증용 데이터는 후속 테스트에서 준비한다.</span>
+</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14" href="#__codelineno-29-14"></a><span class="w">      </span><span class="nt">mode</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">never</span>
 </span></code></pre></div>
 <p>프로파일과 외부 리소스 위치는 실행 시 전달한다. 경로에 <code>optional:</code>을 붙이지 않아 필수 설정 파일이 없으면 기동 중에 발견할 수 있도록 한다. 이 경로 규칙에서는 <code>local</code>처럼 환경 프로파일 하나를 지정한다. <code>local,extra</code>를 지정하면 환경 디렉터리 이름까지 해당 문자열로 치환되므로 그대로 사용할 수 없다.</p>
 <p>현재 Runtime에는 MyBatis 자동 구성 라이브러리가 없으므로 기존 <code>MybatisAutoConfiguration</code> 제외 항목을 먼저 복사하지 않는다. 다음 가이드에서 MyBatis 의존성과 두 DB의 명시 구성을 추가할 때 제외 정책도 함께 적용한다.</p>
@@ -3363,41 +2970,41 @@
 <p>프로젝트 하위의 <code>.vscode</code>를 각각 만들지 않고 <code>workspace/.vscode</code>에서 실행·테스트 설정을 관리한다. 기존 <code>microserver</code> 프로젝트를 계속 사용하는 경우 기존 실행 항목은 보존하고 아래 신규 항목을 추가한다.</p>
 <h3 id="72-launchjson">7.2 launch.json<a class="headerlink" href="#72-launchjson" title="Permanent link">&para;</a></h3>
 <p><code>workspace/.vscode/launch.json</code>의 <code>configurations</code> 배열에 아래 항목을 추가한다. 기존 파일이 없을 때만 전체 내용을 새 파일로 사용한다.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="p">{</span>
-</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
-</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a><span class="w">  </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;java&quot;</span><span class="p">,</span>
-</span><span id="__span-51-6"><a id="__codelineno-51-6" name="__codelineno-51-6" href="#__codelineno-51-6"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Microserver Runtime (local)&quot;</span><span class="p">,</span>
-</span><span id="__span-51-7"><a id="__codelineno-51-7" name="__codelineno-51-7" href="#__codelineno-51-7"></a><span class="w">      </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
-</span><span id="__span-51-8"><a id="__codelineno-51-8" name="__codelineno-51-8" href="#__codelineno-51-8"></a><span class="w">      </span><span class="nt">&quot;mainClass&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;io.github.microserverlab.microserver.runtime.MicroserverRuntimeApplication&quot;</span><span class="p">,</span>
-</span><span id="__span-51-9"><a id="__codelineno-51-9" name="__codelineno-51-9" href="#__codelineno-51-9"></a><span class="w">      </span><span class="nt">&quot;projectName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-runtime&quot;</span><span class="p">,</span>
-</span><span id="__span-51-10"><a id="__codelineno-51-10" name="__codelineno-51-10" href="#__codelineno-51-10"></a><span class="w">      </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}/microserver-runtime&quot;</span><span class="p">,</span>
-</span><span id="__span-51-11"><a id="__codelineno-51-11" name="__codelineno-51-11" href="#__codelineno-51-11"></a><span class="w">      </span><span class="nt">&quot;vmArgs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-51-12"><a id="__codelineno-51-12" name="__codelineno-51-12" href="#__codelineno-51-12"></a><span class="w">        </span><span class="s2">&quot;-Dspring.profiles.active=local&quot;</span><span class="p">,</span>
-</span><span id="__span-51-13"><a id="__codelineno-51-13" name="__codelineno-51-13" href="#__codelineno-51-13"></a><span class="w">        </span><span class="s2">&quot;-Dmicroserver.resource-dir=${workspaceFolder}/microserver_resource&quot;</span>
-</span><span id="__span-51-14"><a id="__codelineno-51-14" name="__codelineno-51-14" href="#__codelineno-51-14"></a><span class="w">      </span><span class="p">]</span>
-</span><span id="__span-51-15"><a id="__codelineno-51-15" name="__codelineno-51-15" href="#__codelineno-51-15"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-51-16"><a id="__codelineno-51-16" name="__codelineno-51-16" href="#__codelineno-51-16"></a><span class="w">  </span><span class="p">]</span>
-</span><span id="__span-51-17"><a id="__codelineno-51-17" name="__codelineno-51-17" href="#__codelineno-51-17"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="p">{</span>
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="w">  </span><span class="nt">&quot;version&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;0.2.0&quot;</span><span class="p">,</span>
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">  </span><span class="nt">&quot;configurations&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">      </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;java&quot;</span><span class="p">,</span>
+</span><span id="__span-30-6"><a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Microserver Runtime (local)&quot;</span><span class="p">,</span>
+</span><span id="__span-30-7"><a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">      </span><span class="nt">&quot;request&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;launch&quot;</span><span class="p">,</span>
+</span><span id="__span-30-8"><a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">      </span><span class="nt">&quot;mainClass&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;io.github.microserverlab.microserver.runtime.MicroserverRuntimeApplication&quot;</span><span class="p">,</span>
+</span><span id="__span-30-9"><a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">      </span><span class="nt">&quot;projectName&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-runtime&quot;</span><span class="p">,</span>
+</span><span id="__span-30-10"><a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">      </span><span class="nt">&quot;cwd&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;${workspaceFolder}/microserver-runtime&quot;</span><span class="p">,</span>
+</span><span id="__span-30-11"><a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="w">      </span><span class="nt">&quot;vmArgs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-30-12"><a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="w">        </span><span class="s2">&quot;-Dspring.profiles.active=local&quot;</span><span class="p">,</span>
+</span><span id="__span-30-13"><a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="w">        </span><span class="s2">&quot;-Dmicroserver.resource-dir=${workspaceFolder}/microserver_resource&quot;</span>
+</span><span id="__span-30-14"><a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-30-15"><a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-30-16"><a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a><span class="w">  </span><span class="p">]</span>
+</span><span id="__span-30-17"><a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="p">}</span>
 </span></code></pre></div>
 <p><code>projectName</code>은 Runtime의 <code>rootProject.name</code>과 일치시킨다. VS Code에서 <strong>Run and Debug → Microserver Runtime (local)</strong> 을 선택하여 실행한다. Framework에는 실행 진입점이 없으므로 실행 설정을 만들지 않는다.</p>
 <h3 id="73">7.3 테스트 설정<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
 <p><code>workspace/.vscode/settings.json</code>의 기존 설정에 다음 테스트 구성을 통합한다.</p>
-<div class="language-json highlight"><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="p">{</span>
-</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="w">  </span><span class="nt">&quot;files.encoding&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
-</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="w">  </span><span class="nt">&quot;java.configuration.updateBuildConfiguration&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;interactive&quot;</span><span class="p">,</span>
-</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4" href="#__codelineno-52-4"></a><span class="w">  </span><span class="nt">&quot;java.test.config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5" href="#__codelineno-52-5"></a><span class="w">    </span><span class="p">{</span>
-</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6" href="#__codelineno-52-6"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-runtime-local&quot;</span><span class="p">,</span>
-</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7" href="#__codelineno-52-7"></a><span class="w">      </span><span class="nt">&quot;vmArgs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8" href="#__codelineno-52-8"></a><span class="w">        </span><span class="s2">&quot;-Dspring.profiles.active=local&quot;</span><span class="p">,</span>
-</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9" href="#__codelineno-52-9"></a><span class="w">        </span><span class="s2">&quot;-Dmicroserver.resource-dir=${workspaceFolder}/microserver_resource&quot;</span>
-</span><span id="__span-52-10"><a id="__codelineno-52-10" name="__codelineno-52-10" href="#__codelineno-52-10"></a><span class="w">      </span><span class="p">]</span>
-</span><span id="__span-52-11"><a id="__codelineno-52-11" name="__codelineno-52-11" href="#__codelineno-52-11"></a><span class="w">    </span><span class="p">}</span>
-</span><span id="__span-52-12"><a id="__codelineno-52-12" name="__codelineno-52-12" href="#__codelineno-52-12"></a><span class="w">  </span><span class="p">],</span>
-</span><span id="__span-52-13"><a id="__codelineno-52-13" name="__codelineno-52-13" href="#__codelineno-52-13"></a><span class="w">  </span><span class="nt">&quot;java.test.defaultConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-runtime-local&quot;</span>
-</span><span id="__span-52-14"><a id="__codelineno-52-14" name="__codelineno-52-14" href="#__codelineno-52-14"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="p">{</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="w">  </span><span class="nt">&quot;files.encoding&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;utf8&quot;</span><span class="p">,</span>
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="w">  </span><span class="nt">&quot;java.configuration.updateBuildConfiguration&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;interactive&quot;</span><span class="p">,</span>
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="w">  </span><span class="nt">&quot;java.test.config&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="w">      </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-runtime-local&quot;</span><span class="p">,</span>
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">      </span><span class="nt">&quot;vmArgs&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="w">        </span><span class="s2">&quot;-Dspring.profiles.active=local&quot;</span><span class="p">,</span>
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="w">        </span><span class="s2">&quot;-Dmicroserver.resource-dir=${workspaceFolder}/microserver_resource&quot;</span>
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="w">      </span><span class="p">]</span>
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="w">  </span><span class="nt">&quot;java.test.defaultConfig&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;microserver-runtime-local&quot;</span>
+</span><span id="__span-31-14"><a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a><span class="p">}</span>
 </span></code></pre></div>
 <p>기존 <code>java.test.config</code> 배열이 있다면 새 항목을 추가하고, 같은 JSON 키를 중복 정의하지 않는다. 기존 JDK 설정과 나머지 설정은 유지한다. 원본 프로젝트의 <code>src/test/resources</code>를 추가하는 <code>classPaths</code> 설정은 새 테스트 구성에 복사하지 않는다.</p>
 <p>이 설정은 VS Code의 Java 테스트 실행용이다. 터미널의 Gradle 테스트에는 자동 반영되지 않는다. Gradle 테스트에 프로파일과 경로를 전달하는 설정은 테스트를 구현하는 후속 가이드에서 추가한다.</p>
@@ -3407,30 +3014,30 @@
 <h2 id="8">8. 빌드와 최초 실행<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
 <h3 id="81-runtime">8.1 Runtime 의존성 확인<a class="headerlink" href="#81-runtime" title="Permanent link">&para;</a></h3>
 <p>Windows PowerShell:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-53-1"><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">local-microserver</span><span class="p">\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-runtime</span>
-</span><span id="__span-53-2"><a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="p">-</span><span class="n">-version</span>
-</span><span id="__span-53-3"><a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">dependencyInsight</span> <span class="p">-</span><span class="n">-dependency</span> <span class="n">microserver-framework-starter</span> <span class="p">-</span><span class="n">-configuration</span> <span class="n">runtimeClasspath</span>
-</span><span id="__span-53-4"><a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">classes</span>
-</span><span id="__span-53-5"><a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">dependencies</span> <span class="p">-</span><span class="n">-configuration</span> <span class="n">runtimeClasspath</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="nb">Set-Location</span> <span class="n">C</span><span class="p">:\</span><span class="n">local-microserver</span><span class="p">\</span><span class="n">workspace</span><span class="p">\</span><span class="n">microserver-runtime</span>
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="p">-</span><span class="n">-version</span>
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">dependencyInsight</span> <span class="p">-</span><span class="n">-dependency</span> <span class="n">microserver-framework-starter</span> <span class="p">-</span><span class="n">-configuration</span> <span class="n">runtimeClasspath</span>
+</span><span id="__span-32-4"><a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">classes</span>
+</span><span id="__span-32-5"><a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">dependencies</span> <span class="p">-</span><span class="n">-configuration</span> <span class="n">runtimeClasspath</span>
 </span></code></pre></div>
 <p>macOS:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-54-1"><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="nb">cd</span><span class="w"> </span>~/local-microserver/workspace/microserver-runtime
-</span><span id="__span-54-2"><a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a>./gradlew<span class="w"> </span>--version
-</span><span id="__span-54-3"><a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a>./gradlew<span class="w"> </span>dependencyInsight<span class="w"> </span>--dependency<span class="w"> </span>microserver-framework-starter<span class="w"> </span>--configuration<span class="w"> </span>runtimeClasspath
-</span><span id="__span-54-4"><a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a>./gradlew<span class="w"> </span>classes
-</span><span id="__span-54-5"><a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a>./gradlew<span class="w"> </span>dependencies<span class="w"> </span>--configuration<span class="w"> </span>runtimeClasspath
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="nb">cd</span><span class="w"> </span>~/local-microserver/workspace/microserver-runtime
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>./gradlew<span class="w"> </span>--version
+</span><span id="__span-33-3"><a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>./gradlew<span class="w"> </span>dependencyInsight<span class="w"> </span>--dependency<span class="w"> </span>microserver-framework-starter<span class="w"> </span>--configuration<span class="w"> </span>runtimeClasspath
+</span><span id="__span-33-4"><a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>./gradlew<span class="w"> </span>classes
+</span><span id="__span-33-5"><a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a>./gradlew<span class="w"> </span>dependencies<span class="w"> </span>--configuration<span class="w"> </span>runtimeClasspath
 </span></code></pre></div>
 <p><code>dependencyInsight</code>에서 Starter 라이브러리 의존성이 포함된 Framework 빌드의 프로젝트로 치환되는지 확인한다. 출력 형식은 Gradle 버전에 따라 달라질 수 있으므로 전체 문자열보다 선택된 프로젝트와 치환 관계를 확인한다. <code>dependencies</code>에서는 Starter를 통해 DataSource와 MyBatis 공통 모듈까지 포함되는지 확인한다.</p>
 <h3 id="82">8.2 터미널에서 실행<a class="headerlink" href="#82" title="Permanent link">&para;</a></h3>
 <p>Runtime 루트에서 실행한다. 외부 리소스 경로는 절대 경로로 변환하여 전달한다.</p>
 <p>Windows PowerShell:</p>
-<div class="language-powershell highlight"><pre><span></span><code><span id="__span-55-1"><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a><span class="nv">$resourceDir</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Resolve-Path</span> <span class="p">..\</span><span class="n">microserver_resource</span><span class="p">).</span><span class="n">Path</span> <span class="o">-replace</span> <span class="s1">&#39;\\&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span>
-</span><span id="__span-55-2"><a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="nv">$runtimeArgs</span> <span class="p">=</span> <span class="s1">&#39;--spring.profiles.active=local --microserver.resource-dir=&quot;&#39;</span> <span class="p">+</span> <span class="nv">$resourceDir</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span>
-</span><span id="__span-55-3"><a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">bootRun</span> <span class="p">-</span><span class="n">-args</span><span class="p">=</span><span class="nv">$runtimeArgs</span>
+<div class="language-powershell highlight"><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a><span class="nv">$resourceDir</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Resolve-Path</span> <span class="p">..\</span><span class="n">microserver_resource</span><span class="p">).</span><span class="n">Path</span> <span class="o">-replace</span> <span class="s1">&#39;\\&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a><span class="nv">$runtimeArgs</span> <span class="p">=</span> <span class="s1">&#39;--spring.profiles.active=local --microserver.resource-dir=&quot;&#39;</span> <span class="p">+</span> <span class="nv">$resourceDir</span> <span class="p">+</span> <span class="s1">&#39;&quot;&#39;</span>
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a><span class="p">.\</span><span class="n">gradlew</span><span class="p">.</span><span class="n">bat</span> <span class="n">bootRun</span> <span class="p">-</span><span class="n">-args</span><span class="p">=</span><span class="nv">$runtimeArgs</span>
 </span></code></pre></div>
 <p>macOS:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-56-1"><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a><span class="nv">resource_dir</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span>../microserver_resource<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
-</span><span id="__span-56-2"><a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>./gradlew<span class="w"> </span>bootRun<span class="w"> </span>--args<span class="o">=</span><span class="s2">&quot;--spring.profiles.active=local --microserver.resource-dir=\&quot;</span><span class="nv">$resource_dir</span><span class="s2">\&quot;&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a><span class="nv">resource_dir</span><span class="o">=</span><span class="s2">&quot;</span><span class="k">$(</span><span class="nb">cd</span><span class="w"> </span>../microserver_resource<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nb">pwd</span><span class="k">)</span><span class="s2">&quot;</span>
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>./gradlew<span class="w"> </span>bootRun<span class="w"> </span>--args<span class="o">=</span><span class="s2">&quot;--spring.profiles.active=local --microserver.resource-dir=\&quot;</span><span class="nv">$resource_dir</span><span class="s2">\&quot;&quot;</span>
 </span></code></pre></div>
 <p><code>bootRun --args</code>는 실행할 애플리케이션의 인수를 지정한다. Gradle에 전달한 임의의 <code>-D</code> 시스템 속성이 애플리케이션 JVM에 자동 전달된다고 가정하지 않고, 위 명령처럼 애플리케이션 인수를 명시한다.</p>
 <p>로그에서 <code>local</code> 프로파일 활성화와 <code>Started MicroserverRuntimeApplication</code>을 확인한다. 아직 Controller가 없으므로 브라우저에서 루트 URL을 열었을 때 404가 표시될 수 있다. 이번 단계에서는 기동 로그로 확인하고, 확인이 끝나면 <code>Ctrl+C</code>로 종료한다.</p>
@@ -3441,16 +3048,16 @@
 <h2 id="9">9. 파일 관리와 완료 기준<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
 <h3 id="91-gitignore">9.1 .gitignore<a class="headerlink" href="#91-gitignore" title="Permanent link">&para;</a></h3>
 <p>Framework 루트와 Runtime 루트에 각각 <code>.gitignore</code>를 만든다. 기존 파일이 있다면 내용을 통합한다.</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-57-1"><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a># Gradle 캐시와 빌드 결과
-</span><span id="__span-57-2"><a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>.gradle/
-</span><span id="__span-57-3"><a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>**/build/
-</span><span id="__span-57-4"><a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>
-</span><span id="__span-57-5"><a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a># 개발 PC 전용 로컬 연결 설정
-</span><span id="__span-57-6"><a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>/gradle.properties
-</span><span id="__span-57-7"><a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a>
-</span><span id="__span-57-8"><a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a># OS 생성 파일
-</span><span id="__span-57-9"><a id="__codelineno-57-9" name="__codelineno-57-9" href="#__codelineno-57-9"></a>.DS_Store
-</span><span id="__span-57-10"><a id="__codelineno-57-10" name="__codelineno-57-10" href="#__codelineno-57-10"></a>Thumbs.db
+<div class="language-text highlight"><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a># Gradle 캐시와 빌드 결과
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>.gradle/
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a>**/build/
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a># 개발 PC 전용 로컬 연결 설정
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>/gradle.properties
+</span><span id="__span-36-7"><a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a>
+</span><span id="__span-36-8"><a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a># OS 생성 파일
+</span><span id="__span-36-9"><a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>.DS_Store
+</span><span id="__span-36-10"><a id="__codelineno-36-10" name="__codelineno-36-10" href="#__codelineno-36-10"></a>Thumbs.db
 </span></code></pre></div>
 <p>Wrapper의 JAR을 포함한 4개 파일은 Git 관리 대상이다. <code>*.jar</code>를 일괄 제외하는 설정을 추가하지 않는다. 이번 <code>gradle.properties</code>는 개발 PC 전용이므로 제외한다. 공통으로 공유할 빌드 속성이 생기면 공유 설정과 개인 설정의 저장 위치를 다시 정리한다.</p>
 <p>Framework와 Runtime은 각각 독립된 Git 저장 단위로 관리하는 방향이다. 원격 저장소, 기존 저장소와의 연결, 초기 커밋·push는 실제 프로젝트를 구성하는 단계에서 확정한다. 외부 리소스의 접속 비밀번호를 소스 저장 대상에 포함하지 않는다.</p>
