@@ -222,6 +222,10 @@ nav:
       - 참고:
         - Lombok 설치 및 설정: 04_multi_project_framework/lombok_setup.md
         - VS Code Java User Snippet: 04_multi_project_framework/vscode_java_user_snippet.md
+        - Gradle 문법:
+            - api 의존성 선언: 04_multi_project_framework/gradle/gradle_api_dependency.md
+            - 로컬 Framework 연결: 04_multi_project_framework/gradle/gradle_local_framework_connection.md
+
 
       - DataSource 구성:
           - DataSource:

@@ -416,144 +416,12 @@ dependencies {
 }
 ```
 
-#### 4.5.1 의존성 선언이 하는 일
+!!! tip "Starter에서 api를 사용하는 이유"
+    `api`는 Starter를 사용하는 Runtime에서도 공통 모듈의 공개 타입을 컴파일·실행에 사용할 수 있도록 의존성을 전달한다. 
 
-`api`와 `implementation`은 다른 모듈·라이브러리에 대한 의존성을 선언하는 방식이다. 둘 다 선언한 프로젝트에서는 해당 라이브러리를 컴파일과 실행에 사용할 수 있다. 차이는 **그 프로젝트를 사용하는 다른 프로젝트에도 의존성을 컴파일 시점에 전달하는가**이다.
+    **Gradle 문법의 `api` 선언에 대한 자세한 내용은 아래 링크를 클릭해 확인할 수 있습니다.**
 
-컴파일 클래스패스는 소스에서 import한 클래스와 메서드의 존재·타입을 검사할 때 사용하는 라이브러리 목록이고, 실행 클래스패스는 애플리케이션을 실제 실행할 때 필요한 라이브러리 목록이다.
-
-아래 표는 B 프로젝트가 C를 의존하고, A 프로젝트는 B만 의존하는 경우다. A가 C를 별도로 선언하거나 다른 의존성 경로로 받는 경우는 제외한다.
-
-| B에서 C를 선언하는 방법 | B에서 C 사용 | A의 컴파일 클래스패스에 C 포함 | A의 실행 클래스패스에 C 포함 |
-| --- | --- | --- | --- |
-| `api(C)` | 컴파일·실행 가능 | 포함 | 포함 |
-| `implementation(C)` | 컴파일·실행 가능 | 포함하지 않음 | 포함 |
-
-`implementation`이라고 해서 C가 A의 실행에 전달되지 않는 것은 아니다. 또한 Java 클래스의 `public`·`private` 접근 제어를 바꾸거나 보안상 접근을 차단하는 기능도 아니다.
-
-#### 4.5.2 Starter에서 api를 사용하는 이유
-
-이 가이드의 Starter는 Runtime에 공통 모듈을 묶어서 제공한다.
-
-```groovy
-// microserver-framework-starter/build.gradle
-dependencies {
-    api project(':microserver-framework-datasource')
-    api project(':microserver-framework-mybatis')
-}
-```
-
-Runtime은 Starter 하나를 선언한다.
-
-```groovy
-// microserver-runtime/build.gradle
-dependencies {
-    implementation 'io.github.microserverlab:microserver-framework-starter:0.0.1-SNAPSHOT'
-}
-```
-
-그러면 Runtime의 컴파일·실행 클래스패스에 Starter뿐 아니라 DataSource·MyBatis 공통 모듈도 연결된다. Runtime 소스는 두 모듈에 공개된 클래스를 직접 import하여 사용할 수 있다. 단, 다음 예제 클래스가 실제로 구현되어 있다는 전제다.
-
-```java
-// Runtime에서 사용할 수 있는 공개 타입의 예시
-// import io.github.microserverlab.microserver.framework.datasource.FrameworkDatabaseInfo;
-```
-
-Starter에서 두 의존성을 `implementation`으로 바꾸면 Runtime 실행에는 두 모듈이 전달되지만, Runtime 소스에서 해당 모듈의 클래스를 직접 import해 컴파일할 수는 없다. Runtime이 별도로 의존성을 선언했다면 그 별도 경로로는 사용할 수 있다.
-
-Runtime이 Starter를 `implementation`으로 선언해도 Runtime 자신의 컴파일에는 Starter와 그 api 의존성이 포함된다. 이때의 `implementation`은 Runtime을 또 다른 프로젝트가 사용하는 경우의 전파 범위를 정하는 것으로, Runtime 자신에게 Starter의 공개 의존성이 전달되지 않는다는 의미가 아니다.
-
-#### 4.5.3 MyBatis 내부에서만 DataSource 타입을 사용하는 경우
-
-다음은 의존성 차이를 설명하기 위한 가상 예제다. 실제 설정 클래스와 메서드를 이 예제대로 작성하라는 뜻은 아니다.
-
-DataSource 모듈에 다음 클래스가 있다고 가정한다.
-
-```java
-public class FrameworkDatabaseInfo {
-    public String name() {
-        return "framework";
-    }
-}
-```
-
-MyBatis 모듈이 메서드 내부에서만 그 클래스를 사용하고, 외부에는 `String`을 반환한다면 다음과 같다. 각 예제는 별도 파일이며 import는 생략했다.
-
-```java
-public class MapperDatabaseService {
-    public String databaseName() {
-        FrameworkDatabaseInfo info = new FrameworkDatabaseInfo();
-        return info.name();
-    }
-}
-```
-
-이 경우 MyBatis는 DataSource를 내부 구현 의존성으로 선언할 수 있다.
-
-```groovy
-// microserver-framework-mybatis/build.gradle
-dependencies {
-    implementation project(':microserver-framework-datasource')
-}
-```
-
-MyBatis만 의존하는 사용자는 `MapperDatabaseService`와 `String` 타입만 알면 메서드를 호출할 수 있다. 내부에서 사용하는 `FrameworkDatabaseInfo` 타입을 자신의 소스에서 사용할 필요가 없다. 실행 시에는 내부 코드가 동작해야 하므로 DataSource 모듈도 실행 의존성으로 전달된다.
-
-#### 4.5.4 공개 메서드에 다른 모듈의 타입이 나타나는 경우
-
-MyBatis 모듈이 앞의 메서드를 다음처럼 변경했다고 가정한다.
-
-```java
-public class MapperDatabaseService {
-    public FrameworkDatabaseInfo databaseInfo() {
-        return new FrameworkDatabaseInfo();
-    }
-}
-```
-
-반환 타입이 DataSource 모듈의 `FrameworkDatabaseInfo`다. 사용자는 다음 코드를 컴파일할 때 해당 타입을 알아야 한다.
-
-```java
-FrameworkDatabaseInfo info = service.databaseInfo();
-```
-
-이 공개 기능을 제공하려면 MyBatis는 DataSource 의존성을 `api`로 선언하는 것이 적절하다.
-
-```groovy
-// microserver-framework-mybatis/build.gradle
-dependencies {
-    api project(':microserver-framework-datasource')
-}
-```
-
-이것이 “공개 API에 다른 모듈의 타입이 노출되면 계약에 맞게 선언을 조정한다”는 의미다. 여기서 API는 HTTP API가 아니라 다른 Java 프로젝트가 호출·사용하는 공개 클래스와 메서드다. 메서드 반환 타입·매개변수, 공개 생성자 매개변수, 상속 클래스·구현 인터페이스 등에 다른 모듈의 타입이 사용되는지 확인한다.
-
-이 예시에서 FrameworkDatabaseInfo는 직접 작성한 가상 타입이다. 실제 코드에서 쓰는 `javax.sql.DataSource`는 JDK 제공 타입이므로, 이름에 DataSource가 있다는 이유만으로 Framework DataSource 모듈을 `api`로 바꿀 필요는 없다. 타입이 어느 라이브러리에 소속되는지가 판단 기준이다.
-
-현재 Starter는 DataSource 모듈을 직접 `api`로 공개한다. 따라서 Starter를 사용하는 Runtime에서는 MyBatis의 선언과 관계없이 그 직접 경로로 DataSource 모듈이 보일 수 있다. MyBatis 모듈의 의존성 계약을 확인할 때는 MyBatis만 사용하는 프로젝트에서도 공개 메서드를 컴파일할 수 있는지 검토한다.
-
-#### 4.5.5 선언 선택 기준과 확인 방법
-
-| 사용 상황 | 선언 기준 |
-| --- | --- |
-| 메서드 본문 등 해당 모듈 내부 구현에서만 사용 | `implementation` |
-| 사용자가 호출할 공개 기능의 타입에 포함 | `api` 검토 |
-| Starter처럼 다른 모듈을 사용자에게 묶어 제공 | `api` |
-| Runtime이 별도 기능의 클래스를 직접 사용하지만 Starter가 공개하지 않음 | Runtime에 해당 라이브러리를 직접 선언 |
-
-Java의 `import` 문이 있다는 사실만으로 결정하지 않는다. 가져온 타입이 내부 처리에만 쓰이는지, 다른 프로젝트도 컴파일할 때 알아야 하는 공개 계약에 포함되는지 확인한다. Gradle이 소스를 분석하여 `implementation`을 `api`로 자동 변경해주지는 않는다.
-
-Runtime 루트에서 다음 두 결과를 비교하면 컴파일·실행 의존성 차이를 확인할 수 있다. macOS는 `./gradlew`, Windows PowerShell은 `.\gradlew.bat`을 사용한다.
-
-```bash
-./gradlew dependencies --configuration compileClasspath
-./gradlew dependencies --configuration runtimeClasspath
-```
-
-`api`를 사용해도 대상 모듈의 클래스가 Starter JAR 안으로 합쳐지는 것은 아니다. 각 모듈 JAR은 별도로 존재하고, Gradle이 의존성 관계를 통해 필요한 클래스패스에 연결한다. 배포 시에도 이 관계가 전달되도록 JAR과 의존성 메타데이터를 함께 게시한다.
-
-참고: [Gradle Java Library Plugin — API와 implementation 구분](https://docs.gradle.org/current/userguide/java_library_plugin.html#sec:java_library_separation)
-
+    → [Gradle api 의존성 선언 자세히 보기](../gradle/gradle_api_dependency.md)
 
 ### 4.6 Framework 인식 확인
 
@@ -579,246 +447,69 @@ cd ~/local-microserver/workspace/microserver-framework
 
 ### 5.1 Runtime settings.gradle
 
-Runtime에서 배포된 Framework 라이브러리와 개발 PC의 Framework 소스 중 어느 것을 사용할지 선택한다. 먼저 전체 설정 항목을 확인하고, 코드 아래의 항목별 설명을 순서대로 읽는다.
+Framework와 Runtime을 함께 개발할 때는 **Framework 코드를 변경할 때마다 JAR을 저장소에 게시하고 Runtime에서 다시 내려받는 절차 없이 변경 결과를 확인할 수 있도록** 로컬 Framework를 연결한다.
 
-| 항목 | 하는 일 |
-| --- | --- |
-| Runtime 프로젝트 이름 | 독립 Runtime 빌드의 이름 지정 |
-| `useLocalFramework` 속성 | 로컬 소스 연결 사용 여부 선택 |
-| `providers.gradleProperty`·`map`·`getOrElse` | 속성 읽기, Boolean 변환, 미지정 기본값 처리 |
-| Framework 경로 | Runtime과 함께 개발할 Framework 빌드 위치 지정 |
-| 설정 파일 검사 | Framework 빌드가 있는지 확인하고 없으면 오류 표시 |
-| `includeBuild` | 독립 Framework 빌드를 Runtime 빌드에 연결 |
-| `dependencySubstitution` | Starter 라이브러리 요청을 로컬 Starter 프로젝트로 치환 |
-| `gradle.properties` | 개발 PC에서 사용할 기본 선택 저장 |
-| 명령행 `-P` | 이번 Gradle 실행의 선택을 명시적으로 지정 |
+Runtime의 Starter 의존성을 개발 PC의 Framework 프로젝트로 치환하면, Runtime을 다시 빌드·실행할 때 필요한 Framework 빌드 작업도 Gradle이 함께 처리한다. 이 방식을 Composite Build라고 한다. 빌드 과정에서 로컬 JAR은 생성될 수 있으며, 실행 중인 서버에 변경이 자동으로 반영되는 기능은 아니므로 변경 후 다시 빌드·실행한다.
 
-`workspace/microserver-runtime/settings.gradle`:
+`workspace/microserver-runtime/settings.gradle`에 다음을 작성한다.
 
 ```groovy
+// Runtime은 Framework와 별도의 settings.gradle을 갖는 독립 빌드다.
 rootProject.name = 'microserver-runtime'
 
-// 기본값은 배포 라이브러리 사용이다.
-// 로컬 공동 개발 환경에서 -PuseLocalFramework=true로 소스 연결을 켠다.
+// 개발 PC에서 Framework 소스를 함께 개발할 때 true로 설정한다.
+// Runtime 루트의 gradle.properties 또는 명령행 -P 옵션에서 값을 읽는다.
+// 속성 문자열을 Boolean으로 변환하고, 미지정이면 false(배포 라이브러리)를 사용한다.
 def useLocalFramework = providers.gradleProperty('useLocalFramework')
         .map { it.toBoolean() }
         .getOrElse(false)
 
+// 로컬 사용을 선택한 경우에만 Framework 빌드를 연결한다.
 if (useLocalFramework) {
+    // 현재 settings.gradle 위치를 기준으로 이웃 Framework 폴더를 찾는다.
     def frameworkDir = file('../microserver-framework')
+
+    // Framework의 Gradle 설정 파일이 없으면 원인을 표시하고 즉시 중단한다.
+    // 로컬 연결 실패 시 배포 라이브러리로 자동 전환하지 않는다.
     if (!new File(frameworkDir, 'settings.gradle').isFile()) {
         throw new GradleException("로컬 Framework 빌드를 찾을 수 없습니다: ${frameworkDir}")
     }
 
+    // 독립 Framework 빌드를 포함하여 Runtime과 함께 빌드할 수 있게 한다.
     includeBuild(frameworkDir) {
         dependencySubstitution {
-            // 외부 라이브러리 좌표를 포함된 빌드의 Starter 프로젝트로 연결한다.
+            // Runtime build.gradle의 Starter 라이브러리 요청을
+            // 포함된 Framework 빌드의 Starter 프로젝트로 치환한다.
+            // Runtime의 의존성 좌표는 바꾸지 않고 로컬 소스를 사용할 수 있다.
             substitute module('io.github.microserverlab:microserver-framework-starter') using project(':microserver-framework-starter')
         }
     }
 }
 ```
 
-#### 5.1.1 Runtime 프로젝트 이름 지정
-
-```groovy
-rootProject.name = 'microserver-runtime'
-```
-
-Runtime의 Gradle 루트 프로젝트 이름을 지정한다. Framework의 하위 프로젝트가 아니라 자체 `settings.gradle`과 `build.gradle`을 가진 독립 빌드다. 이 이름은 VS Code 실행 설정의 `projectName`과도 맞춘다.
-
-#### 5.1.2 로컬 Framework 사용 여부 읽기
-
-```groovy
-def useLocalFramework = providers.gradleProperty('useLocalFramework')
-        .map { it.toBoolean() }
-        .getOrElse(false)
-```
-
-배포된 공통 라이브러리를 사용할지, 개발 PC의 Framework 소스를 사용할지 선택하는 사용자 정의 설정이다. `useLocalFramework`는 Gradle의 내장 옵션이 아니라 이 가이드에서 정한 이름이다.
-
-| 코드 | 기능 | 값의 예 |
-| --- | --- | --- |
-| `def useLocalFramework` | 처리 결과를 저장할 Groovy 변수 선언 | 최종 Boolean 값 |
-| `providers.gradleProperty('useLocalFramework')` | Gradle 프로젝트 속성을 Provider로 읽음 | 문자열 `true` 또는 `false` |
-| `.map { it.toBoolean() }` | 속성이 있으면 문자열을 Boolean으로 변환 | `true` → 참, `false` → 거짓 |
-| `.getOrElse(false)` | 속성이 없으면 기본값 사용 | 거짓 |
-
-Provider는 외부에서 전달한 값을 읽고 변환할 수 있는 Gradle의 값 제공 객체다. `it`은 `map` 블록에 전달되는 속성 문자열을 가리킨다. 마지막에는 Boolean 값을 얻어 아래 `if` 조건에 사용한다.
-
-설정값은 혼동을 피하도록 정확히 `true` 또는 `false`로 작성한다. `getOrElse(false)`는 속성이 없을 때의 기본값이다. 로컬 폴더가 없거나 빌드가 실패했을 때 배포 라이브러리로 자동 전환하는 예외 처리 기능이 아니다.
-
-#### 5.1.3 사용 방식에 따라 로컬 연결 실행
-
-```groovy
-if (useLocalFramework) {
-    // 로컬 Framework 위치 확인 및 빌드 연결
-}
-```
-
-| 최종 값 | settings.gradle 동작 | Runtime이 사용하는 Framework |
-| --- | --- | --- |
-| `true` | 폴더를 검사하고 `includeBuild` 실행 | 개발 PC의 Framework 프로젝트 |
-| `false` | 로컬 연결 블록을 건너뜀 | 설정된 저장소에서 해석한 라이브러리 |
-| 값 미지정 | 기본값 `false` | 설정된 저장소에서 해석한 라이브러리 |
-
-이 값은 Gradle의 빌드·의존성 연결 설정이다. Spring의 `local`·`dev`·`prod` 실행 프로파일과는 별개다. `spring.profiles.active=local`만 전달해도 로컬 Framework 소스가 연결되는 것은 아니다.
-
-#### 5.1.4 Framework 소스 위치 지정
-
-```groovy
-def frameworkDir = file('../microserver-framework')
-```
-
-Runtime의 `settings.gradle`이 있는 디렉터리를 기준으로 Framework 경로를 해석한다. `..`는 상위 디렉터리이며, 그 아래 `microserver-framework` 폴더를 선택한다.
-
-| 환경 | Runtime 빌드 루트 | 위 상대 경로의 결과 |
-| --- | --- | --- |
-| Windows | `C:\local-microserver\workspace\microserver-runtime` | `C:\local-microserver\workspace\microserver-framework` |
-| macOS | `~/local-microserver/workspace/microserver-runtime` | `~/local-microserver/workspace/microserver-framework` |
-
-두 프로젝트가 같은 작업 공간의 이웃 디렉터리에 있어야 이 경로를 그대로 사용할 수 있다. `file(...)`은 파일 경로를 나타내는 객체를 만들 뿐 폴더 생성·저장소 복제·파일 복사를 수행하지 않는다.
-
-#### 5.1.5 Framework 빌드 존재 확인과 오류 처리
-
-```groovy
-if (!new File(frameworkDir, 'settings.gradle').isFile()) {
-    throw new GradleException("로컬 Framework 빌드를 찾을 수 없습니다: ${frameworkDir}")
-}
-```
-
-| 표현 | 의미 |
-| --- | --- |
-| `new File(frameworkDir, 'settings.gradle')` | Framework 디렉터리 안의 설정 파일 경로 생성 |
-| `.isFile()` | 해당 경로에 일반 파일이 존재하는지 확인 |
-| `!` | 조건 반전. 파일이 없으면 참 |
-| `throw new GradleException(...)` | 오류 메시지를 표시하고 빌드 설정 처리를 중단 |
-| `${frameworkDir}` | 오류 메시지에 실제 검사한 경로 삽입 |
-
-로컬 사용을 선택했는데 Framework를 준비하지 않은 경우, 원인을 초기에 알려주는 검사다. 로컬 빌드 파일의 존재만 확인하므로 소스의 정상 컴파일이나 의존성 다운로드 성공까지 보장하지는 않는다. 이 가이드는 Groovy DSL의 `settings.gradle`을 사용한다. Kotlin DSL의 `settings.gradle.kts`로 변경한다면 검사 대상도 조정해야 한다.
-
-#### 5.1.6 독립 Framework 빌드 연결 — includeBuild
-
-```groovy
-includeBuild(frameworkDir) {
-    // 의존성 치환 규칙
-}
-```
-
-별도의 Framework 빌드를 Runtime과 함께 빌드할 수 있도록 연결한다. 독립된 빌드들을 함께 구성하는 방식을 Composite Build라고 한다.
-
-| 구분 | 사용하는 설정 | 적용 위치 |
-| --- | --- | --- |
-| 하나의 Framework 빌드에 하위 프로젝트 포함 | `include 'microserver-framework-datasource'` | Framework의 `settings.gradle` |
-| 같은 빌드 안의 하위 프로젝트 의존성 선언 | `implementation project(':microserver-framework-datasource')` 등 | Framework 하위 모듈의 `build.gradle` |
-| 독립 Framework 빌드를 Runtime의 로컬 개발에 연결 | `includeBuild(frameworkDir)` | Runtime의 `settings.gradle` |
-
-연결 후 Runtime을 빌드·실행하면 필요한 Framework 프로젝트의 빌드 작업도 의존성에 따라 수행된다. Framework 소스를 변경한 뒤 Runtime을 다시 빌드·실행할 때, 먼저 공통 JAR을 저장소에 게시하지 않고 변경 내용을 확인할 수 있다.
-
-소스가 Runtime 폴더로 복사되거나 두 Git 저장소가 합쳐지는 것은 아니다. Framework와 Runtime의 루트 빌드 설정, 플러그인, 저장소 설정은 각각 관리한다. 실행 중인 애플리케이션에 소스 변경이 자동으로 반영되는 Hot Reload 기능도 아니므로 필요한 재빌드·재실행을 수행한다.
-
-#### 5.1.7 라이브러리 의존성을 로컬 프로젝트로 치환
-
-```groovy
-dependencySubstitution {
-    substitute module('io.github.microserverlab:microserver-framework-starter') using project(':microserver-framework-starter')
-}
-```
-
-Runtime이 요청한 Starter 라이브러리를 로컬 Framework의 Starter 프로젝트로 바꿔 연결하는 규칙이다.
-
-| 코드 | 의미 |
-| --- | --- |
-| `dependencySubstitution` | 의존성 대상을 다른 대상으로 치환하는 규칙 선언 |
-| `module('io.github.microserverlab:microserver-framework-starter')` | 바꿀 대상인 외부 라이브러리의 그룹·이름 지정 |
-| `using project(':microserver-framework-starter')` | 대체할 대상으로 포함된 Framework 빌드의 Starter 하위 프로젝트 지정 |
-
-여기서 `project(...)`는 `includeBuild`의 치환 규칙 안에 있으므로 포함된 Framework 빌드의 프로젝트를 가리킨다. Runtime 안에 Starter 하위 프로젝트가 있다는 뜻이 아니다.
-
-Runtime의 `build.gradle`은 두 사용 방식 모두 다음 선언을 유지한다.
-
-```groovy
-implementation 'io.github.microserverlab:microserver-framework-starter:0.0.1-SNAPSHOT'
-```
-
-| 사용 방식 | 위 선언의 실제 해석 |
-| --- | --- |
-| 로컬 연결 켬 | Framework 빌드의 `:microserver-framework-starter` 프로젝트로 치환 |
-| 로컬 연결 끔 | 선언한 라이브러리 좌표와 버전을 설정된 저장소에서 해석 |
-
-Starter가 의존하는 DataSource·MyBatis 공통 모듈도 Framework의 프로젝트 의존성으로 함께 연결된다. 외부 의존성 좌표를 유지하므로 로컬 소스 사용과 배포 라이브러리 사용을 전환할 때 Runtime의 의존성 선언을 바꿀 필요가 없다.
-
-현재처럼 라이브러리 그룹·이름과 로컬 프로젝트 식별자가 일치하면 Gradle의 기본 치환 규칙으로도 연결할 수 있다. 본 가이드에서는 어떤 Starter를 어떤 프로젝트로 연결하는지 드러내기 위해 명시적인 치환 규칙을 작성했다.
-
-위 `module(...)`에는 버전이 없으므로 같은 그룹·이름의 요청을 로컬 프로젝트로 치환한다. 따라서 로컬 연결을 켠 상태에서는 선언된 `0.0.1-SNAPSHOT` 배포물과 로컬 소스가 동일하다고 보장되지 않는다. 배포 버전 자체를 검증할 때는 로컬 연결을 끈다.
-
-#### 5.1.8 개발 PC의 기본 선택 저장 — gradle.properties
-
-`workspace/microserver-runtime/gradle.properties`:
+로컬 Framework를 함께 개발하는 PC에서는 `workspace/microserver-runtime/gradle.properties`를 생성한다. 이 파일은 개발 PC 전용 설정으로 Git 관리에서 제외한다.
 
 ```properties
+# Runtime 빌드와 VS Code의 Gradle 가져오기에서 로컬 Framework 사용
 useLocalFramework=true
 ```
 
-Runtime 루트에 이 파일을 두면 매번 `-P` 옵션을 입력하지 않아도 로컬 연결을 사용한다. VS Code가 Runtime의 Gradle 프로젝트를 가져올 때도 이 설정을 읽을 수 있다.
+!!! tip "로컬 Framework 연결 코드 요약"
+    | 주요 코드 | 하는 일 |
+    | --- | --- |
+    | `rootProject.name` | 독립 Runtime 빌드의 이름 지정 |
+    | `providers.gradleProperty` → `map` → `getOrElse` | 속성을 읽어 Boolean으로 변환하고 미지정이면 `false` 사용 |
+    | `file`·`isFile` | 이웃 Framework 경로 지정 및 설정 파일 존재 확인 |
+    | `includeBuild` | 독립 Framework 빌드를 Runtime과 함께 연결 |
+    | `dependencySubstitution` | Starter 라이브러리 요청을 로컬 Starter 프로젝트로 치환 |
+    | `gradle.properties`·`-P` | 개발 PC의 기본 선택 저장 및 이번 명령의 선택 지정 |
 
-이 가이드에서는 로컬 소스를 함께 내려받은 개발 PC의 선택으로 관리하므로 해당 파일을 `.gitignore`에서 제외한다. 파일이 Git에 포함되지 않기 때문에 신규 PC에서는 직접 만들거나 실행 명령에 속성을 전달해야 한다. CI도 다른 곳에서 이 속성을 주입하지 않는 한 기본값 `false`로 동작한다.
+    **Gradle 문법과 로컬 Framework 연결 설정에 대한 자세한 내용은 아래 링크를 클릭해 확인할 수 있습니다.**
 
-설정 파일을 Git에서 제외한다는 것은 개발 PC에 파일을 만들지 말라는 뜻이 아니다. 이 파일을 생성해 사용하되 저장소에는 올리지 않는다는 의미다. 공용 Gradle 설정까지 항상 모두 제외해야 한다는 일반 규칙도 아니다.
+    → [Gradle 로컬 Framework 연결 자세히 보기](../gradle/gradle_local_framework_connection.md)
 
-또한 Gradle 사용자 홈의 `gradle.properties` 등에 같은 속성이 있다면 값 선택에 영향을 줄 수 있다. 본 가이드에서는 Runtime별 파일로 관리하고, 의도와 다른 동작이 나오면 사용자 홈의 동명 속성도 확인한다.
-
-#### 5.1.9 명령행에서 일시적으로 전환 — -P
-
-`-P`는 Gradle 프로젝트 속성을 전달하는 옵션이다. 명령행 값이 파일의 같은 속성보다 우선한다.
-
-Windows PowerShell — Runtime 루트:
-
-```powershell
-# 이번 명령에서는 로컬 Framework 사용
-.\gradlew.bat classes -PuseLocalFramework=true
-
-# 이번 명령에서는 배포 라이브러리 사용
-.\gradlew.bat classes -PuseLocalFramework=false
-```
-
-macOS — Runtime 루트:
-
-```bash
-# 이번 명령에서는 로컬 Framework 사용
-./gradlew classes -PuseLocalFramework=true
-
-# 이번 명령에서는 배포 라이브러리 사용
-./gradlew classes -PuseLocalFramework=false
-```
-
-위 명령은 `gradle.properties` 파일을 수정하지 않는다. 파일이 `true`인 상태에서 명령행에 `false`를 지정하면 해당 실행만 배포 라이브러리를 사용하고, 다음 명령에서 옵션을 생략하면 다시 파일의 `true`를 사용한다.
-
-`useLocalFramework`는 빌드 구성을 선택하는 값이므로 `bootRun --args`의 애플리케이션 인수로 전달하지 않는다. 예를 들어 `bootRun -PuseLocalFramework=true`는 Gradle 설정이고, `bootRun --args='--spring.profiles.active=local'`은 Spring 애플리케이션 설정이다.
-
-#### 5.1.10 사용 방식 확인과 최초 구성 시 주의점
-
-| 확인 상황 | 확인할 내용 |
-| --- | --- |
-| Framework 소스도 함께 개발 | 속성 `true`, 이웃 Framework 폴더 존재, 의존성이 로컬 프로젝트로 치환되는지 확인 |
-| 배포된 버전만 사용 | 속성 `false`, Framework가 게시된 저장소 설정과 대상 버전 존재 확인 |
-| 로컬 연결은 켰지만 폴더가 없음 | 설정 파일 검사에서 즉시 실패. 배포 라이브러리로 자동 전환하지 않음 |
-| 속성 없이 신규 PC에서 실행 | 기본값 `false`. 아직 배포하지 않았다면 Starter 의존성 해석 실패 가능 |
-
-현재 가이드의 Runtime은 `mavenCentral()`만 선언한다. 회사 공통 Framework가 그곳에 게시되어 있지 않다면 로컬 연결을 끈 상태에서 사용할 수 없다. 배포 단계에서 실제 라이브러리 저장소를 추가하고 필요한 버전을 게시해야 한다. 이 설정에 `mavenLocal()`이 없으므로 로컬 Maven 저장소에 게시하는 것만으로 해석되지도 않는다.
-
-최초 구성에서는 반드시 `gradle.properties`를 만들거나 `-PuseLocalFramework=true`를 전달한다. 이후 배포 라이브러리 사용 검증은 실제 게시와 저장소 설정을 마친 다음 진행한다.
-
-예를 들어 macOS에서는 다음으로 Starter 연결 결과를 확인한다. Windows에서는 `./gradlew` 대신 `.\gradlew.bat`을 사용한다.
-
-```bash
-./gradlew dependencyInsight --dependency microserver-framework-starter --configuration runtimeClasspath -PuseLocalFramework=true
-```
-
-결과에서 Starter의 라이브러리 요청이 포함된 Framework 빌드의 프로젝트로 선택되는지 확인한다. `useLocalFramework=false` 검증에서는 같은 명령의 속성을 `false`로 바꾸어 저장소의 배포 버전이 선택되는지 확인한다.
-
-참고: [Gradle Composite Builds](https://docs.gradle.org/current/userguide/composite_builds.html) · [Gradle 프로젝트 속성](https://docs.gradle.org/current/userguide/build_environment.html#sec:project_properties)
-
+!!! note "최초 실행과 배포 라이브러리 사용"
+    최초 구성에서는 `useLocalFramework=true`로 실행한다. `false`로 실행하려면 Framework가 게시된 저장소 설정과 해당 배포 버전이 준비되어 있어야 한다. 이 값은 Spring의 `local` 실행 프로파일과 별도로 설정한다.
 
 ### 5.2 Runtime build.gradle
 
